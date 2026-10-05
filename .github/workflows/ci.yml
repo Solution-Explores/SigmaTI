@@ -1,0 +1,24 @@
+name: CI Infrastructure Validation
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate-compose:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Validate Docker Compose Configuration
+        run: |
+          docker compose config --quiet
+        env:
+          ZABBIX_DB_USER: dummy_user
+          ZABBIX_DB_PASS: dummy_pass
+          N8N_USER: dummy_user
+          N8N_PASS: dummy_pass

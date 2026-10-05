@@ -1,4 +1,5 @@
 version: '3.8'
+<<<<<<< HEAD
 services:
   postgres:
     image: postgres:15-alpine
@@ -14,3 +15,54 @@ services:
 
 volumes:
   sigma_data:
+=======
+
+services:
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:latest
+    environment:
+      - DB_SERVER_HOST=postgres-server
+      - POSTGRES_USER=${ZABBIX_DB_USER}
+      - POSTGRES_PASSWORD=${ZABBIX_DB_PASS}
+      - POSTGRES_DB=zabbix
+    ports:
+      - "10051:10051"
+    depends_on:
+      - postgres-server
+    restart: unless-stopped
+
+  postgres-server:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=${ZABBIX_DB_USER}
+      - POSTGRES_PASSWORD=${ZABBIX_DB_PASS}
+      - POSTGRES_DB=zabbix
+    volumes:
+      - zabbix-db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
+
+  n8n:
+    image: n8nio/n8n:latest
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASS}
+    volumes:
+      - n8n-data:/home/node/.n8n
+    restart: unless-stopped
+
+volumes:
+  zabbix-db-data:
+  grafana-data:
+  n8n-data:
+>>>>>>> 9d05615aeea6e871fc6c0ca5a82eeb6801bda421
