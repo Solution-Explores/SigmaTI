@@ -1,4 +1,21 @@
 version: '3.8'
+<<<<<<< HEAD
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: sigma-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpassword
+      POSTGRES_DB: sigmadb
+    ports:
+      - "5432:5432"
+    volumes:
+      - sigma_data:/var/lib/postgresql/data
+
+volumes:
+  sigma_data:
+=======
 
 services:
   zabbix-server:
@@ -48,3 +65,4 @@ volumes:
   zabbix-db-data:
   grafana-data:
   n8n-data:
+>>>>>>> 9d05615aeea6e871fc6c0ca5a82eeb6801bda421
