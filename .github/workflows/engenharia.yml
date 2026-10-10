@@ -1,0 +1,28 @@
+name: Engenharia (testes)
+
+on:
+  push:
+    paths: ["engenharia/**", ".github/workflows/engenharia.yml"]
+  pull_request:
+    paths: ["engenharia/**", ".github/workflows/engenharia.yml"]
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: engenharia
+    strategy:
+      matrix:
+        python: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: engenharia/requirements.txt
+      - run: pip install -r requirements.txt
+      - run: pytest -q
+      - name: Reproduzir experimento E1
+        run: python -m experimentos.exp_deteccao

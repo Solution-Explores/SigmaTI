@@ -1,0 +1,9 @@
+# Núcleo (sigma_eng, exceto api.py): apenas biblioteca padrão.
+# Opcional, para inspeção de certificados na sonda HTTPS:
+cryptography>=42
+# API (sigma_eng.api):
+fastapi>=0.110
+pydantic>=2
+# Testes:
+pytest>=8
+httpx>=0.27
