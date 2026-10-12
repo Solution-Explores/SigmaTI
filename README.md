@@ -52,7 +52,7 @@ Sonda de pacotes ──┘        │                │
 Técnicos (login + perfil) ──► Frontend (alerta original + chat com IA)
 ```
 
-Implantação híbrida: `frontend`, `api`, `db` e `n8n` em contêineres. A sonda roda no host, porque precisa de acesso à interface física de rede. O pfSense fica na rede.
+Implantação híbrida: `db` (PostgreSQL) e `n8n` orquestrados via Docker Compose. Os serviços `api` e `frontend` estão em fase de conteinerização. A stack de observabilidade legada/opcional (Zabbix e Grafana) está disponível via perfil (`--profile monitoring`). A sonda roda no host, porque precisa de acesso à interface física de rede. O pfSense fica na rede.
 
 ## Como instalar
 
@@ -70,7 +70,11 @@ Pré-requisitos: Docker, Docker Compose e um servidor ou VM Linux com acesso à 
    Preencha no `.env`: credenciais do banco, chave de cada sonda, chave do pfSense e chaves da IA (Groq/OpenRouter). **Nunca versione o `.env`.**
 3. Suba os serviços em contêiner:
    ```bash
+   # Núcleo da aplicação (banco de dados e automação)
    docker compose up -d
+
+   # (Opcional) Incluir stack de observabilidade (Zabbix e Grafana)
+   docker compose --profile monitoring up -d
    ```
 4. Inicie a sonda no host:
    ```bash

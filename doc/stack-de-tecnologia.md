@@ -158,7 +158,8 @@
 
 | Onde | Componentes | Motivo |
 |---|---|---|
-| **Contêineres Docker** (Docker Compose) | `frontend`, `api`, `db`, `n8n` | Portabilidade e isolamento |
+| **Contêineres Docker (Core)** | `db` (PostgreSQL), `n8n` *(com `api` e `frontend` em fase de conteinerização)* | Portabilidade e isolamento dos serviços essenciais |
+| **Contêineres Docker (Observabilidade)** | `zabbix-server`, `postgres-server`, `grafana` *(perfil opcional `--profile monitoring`)* | Telemetria e métricas avançadas sob demanda |
 | **Host** (servidor ou VM) | Sonda de análise de pacotes | Acesso à interface física |
 | **Rede** | pfSense | Firewall da rede |
 
@@ -236,7 +237,7 @@ Técnicos (login + perfil) ──► Frontend (alerta original + chat IA) ◄─
 Validação (fora do fluxo de produção): mocks em blocos RFC 5737 / RFC 3849
   → Etapa 1 (zero vazamentos) e Etapa 2 (custo da generalização) → Anexo A
 
-Contêineres (Docker Compose): frontend, api, db, n8n
+Contêineres (Docker Compose): db, n8n (padrão) | zabbix, grafana (profile monitoring)
 Host: sonda de pacotes
 Rede: pfSense
 ```
