@@ -1,68 +1,92 @@
-version: '3.8'
-<<<<<<< HEAD
+
 services:
-  postgres:
+  # ==========================================
+  # NÚCLEO SIGMA (Padrão)
+  # ==========================================
+  db:
     image: postgres:15-alpine
     container_name: sigma-db
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: adminpassword
-      POSTGRES_DB: sigmadb
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: ${POSTGRES_USER:-sigma}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sigmapassword}
+      POSTGRES_DB: ${POSTGRES_DB:-sigmadb}
     volumes:
-      - sigma_data:/var/lib/postgresql/data
+      - sigma-db-data:/var/lib/postgresql/data
+    networks:
+      - sigma-net
+    restart: unless-stopped
 
-volumes:
-  sigma_data:
-=======
-
-services:
-  zabbix-server:
-    image: zabbix/zabbix-server-pgsql:latest
+  n8n:
+    image: n8nio/n8n:1.80.0
+    container_name: sigma-n8n
+    ports:
+      - "${N8N_BIND_IP:-127.0.0.1}:5678:5678"
     environment:
-      - DB_SERVER_HOST=postgres-server
-      - POSTGRES_USER=${ZABBIX_DB_USER}
-      - POSTGRES_PASSWORD=${ZABBIX_DB_PASS}
-      - POSTGRES_DB=zabbix
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASS:-adminpassword}
+    volumes:
+      - n8n-data:/home/node/.n8n
+    networks:
+      - sigma-net
+    restart: unless-stopped
+
+  # ==========================================
+  # PERFIL DE OBSERVABILIDADE (Opcional)
+  # Executar com: docker compose --profile monitoring up -d
+  # ==========================================
+  postgres-server:
+    image: postgres:15-alpine
+    container_name: zabbix-db
+    profiles:
+      - monitoring
+    environment:
+      POSTGRES_USER: ${ZABBIX_DB_USER:-zabbix}
+      POSTGRES_PASSWORD: ${ZABBIX_DB_PASS:-zabbixpassword}
+      POSTGRES_DB: zabbix
+    volumes:
+      - zabbix-db-data:/var/lib/postgresql/data
+    networks:
+      - sigma-net
+    restart: unless-stopped
+
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:alpine-6.4-latest
+    container_name: zabbix-server
+    profiles:
+      - monitoring
+    environment:
+      DB_SERVER_HOST: postgres-server
+      POSTGRES_USER: ${ZABBIX_DB_USER:-zabbix}
+      POSTGRES_PASSWORD: ${ZABBIX_DB_PASS:-zabbixpassword}
+      POSTGRES_DB: zabbix
     ports:
       - "10051:10051"
     depends_on:
       - postgres-server
-    restart: unless-stopped
-
-  postgres-server:
-    image: postgres:15-alpine
-    environment:
-      - POSTGRES_USER=${ZABBIX_DB_USER}
-      - POSTGRES_PASSWORD=${ZABBIX_DB_PASS}
-      - POSTGRES_DB=zabbix
-    volumes:
-      - zabbix-db-data:/var/lib/postgresql/data
+    networks:
+      - sigma-net
     restart: unless-stopped
 
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:10.4.0
+    container_name: sigma-grafana
+    profiles:
+      - monitoring
     ports:
-      - "3000:3000"
+      - "${GRAFANA_BIND_IP:-127.0.0.1}:3000:3000"
     volumes:
       - grafana-data:/var/lib/grafana
-    restart: unless-stopped
-
-  n8n:
-    image: n8nio/n8n:latest
-    ports:
-      - "5678:5678"
-    environment:
-      - N8N_BASIC_AUTH_ACTIVE=true
-      - N8N_BASIC_AUTH_USER=${N8N_USER}
-      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASS}
-    volumes:
-      - n8n-data:/home/node/.n8n
+    networks:
+      - sigma-net
     restart: unless-stopped
 
 volumes:
+  sigma-db-data:
+  n8n-data:
   zabbix-db-data:
   grafana-data:
-  n8n-data:
->>>>>>> 9d05615aeea6e871fc6c0ca5a82eeb6801bda421
+
+networks:
+  sigma-net:
+    driver: bridge
