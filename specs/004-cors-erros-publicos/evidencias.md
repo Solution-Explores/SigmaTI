@@ -2,7 +2,10 @@
 
 Data: 15/10/2026 (America/Manaus). Responsável: Vinícius.
 Base: `dev@d5460397d2212548d58977ac839a2499d0b84670`, atualizada por fast-forward.
-Estado: implementação local validada; CI/publicação e revisão independente pendentes.
+Estado: **Revisão e testes**. Implementação publicada na `dev`, validação local e
+CI aprovados; revisão independente e aprovação pendentes.
+
+Implementação: [a9c2b0f](https://github.com/Solution-Explores/SigmaTI/commit/a9c2b0f4e74fc9d596f983d14d1d9114d9d4c50d).
 
 ## Ambiente e reprodução
 
@@ -26,7 +29,9 @@ git diff --check
 | `pip check` | Dependências compatíveis | Nenhuma dependência quebrada |
 | `git diff --check` | Sem problemas de whitespace | Aprovado |
 | Diff de Compose, lock de imagens, frontend e configuração K02 | Preservados | Sem alterações |
-| CI remoto do commit desta entrega | Ambos aprovados e artefato disponível | A conferir após publicação |
+| CI remoto API de `a9c2b0f` | Testes e dependências aprovados | **Sucesso**, [execução 38799402425](https://github.com/Solution-Explores/SigmaTI/actions/runs/38799402425) |
+| CI remoto infraestrutura de `a9c2b0f` | Validadores K03/K04 aprovados | **Sucesso**, [execução 38799402543](https://github.com/Solution-Explores/SigmaTI/actions/runs/38799402543) |
+| Artefato remoto | Relatório JUnit disponível | `api-test-results`, id `12002784087`, não expirado na conferência |
 
 JUnit: `test-results/api.xml`, ignorado pelo Git e publicado pelo workflow como
 `api-test-results`. Não confundir esse relatório local com resultado remoto do CI.
@@ -57,7 +62,30 @@ adicional identificado no escopo. **Isso não substitui revisão independente.**
   publicado pela sessão autenticada do navegador (conector de escrita ainda restrito).
 - Revisor solicitado ao usuário; indicação nominal e aprovação aguardadas.
 - Cartão K06 informado pela equipe: [Trello](https://trello.com/c/C9pNKEwW/11-k06-restringir-cors-e-padronizar-erros-p%C3%BAblicos).
+  Movido de A fazer para Em andamento e depois **Revisão e testes**, com a lista
+  confirmada no cabeçalho. Não foi marcado como concluído.
+- [Entrega e pedido de revisão na issue #4](https://github.com/Solution-Explores/SigmaTI/issues/4#issuecomment-6201277632),
+  publicação confirmada também pela leitura do conector GitHub.
+- [Evidências e pedido de revisão no cartão](https://trello.com/c/C9pNKEwW/11-k06-restringir-cors-e-padronizar-erros-p%C3%BAblicos#comment-6ad133348ecf98ba6180ea5a),
+  com commit, issue, documentação, CIs e pendências vinculados; salvamento confirmado.
 - Nenhum PR de integração K06 identificado; apenas PR #1 histórico, já fechado.
   Vincular o PR de integração quando existir após revisão e validação conjunta.
 - Sem integração à `main` ou fechamento da issue #4. K07 e revisão do conjunto
   continuam pendentes. Esta entrega não implementa autenticação ou amplia a anonimização.
+
+## Conferência de conclusão
+
+| Requisito | Evidência e situação |
+|---|---|
+| Restringir CORS e padronizar erros públicos | Implementação `a9c2b0f`, 61 testes K06 e regressão completa aprovados |
+| Sem segredo no código e falha ao iniciar sem chave | Configuração K02 preservada; testes de configuração/importação aprovados no conjunto de 180 |
+| Origem não autorizada recusada | POST simples/JSON e preflight testados; provedor e anonimização não executam nos POSTs recusados |
+| Timeout ≤ 15 s e erro genérico com provedor simulado | Regressão K05 aprovada, incluindo orçamento real e falhas; contrato HTTP 200 mantido |
+| Evidências vinculadas | CI, artefato JUnit, issue e comentário Trello vinculados acima |
+| Documentação pertinente | README, `.env.example`, B4/B5, especificação e atividades atualizados |
+| Revisão de outro integrante | **Pendente**; solicitada na issue e no cartão, aguardando indicação/validação da equipe |
+| Aprovação, integração à main e conclusão do cartão | **Pendentes**, condicionadas à revisão e validação conjunta; não realizadas |
+
+A implementação técnica está pronta para revisão; a tarefa completa **ainda não
+está concluída** pelo fluxo do TCC. Não há evidência de aprovação independente,
+e a issue #4 permanece aberta.

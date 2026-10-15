@@ -1,7 +1,8 @@
 # Atividades — K06 / issue #4
 
 Responsável: Vinícius. Prazo: 16/10/2026. Revisor: **a definir pela equipe**.
-Estado: implementação e testes locais concluídos, aguardando publicação/CI e revisão.
+Estado: **Revisão e testes**, confirmado no Trello. Implementação publicada na `dev`,
+com validação local e CI aprovados; revisão independente e aprovação pendentes.
 
 - [x] Ler fluxo do TCC, issue #4 e comentários; atualizar `dev` por fast-forward.
 - [x] Confirmar dependências K02/K05 e publicar escopo inicial na issue.
@@ -13,9 +14,11 @@ Estado: implementação e testes locais concluídos, aguardando publicação/CI 
 - [x] Atualizar README, template, registro B4/B5 e especificação.
 - [x] Executar regressão completa: 180 testes; `pip check` e diff aprovados.
 - [x] Fazer autorrevisão do escopo e produzir evidências locais.
-- [ ] Publicar na `dev` e conferir CI da API/infraestrutura no commit.
-- [ ] Comentar entrega na issue #4 com links e pendências.
-- [ ] Mover cartão para Revisão e testes, confirmando o resultado no quadro.
+- [x] Publicar na `dev` e conferir CI da API/infraestrutura no commit.
+- [x] Comentar entrega na issue #4 com links e pendências.
+- [x] Mover cartão para Revisão e testes, confirmando o resultado no quadro.
+- [x] Vincular commit, issue, documentação e CIs no comentário do cartão.
+- [x] Solicitar revisão independente na issue e no cartão.
 - [ ] Registrar revisor independente e aprovação ou achados.
 - [ ] Havendo achados, criar branch de correção, testar e reintegrar à `dev`.
 - [ ] Após aprovação, validar conjunto na `dev`, integrar à `main` e vincular PR.
