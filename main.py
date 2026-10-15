@@ -4,12 +4,16 @@ from pydantic import BaseModel
 import re
 import requests
 
+from config import load_settings
+
+settings = load_settings()
+
 app = FastAPI(title="SIGMA - Mini MVP Integrado")
 
-# --- LIBERAÇÃO DE SEGURANÇA DO NAVEGADOR (CORS) ---
+# Origens do painel configuradas separadamente em cada ambiente.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Autoriza o painel React a comunicar com a API
+    allow_origins=list(settings.cors_origins),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -33,16 +37,15 @@ async def receber_alerta(alerta: AlertaRede):
     
     prompt_enviado = f"Equipamento: {alerta.equipamento} | Erro: {erro_anonimizado}. Forneça um diagnóstico de rede curto e direto."
     
-    # 2. Chamada real ao OpenRouter (Modelo Llama 3 Gratuito)
-    OPENROUTER_API_KEY = "" 
+    # 2. Chamada ao OpenRouter com chave e modelo definidos no ambiente.
     
     headers = {
-        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Authorization": f"Bearer {settings.openrouter_api_key}",
         "Content-Type": "application/json"
     }
     
     payload = {
-        "model": "qwen/qwen3.8-27b:free",
+        "model": settings.llm_model,
         "messages": [
             {"role": "system", "content": "És um engenheiro de redes sénior de um hospital oncológico. Responde de forma técnica e concisa."},
             {"role": "user", "content": prompt_enviado}

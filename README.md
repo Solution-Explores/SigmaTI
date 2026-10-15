@@ -2,6 +2,17 @@
 
 Sistema de monitoramento ativo de rede com apoio de IA, desenvolvido como TCC para a equipe de TI de um hospital oncológico (fundação pública).
 
+## Como trabalhamos no TCC
+
+**Comece pelo [fluxo de trabalho do TCC e orientações para issues](doc/fluxo-de-trabalho-tcc.md).**
+O desenvolvimento acontece na `dev`, com testes, evidências e revisão por outro
+integrante antes da integração à `main`. O guia explica as etapas, as correções,
+as colunas do quadro e quando uma issue pode ser encerrada.
+
+**Soluções dos desafios:** a [K02 — configuração da API por ambiente](specs/004-configuracao-ambiente-api/spec.md)
+tem [testes e evidências registrados](specs/004-configuracao-ambiente-api/evidencias.md).
+Ela está em **Revisão e testes**, aguardando outro integrante; a issue #4 permanece aberta.
+
 ## Problema que resolve
 
 A equipe de TI trabalha sem visibilidade em tempo real da rede. Descobre as falhas só quando os usuários reclamam, o que gera:
@@ -82,6 +93,62 @@ Pré-requisitos: Docker, Docker Compose e um servidor ou VM Linux com acesso à 
    ```
 5. Configure o pfSense para enviar logs à API, com a chave própria e por HTTPS.
 
+### Executar a API no desenvolvimento
+
+Use Python 3.12 ou superior. Na raiz do repositório, crie um ambiente virtual e
+instale as dependências:
+
+```bash
+python -m venv .venv
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+# Linux/macOS: source .venv/bin/activate
+python -m pip install -r requirements.txt
+```
+
+Copie `.env.example` para `.env` (`Copy-Item .env.example .env` no PowerShell ou
+`cp .env.example .env` no Linux/macOS) e preencha as configurações da API:
+
+| Variável obrigatória | Conteúdo |
+|---|---|
+| `OPENROUTER_API_KEY` | Chave da sua conta OpenRouter; mantenha-a somente no ambiente ou no `.env` ignorado pelo Git. |
+| `SIGMA_LLM_MODEL` | Identificador do modelo disponível na sua conta OpenRouter; sem modelo padrão fixo no código. |
+| `SIGMA_CORS_ORIGINS` | Origens HTTP/HTTPS exatas do painel, separadas por vírgulas, como `http://localhost:5173,http://127.0.0.1:5173`. |
+
+O backend carrega exclusivamente o `.env` da raiz, independentemente da pasta de
+execução. Variáveis já definidas no processo têm prioridade, inclusive se vazias;
+os valores do arquivo são literais, sem interpolação de `${...}`. O arquivo pode
+ser omitido quando as três variáveis estiverem definidas no ambiente. Configuração
+ausente, vazia ou com origens inválidas impede a inicialização. A chave aceita
+somente caracteres ASCII visíveis, sem espaços internos. Não inclua caminhos,
+barra final, credenciais, curingas ou itens vazios na lista de origens. Domínios
+internacionalizados devem ser escritos em punycode.
+
+```bash
+python -m uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+Em outro terminal, execute `npm ci` e `npm run dev` dentro de `sigma-frontend`.
+Se o Vite usar outra porta, ajuste a origem no ambiente e reinicie a API.
+Homologação e produção usam o mesmo código: configure chave, modelo e origens
+HTTPS do respectivo ambiente antes de iniciar o processo. A chave nunca é enviada
+ao frontend. Não há seleção automática de arquivos `.env.production` ou similares.
+
+O Compose atual inicia banco e automação; ele não inicia a API nem injeta suas
+variáveis no processo Python do host. Validar o Compose não valida a configuração
+obrigatória da API.
+
+O CORS controla o acesso pelo navegador. Preflights de origens não autorizadas
+recebem HTTP 400; chamadas diretas sem navegador não passam a exigir autenticação.
+Chamada assíncrona, timeout e padronização de erros continuam nas tarefas K05/K06.
+
+Para executar os testes sem uma chave real ou chamadas externas:
+
+```bash
+python -m pip install -r requirements-dev.txt
+python -m pytest -q -p no:cacheprovider
+```
+
 ## Como usar
 
 1. Acesse o painel e faça login com o seu perfil.
@@ -141,12 +208,6 @@ A validação completa está no estudo de caso (seção 6).
 - A generalização é baseada em regras: reduz o risco, mas não o elimina. Por isso existe a falha segura.
 - Arredondar horários e mascarar sub-redes pode reduzir a precisão do diagnóstico. O RNF08 mede essa perda com dados fictícios.
 - O servidor on-premise e a VLAN ou VPN de gerência ainda precisam ser confirmados pela instituição.
-
-## Fluxo de trabalho do TCC
-
-O desenvolvimento acontece na branch `dev`, com testes, registro de evidências e
-revisão por outro integrante antes da integração à `main`. Consulte o
-[fluxo de trabalho e as orientações para issues](doc/fluxo-de-trabalho-tcc.md).
 
 ## Status
 
