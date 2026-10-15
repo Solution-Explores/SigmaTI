@@ -15,7 +15,7 @@ a issue nem substitui a revisão e a validação operacional.
 | B5 | CORS com `allow_origins=["*"]` e `allow_credentials=True` | `main.py` | Qualquer origem pode chamar a API; restringir à origem do painel |
 | B6 | Anonimização cobre apenas IPv4 e o literal `dr.joao` | `main.py::anonimizar_dados` | Contradiz o RF05 (nomes, MACs, hostnames, prontuários); risco LGPD |
 | B7 | Se a anonimização falhar, o fluxo segue e envia o texto | `main.py` | O README promete "se o filtro falhar, nada é enviado" |
-| B8 | `requests.post` síncrono, sem *timeout*, dentro de `async def` | `main.py` | Bloqueia o *event loop*; sem limite de espera (RNF04 ≤ 15 s não é garantido) |
+| B8 | `requests.post` síncrono, sem *timeout*, dentro de `async def` | `main.py` | **K05 / implementação para revisão:** cliente HTTPX2 assíncrono compartilhado, timeouts HTTP e prazo global de 14 s, erro público genérico e log técnico sem payload/segredos. Validação com provedor simulado; revisão independente e homologação operacional pendentes. A issue #4 permanece aberta. Veja [solução e evidências](../../specs/004-chamada-assincrona-timeout/spec.md). |
 | B9 | Sem autenticação nas rotas | `main.py` | RF07 não implementado |
 
 ## Riscos introduzidos por este núcleo e mitigações

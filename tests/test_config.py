@@ -3,9 +3,10 @@ import os
 from pathlib import Path
 import subprocess
 import sys
-from unittest.mock import Mock
+from unittest.mock import AsyncMock, Mock
 
 import pytest
+import httpx2 as httpx
 from fastapi.testclient import TestClient
 
 import config
@@ -38,7 +39,7 @@ def test_load_valid_settings_and_hide_key(environment):
 @pytest.mark.parametrize(
     "key", ["fake-key\nHeader: value", "fake-key\rHeader: value", "fake\tkey", "fake-☃"]
 )
-def test_invalid_api_key_fails_before_requests_can_disclose_it(environment, monkeypatch, key):
+def test_invalid_api_key_fails_before_http_can_disclose_it(environment, monkeypatch, key):
     monkeypatch.setenv("OPENROUTER_API_KEY", key)
     with pytest.raises(config.ConfigurationError) as error:
         config.load_settings(environment)
@@ -181,8 +182,9 @@ def api(environment, monkeypatch):
     monkeypatch.setattr(config, "load_settings", lambda: settings)
     previous = sys.modules.pop("main", None)
     module = importlib.import_module("main")
-    provider = Mock(side_effect=AssertionError("Unexpected external request"))
-    monkeypatch.setattr(module.requests, "post", provider)
+    provider = AsyncMock(side_effect=AssertionError("Unexpected external request"))
+    fake_client = Mock(post=provider)
+    module.app.dependency_overrides[module.get_provider_client] = lambda: fake_client
     try:
         with TestClient(module.app) as client:
             yield client, provider
@@ -219,9 +221,9 @@ def test_disallowed_browser_preflight(api):
 def test_alert_uses_configured_provider_and_preserves_response_contract(api):
     client, provider = api
     provider.side_effect = None
-    provider.return_value = Mock(
-        status_code=200,
-        json=Mock(return_value={"choices": [{"message": {"content": "Diagnóstico simulado"}}]}),
+    provider.return_value = httpx.Response(
+        200, request=httpx.Request("POST", "https://openrouter.ai/api/v1/chat/completions"),
+        json={"choices": [{"message": {"content": "Diagnóstico simulado"}}]},
     )
     response = client.post(
         "/api/alertas", headers={"Origin": "http://localhost:5173"},
@@ -235,7 +237,7 @@ def test_alert_uses_configured_provider_and_preserves_response_contract(api):
         "dados_enviados_nuvem": "Equipamento: Switch de teste | Erro: Falha de rede no IP [IP_MASCARADO]. Forneça um diagnóstico de rede curto e direto.",
         "diagnostico_ia": "Diagnóstico simulado",
     }
-    provider.assert_called_once()
+    provider.assert_awaited_once()
     args, kwargs = provider.call_args
     assert args == ("https://openrouter.ai/api/v1/chat/completions",)
     assert kwargs["headers"]["Authorization"] == f"Bearer {VALUES['OPENROUTER_API_KEY']}"

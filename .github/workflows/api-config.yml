@@ -1,4 +1,4 @@
-name: API environment configuration
+name: API configuration and async provider
 
 on:
   push:
@@ -19,4 +19,12 @@ jobs:
             requirements.txt
             requirements-dev.txt
       - run: python -m pip install -r requirements-dev.txt
-      - run: python -m pytest -q -p no:cacheprovider
+      - run: python -m pip check
+      - run: python -m pytest -q -p no:cacheprovider --junitxml=test-results/api.xml
+      - name: Publish test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-results
+          path: test-results/api.xml
+          if-no-files-found: warn

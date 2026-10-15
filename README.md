@@ -212,7 +212,33 @@ obrigatória da API.
 
 O CORS controla o acesso pelo navegador. Preflights de origens não autorizadas
 recebem HTTP 400; chamadas diretas sem navegador não passam a exigir autenticação.
-Chamada assíncrona, timeout e padronização de erros continuam nas tarefas K05/K06.
+
+### Chamada à IA e indisponibilidade (K05)
+
+A API usa um cliente HTTPX2 assíncrono compartilhado durante a vida da aplicação,
+fechado no desligamento. A espera pelo provedor tem prazo global de **14 segundos**
+e timeouts HTTP de 14 segundos por etapa, sem retentativas automáticas nem redirects.
+O prazo global também interrompe respostas recebidas lentamente em pequenos blocos;
+um timeout apenas de leitura não limitaria essa duração total.
+
+`POST /api/alertas` preserva HTTP 200 e os campos `status`,
+`dados_enviados_nuvem` e `diagnostico_ia`. Se a IA exceder o prazo, recusar a
+requisição, falhar na comunicação ou devolver uma resposta inválida, o diagnóstico
+será: **“Diagnóstico de IA indisponível no momento. Tente novamente mais tarde.”**
+O HTTP 200 mantém a compatibilidade com o painel e não indica sucesso do provedor
+nem comprova persistência do incidente em banco.
+
+O log técnico registra categoria, classe da exceção, status HTTP quando conhecido
+e duração. Não registra chave, prompt, corpo bruto da IA ou texto da exceção.
+Os 14 segundos reservam margem para responder dentro da meta de 15 segundos nos
+testes controlados; não garantem latência de rede, carga do servidor ou resposta
+de um modelo real em produção.
+
+Veja a [solução K05](specs/004-chamada-assincrona-timeout/spec.md),
+as [evidências](specs/004-chamada-assincrona-timeout/evidencias.md) e
+as [pendências de revisão](specs/004-chamada-assincrona-timeout/tasks.md).
+Demais atividades K06/K07 e a revisão independente continuam pendentes; a K05
+é uma entrega parcial da issue #4.
 
 Para executar os testes sem uma chave real ou chamadas externas:
 
