@@ -2,7 +2,10 @@
 
 Data: 15/10/2026 (America/Manaus). Responsável: Vinícius.
 Base: `dev@900dcc409e72fd973be12a76330233ce163f62ed`, confirmada por `git pull --ff-only origin dev`.
-Estado: validação local concluída; revisão de outro integrante pendente.
+Estado: **publicada na dev para Revisão e testes**; validação local e CI aprovados,
+revisão de outro integrante pendente.
+
+Implementação publicada: [d7a3e0d](https://github.com/Solution-Explores/SigmaTI/commit/d7a3e0d1b965128426424f399d9005de158bdb32).
 
 ## Ambiente e reprodução
 
@@ -34,7 +37,8 @@ git diff --check
 | `git diff --check` | Sem erros de whitespace | Aprovado |
 | Validador K03, `python scripts/validate_compose_credentials.py` | Credenciais obrigatórias e Compose válido | **32 verificações aprovadas**; nenhum contêiner iniciado |
 | Validador K04, `python scripts/validate_infrastructure.py` | Portas e imagens preservadas | **12 cenários aprovados**; nenhum contêiner iniciado |
-| CI remoto | Sucesso para o commit publicado | Pendente de publicação/conferência |
+| CI remoto da API | Sucesso para `d7a3e0d` | **Aprovado**: [execução 38794814488](https://github.com/Solution-Explores/SigmaTI/actions/runs/38794814488) |
+| CI remoto da infraestrutura | Sucesso para `d7a3e0d` | **Aprovado**: [execução 38794814430](https://github.com/Solution-Explores/SigmaTI/actions/runs/38794814430) |
 
 Comando da primeira execução: `python -m pytest -q -p no:cacheprovider tests/test_provider.py tests/test_config.py -rP`.
 Os logs de falha contêm somente categoria, classe, status quando conhecido e duração;
@@ -48,7 +52,7 @@ O primeiro validador K03 executado no sandbox recusou avisos de acesso negado ao
 arquivo de configuração local do Docker, embora o Compose retornasse código 0.
 Uma tentativa com diretório Docker vazio não encontrou o plugin Compose. A execução
 do comando original com acesso aprovado à configuração passou nas 32 verificações,
-sem alterar o validador ou ler/imprimir credenciais. O K04 e os testes de política
+sem alterar o validador ou usar/imprimir credenciais reais. O K04 e os testes de política
 passaram no sandbox. Os scripts e arquivos de infraestrutura não foram alterados.
 
 ## Autorrevisão
@@ -63,7 +67,9 @@ no escopo K05. Esta conferência foi feita pelo mesmo agente, não por outro int
 
 - O revisor será indicado pela equipe. Autorrevisão e testes não substituem essa aprovação.
 - O conector GitHub recusou o comentário inicial com HTTP 403 (`Resource not accessible by integration`).
-  A tentativa não publicou comentário. O registro será mantido aqui para publicação posterior.
+  A tentativa não publicou comentário. A alternativa pelo navegador foi verificada:
+  a sessão está sem login e exige autenticação para comentar. O [texto da entrega](registro-issue.md)
+  está pronto para publicação pela equipe. Nenhuma aprovação foi atribuída artificialmente.
 - Quadro externo não acessado: nenhuma movimentação de cartão é declarada.
 - Sem integração à `main`, PR novo ou encerramento da issue. K06/K07 continuam separadas.
 - As três imagens locais não versionadas foram preservadas.

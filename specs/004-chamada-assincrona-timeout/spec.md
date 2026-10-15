@@ -4,7 +4,8 @@ Responsável: **Vinícius (Pessoa 1)**. Prazo: **16/10/2026**.
 Sprint: 15–20/10/2026. Entrega parcial da [issue #4](https://github.com/Solution-Explores/SigmaTI/issues/4).
 Base conferida: `dev@900dcc409e72fd973be12a76330233ce163f62ed`.
 
-Estado: implementação e validação local concluídas; revisão independente pendente.
+Estado: **publicada na dev para Revisão e testes**, com CI aprovado; revisão
+independente pendente. Commit da implementação: [d7a3e0d](https://github.com/Solution-Explores/SigmaTI/commit/d7a3e0d1b965128426424f399d9005de158bdb32).
 Revisor: **a definir com a equipe**. A autorização para implementar não é aprovação
 técnica independente. Consulte [atividades](tasks.md) e [evidências](evidencias.md).
 

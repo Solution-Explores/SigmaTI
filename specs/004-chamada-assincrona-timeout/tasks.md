@@ -1,7 +1,8 @@
 # Atividades — K05 / issue #4
 
 Responsável: Vinícius. Prazo: 16/10/2026. Revisor: **a definir com a equipe**.
-Estado: implementação e validação local concluídas; revisão independente pendente.
+Estado: **publicada na dev para Revisão e testes**, com CI aprovado; revisão
+independente pendente. A coluna do quadro externo ainda não foi atualizada.
 
 - [x] Conferir issue #4, comentários e fluxo do TCC; atualizar `dev` por fast-forward.
 - [x] Confirmar K02 presente e delimitar K05 + erros da IA, preservando HTTP 200.
@@ -13,7 +14,8 @@ Estado: implementação e validação local concluídas; revisão independente p
 - [x] Atualizar README, B8, especificação e workflow com relatório JUnit.
 - [x] Finalizar validação completa e consolidar evidências.
 - [ ] Definir e registrar revisor independente.
-- [ ] Publicar commit na `dev`, vincular evidências e conferir CI remoto.
+- [x] Publicar commit na `dev`, vincular evidências e conferir CI remoto.
+- [x] Preparar [registro da entrega na issue](registro-issue.md) com links verificáveis.
 - [ ] Publicar registro na issue #4 (conector recusou comentário inicial com HTTP 403).
 - [ ] Mover cartão para Revisão e testes; quadro externo não acessado nesta execução.
 - [ ] Outro integrante revisar e reproduzir os testes; registrar aprovação/achados.
