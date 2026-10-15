@@ -74,7 +74,9 @@ Pré-requisitos: Docker, Docker Compose e um servidor ou VM Linux com acesso à 
    ```bash
    cp .env.example .env
    ```
-   Preencha no `.env`: credenciais do banco, chave de cada sonda, chave do pfSense e chaves da IA (Groq/OpenRouter). **Nunca versione o `.env`.**
+   Preencha as credenciais obrigatórias do Compose conforme a seção abaixo. As
+   variáveis da API, das sondas e da IA são configuradas conforme o componente
+   utilizado. **Nunca versione o `.env`.**
 3. Suba os serviços em contêiner:
    ```bash
    # Núcleo da aplicação (banco de dados e automação)
@@ -88,6 +90,56 @@ Pré-requisitos: Docker, Docker Compose e um servidor ou VM Linux com acesso à 
    [comando de execução da sonda]
    ```
 5. Configure o pfSense para enviar logs à API, com a chave própria e por HTTPS.
+
+### Credenciais da infraestrutura
+
+O Compose exige as seis variáveis abaixo, definidas no `.env` ou no ambiente do
+processo. Se alguma estiver ausente ou vazia, a configuração é recusada, indicando
+o nome da variável sem fornecer uma senha padrão.
+
+| Variáveis obrigatórias | Uso |
+|---|---|
+| `POSTGRES_USER`, `POSTGRES_PASSWORD` | Banco principal da aplicação. |
+| `ZABBIX_DB_USER`, `ZABBIX_DB_PASS` | Banco do Zabbix, com os mesmos valores no banco e no servidor Zabbix. |
+| `GF_SECURITY_ADMIN_USER`, `GF_SECURITY_ADMIN_PASSWORD` | Conta inicial do Grafana em uma instalação nova. |
+
+Preencha também as credenciais do perfil `monitoring` quando usar somente o
+núcleo: o Compose faz a interpolação antes de filtrar perfis. Os serviços de
+monitoramento continuam opcionais e só iniciam com `--profile monitoring`.
+O `.env.example` contém campos vazios e não deve iniciar uma instalação sem
+preenchimento. Variáveis já definidas no processo têm prioridade sobre o arquivo.
+
+Para **uma instalação nova**, escolha os usuários e gere uma senha distinta por
+serviço. Execute o comando a seguir uma vez para cada senha e copie o resultado
+somente para o `.env` local ou para o ambiente do servidor:
+
+```bash
+python -c "import secrets; print(secrets.token_hex(32))"
+```
+
+**Instalações existentes:** informe as credenciais efetivamente persistidas.
+Alterar o `.env` não troca a senha nem o usuário já gravados no PostgreSQL ou no
+Grafana. A rotação dessas credenciais exige um procedimento separado e aprovado;
+esta configuração não migra nem apaga volumes. Se credenciais antigas forem
+inseguras, a correção operacional continua pendente até essa rotação.
+
+O n8n instalado usa o próprio login. Em uma instalação nova, abra o painel local
+depois da inicialização e crie a conta **owner** pelo fluxo nativo. Em uma
+instalação existente, use a conta já cadastrada. As variáveis antigas
+`N8N_USER`/`N8N_PASS` e `N8N_BASIC_AUTH_*` não configuram essa conta e foram
+retiradas do Compose. Não há migração de usuários ou implantação de proxy nesta etapa.
+
+Para validar a configuração sem usar seu `.env`, sem revelar senhas e sem iniciar
+contêineres:
+
+```bash
+python scripts/validate_compose_credentials.py
+```
+
+Esse comando gera credenciais fictícias temporárias somente na memória, confere
+as configurações padrão, `monitoring` e template e verifica rejeições de valores
+ausentes/vazios. Requer Python 3.12+, Docker Compose e um checkout Git. Não usa
+chaves da IA, não imprime valores de credenciais e não precisa do Docker Engine ativo.
 
 ### Executar a API no desenvolvimento
 

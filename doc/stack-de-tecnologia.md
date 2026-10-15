@@ -172,6 +172,20 @@
 - PostgreSQL e n8n usam **volumes persistentes** no disco físico do servidor.
 - Recriar contêineres **não apaga** o histórico (RF04).
 
+### Credenciais de inicialização
+
+- PostgreSQL da aplicação, PostgreSQL do Zabbix e conta inicial do Grafana usam
+  credenciais obrigatórias do ambiente ou `.env`, sem senhas padrão no Compose.
+- O template mantém campos vazios; todos devem ser preenchidos antes de validar
+  o Compose, inclusive os de `monitoring`, por causa da interpolação dos perfis.
+- O n8n usa o fluxo nativo de criação da conta owner na primeira abertura do
+  painel. As variáveis legadas de Basic Auth não fazem parte da configuração.
+- Variáveis de inicialização não rotacionam credenciais já persistidas. Rotação,
+  migração de volumes e homologação de uma instalação existente exigem ações
+  próprias; a K03 não executa esses procedimentos.
+- Os testes de configuração usam credenciais fictícias geradas em memória e não
+  iniciam contêineres. Ver [solução da K03](../specs/003-credenciais-compose/spec.md).
+
 ### Backup automatizado e controle de acesso
 - **Backup diário** do PostgreSQL (por exemplo, `pg_dump` agendado via cron).
 - Cópia em **disco ou local de rede fisicamente separado**. Sem esse destino, registra-se a **limitação conhecida**.

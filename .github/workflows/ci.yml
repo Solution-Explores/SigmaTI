@@ -2,9 +2,9 @@ name: CI Infrastructure Validation
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
 
 jobs:
   validate-compose:
@@ -14,28 +14,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Validate Default Docker Compose Configuration
-        run: |
-          docker compose config --quiet
-        env:
-          POSTGRES_USER: dummy_user
-          POSTGRES_PASSWORD: dummy_pass
-          POSTGRES_DB: dummy_db
-          N8N_USER: dummy_user
-          N8N_PASS: dummy_pass
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-      - name: Validate Monitoring Profile Configuration
-        run: |
-          docker compose --profile monitoring config --quiet
-        env:
-          POSTGRES_USER: dummy_user
-          POSTGRES_PASSWORD: dummy_pass
-          POSTGRES_DB: dummy_db
-          N8N_USER: dummy_user
-          N8N_PASS: dummy_pass
-          ZABBIX_DB_USER: dummy_user
-          ZABBIX_DB_PASS: dummy_pass
-
-      - name: Validate Compose with .env.example
-        run: |
-          docker compose --env-file .env.example --profile monitoring config --quiet
+      - name: Validate credentials and Compose without starting containers
+        run: python scripts/validate_compose_credentials.py

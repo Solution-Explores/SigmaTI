@@ -7,8 +7,8 @@ services:
     image: postgres:15-alpine
     container_name: sigma-db
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-sigma}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-sigmapassword}
+      POSTGRES_USER: ${POSTGRES_USER:?Configure POSTGRES_USER no ambiente ou no .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Configure POSTGRES_PASSWORD no ambiente ou no .env}
       POSTGRES_DB: ${POSTGRES_DB:-sigmadb}
     volumes:
       - sigma-db-data:/var/lib/postgresql/data
@@ -21,10 +21,6 @@ services:
     container_name: sigma-n8n
     ports:
       - "${N8N_BIND_IP:-127.0.0.1}:5678:5678"
-    environment:
-      - N8N_BASIC_AUTH_ACTIVE=true
-      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
-      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASS:-adminpassword}
     volumes:
       - n8n-data:/home/node/.n8n
     networks:
@@ -41,8 +37,8 @@ services:
     profiles:
       - monitoring
     environment:
-      POSTGRES_USER: ${ZABBIX_DB_USER:-zabbix}
-      POSTGRES_PASSWORD: ${ZABBIX_DB_PASS:-zabbixpassword}
+      POSTGRES_USER: ${ZABBIX_DB_USER:?Configure ZABBIX_DB_USER no ambiente ou no .env}
+      POSTGRES_PASSWORD: ${ZABBIX_DB_PASS:?Configure ZABBIX_DB_PASS no ambiente ou no .env}
       POSTGRES_DB: zabbix
     volumes:
       - zabbix-db-data:/var/lib/postgresql/data
@@ -57,8 +53,8 @@ services:
       - monitoring
     environment:
       DB_SERVER_HOST: postgres-server
-      POSTGRES_USER: ${ZABBIX_DB_USER:-zabbix}
-      POSTGRES_PASSWORD: ${ZABBIX_DB_PASS:-zabbixpassword}
+      POSTGRES_USER: ${ZABBIX_DB_USER:?Configure ZABBIX_DB_USER no ambiente ou no .env}
+      POSTGRES_PASSWORD: ${ZABBIX_DB_PASS:?Configure ZABBIX_DB_PASS no ambiente ou no .env}
       POSTGRES_DB: zabbix
     ports:
       - "10051:10051"
@@ -75,6 +71,9 @@ services:
       - monitoring
     ports:
       - "${GRAFANA_BIND_IP:-127.0.0.1}:3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GF_SECURITY_ADMIN_USER:?Configure GF_SECURITY_ADMIN_USER no ambiente ou no .env}
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD:?Configure GF_SECURITY_ADMIN_PASSWORD no ambiente ou no .env}
     volumes:
       - grafana-data:/var/lib/grafana
     networks:

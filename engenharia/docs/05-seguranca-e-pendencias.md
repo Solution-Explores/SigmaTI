@@ -2,13 +2,15 @@
 
 ## Bloqueadores do repositório
 
-Encontrados ao ler o repositório antes de portar o código. **Não foram alterados nesta branch** (fora do escopo da pasta `engenharia/`), mas bloqueiam a operação real e estão registrados como issues.
+Achados registrados antes de portar o código. As mitigações posteriores são
+identificadas na coluna de status; uma entrega parcial não encerra automaticamente
+a issue nem substitui a revisão e a validação operacional.
 
 | # | Achado | Local | Impacto / Status |
 |---|---|---|---|
 | B1 | Marcadores de conflito de merge no `docker-compose.yml` | `docker-compose.yml` | **Resolvido na Issue #2:** YAML corrigido, validado localmente e no CI com stack core e profile `monitoring` |
-| B2 | Credenciais fixas e porta `5432` publicada no host | `docker-compose.yml` | **Mitigado na Issue #2:** Senhas parametrizadas via variáveis de ambiente e porta 5432 isolada na rede interna |
-| B3 | Imagens com tag `:latest` (zabbix, grafana, n8n) | `docker-compose.yml` | **Mitigado na Issue #2:** Versões fixadas em tags estáveis (`postgres:15-alpine`, `n8n:1.80.0`, `grafana:10.4.0`) |
+| B2 | Credenciais fixas e porta `5432` publicada no host | `docker-compose.yml` | **K03 / entrega parcial da issue #3:** credenciais obrigatórias sem fallback e template sem senhas; PostgreSQL já sem porta publicada. Revisão por outro integrante e rotação de credenciais existentes continuam pendentes. |
+| B3 | Referências de imagens mutáveis | `docker-compose.yml` | **Pendente para K04:** PostgreSQL e Zabbix ainda usam referências mutáveis; a K03 não altera imagens ou portas nem conclui a issue #3. |
 | B4 | `OPENROUTER_API_KEY` fixa no código (vazia no momento) | `main.py` | Convida a commitar um segredo; deve vir de variável de ambiente |
 | B5 | CORS com `allow_origins=["*"]` e `allow_credentials=True` | `main.py` | Qualquer origem pode chamar a API; restringir à origem do painel |
 | B6 | Anonimização cobre apenas IPv4 e o literal `dr.joao` | `main.py::anonimizar_dados` | Contradiz o RF05 (nomes, MACs, hostnames, prontuários); risco LGPD |
