@@ -4,7 +4,7 @@ services:
   # NÚCLEO SIGMA (Padrão)
   # ==========================================
   db:
-    image: postgres:15-alpine
+    image: postgres:15.19-alpine3.24@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
     container_name: sigma-db
     environment:
       POSTGRES_USER: ${POSTGRES_USER:?Configure POSTGRES_USER no ambiente ou no .env}
@@ -17,10 +17,13 @@ services:
     restart: unless-stopped
 
   n8n:
-    image: n8nio/n8n:1.80.0
+    image: n8nio/n8n:1.80.0@sha256:603d3a976c314abf5a322298a00e6b175fe289a477853f00033f43d0d0dc7932
     container_name: sigma-n8n
     ports:
-      - "${N8N_BIND_IP:-127.0.0.1}:5678:5678"
+      - target: 5678
+        published: "5678"
+        host_ip: ${N8N_BIND_IP:-127.0.0.1}
+        protocol: tcp
     volumes:
       - n8n-data:/home/node/.n8n
     networks:
@@ -32,7 +35,7 @@ services:
   # Executar com: docker compose --profile monitoring up -d
   # ==========================================
   postgres-server:
-    image: postgres:15-alpine
+    image: postgres:15.19-alpine3.24@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
     container_name: zabbix-db
     profiles:
       - monitoring
@@ -47,7 +50,7 @@ services:
     restart: unless-stopped
 
   zabbix-server:
-    image: zabbix/zabbix-server-pgsql:alpine-6.4-latest
+    image: zabbix/zabbix-server-pgsql:alpine-6.4.21@sha256:758c058909fdcc4e73034380460ea44bd5be965a80dcfc28744408b792ef04e5
     container_name: zabbix-server
     profiles:
       - monitoring
@@ -57,7 +60,10 @@ services:
       POSTGRES_PASSWORD: ${ZABBIX_DB_PASS:?Configure ZABBIX_DB_PASS no ambiente ou no .env}
       POSTGRES_DB: zabbix
     ports:
-      - "10051:10051"
+      - target: 10051
+        published: "10051"
+        host_ip: ${ZABBIX_BIND_IP:-127.0.0.1}
+        protocol: tcp
     depends_on:
       - postgres-server
     networks:
@@ -65,12 +71,15 @@ services:
     restart: unless-stopped
 
   grafana:
-    image: grafana/grafana:10.4.0
+    image: grafana/grafana:10.4.0@sha256:f9811e4e687ffecf1a43adb9b64096c50bc0d7a782f8608530f478b6542de7d5
     container_name: sigma-grafana
     profiles:
       - monitoring
     ports:
-      - "${GRAFANA_BIND_IP:-127.0.0.1}:3000:3000"
+      - target: 3000
+        published: "3000"
+        host_ip: ${GRAFANA_BIND_IP:-127.0.0.1}
+        protocol: tcp
     environment:
       GF_SECURITY_ADMIN_USER: ${GF_SECURITY_ADMIN_USER:?Configure GF_SECURITY_ADMIN_USER no ambiente ou no .env}
       GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD:?Configure GF_SECURITY_ADMIN_PASSWORD no ambiente ou no .env}

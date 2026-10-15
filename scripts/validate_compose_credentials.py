@@ -38,7 +38,7 @@ class CredentialChecks:
         # Não herdar credenciais reais nem controles Compose do ambiente local.
         self.clean_env = {
             name: value for name, value in os.environ.items()
-            if name not in (*REQUIRED, *LEGACY, "POSTGRES_DB", "N8N_BIND_IP", "GRAFANA_BIND_IP")
+            if name not in (*REQUIRED, *LEGACY, "POSTGRES_DB", "N8N_BIND_IP", "GRAFANA_BIND_IP", "ZABBIX_BIND_IP")
             and not name.startswith("COMPOSE_")
         }
         self.clean_env["COMPOSE_ANSI"] = "never"
@@ -48,7 +48,7 @@ class CredentialChecks:
         }
         self.valid_env = {
             **self.clean_env, **self.values, "POSTGRES_DB": "sigma_config_test",
-            "N8N_BIND_IP": "127.0.0.1", "GRAFANA_BIND_IP": "127.0.0.1",
+            "N8N_BIND_IP": "127.0.0.1", "GRAFANA_BIND_IP": "127.0.0.1", "ZABBIX_BIND_IP": "127.0.0.1",
         }
 
     def passed(self, label: str) -> None:

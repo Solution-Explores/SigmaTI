@@ -141,6 +141,30 @@ as configurações padrão, `monitoring` e template e verifica rejeições de va
 ausentes/vazios. Requer Python 3.12+, Docker Compose e um checkout Git. Não usa
 chaves da IA, não imprime valores de credenciais e não precisa do Docker Engine ativo.
 
+### Portas e versões da infraestrutura
+
+Os bancos não publicam portas no host. n8n (`5678`), Grafana (`3000`) e Zabbix
+(`10051`) usam `127.0.0.1` por padrão. O Zabbix permanece no perfil `monitoring`;
+não foi encontrada configuração de coletor externo no repositório.
+
+As imagens usam releases explícitas e digests SHA-256 registrados em
+[`docker-images.lock.json`](docker-images.lock.json): PostgreSQL 15.19/Alpine 3.24,
+n8n 1.80.0, Zabbix 6.4.21 e Grafana 10.4.0. Não há atualização automática de imagem.
+Fixar um digest garante a referência escolhida, não a ausência de vulnerabilidades.
+**Zabbix 6.4 está sem suporte**; a migração para uma linha suportada exige tarefa
+separada e não foi executada nesta entrega.
+
+Leia a [política de portas e atualização de imagens](doc/politica-imagens-e-portas.md)
+antes de alterar os binds ou as imagens. Para conferir a configuração de teste
+e a disponibilidade dos manifests oficiais, sem iniciar contêineres:
+
+```bash
+python scripts/validate_infrastructure.py --verify-registry
+```
+
+O validador testa cenários fictícios; não lê nem homologa o `.env` real do servidor,
+não instala firewall/VPN e não verifica o alcance de portas em execução.
+
 ### Executar a API no desenvolvimento
 
 Use Python 3.12 ou superior. Na raiz do repositório, crie um ambiente virtual e

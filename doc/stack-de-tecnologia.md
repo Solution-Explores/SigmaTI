@@ -167,6 +167,11 @@
 - A porta do **n8n** é publicada **apenas no endereço da interface de gerência** do servidor (ou acessada via VPN), e não em todas as interfaces.
 - Regra de firewall complementar: só a VLAN de gerência alcança essa porta.
 - A porta do **PostgreSQL** não é publicada fora da rede interna do Docker.
+- n8n (5678), Grafana (3000) e Zabbix server (10051) usam loopback por padrão.
+  Acesso remoto exige IP específico de gerência/VPN e firewall da instalação.
+- As imagens têm release e digest fixados em `docker-images.lock.json`. Ver
+  [política de portas e atualização](politica-imagens-e-portas.md), incluindo
+  limites de suporte do Zabbix 6.4 e a homologação de rede ainda necessária.
 
 ### Persistência de dados
 - PostgreSQL e n8n usam **volumes persistentes** no disco físico do servidor.

@@ -10,7 +10,7 @@ a issue nem substitui a revisão e a validação operacional.
 |---|---|---|---|
 | B1 | Marcadores de conflito de merge no `docker-compose.yml` | `docker-compose.yml` | **Resolvido na Issue #2:** YAML corrigido, validado localmente e no CI com stack core e profile `monitoring` |
 | B2 | Credenciais fixas e porta `5432` publicada no host | `docker-compose.yml` | **K03 / entrega parcial da issue #3:** credenciais obrigatórias sem fallback e template sem senhas; PostgreSQL já sem porta publicada. Revisão por outro integrante e rotação de credenciais existentes continuam pendentes. |
-| B3 | Referências de imagens mutáveis | `docker-compose.yml` | **Pendente para K04:** PostgreSQL e Zabbix ainda usam referências mutáveis; a K03 não altera imagens ou portas nem conclui a issue #3. |
+| B3 | Referências de imagens mutáveis | `docker-compose.yml` | **K04 / configuração para revisão:** todas as imagens têm release e digest verificados no registro oficial. Bancos sem publicação e Zabbix também em loopback por padrão. Zabbix 6.4 permanece sem suporte; migração, homologação operacional e revisão por outro integrante são pendências separadas. Issue #3 não encerrada. |
 | B4 | `OPENROUTER_API_KEY` fixa no código (vazia no momento) | `main.py` | Convida a commitar um segredo; deve vir de variável de ambiente |
 | B5 | CORS com `allow_origins=["*"]` e `allow_credentials=True` | `main.py` | Qualquer origem pode chamar a API; restringir à origem do painel |
 | B6 | Anonimização cobre apenas IPv4 e o literal `dr.joao` | `main.py::anonimizar_dados` | Contradiz o RF05 (nomes, MACs, hostnames, prontuários); risco LGPD |
