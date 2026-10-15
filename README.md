@@ -9,10 +9,6 @@ O desenvolvimento acontece na `dev`, com testes, evidências e revisão por outr
 integrante antes da integração à `main`. O guia explica as etapas, as correções,
 as colunas do quadro e quando uma issue pode ser encerrada.
 
-**Soluções dos desafios:** a [K02 — configuração da API por ambiente](specs/004-configuracao-ambiente-api/spec.md)
-tem [testes e evidências registrados](specs/004-configuracao-ambiente-api/evidencias.md).
-Ela está em **Revisão e testes**, aguardando outro integrante; a issue #4 permanece aberta.
-
 ## Problema que resolve
 
 A equipe de TI trabalha sem visibilidade em tempo real da rede. Descobre as falhas só quando os usuários reclamam, o que gera:
