@@ -210,8 +210,43 @@ O Compose atual inicia banco e automação; ele não inicia a API nem injeta sua
 variáveis no processo Python do host. Validar o Compose não valida a configuração
 obrigatória da API.
 
-O CORS controla o acesso pelo navegador. Preflights de origens não autorizadas
-recebem HTTP 400; chamadas diretas sem navegador não passam a exigir autenticação.
+### Origens e erros públicos (K06)
+
+Somente as origens exatas de `SIGMA_CORS_ORIGINS` são aceitas. Um `Origin` não
+autorizado, vazio, `null` ou duplicado é recusado **antes de executar a rota ou
+chamar a IA**. Chamadas comuns recusadas recebem HTTP 403; preflights recusados
+recebem HTTP 400 (origens duplicadas recebem 403 também no preflight).
+
+O preflight permite somente `POST` e `Content-Type`, além dos cabeçalhos simples
+permitidos pelo padrão CORS. Não há curingas de métodos/cabeçalhos, autorização de
+rede privada ou compartilhamento de credenciais/cookies pelo CORS. O painel atual
+não usa cookies nem autenticação no fetch. Uma futura integração de login deve
+reavaliar essa política explicitamente.
+
+Clientes de serviço sem `Origin` continuam possíveis. O cabeçalho pode ser omitido
+ou forjado fora do navegador: **esta política não substitui autenticação da API**.
+
+Erros HTTP usam JSON `{"detail": "mensagem pública"}`, sem refletir a entrada,
+corpo, caminho, origem, chave ou texto de exceção. As respostas 4xx e 500 para uma
+origem permitida também incluem seus cabeçalhos CORS, para o painel poder lê-las.
+
+| HTTP | Mensagem pública |
+|---|---|
+| 400 | Requisição inválida. |
+| 403 | Requisição não permitida. |
+| 404 | Recurso não encontrado. |
+| 405 | Método não permitido. |
+| 422 | Dados da requisição inválidos. |
+| 500 e outras falhas internas | Erro interno do servidor. |
+
+O log registra categoria, classe da falha, status e duração quando disponível;
+não inclui entradas, query, cabeçalhos ou traceback. O OpenAPI documenta o formato
+`PublicError`. As respostas HTTP 200 de sucesso e de indisponibilidade da IA
+continuam no contrato da K05, descrito abaixo.
+
+Veja a [solução K06](specs/004-cors-erros-publicos/spec.md),
+as [evidências](specs/004-cors-erros-publicos/evidencias.md) e
+as [atividades de revisão](specs/004-cors-erros-publicos/tasks.md).
 
 ### Chamada à IA e indisponibilidade (K05)
 
@@ -237,8 +272,8 @@ de um modelo real em produção.
 Veja a [solução K05](specs/004-chamada-assincrona-timeout/spec.md),
 as [evidências](specs/004-chamada-assincrona-timeout/evidencias.md) e
 as [pendências de revisão](specs/004-chamada-assincrona-timeout/tasks.md).
-Demais atividades K06/K07 e a revisão independente continuam pendentes; a K05
-é uma entrega parcial da issue #4.
+K06 complementa as restrições de origens e os erros HTTP. K07, revisão independente
+e conferência final da issue #4 continuam pendentes; K05/K06 são entregas parciais.
 
 Para executar os testes sem uma chave real ou chamadas externas:
 

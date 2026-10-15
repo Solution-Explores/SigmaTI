@@ -6,11 +6,11 @@ from time import monotonic
 from typing import Annotated
 
 from fastapi import Depends, FastAPI, Request
-from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import httpx2 as httpx
 
 from config import load_settings
+from api_errors import PublicError, configure_public_errors
 
 settings = load_settings()
 
@@ -36,16 +36,12 @@ async def get_provider_client(request: Request) -> httpx.AsyncClient:
     return request.app.state.provider_client
 
 
-app = FastAPI(title="SIGMA - Mini MVP Integrado", lifespan=lifespan)
-
-# Origens do painel configuradas separadamente em cada ambiente.
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=list(settings.cors_origins),
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+app = FastAPI(
+    title="SIGMA - Mini MVP Integrado",
+    lifespan=lifespan,
+    responses={status: {"model": PublicError} for status in (403, 422, 500)},
 )
+configure_public_errors(app, settings.cors_origins)
 # --------------------------------------------------
 
 class AlertaRede(BaseModel):
