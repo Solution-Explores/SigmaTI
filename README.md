@@ -142,10 +142,24 @@ A validação completa está no estudo de caso (seção 6).
 - Arredondar horários e mascarar sub-redes pode reduzir a precisão do diagnóstico. O RNF08 mede essa perda com dados fictícios.
 - O servidor on-premise e a VLAN ou VPN de gerência ainda precisam ser confirmados pela instituição.
 
+## Fluxo de trabalho do TCC
+
+O desenvolvimento acontece na branch `dev`, com testes, registro de evidências e
+revisão por outro integrante antes da integração à `main`. Consulte o
+[fluxo de trabalho e as orientações para issues](doc/fluxo-de-trabalho-tcc.md).
+
 ## Status
 
-Em desenvolvimento (TCC).
+MVP (TCC).
 
-## Autor
+## Autores
 
-Vinicius – [LinkedIn ou e-mail]
+### Discentes
+
+- **Iohand Jheremy** — [LinkedIn](https://www.linkedin.com/in/iohan-jheremy/)
+- **Joyce Yasmin** — LinkedIn: Pendente
+- **Vinicis Gomes** — [LinkedIn](https://www.linkedin.com/in/viniciusgomesdev/)
+
+### Docente
+
+- **Euler Azevedo** — [LinkedIn](https://www.linkedin.com/in/eulerazevedo/)
