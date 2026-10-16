@@ -50,3 +50,26 @@ As saídas locais e o JUnit acompanham o pacote de correções. Os resultados de
 tabela são locais; a publicação e o CI remoto serão conferidos no GitHub antes
 de concluir os escopos. A correção contém cinco alterações de documentação,
 sem modificar os arquivos executáveis validados.
+
+## Publicação e aceite do conjunto
+
+Correção publicada no commit `20930b55d3cbbed8a40b439c671a101b9237c8a3` e
+integrada à `dev` em `7433403de014ee9f725095da050eaf615899b5a2`, com checkout
+limpo. Não houve alteração dos arquivos executáveis durante a integração.
+
+CI do commit integrado à dev, consultado após finalizar:
+
+- [API — sucesso](https://github.com/Solution-Explores/SigmaTI/actions/runs/38849249084).
+- [Infraestrutura — sucesso](https://github.com/Solution-Explores/SigmaTI/actions/runs/38849249093).
+
+**Vinícius Lima**, revisor responsável, autorizou publicação e conclusão dos
+escopos validados após apresentação dos resultados nesta conversa. O aceite
+abrange K01 (Compose e documentação corrigida), K02 (configuração), K03
+(credenciais), K04 (portas/imagens), K05 (async/timeout) e K06 (CORS/erros).
+Testes automatizados executados pelo agente; não se declara reprodução manual
+pelo revisor. A conclusão no quadro depende da entrega integrada verificada.
+
+A integração à main terá seus workflows conferidos antes da atualização dos
+cartões. A issue #4 permanece aberta por K07 e aceite completo; tarefas K07–K15
+não são automaticamente concluídas por este registro. Migração real, instalação
+limpa e homologação operacional continuam pendentes para quando houver ambiente.

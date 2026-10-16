@@ -73,8 +73,8 @@ foi indicada para migração nesta entrega. A primeira instalação usa o volume
 mantenha a pasta/nome de projeto nas execuções seguintes para reutilizá-lo.
 Não altere a imagem para renomear dados: imagem e volume têm ciclos distintos.
 
-As correções da sprint estão na `dev`. Use essa branch para instalação e revisão
-do MVP; a `main` ainda não recebeu esta entrega. Este roteiro configura o núcleo
+O roteiro fixa a branch `dev`, usada para validar as correções da sprint, para
+que o checkout não dependa da branch padrão do repositório. Ele configura o núcleo
 Docker e a API de desenvolvimento; a sonda e a integração pfSense continuam
 planejadas, sem procedimento executável de instalação nesta entrega.
 
