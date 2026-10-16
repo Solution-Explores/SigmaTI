@@ -2,9 +2,9 @@ name: CI Infrastructure Validation
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "dev" ]
 
 jobs:
   validate-compose:
@@ -14,11 +14,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Validate Docker Compose Configuration
-        run: |
-          docker compose config --quiet
-        env:
-          ZABBIX_DB_USER: dummy_user
-          ZABBIX_DB_PASS: dummy_pass
-          N8N_USER: dummy_user
-          N8N_PASS: dummy_pass
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate credentials and Compose without starting containers
+        run: python scripts/validate_compose_credentials.py
+
+      - name: Validate published ports and locked official image manifests
+        run: python scripts/validate_infrastructure.py --verify-registry

@@ -158,7 +158,8 @@
 
 | Onde | Componentes | Motivo |
 |---|---|---|
-| **Contêineres Docker** (Docker Compose) | `frontend`, `api`, `db`, `n8n` | Portabilidade e isolamento |
+| **Contêineres Docker (Core)** | `db` (PostgreSQL), `n8n` *(com `api` e `frontend` em fase de conteinerização)* | Portabilidade e isolamento dos serviços essenciais |
+| **Contêineres Docker (Observabilidade)** | `zabbix-server`, `postgres-server`, `grafana` *(perfil opcional `--profile monitoring`)* | Telemetria e métricas avançadas sob demanda |
 | **Host** (servidor ou VM) | Sonda de análise de pacotes | Acesso à interface física |
 | **Rede** | pfSense | Firewall da rede |
 
@@ -166,10 +167,29 @@
 - A porta do **n8n** é publicada **apenas no endereço da interface de gerência** do servidor (ou acessada via VPN), e não em todas as interfaces.
 - Regra de firewall complementar: só a VLAN de gerência alcança essa porta.
 - A porta do **PostgreSQL** não é publicada fora da rede interna do Docker.
+- n8n (5678), Grafana (3000) e Zabbix server (10051) usam loopback por padrão.
+  Acesso remoto exige IP específico de gerência/VPN e firewall da instalação.
+- As imagens têm release e digest fixados em `docker-images.lock.json`. Ver
+  [política de portas e atualização](politica-imagens-e-portas.md), incluindo
+  limites de suporte do Zabbix 6.4 e a homologação de rede ainda necessária.
 
 ### Persistência de dados
 - PostgreSQL e n8n usam **volumes persistentes** no disco físico do servidor.
 - Recriar contêineres **não apaga** o histórico (RF04).
+
+### Credenciais de inicialização
+
+- PostgreSQL da aplicação, PostgreSQL do Zabbix e conta inicial do Grafana usam
+  credenciais obrigatórias do ambiente ou `.env`, sem senhas padrão no Compose.
+- O template mantém campos vazios; todos devem ser preenchidos antes de validar
+  o Compose, inclusive os de `monitoring`, por causa da interpolação dos perfis.
+- O n8n usa o fluxo nativo de criação da conta owner na primeira abertura do
+  painel. As variáveis legadas de Basic Auth não fazem parte da configuração.
+- Variáveis de inicialização não rotacionam credenciais já persistidas. Rotação,
+  migração de volumes e homologação de uma instalação existente exigem ações
+  próprias; a K03 não executa esses procedimentos.
+- Os testes de configuração usam credenciais fictícias geradas em memória e não
+  iniciam contêineres. Ver [solução da K03](../specs/003-credenciais-compose/spec.md).
 
 ### Backup automatizado e controle de acesso
 - **Backup diário** do PostgreSQL (por exemplo, `pg_dump` agendado via cron).
@@ -236,7 +256,7 @@ Técnicos (login + perfil) ──► Frontend (alerta original + chat IA) ◄─
 Validação (fora do fluxo de produção): mocks em blocos RFC 5737 / RFC 3849
   → Etapa 1 (zero vazamentos) e Etapa 2 (custo da generalização) → Anexo A
 
-Contêineres (Docker Compose): frontend, api, db, n8n
+Contêineres (Docker Compose): db, n8n (padrão) | zabbix, grafana (profile monitoring)
 Host: sonda de pacotes
 Rede: pfSense
 ```

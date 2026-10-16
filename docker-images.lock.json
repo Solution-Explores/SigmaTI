@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-15",
+  "registry": "https://registry-1.docker.io",
+  "images": [
+    {
+      "repository": "postgres",
+      "registry_repository": "library/postgres",
+      "tag": "15.19-alpine3.24",
+      "digest": "sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81",
+      "services": ["db", "postgres-server"]
+    },
+    {
+      "repository": "n8nio/n8n",
+      "registry_repository": "n8nio/n8n",
+      "tag": "1.80.0",
+      "digest": "sha256:603d3a976c314abf5a322298a00e6b175fe289a477853f00033f43d0d0dc7932",
+      "services": ["n8n"]
+    },
+    {
+      "repository": "zabbix/zabbix-server-pgsql",
+      "registry_repository": "zabbix/zabbix-server-pgsql",
+      "tag": "alpine-6.4.21",
+      "digest": "sha256:758c058909fdcc4e73034380460ea44bd5be965a80dcfc28744408b792ef04e5",
+      "services": ["zabbix-server"]
+    },
+    {
+      "repository": "grafana/grafana",
+      "registry_repository": "grafana/grafana",
+      "tag": "10.4.0",
+      "digest": "sha256:f9811e4e687ffecf1a43adb9b64096c50bc0d7a782f8608530f478b6542de7d5",
+      "services": ["grafana"]
+    }
+  ]
+}

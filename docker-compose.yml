@@ -1,68 +1,100 @@
-version: '3.8'
-<<<<<<< HEAD
+
 services:
-  postgres:
-    image: postgres:15-alpine
+  # ==========================================
+  # NÚCLEO SIGMA (Padrão)
+  # ==========================================
+  db:
+    image: postgres:15.19-alpine3.24@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
     container_name: sigma-db
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: adminpassword
-      POSTGRES_DB: sigmadb
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: ${POSTGRES_USER:?Configure POSTGRES_USER no ambiente ou no .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Configure POSTGRES_PASSWORD no ambiente ou no .env}
+      POSTGRES_DB: ${POSTGRES_DB:-sigmadb}
     volumes:
-      - sigma_data:/var/lib/postgresql/data
-
-volumes:
-  sigma_data:
-=======
-
-services:
-  zabbix-server:
-    image: zabbix/zabbix-server-pgsql:latest
-    environment:
-      - DB_SERVER_HOST=postgres-server
-      - POSTGRES_USER=${ZABBIX_DB_USER}
-      - POSTGRES_PASSWORD=${ZABBIX_DB_PASS}
-      - POSTGRES_DB=zabbix
-    ports:
-      - "10051:10051"
-    depends_on:
-      - postgres-server
-    restart: unless-stopped
-
-  postgres-server:
-    image: postgres:15-alpine
-    environment:
-      - POSTGRES_USER=${ZABBIX_DB_USER}
-      - POSTGRES_PASSWORD=${ZABBIX_DB_PASS}
-      - POSTGRES_DB=zabbix
-    volumes:
-      - zabbix-db-data:/var/lib/postgresql/data
-    restart: unless-stopped
-
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - "3000:3000"
-    volumes:
-      - grafana-data:/var/lib/grafana
+      - sigma-db-data:/var/lib/postgresql/data
+    networks:
+      - sigma-net
     restart: unless-stopped
 
   n8n:
-    image: n8nio/n8n:latest
+    image: n8nio/n8n:1.80.0@sha256:603d3a976c314abf5a322298a00e6b175fe289a477853f00033f43d0d0dc7932
+    container_name: sigma-n8n
     ports:
-      - "5678:5678"
-    environment:
-      - N8N_BASIC_AUTH_ACTIVE=true
-      - N8N_BASIC_AUTH_USER=${N8N_USER}
-      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASS}
+      - target: 5678
+        published: "5678"
+        host_ip: ${N8N_BIND_IP:-127.0.0.1}
+        protocol: tcp
     volumes:
       - n8n-data:/home/node/.n8n
+    networks:
+      - sigma-net
+    restart: unless-stopped
+
+  # ==========================================
+  # PERFIL DE OBSERVABILIDADE (Opcional)
+  # Executar com: docker compose --profile monitoring up -d
+  # ==========================================
+  postgres-server:
+    image: postgres:15.19-alpine3.24@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81
+    container_name: zabbix-db
+    profiles:
+      - monitoring
+    environment:
+      POSTGRES_USER: ${ZABBIX_DB_USER:?Configure ZABBIX_DB_USER no ambiente ou no .env}
+      POSTGRES_PASSWORD: ${ZABBIX_DB_PASS:?Configure ZABBIX_DB_PASS no ambiente ou no .env}
+      POSTGRES_DB: zabbix
+    volumes:
+      - zabbix-db-data:/var/lib/postgresql/data
+    networks:
+      - sigma-net
+    restart: unless-stopped
+
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:alpine-6.4.21@sha256:758c058909fdcc4e73034380460ea44bd5be965a80dcfc28744408b792ef04e5
+    container_name: zabbix-server
+    profiles:
+      - monitoring
+    environment:
+      DB_SERVER_HOST: postgres-server
+      POSTGRES_USER: ${ZABBIX_DB_USER:?Configure ZABBIX_DB_USER no ambiente ou no .env}
+      POSTGRES_PASSWORD: ${ZABBIX_DB_PASS:?Configure ZABBIX_DB_PASS no ambiente ou no .env}
+      POSTGRES_DB: zabbix
+    ports:
+      - target: 10051
+        published: "10051"
+        host_ip: ${ZABBIX_BIND_IP:-127.0.0.1}
+        protocol: tcp
+    depends_on:
+      - postgres-server
+    networks:
+      - sigma-net
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:10.4.0@sha256:f9811e4e687ffecf1a43adb9b64096c50bc0d7a782f8608530f478b6542de7d5
+    container_name: sigma-grafana
+    profiles:
+      - monitoring
+    ports:
+      - target: 3000
+        published: "3000"
+        host_ip: ${GRAFANA_BIND_IP:-127.0.0.1}
+        protocol: tcp
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GF_SECURITY_ADMIN_USER:?Configure GF_SECURITY_ADMIN_USER no ambiente ou no .env}
+      GF_SECURITY_ADMIN_PASSWORD: ${GF_SECURITY_ADMIN_PASSWORD:?Configure GF_SECURITY_ADMIN_PASSWORD no ambiente ou no .env}
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - sigma-net
     restart: unless-stopped
 
 volumes:
+  sigma-db-data:
+  n8n-data:
   zabbix-db-data:
   grafana-data:
-  n8n-data:
->>>>>>> 9d05615aeea6e871fc6c0ca5a82eeb6801bda421
+
+networks:
+  sigma-net:
+    driver: bridge
