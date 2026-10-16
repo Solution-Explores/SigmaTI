@@ -69,7 +69,34 @@ abrange K01 (Compose e documentação corrigida), K02 (configuração), K03
 Testes automatizados executados pelo agente; não se declara reprodução manual
 pelo revisor. A conclusão no quadro depende da entrega integrada verificada.
 
-A integração à main terá seus workflows conferidos antes da atualização dos
-cartões. A issue #4 permanece aberta por K07 e aceite completo; tarefas K07–K15
+O conjunto foi integrado à main no commit
+[`ad70659519b8645d58e68a921c375004dc20600a`](https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a).
+Os workflows desse commit finalizaram com sucesso:
+
+- [API da main — sucesso](https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101).
+- [Infraestrutura da main — sucesso](https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156).
+
+A árvore integrada foi comparada à dev e confirmou conteúdo idêntico e checkout
+limpo. Não houve PR: o conector não permitiu criá-lo; a integração foi publicada
+pelo Git normal autorizado, sem extração de credenciais.
+
+Após a conferência, os seis cartões foram marcados como completos e movidos
+para **Concluído**, com comentário contendo escopo, autorização do revisor,
+commit integrado e links dos CIs. Os controles de cada cartão e a lista final
+foram verificados pela interface do Trello:
+
+| Cartão | Situação confirmada |
+|---|---|
+| [K01 — Compose](https://trello.com/c/wSoIrYrs) | Concluído |
+| [K02 — Configuração](https://trello.com/c/JtOo3Hii) | Concluído |
+| [K03 — Credenciais](https://trello.com/c/AwLuYdLm) | Concluído |
+| [K04 — Portas e imagens](https://trello.com/c/qbdZ7ZTy) | Concluído |
+| [K05 — Chamada assíncrona](https://trello.com/c/7c6DJxjl) | Concluído |
+| [K06 — CORS e erros](https://trello.com/c/C9pNKEwW) | Concluído |
+
+As conferências antigas nas specs e descrições dos cartões permanecem como
+histórico das bases em que foram escritas; este registro e os comentários de
+conclusão consolidam o estado desta entrega. Não foram fechadas issues nesta
+operação. A issue #4 permanece aberta por K07 e aceite completo; tarefas K07–K15
 não são automaticamente concluídas por este registro. Migração real, instalação
 limpa e homologação operacional continuam pendentes para quando houver ambiente.

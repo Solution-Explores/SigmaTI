@@ -20,7 +20,7 @@ resultados e limites atuais estão no [registro de validação](../revisao-k01-k
 - [x] Identificar ausência de máquina de implantação informada pela equipe.
 - [ ] Executar e homologar migração quando houver ambiente e dados de origem.
 - [x] Registrar autorização de Vinícius Lima após apresentação dos resultados.
-- [ ] Registrar a integração correspondente após verificá-la no GitHub.
+- [x] Registrar a integração à main e os dois CIs aprovados no registro consolidado.
 
 ## Formato: `[ID] [P?] [Story] Descrição`
 
