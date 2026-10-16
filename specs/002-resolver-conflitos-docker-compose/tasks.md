@@ -7,6 +7,21 @@ description: "Lista de tarefas da Issue #2 - Resolução de Conflitos no docker-
 **Input**: Design documents from `specs/002-resolver-conflitos-docker-compose/`  
 **Prerequisites**: `spec.md`, `plan.md`
 
+## Correções posteriores à revisão K01–K06
+
+Revisor responsável: **Vinícius Lima**. Após apresentação dos resultados, autorizou
+publicação e conclusão dos escopos validados, condicionadas à integração verificada.
+A lista original abaixo registra a entrega inicial; os
+resultados e limites atuais estão no [registro de validação](../revisao-k01-k06/validacao.md).
+
+- [x] Substituir placeholders de clone pela URL real e selecionar `dev`.
+- [x] Distinguir primeira instalação de atualização com dados.
+- [x] Documentar migração lógica futura para `sigma-db-data`, preservando a origem.
+- [x] Identificar ausência de máquina de implantação informada pela equipe.
+- [ ] Executar e homologar migração quando houver ambiente e dados de origem.
+- [x] Registrar autorização de Vinícius Lima após apresentação dos resultados.
+- [ ] Registrar a integração correspondente após verificá-la no GitHub.
+
 ## Formato: `[ID] [P?] [Story] Descrição`
 
 - **[P]**: Executável em paralelo

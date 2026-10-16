@@ -1,5 +1,10 @@
 # Revisão da K01 — Docker Compose
 
+> Registro histórico da revisão na base indicada abaixo. Para a situação atual,
+> consultar as [correções e a validação K01–K06](../revisao-k01-k06/validacao.md):
+> revisor responsável indicado **Vinícius Lima**; primeira instalação sem máquina
+> disponível e migração futura documentada, sem operação em dados reais.
+
 Revisão feita após implementar e validar inicialmente a K02, antes da revisão
 final da K02. Base revisada: `dev@b7ebe2c69bda6806fdbbfd4f16efd9bc7c3258b7`.
 O Compose e o workflow original da K01 não foram alterados.
