@@ -65,10 +65,25 @@ Implantação híbrida: `db` (PostgreSQL) e `n8n` orquestrados via Docker Compos
 
 Pré-requisitos: Docker, Docker Compose e um servidor ou VM Linux com acesso à interface de rede a ser monitorada.
 
-1. Clone o repositório:
+### Instalação nova — ambiente de desenvolvimento
+
+A equipe informou que ainda não há máquina de implantação; nenhuma base com dados
+foi indicada para migração nesta entrega. A primeira instalação usa o volume lógico
+`sigma-db-data` definido no Compose. O nome efetivo inclui o projeto Compose;
+mantenha a pasta/nome de projeto nas execuções seguintes para reutilizá-lo.
+Não altere a imagem para renomear dados: imagem e volume têm ciclos distintos.
+
+As correções da sprint estão na `dev`. Use essa branch para instalação e revisão
+do MVP; a `main` ainda não recebeu esta entrega. Este roteiro configura o núcleo
+Docker e a API de desenvolvimento; a sonda e a integração pfSense continuam
+planejadas, sem procedimento executável de instalação nesta entrega.
+
+1. Clone explicitamente a branch de desenvolvimento e registre a referência:
    ```bash
-   git clone [URL do repositório]
-   cd [nome-da-pasta]
+   git clone --branch dev --single-branch https://github.com/Solution-Explores/SigmaTI.git
+   cd SigmaTI
+   git branch --show-current
+   git rev-parse HEAD
    ```
 2. Configure as variáveis de ambiente:
    ```bash
@@ -77,7 +92,12 @@ Pré-requisitos: Docker, Docker Compose e um servidor ou VM Linux com acesso à 
    Preencha as credenciais obrigatórias do Compose conforme a seção abaixo. As
    variáveis da API, das sondas e da IA são configuradas conforme o componente
    utilizado. **Nunca versione o `.env`.**
-3. Suba os serviços em contêiner:
+3. Valide a configuração preenchida antes de iniciar os serviços:
+   ```bash
+   docker compose config --quiet
+   docker compose --profile monitoring config --quiet
+   ```
+   Esses comandos não iniciam contêineres. Para iniciar a instalação nova:
    ```bash
    # Núcleo da aplicação (banco de dados e automação)
    docker compose up -d
@@ -85,11 +105,27 @@ Pré-requisitos: Docker, Docker Compose e um servidor ou VM Linux com acesso à 
    # (Opcional) Incluir stack de observabilidade (Zabbix e Grafana)
    docker compose --profile monitoring up -d
    ```
-4. Inicie a sonda no host:
-   ```bash
-   [comando de execução da sonda]
-   ```
-5. Configure o pfSense para enviar logs à API, com a chave própria e por HTTPS.
+4. Inicie a API e o frontend conforme [Executar a API no desenvolvimento](#executar-a-api-no-desenvolvimento).
+   O Compose não os inicia. Sonda/pfSense, autenticação e implantação operacional
+   permanecem pendentes; não trate o MVP como instalação hospitalar homologada.
+
+### Atualização futura de uma instalação com dados
+
+Não aplique o fluxo de instalação nova sobre uma base existente. Se surgir uma
+instalação com o volume legado `sigma_data`, a decisão é migrar logicamente seus
+dados para o novo volume `sigma-db-data`, preservando a origem para recuperação.
+O [roteiro de migração do PostgreSQL](doc/migracao-volume-postgresql.md) define
+pré-requisitos, backup, restauração, conferência e reversão. A migração só poderá
+ser executada após identificar e homologar a instalação real; não foi executada
+nesta entrega. Não basta renomear um volume ou apontar uma imagem para os dados.
+
+### Revisão desta entrega
+
+Revisor responsável indicado: **Vinícius Lima**. Os testes automatizados e os
+achados corrigidos estão no [registro de validação](specs/revisao-k01-k06/validacao.md).
+Após receber os resultados, Vinícius Lima autorizou nesta conversa a publicação
+e a conclusão dos escopos validados, condicionadas às verificações de integração.
+Os testes foram executados pelo agente; não se atribui reprodução manual ao revisor.
 
 ### Credenciais da infraestrutura
 
