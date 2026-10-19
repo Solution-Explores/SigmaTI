@@ -16,7 +16,7 @@ a issue nem substitui a revisão e a validação operacional.
 | B6 | Anonimização cobre apenas IPv4 e o literal `dr.joao` | `sanitizer.py`, `main.py` | **Resolvido na Issue #5 (RF05):** Módulo `sanitizer.py` implementado com regras determinísticas para IPv4 (/24), IPv6 (/64), MAC, hostnames para categorias, CPF, CNS, prontuários e nomes clínicos, sem tabela de/para (Art. 12 LGPD). Veja [spec.md](../../specs/005-anonimizador-fail-closed/spec.md). |
 | B7 | Se a anonimização falhar, o fluxo segue e envia o texto | `sanitizer.py`, `main.py` | **Resolvido na Issue #5 (RF05):** Arquitetura two-pass com detecção residual e bloqueio fail-closed estrito; falha no filtro aborta o envio à IA e registra auditoria segura (`AUDIT_PRIVACY`), garantindo zero chamadas externas. Veja [evidencias.md](../../specs/005-anonimizador-fail-closed/evidencias.md). |
 | B8 | `requests.post` síncrono, sem *timeout*, dentro de `async def` | `main.py` | **K05 / implementação para revisão:** cliente HTTPX2 assíncrono compartilhado, timeouts HTTP e prazo global de 14 s, erro público genérico e log técnico sem payload/segredos. Validação com provedor simulado; revisão independente e homologação operacional pendentes. A issue #4 permanece aberta. Veja [solução e evidências](../../specs/004-chamada-assincrona-timeout/spec.md). |
-| B9 | Sem autenticação nas rotas | `main.py` | RF07 não implementado |
+| B9 | Sem autenticação nas rotas | `main.py`, `routers/auth.py`, `auth.py` | **Resolvido na Issue #6 (RF07):** Autenticação por JWT de sessão (HS256) com tempo de expiração curto, senhas em hash PBKDF2-HMAC-SHA256 com salt individual, RBAC estrito com 3 perfis (`suporte_n1`, `analista_redes`, `gestor_ti`) cobrindo a matriz do README e as rotas `/api/eng/*`, rate limiting contra força bruta (5 tentativas/lockout) e registro de login/logout/bloqueio na AuditChain. Veja [spec.md](../../specs/006-autenticacao-jwt-rbac/spec.md). |
 
 ## Riscos introduzidos por este núcleo e mitigações
 
@@ -26,7 +26,7 @@ a issue nem substitui a revisão e a validação operacional.
 | Troca de DNS entre a checagem e a conexão (TOCTOU/rebinding) | Limitação conhecida: a conexão resolve de novo. Mitigar conectando ao IP já validado (issue) |
 | Execução de comandos via runbook | Sem shell, allowlist, validação de variáveis, dry-run padrão, aprovação por passo |
 | Trilha de auditoria alterada por quem tem acesso ao arquivo | HMAC com `SIGMA_AUDIT_KEY` fora do disco da trilha; cópia periódica do último hash para outro host |
-| Rotas `/api/eng/*` sem autenticação | **Pendente.** Não expor fora do laboratório antes de RF07 |
+| Rotas `/api/eng/*` sem autenticação | **Resolvido na Issue #6 (RF07):** Rotas `/api/eng/*` protegidas via dependência FastAPI `exige_papel("analista_redes")` para operações de engenharia e `exige_papel("gestor_ti")` para auditoria. |
 | Chave HMAC perdida invalida a verificação do histórico | Guardar a chave em cofre; documentar rotação (issue) |
 
 ## Limitações conhecidas do núcleo
