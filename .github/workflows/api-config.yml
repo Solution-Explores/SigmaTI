@@ -21,6 +21,9 @@ jobs:
             requirements-dev.txt
       - run: python -m venv .venv
       - run: .venv/bin/python -m pip install -r requirements-dev.txt
+      - name: Install engineering package editable with development extras
+        working-directory: engenharia
+        run: ../.venv/bin/python -m pip install -e .[dev]
       - run: .venv/bin/python -m pip check
       - name: Test API and engineering with repository pytest configuration
         run: .venv/bin/python -m pytest -q -p no:cacheprovider --junitxml=test-results/api.xml
@@ -52,3 +55,21 @@ jobs:
             test-results/e6.md
             test-results/painel-diagnostico.png
           if-no-files-found: warn
+
+  test-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate editable and wheel installs outside the checkout
+        run: python scripts/validate_package.py --output test-results/package.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: engineering-package
+          path: |
+            test-results/package.json
+            test-results/package-wheels/*.whl

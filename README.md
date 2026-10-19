@@ -79,8 +79,13 @@ Consulte o [roteiro de instalação e validação de desenvolvimento (K08)](doc/
 com comandos de Windows e Linux, testes offline, autenticação e pendências da K09/K10.
 
 A [execução K09/K10](specs/009-010-instalacao-aceite/evidencias.md) registrou
-bloqueios de instalação Docker e do fluxo autenticado; o aceite integrado ainda
-não foi aprovado. Correções estão encaminhadas para K11/K12.
+bloqueios históricos de instalação Docker e do fluxo autenticado. As correções
+K11/K12 foram integradas à `dev` pelo [PR #32](https://github.com/Solution-Explores/SigmaTI/pull/32),
+com [validação e autorização registradas](specs/011-recuperacao-sprint/integracao-dev.md).
+
+O núcleo `sigma_eng` é instalado por pip. Para trabalhar nele, execute
+`python -m pip install -e "./engenharia[api,dev]"` na raiz com o ambiente virtual
+ativo; não é necessário configurar `PYTHONPATH`.
 
 Pré-requisitos: Docker, Docker Compose e um servidor ou VM Linux com acesso à interface de rede a ser monitorada.
 

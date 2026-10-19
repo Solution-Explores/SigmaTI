@@ -8,3 +8,6 @@ spec-kit/
 .local/
 sigma-frontend/dist/
 sigma-frontend/playwright-report/
+*.egg-info/
+engenharia/build/
+engenharia/dist/

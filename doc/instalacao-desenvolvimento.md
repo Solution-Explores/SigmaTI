@@ -25,6 +25,7 @@ virtual ou o `.env` de outra cópia:
 # Windows PowerShell
 .venv\Scripts\Activate.ps1
 python -m pip install -r requirements-dev.txt
+python -m pip install -e "./engenharia[api,dev]"
 python -m pip check
 ```
 
@@ -32,6 +33,7 @@ python -m pip check
 # Linux/macOS
 source .venv/bin/activate
 python -m pip install -r requirements-dev.txt
+python -m pip install -e "./engenharia[api,dev]"
 python -m pip check
 ```
 
@@ -60,6 +62,20 @@ engenharia. Para executar apenas a K07:
 ```bash
 python -m pytest tests/test_provider.py tests/test_config.py tests/test_public_errors.py tests/test_fail_closed.py -q -p no:cacheprovider --junitxml=test-results/k07.xml
 ```
+
+O caminho `engenharia` deixou de ser acrescentado ao `sys.path`: `sigma_eng`
+é instalado por `pip`. O comando editável mantém as alterações locais do núcleo
+visíveis durante o desenvolvimento. A instalação comum de `requirements.txt`
+inclui o pacote com o extra `api`; execute esse comando a partir da raiz.
+Para validar instalação editável e wheel em ambientes novos, inclusive importação
+fora do checkout:
+
+```bash
+python scripts/validate_package.py --output test-results/package.json
+```
+
+Essa verificação baixa dependências do PyPI, gera uma wheel local e não publica
+o pacote. O núcleo isolado não instala FastAPI; os extras `api` e `dev` são opcionais.
 
 Os validadores de Compose não iniciam contêineres e não carregam seu `.env`.
 Os testes de sondas abrem servidores temporários somente em loopback. Nenhum

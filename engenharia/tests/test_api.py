@@ -3,7 +3,7 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from auth import criar_token_sessao
+from auth import criar_token_sessao, exige_papel
 from sigma_eng import api
 
 
@@ -11,9 +11,8 @@ from sigma_eng import api
 def client(tmp_path, monkeypatch):
     from sigma_eng.audit_chain import AuditChain
     monkeypatch.setenv("SIGMA_AUTH_ENFORCED", "1")
-    monkeypatch.setattr(api, "auditoria", AuditChain(tmp_path / "audit.jsonl"))
     app = FastAPI()
-    app.include_router(api.router)
+    app.include_router(api.create_router(exige_papel, auditoria=AuditChain(tmp_path / "audit.jsonl")))
     token = criar_token_sessao("k08-engenharia", "gestor_ti")
     with TestClient(app, headers={"Authorization": f"Bearer {token}"}) as client:
         yield client
@@ -44,3 +43,22 @@ def test_anomalias_e_auditoria(client):
     assert client.post("/api/eng/anomalias", json={"serie": serie}).json()["indices"] == [60]
     assert client.post("/api/eng/anomalias", json={"serie": serie, "metodo": "x"}).status_code == 422
     assert client.get("/api/eng/auditoria/verificar").json()["integra"] is True
+
+
+@pytest.mark.parametrize('method,path,payload', [
+    ('POST', '/api/eng/probe', {'host': '127.0.0.1', 'port': 80}),
+    ('POST', '/api/eng/slo/avaliar', {'indisponibilidades': []}),
+    ('POST', '/api/eng/incidentes/metricas', []),
+    ('POST', '/api/eng/anomalias', {'serie': [1, 2]}),
+    ('GET', '/api/eng/auditoria/verificar', None),
+])
+def test_packaged_routes_require_auth_and_role(client, method, path, payload):
+    assert client.request(method, path, json=payload, headers={'Authorization': ''}).status_code == 401
+    token = criar_token_sessao('suporte.n1', 'suporte_n1')
+    assert client.request(method, path, json=payload,
+                          headers={'Authorization': f'Bearer {token}'}).status_code == 403
+
+
+def test_router_cannot_be_created_without_host_authorization():
+    with pytest.raises(TypeError):
+        api.create_router()

@@ -1,6 +1,8 @@
 import asyncio
 from contextlib import asynccontextmanager
 import logging
+import os
+from pathlib import Path
 import re
 from time import monotonic
 from typing import Annotated
@@ -12,13 +14,6 @@ import httpx2 as httpx
 from config import load_settings
 from api_errors import PublicError, configure_public_errors
 from auth import Usuario, configure_auth, exige_papel, usuario_repo
-
-import sys
-from pathlib import Path
-
-_eng_dir = Path(__file__).resolve().parent / "engenharia"
-if _eng_dir.exists() and str(_eng_dir) not in sys.path:
-    sys.path.insert(0, str(_eng_dir))
 
 settings = load_settings()
 configure_auth(settings.jwt_secret)
@@ -56,8 +51,17 @@ configure_public_errors(app, settings.cors_origins)
 # Registro de roteadores da aplicação
 app.include_router(auth_router)
 
-from engenharia.sigma_eng.api import router as eng_router
-app.include_router(eng_router)
+from sigma_eng.api import create_router
+from sigma_eng.audit_chain import AuditChain
+
+# O pacote não escolhe o local dos dados da aplicação hospedeira.
+# Preservar o caminho da trilha de engenharia existente no checkout.
+_audit_key = os.getenv("SIGMA_AUDIT_KEY")
+engineering_audit = AuditChain(
+    os.getenv("SIGMA_AUDIT_PATH", str(Path(__file__).resolve().parent / "engenharia" / "resultados" / "audit.jsonl")),
+    chave=_audit_key.encode() if _audit_key else None,
+)
+app.include_router(create_router(exige_papel, auditoria=engineering_audit))
 # --------------------------------------------------
 
 class AlertaRede(BaseModel):

@@ -13,7 +13,9 @@ Escopo autorizado: demonstração controlada; roteiro futuro permanece separado.
 - [x] CI inclui aceite HTTP, E6, build/lint e navegador.
 - [x] K09/K12: validação isolada de prontidão, autenticação e persistência; recursos removidos.
 - [x] Nova revisão técnica: sobrenomes, recriação de conta, limites no .env e escuta do Zabbix corrigidos; 369 testes e aceite ampliado aprovados.
-- [ ] Revisão de outro integrante e integração aprovada na dev/main.
+- [x] Prosseguimento na dev autorizado explicitamente pelo usuário, dispensando nesta entrega a revisão por outro integrante; sem atribuir aprovação independente.
+- [x] PR #32 integrado à dev em 086129c; aceite HTTP e CI do commit integrado aprovados.
+- [ ] Integração à main e encerramento final da sprint.
 - [x] Conferir CI remoto da implementação e atualizar o quadro com PR #32 e links da entrega.
 
 Não fechar #5/#6 por este escopo parcial. PostgreSQL de usuários/sessões,
