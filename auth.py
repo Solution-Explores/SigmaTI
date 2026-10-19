@@ -335,12 +335,9 @@ rate_limiter = LoginRateLimiter()
 # --- Integração com AuditChain ---
 
 def obter_auditor():
-    """Tenta obter instância da AuditChain do núcleo de engenharia ou fallback."""
+    """Obtém a AuditChain instalada; falha sem expor detalhes sensíveis."""
     try:
-        try:
-            from engenharia.sigma_eng.audit_chain import AuditChain
-        except ImportError:
-            from sigma_eng.audit_chain import AuditChain
+        from sigma_eng.audit_chain import AuditChain
         caminho = os.getenv("SIGMA_AUDIT_PATH", "resultados/audit.jsonl")
         chave = os.getenv("SIGMA_AUDIT_KEY")
         return AuditChain(caminho, chave=chave.encode() if chave else None)

@@ -18,7 +18,7 @@ from auth import (
     usuario_repo,
     verificar_senha,
 )
-from engenharia.sigma_eng.audit_chain import AuditChain
+from sigma_eng.audit_chain import AuditChain
 
 FAKE_OPENROUTER_KEY = "sk-or-v1-permanent-server-secret-never-expose"
 SUCCESS_IA = {"choices": [{"message": {"content": "Diagnóstico validado"}}]}

@@ -4,7 +4,8 @@ Funcionalidades inspiradas no Sentinel Vigilark (plataforma de monitoramento e s
 
 O núcleo está integrado ao `main.py` do SIGMA, com proteção por perfil nas rotas
 `/api/eng/*`. Os módulos de cálculo usam a biblioteca padrão; a API e seus testes
-usam as dependências fixadas na raiz.
+usam os extras opcionais do pacote instalável `sigma-eng`, com as mesmas versões
+fixadas usadas pela aplicação.
 
 ## O que tem aqui
 
@@ -24,6 +25,7 @@ usam as dependências fixadas na raiz.
 ```bash
 # Na raiz do repositório, com Python 3.12+ e ambiente virtual ativo:
 python -m pip install -r requirements-dev.txt
+python -m pip install -e "./engenharia[api,dev]"
 python -m pytest engenharia/tests -q -p no:cacheprovider
 
 # Experimento E1 → engenharia/resultados/e1_deteccao.{csv,md}
@@ -31,11 +33,35 @@ cd engenharia
 python -m experimentos.exp_deteccao
 ```
 
-O núcleo (tudo exceto `api.py`) usa só a biblioteca padrão do Python 3.10+.
+O pacote exige Python 3.12+, como o ambiente validado da aplicação. O núcleo
+(tudo exceto `api.py`) usa somente a biblioteca padrão e pode ser instalado sem extras:
 
-O `pytest.ini` da raiz configura o caminho de `sigma_eng`, inclusive ao executar
-a suíte isolada. Não é necessário exportar `PYTHONPATH`. Veja o
-[roteiro de instalação K08](../doc/instalacao-desenvolvimento.md).
+```bash
+python -m pip install -e ./engenharia
+# Importar de qualquer pasta com o mesmo interpretador/venv:
+python -c "import sigma_eng; print(sigma_eng.__version__)"
+```
+
+Dentro de `engenharia/`, `python -m pip install -e ".[dev]"` instala os extras de
+testes, inclusive FastAPI e o cliente HTTP. O CI usa esse comando. Não é necessário
+configurar `PYTHONPATH` ou alterar `sys.path`.
+
+Integração com a API da aplicação:
+
+```python
+from auth import exige_papel  # política da aplicação hospedeira
+from sigma_eng.api import create_router
+
+app.include_router(create_router(exige_papel))
+```
+
+A política de autorização é obrigatória; não há roteador global sem autenticação.
+Importar `sigma_eng.api` não importa `auth.py` nem abre arquivos. A trilha padrão
+é `resultados/audit.jsonl`, relativa ao diretório de execução, ou `SIGMA_AUDIT_PATH`.
+Também é possível passar uma `AuditChain` explícita: `create_router(exige_papel,
+auditoria=trilha)`. O `main.py` do SIGMA faz isso para preservar sua trilha existente
+em `engenharia/resultados/audit.jsonl` quando `SIGMA_AUDIT_PATH` não é definida.
+Veja o [roteiro de instalação K08](../doc/instalacao-desenvolvimento.md).
 
 ## Documentação
 

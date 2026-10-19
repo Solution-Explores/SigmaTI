@@ -5,8 +5,9 @@ Sistema de monitoramento ativo de rede com apoio de IA, desenvolvido como TCC pa
 ## Como trabalhamos no TCC
 
 **Comece pelo [fluxo de trabalho do TCC e orientações para issues](doc/fluxo-de-trabalho-tcc.md).**
-O desenvolvimento acontece na `dev`, com testes, evidências e revisão por outro
-integrante antes da integração à `main`. O guia explica as etapas, as correções,
+O desenvolvimento segue o [Git Flow](doc/gitflow.md), com branches `feature/*`
+e `fix/*` integradas por PR à `develop` (antiga `dev`), testes, evidências e revisão
+antes de preparar uma `release/*` para a `main`. O guia explica as etapas, as correções,
 as colunas do quadro e quando uma issue pode ser encerrada.
 
 ## Problema que resolve
@@ -63,6 +64,10 @@ Implantação híbrida: `db` (PostgreSQL) e `n8n` orquestrados via Docker Compos
 
 ## Demonstração controlada e aceite
 
+O [plano de conclusão para 20/10 às 18h (Manaus)](doc/plano-conclusao-2026-10-20.md)
+registra a ordem de implementação, os cortes de escopo e as dependências externas.
+Itens planejados nesse documento ainda não constituem funcionalidades entregues.
+
 A [revisão K11/K12](specs/011-recuperacao-sprint/evidencias.md) documenta as
 correções de sessão, painel e anonimização. A API exige `SIGMA_JWT_SECRET` e
 `SIGMA_USERS_FILE`, além da configuração da IA. Crie hashes locais com
@@ -79,8 +84,13 @@ Consulte o [roteiro de instalação e validação de desenvolvimento (K08)](doc/
 com comandos de Windows e Linux, testes offline, autenticação e pendências da K09/K10.
 
 A [execução K09/K10](specs/009-010-instalacao-aceite/evidencias.md) registrou
-bloqueios de instalação Docker e do fluxo autenticado; o aceite integrado ainda
-não foi aprovado. Correções estão encaminhadas para K11/K12.
+bloqueios históricos de instalação Docker e do fluxo autenticado. As correções
+K11/K12 foram integradas à `dev` pelo [PR #32](https://github.com/Solution-Explores/SigmaTI/pull/32),
+com [validação e autorização registradas](specs/011-recuperacao-sprint/integracao-dev.md).
+
+O núcleo `sigma_eng` é instalado por pip. Para trabalhar nele, execute
+`python -m pip install -e "./engenharia[api,dev]"` na raiz com o ambiente virtual
+ativo; não é necessário configurar `PYTHONPATH`.
 
 Pré-requisitos: Docker, Docker Compose e um servidor ou VM Linux com acesso à interface de rede a ser monitorada.
 
@@ -92,14 +102,14 @@ foi indicada para migração nesta entrega. A primeira instalação usa o volume
 mantenha a pasta/nome de projeto nas execuções seguintes para reutilizá-lo.
 Não altere a imagem para renomear dados: imagem e volume têm ciclos distintos.
 
-O roteiro fixa a branch `dev`, usada para validar as correções da sprint, para
+O roteiro fixa a branch `develop`, usada para validar as correções da sprint, para
 que o checkout não dependa da branch padrão do repositório. Ele configura o núcleo
 Docker e a API de desenvolvimento; a sonda e a integração pfSense continuam
 planejadas, sem procedimento executável de instalação nesta entrega.
 
 1. Clone explicitamente a branch de desenvolvimento e registre a referência:
    ```bash
-   git clone --branch dev --single-branch https://github.com/Solution-Explores/SigmaTI.git
+   git clone --branch develop https://github.com/Solution-Explores/SigmaTI.git
    cd SigmaTI
    git branch --show-current
    git rev-parse HEAD

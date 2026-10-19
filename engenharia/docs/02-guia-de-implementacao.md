@@ -4,25 +4,30 @@ Roteiro para levar o núcleo do protótipo à operação. Cada fase termina com 
 
 ## Fase 0 · Pré-requisitos (≈ 1 h)
 
-1. Python 3.10+ (o ambiente de desenvolvimento usou 3.14).
-2. Resolver os bloqueadores do repositório descritos em [05](05-seguranca-e-pendencias.md#bloqueadores-do-repositório), principalmente o `docker-compose.yml` com marcadores de conflito de merge.
+1. Python 3.12+ e ambiente virtual novo.
+2. Conferir as pendências descritas em [05](05-seguranca-e-pendencias.md#bloqueadores-do-repositório); o histórico não substitui a validação do checkout atual.
 3. Rodar a suíte:
    ```bash
-   cd engenharia && python3 -m venv .venv && source .venv/bin/activate
-   pip install -r requirements.txt && pytest -q
+   # Na raiz do repositório, com ambiente virtual ativo:
+   python -m pip install -r requirements-dev.txt
+   python -m pip install -e "./engenharia[api,dev]"
+   python -m pytest -q -p no:cacheprovider
    ```
-   **Aceite:** 58 testes passando.
+   **Aceite:** suíte completa sem falhas ou testes ignorados, conforme a evidência do commit.
 
 ## Fase 1 · Integrar a API ao SIGMA (≈ 2 h)
 
 No `main.py` do SIGMA:
 
 ```python
-from engenharia.sigma_eng.api import router as eng_router
-app.include_router(eng_router)
+from auth import exige_papel
+from sigma_eng.api import create_router
+app.include_router(create_router(exige_papel))
 ```
 
-> `engenharia/` não tem `__init__.py` (pacote *namespace*). Se preferir, instale como pacote editável (issue "Empacotar sigma_eng") e importe `sigma_eng.api`.
+`sigma_eng` é um pacote instalado por pip (issue #9). O roteador recebe obrigatoriamente
+a política de autorização da aplicação; não importa módulos da raiz do SIGMA.
+Não acrescente `engenharia/` ao caminho de importação. O extra `api` fornece FastAPI.
 
 Configure por variável de ambiente (nunca no código):
 
