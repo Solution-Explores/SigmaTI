@@ -48,6 +48,14 @@ app = FastAPI(
 )
 configure_public_errors(app, settings.cors_origins)
 
+from persistence.database import PersistenceUnavailable
+from fastapi.responses import JSONResponse
+
+
+@app.exception_handler(PersistenceUnavailable)
+async def persistence_error(request: Request, exc: PersistenceUnavailable):
+    return JSONResponse(status_code=503, content={"detail": "Serviço temporariamente indisponível."})
+
 # Registro de roteadores da aplicação
 app.include_router(auth_router)
 
@@ -191,7 +199,7 @@ async def relatorios_gerenciais(usuario: Annotated[Usuario, Depends(exige_papel(
 @app.get("/api/usuarios")
 async def listar_usuarios(usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))]):
     """Gerenciar usuários (Exclusivo Gestor de TI)."""
-    return {"usuarios": list(usuario_repo._usuarios)}
+    return {"usuarios": usuario_repo.listar()}
 
 
 class NovoUsuarioIn(BaseModel):

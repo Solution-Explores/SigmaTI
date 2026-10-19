@@ -78,6 +78,7 @@ def login(dados: LoginIn, request: Request) -> dict:
             detail="Autenticação necessária.",
         )
 
+    usuario = usuario_repo.atualizar_hash(usuario, dados.password)
     # 3. Credenciais válidas: limpa histórico de falhas e registra sucesso na AuditChain
     rate_limiter.limpar(chave_bloqueio)
     if auditor is not None:
@@ -93,6 +94,7 @@ def login(dados: LoginIn, request: Request) -> dict:
         usuario=usuario.username,
         papel=usuario.papel,
         expira_em_segundos=auth.JWT_EXPIRATION_SECONDS,
+        expected_hash=usuario.senha_hash,
     )
 
     return {
