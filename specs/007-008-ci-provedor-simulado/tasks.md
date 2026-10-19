@@ -22,11 +22,11 @@
 ## Publicação e entrega
 
 - [x] Publicar a implementação inicial na `dev` e inspecionar os dois CIs.
-- [ ] Integrar a correção à `dev` e verificar o CI remoto do conjunto corrigido.
-- [ ] Registrar referências de publicação e atualizar a situação dos cartões.
-- [ ] Conferir a integração antes de declarar entrega final na `main`.
+- [x] Integrar a correção à `dev` e verificar os dois CIs remotos do conjunto corrigido.
+- [x] Registrar referências de publicação e atualizar os cartões para Revisão e testes, com revisão técnica realizada.
 
 O usuário dispensou a espera por revisão de outro integrante nesta execução;
-a revisão registrada é do próprio Codex. K09, K10, correções K11/K12 e aceite
-integral das issues permanecem tarefas separadas, com os limites em
+a revisão registrada é do próprio Codex e está concluída. A integração do conjunto
+na `main` pertence à K13, após aceite K10 e correções K11/K12. K09 e o aceite
+integral das issues também permanecem tarefas separadas, com os limites em
 [evidencias.md](evidencias.md).

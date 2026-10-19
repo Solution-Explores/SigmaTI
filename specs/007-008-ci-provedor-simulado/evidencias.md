@@ -91,5 +91,19 @@ no Linux: 345 aprovados e uma falha, sem testes ignorados. Não houve tentativa 
 mascarar a falha reexecutando o mesmo código até obter sucesso.
 
 Conforme o fluxo, a correção foi isolada na branch
-`codex/fix-k08-porta-fechada`, testada localmente e preparada para retornar à `dev`.
-Os resultados remotos do conjunto corrigido serão registrados após verificação.
+`codex/fix-k08-porta-fechada`, testada localmente e integrada à `dev` no commit
+[`7975c00`](https://github.com/Solution-Explores/SigmaTI/commit/7975c00).
+
+Conjunto corrigido conferido no GitHub:
+
+- [API e engenharia — sucesso](https://github.com/Solution-Explores/SigmaTI/actions/runs/39265110405):
+  **346 testes aprovados em 22,31 s**, em Ubuntu / Python 3.12.15.
+- [Artefato JUnit do CI](https://github.com/Solution-Explores/SigmaTI/actions/runs/39265110405/artifacts/12193086123).
+- [Infraestrutura — sucesso](https://github.com/Solution-Explores/SigmaTI/actions/runs/39265110475).
+
+A revisão técnica está concluída nesta conversa. Os cartões K07/K08 recebem o
+registro atualizado e passam a **Revisão e testes**, com a revisão já realizada
+e os links de CI. A etapa remanescente é a integração do conjunto na K13, após
+conferir o aceite K10 e os achados K11/K12; não é espera por outro revisor.
+Não integrar automaticamente os commits anteriores de autenticação e
+anonimização nem encerrar as issues #4/#5/#6 como efeito desta entrega parcial.
