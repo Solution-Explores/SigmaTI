@@ -1,0 +1,200 @@
+{
+  "date": "2026-10-19",
+  "base_commit": "142efd229151f88ebd5ed65521663c82d3020368",
+  "k09": {
+    "status": "blocked",
+    "independent_checkout": true,
+    "new_python_environment": true,
+    "python_regression": {
+      "passed": 346,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 54.46
+    },
+    "python_dependencies": "pip check passed",
+    "frontend_build": "passed after caching the locked native binding and npm ci --include=optional",
+    "package_lock_unchanged": true,
+    "frontend_lint": {
+      "status": "failed",
+      "file": "sigma-frontend/src/App.jsx",
+      "line": 38,
+      "rule": "no-unused-vars",
+      "name": "err"
+    },
+    "compose_configuration": "passed with isolated names, ports and fresh volumes",
+    "docker_start": {
+      "status": "blocked during image pull",
+      "error": "failed to copy: local error: tls: bad record MAC"
+    },
+    "test_containers_created": 0,
+    "test_volumes_created": 0,
+    "service_readiness_authentication_persistence": "not verified"
+  },
+  "k10": {
+    "status": "failed",
+    "transport": "real HTTP over loopback / Uvicorn",
+    "provider": "httpx2.MockTransport; no real AI provider called",
+    "passed": 16,
+    "failed": 2,
+    "results": [
+      {
+        "name": "token_required_before_provider",
+        "passed": true,
+        "observed": {
+          "http": 401,
+          "provider_calls": 0
+        }
+      },
+      {
+        "name": "session_login",
+        "passed": true,
+        "observed": {
+          "http": 200
+        }
+      },
+      {
+        "name": "rbac_insufficient_role",
+        "passed": true,
+        "observed": {
+          "http": 403
+        }
+      },
+      {
+        "name": "authenticated_sanitized_success",
+        "passed": true,
+        "observed": {
+          "http": 200,
+          "contract": [
+            "dados_enviados_nuvem",
+            "diagnostico_ia",
+            "status"
+          ]
+        }
+      },
+      {
+        "name": "allowed_origin_response",
+        "passed": true,
+        "observed": {
+          "http": 200
+        }
+      },
+      {
+        "name": "k10_provider_error",
+        "passed": true,
+        "observed": {
+          "http": 200,
+          "seconds": 0.0
+        }
+      },
+      {
+        "name": "k10_invalid_json",
+        "passed": true,
+        "observed": {
+          "http": 200,
+          "seconds": 0.0
+        }
+      },
+      {
+        "name": "k10_timeout",
+        "passed": true,
+        "observed": {
+          "http": 200,
+          "seconds": 14.016
+        }
+      },
+      {
+        "name": "untrusted_origin",
+        "passed": true,
+        "observed": {
+          "http": 403,
+          "new_provider_calls": 0
+        }
+      },
+      {
+        "name": "invalid_payload",
+        "passed": true,
+        "observed": {
+          "http": 422,
+          "new_provider_calls": 0
+        }
+      },
+      {
+        "name": "fail_closed",
+        "passed": true,
+        "observed": {
+          "http": 500,
+          "new_provider_calls": 0
+        }
+      },
+      {
+        "name": "preflight_current_contract",
+        "passed": true,
+        "observed": {
+          "http": 200
+        }
+      },
+      {
+        "name": "preflight_authenticated_browser",
+        "passed": false,
+        "observed": {
+          "http": 400
+        }
+      },
+      {
+        "name": "logout_revokes_session",
+        "passed": false,
+        "observed": {
+          "logout": 200,
+          "same_token_after_logout": 200
+        }
+      },
+      {
+        "name": "startup_requires_openrouter_api_key",
+        "passed": true,
+        "observed": {
+          "exit_code": 1
+        }
+      },
+      {
+        "name": "startup_requires_sigma_llm_model",
+        "passed": true,
+        "observed": {
+          "exit_code": 1
+        }
+      },
+      {
+        "name": "startup_requires_sigma_cors_origins",
+        "passed": true,
+        "observed": {
+          "exit_code": 1
+        }
+      },
+      {
+        "name": "safe_server_logs",
+        "passed": true,
+        "observed": {
+          "private_values_in_log": false
+        }
+      }
+    ],
+    "browser": {
+      "renders": true,
+      "alert_submission": "HTTP 401 without token",
+      "displayed_error": "connection failure despite reachable API",
+      "diagnosis_rendered": false
+    }
+  },
+  "follow_up": {
+    "K11": [
+      "authenticated CORS preflight",
+      "login/token in frontend",
+      "logout revocation",
+      "accurate HTTP error messages"
+    ],
+    "K12": [
+      "Docker layer download TLS failure",
+      "frontend lint failure",
+      "reliable optional native dependency installation on Windows"
+    ]
+  }
+}

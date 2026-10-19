@@ -151,3 +151,10 @@ Não use o procedimento de instalação nova como atualização de uma base exis
 
 Os resultados desta entrega e os achados encaminhados estão no
 [registro K07/K08](../specs/007-008-ci-provedor-simulado/evidencias.md).
+
+A [execução K09/K10 de 19/10/2026](../specs/009-010-instalacao-aceite/evidencias.md)
+validou Python e build do frontend, mas encontrou falha TLS no download Docker,
+falha de lint e reprovações no fluxo autenticado. Instalação e aceite integrado
+continuam pendentes de correções K11/K12. O runner HTTP reproduzível é
+`scripts/validate_api_acceptance.py`; ele usa IA simulada e retorna erro quando
+um critério de aceite falha.

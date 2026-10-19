@@ -66,6 +66,10 @@ Implantação híbrida: `db` (PostgreSQL) e `n8n` orquestrados via Docker Compos
 Consulte o [roteiro de instalação e validação de desenvolvimento (K08)](doc/instalacao-desenvolvimento.md),
 com comandos de Windows e Linux, testes offline, autenticação e pendências da K09/K10.
 
+A [execução K09/K10](specs/009-010-instalacao-aceite/evidencias.md) registrou
+bloqueios de instalação Docker e do fluxo autenticado; o aceite integrado ainda
+não foi aprovado. Correções estão encaminhadas para K11/K12.
+
 Pré-requisitos: Docker, Docker Compose e um servidor ou VM Linux com acesso à interface de rede a ser monitorada.
 
 ### Instalação nova — ambiente de desenvolvimento
