@@ -162,7 +162,7 @@ def test_actual_app_import_requires_configuration(name, bad_value):
         else:
             env[name] = bad_value
     result = subprocess.run(
-        [sys.executable, "-c", "import main; print('app-ready')"],
+        [sys.executable, "-c", "import main\nprint('app-ready')"],
         cwd=ROOT, env=env, capture_output=True, text=True, timeout=15,
     )
     output = result.stdout + result.stderr
@@ -234,7 +234,7 @@ def test_alert_uses_configured_provider_and_preserves_response_contract(api):
     assert response.headers["access-control-allow-origin"] == "http://localhost:5173"
     assert response.json() == {
         "status": "Incidente Registrado",
-        "dados_enviados_nuvem": "Equipamento: Switch de teste | Erro: Falha de rede no IP [IP_MASCARADO]. Forneça um diagnóstico de rede curto e direto.",
+        "dados_enviados_nuvem": "Equipamento: [SWITCH_REDE] | Erro: Falha de rede no IP 192.0.2.0/24. Forneça um diagnóstico de rede curto e direto.",
         "diagnostico_ia": "Diagnóstico simulado",
     }
     provider.assert_awaited_once()

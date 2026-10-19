@@ -103,8 +103,18 @@ def test_falha_interrompe():
     assert ex.status == "failed" and len(ex.resultados) == 1
 
 
+import sys
+
+
 def test_executor_real_sem_shell():
-    r = RunbookRunner(["echo"])
-    ex = r.executar("r", parsear("```sigma:step{id=a}\necho oi; id\n```"), {}, dry_run=False)
-    assert ex.status == "completed"
-    assert ex.resultados[0].saida.strip() == "oi; id"  # ';' é argumento literal, não operador
+    if sys.platform == "win32":
+        py_exe = sys.executable.replace("\\", "/")
+        r = RunbookRunner([py_exe])
+        ex = r.executar("r", parsear(f"```sigma:step{{id=a}}\n{py_exe} -c \"print('oi; id')\"\n```"), {}, dry_run=False)
+        assert ex.status == "completed"
+        assert ex.resultados[0].saida.strip() == "oi; id"
+    else:
+        r = RunbookRunner(["echo"])
+        ex = r.executar("r", parsear("```sigma:step{id=a}\necho oi; id\n```"), {}, dry_run=False)
+        assert ex.status == "completed"
+        assert ex.resultados[0].saida.strip() == "oi; id"  # ';' é argumento literal, não operador
