@@ -4,6 +4,11 @@ Plano definido com o usuário em 19/10/2026. Registro de planejamento, não evid
 de implementação das funcionalidades futuras. Esta publicação não altera o código
 executável nem autoriza novos merges em branches compartilhadas.
 
+Atualização do fluxo: `dev` foi renomeada para `develop` e a branch deste
+plano para `feature/pacote`. Referências anteriores descrevem o estado histórico.
+A renomeação encerrou automaticamente o PR #33; o [PR #34](https://github.com/Solution-Explores/SigmaTI/pull/34) preserva o escopo.
+Consulte [Git Flow](gitflow.md) para o fluxo vigente.
+
 ## 1. Objetivo e estado de partida
 
 Entrega em **20/10/2026, às 18h, America/Manaus (22h UTC)**, priorizando o máximo

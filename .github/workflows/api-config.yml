@@ -2,9 +2,9 @@ name: API and engineering regression
 
 on:
   push:
-    branches: [main, dev]
+    branches: [main, develop, 'feature/**', 'fix/**', 'release/**', 'hotfix/**']
   pull_request:
-    branches: [main, dev]
+    branches: [main, develop, 'release/**']
 
 jobs:
   test-config:

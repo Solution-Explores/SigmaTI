@@ -1,9 +1,10 @@
 # Fluxo de trabalho do TCC — SIGMA
 
-Este é o fluxo da equipe para desenvolver as tarefas do planejamento e atender
-às issues do GitHub. O trabalho acontece diretamente na `dev`; uma branch
-separada é criada para corrigir erros identificados na revisão. A integração à
-`main` ocorre depois da aprovação e da validação do conjunto na `dev`.
+Este é o fluxo da equipe para atender às issues do GitHub. Seguimos o
+[Git Flow do SigmaTI](gitflow.md): `feature/*` e `fix/*` partem da `develop`
+e retornam por PR revisado. Uma `release/*` prepara a integração aprovada
+à `main`, com tag de versão e retorno das correções à `develop`.
+`hotfix/*` parte da `main` para urgências e retorna também à `develop`.
 
 ## Fluxo
 
@@ -11,12 +12,12 @@ separada é criada para corrigir erros identificados na revisão. A integração
 flowchart TD
     inicio(["INÍCIO"])
     leitura["1. Ler a issue no GitHub<br/>Pedido, critérios, dependências e responsável"]
-    desenvolvimento["2. Desenvolver na dev<br/>Alterações e commits"]
+    desenvolvimento["2. Desenvolver em feature/*<br/>Base develop, alterações e commits"]
     testes["3. Testar e registrar resultados"]
     revisao["4. Outro integrante revisa e valida"]
     aprovado{"Foi aprovado?"}
-    correcao["Criar branch de correção<br/>Corrigir, testar e integrar à dev"]
-    integracao["5. Integrar à main<br/>Após validar o conjunto na dev"]
+    correcao["Corrigir na branch de trabalho<br/>Testar e retornar à revisão"]
+    integracao["5. Integrar à develop por PR<br/>Preparar release para main e tag"]
     evidencia["6. Comentar na issue<br/>O que foi feito, links e evidências"]
     conclusao["7. Concluir a tarefa<br/>Fechar a issue só com todos os requisitos atendidos"]
     fim(["FIM"])
@@ -43,22 +44,21 @@ consolida as evidências produzidas durante o trabalho.
    a qual parte da issue. Uma issue pode exigir várias tarefas; concluir um cartão
    não significa cumprir a issue inteira. Registre o escopo e as pendências antes
    de começar e mova o cartão para **Em andamento**.
-3. **Desenvolva na `dev`.** Atualize a base antes de começar, coordene mudanças
-   simultâneas com a equipe e preserve alterações de outros integrantes. Faça
-   commits com uma descrição do resultado e referência à issue. Não é necessário
-   criar uma branch por tarefa.
+3. **Desenvolva em uma branch por tarefa.** Atualize a `develop`, crie
+   `feature/nome` para funcionalidades ou `fix/nome` para correções. Preserve
+   alterações de outros integrantes e faça commits com referência à issue.
 4. **Teste e produza evidências.** Execute as verificações dos critérios de aceite
    e as verificações afetadas pela mudança. Registre comandos, ambiente, resultado
    esperado, resultado obtido e links para commits, testes ou arquivos. Use dados
    fictícios; não inclua chaves, senhas ou dados reais do hospital nas evidências.
-5. **Peça revisão a outro integrante.** Mova o cartão para **Revisão e testes**.
-   O colega compara a alteração ao pedido completo e valida os resultados.
-   Se houver reprovação, registre os achados, crie uma branch de correção a partir
-   da `dev`, corrija e teste. Integre a correção à `dev` e retorne à revisão.
-6. **Integre o conjunto aprovado à `main`.** Valide na `dev` o funcionamento das
-   mudanças em conjunto antes da integração. Atualize a documentação conforme o
-   comportamento entregue. A etapa do diagrama descreve o processo da equipe;
-   não dispensa os testes nem a aprovação do colega.
+5. **Peça revisão a outro integrante.** Abra PR para `develop` e mova o cartão
+   para **Revisão e testes**. O colega confere o pedido completo e os resultados.
+   Corrija os achados na branch de trabalho e execute novamente as verificações
+   afetadas antes da aprovação. Integre somente com revisão e CI aprovados.
+6. **Prepare uma release do conjunto aprovado.** Valide na `develop`, crie
+   `release/X.Y.Z`, congele funcionalidades e registre o aceite. Após aprovação,
+   integre à `main`, marque `vX.Y.Z` e leve as correções da release à `develop`.
+   O procedimento completo, incluindo urgências, está em [Git Flow](gitflow.md).
 7. **Registre a entrega e atualize o quadro.** Comente na issue o que foi feito,
    os links, a revisão e as evidências. Marque os critérios realmente atendidos.
    Mova a tarefa para **Concluído** quando seu escopo estiver aprovado e entregue.
@@ -70,7 +70,7 @@ consolida as evidências produzidas durante o trabalho.
 | Coluna | Quando usar |
 |---|---|
 | A fazer | Tarefa identificada, com escopo, responsável e dependências registrados. |
-| Em andamento | Desenvolvimento na `dev` ou correção dos achados em execução. |
+| Em andamento | Desenvolvimento na branch da tarefa ou correção dos achados em execução. |
 | Revisão e testes | Alteração pronta para validação e revisão por outro integrante, com evidências disponíveis. |
 | Concluído | Escopo da tarefa aprovado e entregue; a issue só fecha se seus requisitos completos também estiverem atendidos. |
 
@@ -87,7 +87,7 @@ Responsável: [nome]. Revisor: [outro integrante].
 Escopo desta entrega: [parte do pedido que será atendida].
 Critérios a validar: [critérios do corpo e do checklist].
 Dependências e pendências: [listar ou indicar nenhuma].
-Trabalho na dev; evidências serão registradas nesta issue e na documentação.
+Trabalho em feature/nome, com PR para develop; evidências serão registradas nesta issue e na documentação.
 ```
 
 **Comentário final:**
