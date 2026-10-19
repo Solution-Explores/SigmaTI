@@ -64,8 +64,8 @@ _NAME_WORD = (
     r"identificaram|solicitou|portador|falha|est[aá]|offline)\b)[A-Za-zÀ-ÿ]{2,}"
 )
 RE_NOMES_CONTEXTUAIS = re.compile(
-    r"(?i:\b(?:dr\.|dra\.|doutor\b|doutora\b|enf\.|enfermeir[oa]\b|m[eé]dic[oa]\b|"
-    r"t[eé]cnic[oa]\b|paciente\b|usu[aá]rio\b)\s+)"
+    r"(?i:\b(?:(?:dr\.|dra\.|enf\.)\s*|(?:doutor|doutora|enfermeir[oa]|m[eé]dic[oa]|"
+    r"t[eé]cnic[oa]|paciente|usu[aá]rio)\b\s+))"
     + _NAME_WORD + r"(?:\s+(?:(?:de|da|do|dos|das)\s+)?" + _NAME_WORD + r")*"
 )
 
@@ -225,19 +225,22 @@ def sanitizar_texto(texto: str) -> ResultadoSanitizacao:
     saida = texto
 
     try:
-        # 1. Nomes literais configurados (ex: dr.joao)
+        # Remover o nome contextual completo antes de seus prefixos configurados.
+        # Caso contrário, dr.joao Silva vira [USUARIO_MEDICO] Silva.
+        def _sub_nome_contextual(m: re.Match) -> str:
+            removidos.append("nome_contextual")
+            if any(nome in m.group().lower() for nome in nomes_configurados()):
+                return "[USUARIO_MEDICO]"
+            return "[NOME_REMOVIDO]"
+
+        saida = RE_NOMES_CONTEXTUAIS.sub(_sub_nome_contextual, saida)
+
+        # Nomes literais configurados que não têm contexto reconhecido.
         for nome in sorted(nomes_configurados(), key=len, reverse=True):
             if nome in saida.lower():
                 pattern = re.compile(re.escape(nome), re.IGNORECASE)
                 saida = pattern.sub("[USUARIO_MEDICO]", saida)
                 removidos.append("nome_configurado")
-
-        # 2. Nomes por heurística profissional / clínica
-        def _sub_nome_contextual(m: re.Match) -> str:
-            removidos.append("nome_contextual")
-            return "[NOME_REMOVIDO]"
-
-        saida = RE_NOMES_CONTEXTUAIS.sub(_sub_nome_contextual, saida)
 
         # 3. E-mails
         if RE_EMAIL.search(saida):

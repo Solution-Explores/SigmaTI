@@ -1,5 +1,9 @@
 # Correções K11/K12 e revisão de privacidade — 19/10/2026
 
+Atualização após nova revisão solicitada: veja [revisao-tecnica.md](revisao-tecnica.md).
+O novo aceite inclui 369 testes Python, E6 com 53 identificadores e 23 verificações
+Docker. Os números abaixo preservam o histórico da primeira entrega.
+
 Base remota: `dev@001d30402a1c5900a8228111ac16301171c83083`.
 Branch: `fix/sprint-aceite-autenticacao-privacidade`.
 Checkout independente em `D:/sigma-dev/SigmaTI`; cópia anterior preservada.

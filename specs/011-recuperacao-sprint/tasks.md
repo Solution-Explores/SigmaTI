@@ -12,6 +12,7 @@ Escopo autorizado: demonstração controlada; roteiro futuro permanece separado.
 - [x] Build/lint e navegador com IA simulada.
 - [x] CI inclui aceite HTTP, E6, build/lint e navegador.
 - [x] K09/K12: validação isolada de prontidão, autenticação e persistência; recursos removidos.
+- [x] Nova revisão técnica: sobrenomes, recriação de conta, limites no .env e escuta do Zabbix corrigidos; 369 testes e aceite ampliado aprovados.
 - [ ] Revisão de outro integrante e integração aprovada na dev/main.
 - [x] Conferir CI remoto da implementação e atualizar o quadro com PR #32 e links da entrega.
 

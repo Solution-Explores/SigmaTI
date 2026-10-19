@@ -41,9 +41,9 @@ PAPEIS: dict[str, int] = {
 JWT_SECRET = None
 _sessions: dict[str, dict] = {}
 _session_lock = threading.Lock()
-JWT_EXPIRATION_SECONDS = int(os.getenv("SIGMA_JWT_EXPIRATION_SECONDS", "3600"))  # 1 hora
-MAX_LOGIN_ATTEMPTS = int(os.getenv("SIGMA_MAX_LOGIN_ATTEMPTS", "5"))
-LOCKOUT_DURATION_SECONDS = int(os.getenv("SIGMA_LOCKOUT_DURATION_SECONDS", "900"))  # 15 minutos
+JWT_EXPIRATION_SECONDS = 3600
+MAX_LOGIN_ATTEMPTS = 5
+LOCKOUT_DURATION_SECONDS = 900
 
 
 # --- Funções Criptográficas Auxiliares (Base64URL e JWT puro sem dependências pesadas) ---
@@ -240,7 +240,12 @@ class UsuarioRepository:
             papel=papel,
             ativo=True,
         )
-        self._usuarios[username] = user
+        # Recriar uma conta não pode preservar as sessões da identidade anterior.
+        with _session_lock:
+            for jti in [j for j, sessao in _sessions.items()
+                        if self is usuario_repo and sessao["sub"] == username]:
+                _sessions.pop(jti, None)
+            self._usuarios[username] = user
         return user
 
     def obter_por_username(self, username: str) -> Usuario | None:
@@ -257,15 +262,24 @@ def configure_auth(secret: str) -> None:
     caminho = os.getenv("SIGMA_USERS_FILE", "").strip()
     if not caminho:
         raise ConfigurationError("Configure a variável obrigatória SIGMA_USERS_FILE.")
+    def positive_setting(name: str, default: int, maximum: int) -> int:
+        try:
+            value = int(os.getenv(name, str(default)))
+            if not 1 <= value <= maximum:
+                raise ValueError()
+            return value
+        except ValueError:
+            raise ConfigurationError(f"{name} deve estar entre 1 e {maximum}.") from None
+
+    expiration = positive_setting("SIGMA_JWT_EXPIRATION_SECONDS", 3600, 86400)
+    attempts = positive_setting("SIGMA_MAX_LOGIN_ATTEMPTS", 5, 100)
+    duration = positive_setting("SIGMA_LOCKOUT_DURATION_SECONDS", 900, 86400)
     usuario_repo.carregar(caminho)
-    try:
-        expiration = int(os.getenv("SIGMA_JWT_EXPIRATION_SECONDS", "3600"))
-        if not 1 <= expiration <= 86400:
-            raise ValueError()
-    except ValueError:
-        raise ConfigurationError("SIGMA_JWT_EXPIRATION_SECONDS deve estar entre 1 e 86400.") from None
     JWT_EXPIRATION_SECONDS = expiration
     JWT_SECRET = secret
+    rate_limiter.max_falhas = attempts
+    rate_limiter.tempo_bloqueio = duration
+    rate_limiter._tentativas.clear()
     with _session_lock:
         _sessions.clear()
 

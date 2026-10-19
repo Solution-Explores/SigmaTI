@@ -61,6 +61,15 @@ def test_deactivated_user_and_changed_role_are_rejected(client, temporary_identi
     assert client.get("/api/status", headers=headers).status_code == 401
 
 
+def test_replacing_account_revokes_old_sessions(client, temporary_identity):
+    headers = login(client, temporary_identity)
+    auth.usuario_repo.adicionar_usuario("suporte.n1", "replacement-password", "suporte_n1")
+    assert client.get("/api/status", headers=headers).status_code == 401
+    assert client.post("/api/auth/login", json={
+        "username": "suporte.n1", "password": "replacement-password",
+    }).status_code == 200
+
+
 def test_environment_cannot_disable_auth(client, monkeypatch):
     monkeypatch.setenv("SIGMA_AUTH_ENFORCED", "0")
     assert client.get("/api/status").status_code == 401
@@ -70,9 +79,12 @@ def test_jwt_secret_from_dotenv_is_loaded_before_auth(monkeypatch, tmp_path):
     import config
     secret = __import__('secrets').token_hex(32)
     path = tmp_path / '.env'
-    path.write_text('SIGMA_JWT_SECRET=' + secret + '\nSIGMA_JWT_EXPIRATION_SECONDS=60\n', encoding='utf-8')
+    path.write_text('SIGMA_JWT_SECRET=' + secret + '\nSIGMA_JWT_EXPIRATION_SECONDS=60\n'
+                    'SIGMA_MAX_LOGIN_ATTEMPTS=2\nSIGMA_LOCKOUT_DURATION_SECONDS=30\n', encoding='utf-8')
     monkeypatch.delenv('SIGMA_JWT_SECRET')
     monkeypatch.delenv('SIGMA_JWT_EXPIRATION_SECONDS', raising=False)
+    monkeypatch.delenv('SIGMA_MAX_LOGIN_ATTEMPTS', raising=False)
+    monkeypatch.delenv('SIGMA_LOCKOUT_DURATION_SECONDS', raising=False)
     monkeypatch.delenv('PYTHON_DOTENV_DISABLED', raising=False)
     monkeypatch.setenv('OPENROUTER_API_KEY', 'fake-only')
     monkeypatch.setenv('SIGMA_LLM_MODEL', 'test/model')
@@ -81,6 +93,27 @@ def test_jwt_secret_from_dotenv_is_loaded_before_auth(monkeypatch, tmp_path):
     auth.configure_auth(settings.jwt_secret)
     assert auth.JWT_SECRET == secret
     assert auth.JWT_EXPIRATION_SECONDS == 60
+    assert auth.rate_limiter.max_falhas == 2
+    assert auth.rate_limiter.tempo_bloqueio == 30
+
+
+@pytest.mark.parametrize('name,value', [
+    ('SIGMA_JWT_EXPIRATION_SECONDS', 'invalid'),
+    ('SIGMA_MAX_LOGIN_ATTEMPTS', '0'),
+    ('SIGMA_LOCKOUT_DURATION_SECONDS', '-1'),
+])
+def test_invalid_auth_limits_fail_closed(monkeypatch, name, value):
+    from config import ConfigurationError
+    monkeypatch.setenv(name, value)
+    with pytest.raises(ConfigurationError, match=name):
+        auth.configure_auth(auth.JWT_SECRET)
+
+
+@pytest.mark.parametrize('name', ['Dr. Joao Silva', 'dr.joao Silva', 'Dra.Maria Souza'])
+def test_configured_name_prefix_never_preserves_surname(name):
+    result = sanitizer.sanitizar_texto(name + ' relatou falha no enlace.')
+    assert result.sucesso
+    assert result.texto_sanitizado == '[USUARIO_MEDICO] relatou falha no enlace.'
 
 
 @pytest.mark.parametrize('body', [[], [{"username": "demo", "senha_hash": "plaintext", "papel": "gestor_ti"}]])

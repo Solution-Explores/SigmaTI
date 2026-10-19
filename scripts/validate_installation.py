@@ -78,6 +78,10 @@ def main():
             with opener.open(req,timeout=5) as r: return r.status, r.read().decode(), r.headers
         except urllib.error.HTTPError as e: return e.code, e.read().decode(), e.headers
 
+    def zabbix_listening():
+        with socket.create_connection(('127.0.0.1', ports['zabbix-server']), timeout=3):
+            return True
+
     try:
         run(['docker','info','--format','{{.ServerVersion}}'])
         rendered = run(['docker','compose','--env-file',str(empty),'-p',project,
@@ -144,6 +148,7 @@ def main():
             payload={'theme':'dark','timezone':'utc'},method='PUT')[0] == 200)
         eventually(lambda: sql('postgres-server','SELECT count(*) FROM hosts').returncode == 0)
         check('zabbix_database_ready', sql('postgres-server','SELECT count(*) FROM hosts').returncode == 0)
+        check('zabbix_server_listening', eventually(zabbix_listening))
         check('zabbix_database_rejects_wrong_password', sql('postgres-server','SELECT 1',False).returncode != 0)
         for service in ('db','postgres-server'):
             check(service+'_write_marker',sql(service,
@@ -165,6 +170,7 @@ def main():
         check('grafana_preference_persistence',json.loads(http(ports['grafana'],
             '/api/user/preferences',admin)[1]).get('timezone') == 'utc')
         check('zabbix_database_persistence',sql('postgres-server','SELECT count(*) FROM acceptance_marker').stdout.strip() == '1')
+        check('zabbix_server_listening_after_recreation', eventually(zabbix_listening))
         report['status'] = 'passed'
     except Exception as e:
         report['status'] = 'failed'

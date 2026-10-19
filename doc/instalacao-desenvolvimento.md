@@ -105,6 +105,9 @@ Sessões e alterações de usuários ficam em memória, em um único processo da
 Logout revoga somente seu token; reinício invalida todas as sessões. Usuários
 criados pela API não sobrevivem ao reinício. PostgreSQL e Argon2id/bcrypt continuam
 pendentes na issue #6; este ambiente é para demonstração com dados fictícios.
+Recriar uma conta revoga suas sessões anteriores. `SIGMA_MAX_LOGIN_ATTEMPTS`
+(1–100, padrão 5) e `SIGMA_LOCKOUT_DURATION_SECONDS` (1–86400, padrão 900)
+são carregados após o `.env`, assim como a expiração da sessão (1–86400 segundos).
 
 ## 4. Validar e iniciar os componentes
 

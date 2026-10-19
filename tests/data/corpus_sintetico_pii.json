@@ -703,5 +703,56 @@
       }
     ],
     "espera_sanitizacao": true
+  },
+  {
+    "id": "POS-032",
+    "tipo": "positivo",
+    "entrada": "Dr. Joao Silva relatou falha no enlace.",
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "Dr. Joao Silva",
+        "substituto": "[USUARIO_MEDICO]",
+        "proibidos": [
+          "Joao",
+          "Silva"
+        ]
+      }
+    ],
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "POS-033",
+    "tipo": "positivo",
+    "entrada": "dr.joao Silva relatou falha no enlace.",
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "dr.joao Silva",
+        "substituto": "[USUARIO_MEDICO]",
+        "proibidos": [
+          "joao",
+          "Silva"
+        ]
+      }
+    ],
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "POS-034",
+    "tipo": "positivo",
+    "entrada": "Dra.Maria Souza relatou falha no enlace.",
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "Dra.Maria Souza",
+        "substituto": "[USUARIO_MEDICO]",
+        "proibidos": [
+          "Maria",
+          "Souza"
+        ]
+      }
+    ],
+    "espera_sanitizacao": true
   }
 ]

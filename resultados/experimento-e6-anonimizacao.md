@@ -1,6 +1,6 @@
 # E6 — avaliação por identificador do corpus sintético
 
-Amostras: 56; identificadores: 50.
+Amostras: 59; identificadores: 53.
 Recall de transformação: 100.00%; precisão operacional: 100.00%.
 Falsos positivos por mensagem negativa: 0.00%.
 Identificadores bloqueados: 0; vazados: 0.
@@ -14,7 +14,7 @@ Identificadores bloqueados: 0; vazados: 0.
 | ipv4 | 10 | 10 | 0 | 0 |
 | ipv6 | 5 | 5 | 0 | 0 |
 | mac | 3 | 3 | 0 | 0 |
-| nome | 9 | 9 | 0 | 0 |
+| nome | 12 | 12 | 0 | 0 |
 | prontuario | 3 | 3 | 0 | 0 |
 
 ## Método e limites
