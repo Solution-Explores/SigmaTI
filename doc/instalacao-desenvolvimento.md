@@ -80,23 +80,31 @@ O [README](../README.md#credenciais-da-infraestrutura) detalha cada variável.
 Para iniciar a API, preencha também `OPENROUTER_API_KEY`, `SIGMA_LLM_MODEL` e
 `SIGMA_CORS_ORIGINS`, com a origem exata do painel. Nunca publique esse arquivo.
 
-A autenticação atual lê a chave JWT ao importar `auth.py`, antes de carregar o
-`.env`. Por isso, defina `SIGMA_JWT_SECRET` **no ambiente do processo antes de
-iniciar a API**, usando um segredo local gerado sem exibi-lo:
+A API carrega o `.env` antes de configurar a autenticação. `SIGMA_JWT_SECRET`
+é obrigatória, com pelo menos 32 bytes; não existe fallback. Gere um segredo local
+sem incluí-lo nos registros de teste:
 
 ```powershell
 $env:SIGMA_JWT_SECRET = python -c "import secrets; print(secrets.token_hex(32))"
+python scripts/create_demo_users.py
+$env:SIGMA_USERS_FILE = (Resolve-Path .local/users.json).Path
 ```
 
 ```bash
 export SIGMA_JWT_SECRET="$(python -c 'import secrets; print(secrets.token_hex(32))')"
+python scripts/create_demo_users.py
+export SIGMA_USERS_FILE="$(pwd)/.local/users.json"
 ```
 
-A chave é efêmera nessa sessão; reiniciar com outra chave invalida os tokens
-anteriores. Padronizar o carregamento e retirar o fallback é um achado para K11.
-Mantenha a autenticação habilitada. Contas de demonstração, usuários em memória,
-logout e integração do login ao painel ainda exigem tratamento na issue #6/K11.
-Este roteiro não homologa o sistema para uso hospitalar.
+O criador pede uma senha temporária diferente para cada perfil e grava somente os
+hashes no arquivo local ignorado. Não há contas criadas automaticamente. Essas
+variáveis também podem ser definidas no `.env`; use caminho absoluto no arquivo.
+As senhas não são exibidas nem gravadas pelo script.
+
+Sessões e alterações de usuários ficam em memória, em um único processo da API.
+Logout revoga somente seu token; reinício invalida todas as sessões. Usuários
+criados pela API não sobrevivem ao reinício. PostgreSQL e Argon2id/bcrypt continuam
+pendentes na issue #6; este ambiente é para demonstração com dados fictícios.
 
 ## 4. Validar e iniciar os componentes
 
@@ -133,9 +141,38 @@ npm run dev
 ```
 
 Uma chamada sem token a `GET http://127.0.0.1:8000/api/status` deve receber 401.
-A validação autenticada com IA simulada está nos testes da K07. O painel atual
-ainda não implementa login, e o preflight CORS não permite `Authorization`;
-o fluxo completo pelo navegador é um achado para K11/K10, não um aceite desta K08.
+O painel possui login, consulta de perfil e logout. Envia o token por Bearer e
+mantém a sessão somente em memória; recarregar a página exige novo login.
+`VITE_API_URL` define o endereço da API (padrão `http://localhost:8000`). CORS
+permite GET/POST com Authorization/Content-Type nas origens configuradas.
+
+Aceite sem IA real, com credenciais geradas pelo próprio runner:
+
+```bash
+python scripts/validate_api_acceptance.py --output test-results/aceite-novo.json --port 18001
+python scripts/executar_experimento_e6.py --output test-results/e6.md
+cd sigma-frontend
+npm ci --include=optional
+npm run build
+npm run lint
+npx playwright install chromium
+npm run test:e2e
+```
+
+Use um caminho de saída novo a cada aceite para preservar evidências anteriores.
+O teste de navegador inicia e encerra API/Vite próprios; as portas 18000 e 5173
+precisam estar disponíveis. Nenhum navegador de uso pessoal é controlado.
+
+Para repetir K09 em projeto/volumes descartáveis, com Docker ativo:
+
+```bash
+python scripts/validate_installation.py --output test-results/instalacao-nova
+```
+
+Esse runner baixa as imagens fixadas, testa autenticação e persistência após
+recriação, e remove somente o projeto e os volumes exclusivos criados por ele.
+O diretório de saída deve ser novo e conterá configuração com credenciais
+fictícias: não o publique. Apenas `report.json` é apropriado para evidências.
 
 ## 5. Evidências e recuperação
 
@@ -155,6 +192,6 @@ Os resultados desta entrega e os achados encaminhados estão no
 A [execução K09/K10 de 19/10/2026](../specs/009-010-instalacao-aceite/evidencias.md)
 validou Python e build do frontend, mas encontrou falha TLS no download Docker,
 falha de lint e reprovações no fluxo autenticado. Instalação e aceite integrado
-continuam pendentes de correções K11/K12. O runner HTTP reproduzível é
+foram reavaliados na [revisão K11/K12](../specs/011-recuperacao-sprint/evidencias.md). O runner HTTP reproduzível é
 `scripts/validate_api_acceptance.py`; ele usa IA simulada e retorna erro quando
 um critério de aceite falha.

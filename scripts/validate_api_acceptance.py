@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 import secrets
+from dataclasses import asdict
 import socket
 import subprocess
 import sys
@@ -79,6 +80,7 @@ def request(base: str, method: str, path: str, payload=None, headers=None):
 
 def validate(args) -> int:
     checkout = args.checkout.resolve()
+    sys.path.insert(0, str(checkout))
     output = args.output.resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
     interpreter = checkout / ".venv" / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
@@ -87,10 +89,18 @@ def validate(args) -> int:
     with socket.socket() as reservation:
         reservation.bind(("127.0.0.1", args.port))
     env = {**os.environ, "OPENROUTER_API_KEY": FAKE_KEY, "SIGMA_LLM_MODEL": "test-provider/test-model",
-           "SIGMA_CORS_ORIGINS": ORIGIN, "SIGMA_AUTH_ENFORCED": "1", "PYTHON_DOTENV_DISABLED": "1",
+           "SIGMA_CORS_ORIGINS": ORIGIN, "PYTHON_DOTENV_DISABLED": "1",
            "SIGMA_JWT_SECRET": secrets.token_hex(32), "SIGMA_AUDIT_KEY": secrets.token_hex(32),
            "SIGMA_AUDIT_PATH": str(output.with_suffix(".audit.jsonl")), "PYTHONUNBUFFERED": "1"}
     env.pop("PYTHONPATH", None)
+    from auth import UsuarioRepository
+    password = secrets.token_urlsafe(24)
+    repo = UsuarioRepository()
+    repo.adicionar_usuario("suporte.n1", password, "suporte_n1")
+    users_path = output.with_suffix(".users.json")
+    with users_path.open("x", encoding="utf-8") as stream:
+        json.dump([asdict(u) for u in repo._usuarios.values()], stream)
+    env["SIGMA_USERS_FILE"] = str(users_path)
     events = output.with_suffix(".events.jsonl")
     if events.exists():
         raise RuntimeError("Use a new output path; previous acceptance evidence is preserved")
@@ -98,7 +108,7 @@ def validate(args) -> int:
     log_path = output.with_suffix(".server.log")
     records = []
     base = f"http://127.0.0.1:{args.port}"
-    commit = subprocess.check_output(["git", "-C", str(checkout), "rev-parse", "HEAD"], text=True).strip()
+    commit = subprocess.check_output(["git", "-c", f"safe.directory={checkout.as_posix()}", "-C", str(checkout), "rev-parse", "HEAD"], text=True).strip()
 
     def count():
         return sum(json.loads(line)["phase"] == "provider_called" for line in events.read_text().splitlines())
@@ -133,7 +143,7 @@ def validate(args) -> int:
             status, body, _ = request(base, "POST", "/api/alertas", ALERT)
             check("token_required_before_provider", status == 401 and count() == 0, {"http": status, "provider_calls": count()})
             status, body, _ = request(base, "POST", "/api/auth/login",
-                                      {"username": "suporte.n1", "password": "SenhaN1@123"})
+                                      {"username": "suporte.n1", "password": password})
             login = json.loads(body)
             check("session_login", status == 200 and FAKE_KEY not in body and bool(login.get("access_token")), {"http": status})
             token = login["access_token"]
@@ -183,7 +193,7 @@ def validate(args) -> int:
             after, _, _ = request(base, "GET", "/api/status", headers=auth)
             check("logout_revokes_session", status == 200 and after == 401, {"logout": status, "same_token_after_logout": after})
 
-            for missing in ("OPENROUTER_API_KEY", "SIGMA_LLM_MODEL", "SIGMA_CORS_ORIGINS"):
+            for missing in ("OPENROUTER_API_KEY", "SIGMA_LLM_MODEL", "SIGMA_CORS_ORIGINS", "SIGMA_JWT_SECRET", "SIGMA_USERS_FILE"):
                 invalid_env = {key: value for key, value in env.items() if key != missing}
                 imported = subprocess.run([str(interpreter), "-c", "import main"], cwd=checkout,
                                           env=invalid_env, capture_output=True, text=True, timeout=15)
@@ -202,6 +212,11 @@ def validate(args) -> int:
                       "passed": sum(r["passed"] for r in records), "failed": sum(not r["passed"] for r in records),
                       "server_pid": process.pid if args.keep_server and ready else None}
             output.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+            if args.keep_server and ready:
+                output.with_suffix(".browser.json").write_text(json.dumps({
+                    "username": "suporte.n1", "password": password, "api_url": base,
+                    "server_pid": process.pid,
+                }), encoding="utf-8")
     return 1 if any(not item["passed"] for item in records) else 0
 
 

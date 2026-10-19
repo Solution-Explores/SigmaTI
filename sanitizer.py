@@ -1,4 +1,4 @@
-"""Módulo de anonimização e privacidade em conformidade com a LGPD (RF05).
+"""Pipeline determinístico de privacidade para os casos definidos no RF05.
 
 Implementa generalização de rede (IPv4 -> /24, IPv6 -> /64), mascaramento de MAC,
 categorização de equipamentos/hostnames e remoção de dados pessoais e médicos
@@ -13,9 +13,9 @@ from __future__ import annotations
 
 import ipaddress
 import logging
+import os
 import re
 from dataclasses import dataclass, field
-from typing import Any
 
 logger = logging.getLogger("sigma.sanitizer")
 audit_logger = logging.getLogger("sigma.audit")
@@ -43,13 +43,9 @@ class ResultadoSanitizacao:
 
 # --- Expressões Regulares de Detecção ---
 
-RE_IPV4 = re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b")
-RE_IPV6 = re.compile(
-    r"\b(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\b|"
-    r"\b(?:[0-9a-fA-F]{1,4}:){1,7}:[0-9a-fA-F]{1,4}\b|"
-    r"\b::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}\b|"
-    r"\b(?:[0-9a-fA-F]{1,4}:){1,6}:(?:[0-9a-fA-F]{1,4}:){0,5}[0-9a-fA-F]{1,4}\b"
-)
+RE_IPV4 = re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b(?:/\d{1,2})?")
+RE_IPV6 = re.compile(r"(?<![\w:])(?:[0-9a-fA-F]*:){2,}[0-9a-fA-F:.]*(?:%[\w]+)?(?:/\d{1,3})?(?![\w:])")
+RE_CPF_LIVRE = re.compile(r"\b\d{11}\b")
 RE_MAC = re.compile(
     r"\b(?:[0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}\b|\b[0-9A-Fa-f]{4}\.[0-9A-Fa-f]{4}\.[0-9A-Fa-f]{4}\b"
 )
@@ -63,15 +59,20 @@ RE_CNS = re.compile(
 RE_PRONTUARIO = re.compile(r"(?i:\bprontu[aá]rio[:\s#]+|\bpront[:\s#]+)([A-Za-z0-9_-]{3,20})\b")
 
 # Nomes precedidos por termos médicos, cargos ou papéis no hospital
+_NAME_WORD = (
+    r"(?!(?i:dr|dra|e|o|a|no|na|em|com|sem|ap[oó]s|para|por|relatou|reporta|reportou|"
+    r"identificaram|solicitou|portador|falha|est[aá]|offline)\b)[A-Za-zÀ-ÿ]{2,}"
+)
 RE_NOMES_CONTEXTUAIS = re.compile(
-    r"(?i:\b(?:dr\.|dra\.|doutor\b|doutora\b|enf\.|enfermeir[oa]\b|m[eé]dic[oa]\b|t[eé]cnic[oa]\b|paciente\b|usu[aá]rio\b)\s+)"
-    r"([A-ZÀ-Úa-zà-ú]{2,}(?:\s+[A-ZÀ-Úa-zà-ú]{2,})*)"
+    r"(?i:\b(?:dr\.|dra\.|doutor\b|doutora\b|enf\.|enfermeir[oa]\b|m[eé]dic[oa]\b|"
+    r"t[eé]cnic[oa]\b|paciente\b|usu[aá]rio\b)\s+)"
+    + _NAME_WORD + r"(?:\s+(?:(?:de|da|do|dos|das)\s+)?" + _NAME_WORD + r")*"
 )
 
 # Hostnames comuns em logs hospitalares
 RE_HOSTNAME_LOG = re.compile(
-    r"\b([a-zA-Z0-9_-]+\.(?:fcecon|hospital|rede|local|lan|internal))\b|"
-    r"\b((?:sw(?:itch)?|rt|router|srv|server|fw|firewall|tomo(?:grafo)?|ct|mon(?:itor)?|ws|term(?:inal)?|ap|wifi)-[a-zA-Z0-9_.-]+)\b",
+    r"\b([a-zA-Z0-9_-]+\.(?:fcecon|hospital|rede|local|lan|internal)(?:\.[a-zA-Z0-9_-]+)*)\b|"
+    r"\b((?:sw(?:itch)?|rt|router|srv|server|fw|firewall|tomo(?:grafo)?|ressonancia|bomba|ct|mon(?:itor)?|ws|term(?:inal)?|ap|wifi)-[a-zA-Z0-9_.-]+)\b",
     re.IGNORECASE,
 )
 
@@ -152,7 +153,7 @@ def _validar_digitos_cpf(cpf: str) -> bool:
 def _substituir_ipv4(match: re.Match) -> str:
     candidato = match.group(0)
     try:
-        ip = ipaddress.IPv4Address(candidato)
+        ip = ipaddress.IPv4Interface(candidato).ip
         # Generaliza o endereço IP para a sub-rede /24 correspondente (RF05)
         # Ex: 192.168.1.55 -> 192.168.1.0/24
         net = ipaddress.IPv4Network(f"{ip}/24", strict=False)
@@ -164,17 +165,51 @@ def _substituir_ipv4(match: re.Match) -> str:
 def _substituir_ipv6(match: re.Match) -> str:
     candidato = match.group(0)
     try:
-        ip = ipaddress.IPv6Address(candidato)
+        ip = ipaddress.IPv6Interface(candidato.rstrip(".")).ip
         # Generaliza o endereço IPv6 para o prefixo /64 correspondente
         net = ipaddress.IPv6Network(f"{ip}/64", strict=False)
-        return f"{net.network_address}/64"
+        return f"{net.network_address}/64" + ("." if candidato.endswith(".") else "")
     except ValueError:
         return candidato
 
 
+def nomes_configurados() -> set[str]:
+    return NOMES_CONFIGURADOS | {n.strip().lower() for n in os.getenv("SIGMA_PII_NAMES", "").split(",") if n.strip()}
+
+
+def detectar_residuos(texto: str) -> list[str]:
+    """Verifica a saída sem incluir valores sensíveis no diagnóstico."""
+    residuos = []
+    for categoria, pattern in (("mac", RE_MAC), ("email", RE_EMAIL), ("cpf", RE_CPF_FORMATADO),
+                               ("cpf_contextual", RE_CPF_CONTEXTUAL), ("cns", RE_CNS),
+                               ("prontuario", RE_PRONTUARIO), ("hostname", RE_HOSTNAME_LOG),
+                               ("nome", RE_NOMES_CONTEXTUAIS)):
+        if pattern.search(texto):
+            residuos.append(categoria + "_residual")
+    if any(_validar_digitos_cpf(m.group()) for m in RE_CPF_LIVRE.finditer(texto)):
+        residuos.append("cpf_residual")
+    for categoria, pattern, cls, prefix in (("ipv4", RE_IPV4, ipaddress.IPv4Interface, 24),
+                                           ("ipv6", RE_IPV6, ipaddress.IPv6Interface, 64)):
+        for match in pattern.finditer(texto):
+            try:
+                interface = cls(match.group().rstrip("."))
+            except ValueError:
+                continue
+            if interface.network.prefixlen != prefix or interface.ip != interface.network.network_address:
+                residuos.append(categoria + "_residual")
+    if any(re.search(re.escape(n), texto, re.IGNORECASE) for n in nomes_configurados()):
+        residuos.append("nome_configurado_residual")
+    return sorted(set(residuos))
+
+
 def registrar_auditoria_privacidade(categoria: str, detalhe: str) -> None:
-    """Grava registro na trilha de auditoria sem expor payloads ou dados brutos."""
-    audit_logger.warning("AUDIT_PRIVACY event=%s detalhe=%s", categoria, detalhe)
+    """Audita somente códigos fixos; nunca inclui texto ou identificadores."""
+    audit_logger.warning("AUDIT_PRIVACY event=sanitization_failed")
+    from auth import obter_auditor
+    auditor = obter_auditor()
+    if auditor is None:
+        raise SanitizationError("Auditoria de privacidade indisponível.")
+    auditor.registrar("sanitizer", "privacy.sanitization_failed", "outbound_ai", {"motivo": "blocked"})
 
 
 def sanitizar_texto(texto: str) -> ResultadoSanitizacao:
@@ -191,11 +226,11 @@ def sanitizar_texto(texto: str) -> ResultadoSanitizacao:
 
     try:
         # 1. Nomes literais configurados (ex: dr.joao)
-        for nome in NOMES_CONFIGURADOS:
+        for nome in sorted(nomes_configurados(), key=len, reverse=True):
             if nome in saida.lower():
                 pattern = re.compile(re.escape(nome), re.IGNORECASE)
                 saida = pattern.sub("[USUARIO_MEDICO]", saida)
-                removidos.append(f"nome_configurado:{nome}")
+                removidos.append("nome_configurado")
 
         # 2. Nomes por heurística profissional / clínica
         def _sub_nome_contextual(m: re.Match) -> str:
@@ -216,12 +251,19 @@ def sanitizar_texto(texto: str) -> ResultadoSanitizacao:
 
         def _sub_cpf_contextual(m: re.Match) -> str:
             digitos = re.sub(r"\D", "", m.group(0))
-            if len(digitos) == 11 and _validar_digitos_cpf(digitos):
+            if len(digitos) == 11:
                 removidos.append("cpf_contextual")
                 return "[CPF_REMOVIDO]"
             return m.group(0)
 
         saida = RE_CPF_CONTEXTUAL.sub(_sub_cpf_contextual, saida)
+
+        def _sub_cpf_livre(m: re.Match) -> str:
+            if _validar_digitos_cpf(m.group()):
+                removidos.append("cpf")
+                return "[CPF_REMOVIDO]"
+            return m.group()
+        saida = RE_CPF_LIVRE.sub(_sub_cpf_livre, saida)
 
         # 5. CNS (Cartão Nacional de Saúde)
         if RE_CNS.search(saida):
@@ -247,47 +289,15 @@ def sanitizar_texto(texto: str) -> ResultadoSanitizacao:
             saida = RE_MAC.sub("[MAC_MASCARADO]", saida)
             removidos.append("mac")
 
-        # 9. Endereços IPv4 (conversão para /24)
+        if RE_IPV6.search(saida):
+            saida = RE_IPV6.sub(_substituir_ipv6, saida)
+            removidos.append("ipv6_subrede")
         if RE_IPV4.search(saida):
             saida = RE_IPV4.sub(_substituir_ipv4, saida)
             removidos.append("ipv4_subrede")
 
-        # 10. Endereços IPv6 (conversão para /64)
-        if RE_IPV6.search(saida):
-            saida = RE_IPV6.sub(_substituir_ipv6, saida)
-            removidos.append("ipv6_subrede")
-
         # --- SEGUNDA PASSADA: Detecção Residual (Two-Pass Verification) ---
-        residuos: list[str] = []
-
-        # Detecção de IPv4 residual que não seja sub-rede /24
-        for match in RE_IPV4.finditer(saida):
-            cand = match.group(0)
-            try:
-                ipaddress.IPv4Address(cand)
-                # Verifica se o IP está seguido por '/24' ou faz parte de token
-                inicio, fim = match.span()
-                sufixo = saida[fim:fim + 3]
-                if sufixo != "/24":
-                    residuos.append(f"ipv4_residual:{cand}")
-            except ValueError:
-                pass
-
-        # Detecção de MAC residual
-        if RE_MAC.search(saida):
-            residuos.append("mac_residual")
-
-        # Detecção de E-mail residual
-        if RE_EMAIL.search(saida):
-            residuos.append("email_residual")
-
-        # Detecção de CPF formatado residual
-        if RE_CPF_FORMATADO.search(saida):
-            residuos.append("cpf_residual")
-
-        # Detecção de CNS residual
-        if RE_CNS.search(saida):
-            residuos.append("cns_residual")
+        residuos = detectar_residuos(saida)
 
         if residuos:
             return ResultadoSanitizacao(
@@ -295,7 +305,7 @@ def sanitizar_texto(texto: str) -> ResultadoSanitizacao:
                 texto_sanitizado=saida,
                 identificadores_removidos=removidos,
                 residuos=residuos,
-                motivo_bloqueio=f"Detecção residual de dados: {','.join(residuos)}",
+                motivo_bloqueio="Detecção residual de identificadores.",
             )
 
         return ResultadoSanitizacao(
@@ -329,6 +339,6 @@ def anonimizar_dados(texto: str) -> str:
             detalhe=resultado.motivo_bloqueio or "falha_desconhecida",
         )
         raise SanitizationResidualError(
-            f"Falha de conformidade LGPD: {resultado.motivo_bloqueio}"
+            "Sanitização bloqueou o envio externo."
         )
     return resultado.texto_sanitizado

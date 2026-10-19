@@ -1,3 +1,5 @@
+> Atualização 19/10/2026: entrega parcial em correção/revisão. As afirmações de conclusão abaixo são históricas e não equivalem ao aceite integral. Consulte [a revisão da sprint](../011-recuperacao-sprint/evidencias.md).
+
 ---
 description: "Lista de tarefas da Issue #5 - Módulo Anonimizador com Fail-Closed e Experimento E6"
 ---

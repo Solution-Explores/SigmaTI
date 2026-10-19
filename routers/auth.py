@@ -1,16 +1,17 @@
 """Roteador de autenticação (login/logout/me) com JWT de sessão (RF07)."""
 
 import os
-from fastapi import APIRouter, Depends, HTTPException, Request
+import auth
+from fastapi import APIRouter, Depends, Header, HTTPException, Request
 from pydantic import BaseModel, Field
 
 from auth import (
-    JWT_EXPIRATION_SECONDS,
     Usuario,
     criar_token_sessao,
     obter_auditor,
     obter_usuario_atual,
     rate_limiter,
+    revogar_token,
     usuario_repo,
     verificar_senha,
 )
@@ -91,20 +92,21 @@ def login(dados: LoginIn, request: Request) -> dict:
     token = criar_token_sessao(
         usuario=usuario.username,
         papel=usuario.papel,
-        expira_em_segundos=JWT_EXPIRATION_SECONDS,
+        expira_em_segundos=auth.JWT_EXPIRATION_SECONDS,
     )
 
     return {
         "access_token": token,
         "token_type": "bearer",
-        "expires_in": JWT_EXPIRATION_SECONDS,
+        "expires_in": auth.JWT_EXPIRATION_SECONDS,
         "usuario": usuario.username,
         "papel": usuario.papel,
     }
 
 
 @router.post("/logout", response_model=LogoutOut)
-def logout(usuario: Usuario = Depends(obter_usuario_atual)) -> dict:
+def logout(usuario: Usuario = Depends(obter_usuario_atual), authorization: str = Header(...)) -> dict:
+    revogar_token(authorization.split(" ", 1)[1].strip())
     auditor = obter_auditor()
     if auditor is not None:
         auditor.registrar(

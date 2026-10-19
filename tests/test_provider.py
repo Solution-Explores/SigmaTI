@@ -24,13 +24,14 @@ SUCCESS = {"choices": [{"message": {"content": "Diagnóstico simulado"}}]}
 
 
 @pytest.fixture
-def module(monkeypatch):
+def module(monkeypatch, legacy_identity):
     monkeypatch.setenv("OPENROUTER_API_KEY", FAKE_KEY)
     monkeypatch.setenv("SIGMA_LLM_MODEL", "test-provider/test-model")
     monkeypatch.setenv("SIGMA_CORS_ORIGINS", "http://localhost:5173")
     monkeypatch.setenv("PYTHON_DOTENV_DISABLED", "1")
     previous = sys.modules.pop("main", None)
     app_module = importlib.import_module("main")
+    legacy_identity(app_module)
     try:
         yield app_module
     finally:
@@ -57,13 +58,14 @@ def provider(module, monkeypatch):
 
 
 @pytest.fixture
-def authenticated_client(module, provider, monkeypatch, tmp_path):
+def authenticated_client(module, provider, monkeypatch, tmp_path, temporary_identity):
     """K07: exercita a rota real com login e autenticação habilitada."""
-    monkeypatch.setenv("SIGMA_AUTH_ENFORCED", "1")
+    from auth import obter_usuario_atual
+    module.app.dependency_overrides.pop(obter_usuario_atual, None)
     monkeypatch.setenv("SIGMA_AUDIT_PATH", str(tmp_path / "audit.jsonl"))
     with TestClient(module.app) as client:
         login = client.post("/api/auth/login", json={
-            "username": "suporte.n1", "password": "SenhaN1@123",
+            "username": "suporte.n1", "password": temporary_identity,
         })
         assert login.status_code == 200
         client.headers["Authorization"] = f"Bearer {login.json()['access_token']}"

@@ -20,13 +20,14 @@ ALERT = {"equipamento": "Switch fictício", "ip_origem": "192.0.2.10", "descrica
 
 
 @pytest.fixture
-def api(monkeypatch):
+def api(monkeypatch, legacy_identity):
     monkeypatch.setenv("OPENROUTER_API_KEY", KEY)
     monkeypatch.setenv("SIGMA_LLM_MODEL", "test/model")
     monkeypatch.setenv("SIGMA_CORS_ORIGINS", ",".join(ORIGINS))
     monkeypatch.setenv("PYTHON_DOTENV_DISABLED", "1")
     previous = sys.modules.pop("main", None)
     module = importlib.import_module("main")
+    legacy_identity(module)
     provider = AsyncMock(return_value=httpx.Response(
         200, request=httpx.Request("POST", module.OPENROUTER_URL),
         json={"choices": [{"message": {"content": "Diagnóstico fictício"}}]},
@@ -65,7 +66,7 @@ def test_allowed_origins_can_preflight_and_post(api, origin):
     })
     assert preflight.status_code == 200
     assert preflight.headers["access-control-allow-origin"] == origin
-    assert preflight.headers["access-control-allow-methods"] == "POST"
+    assert preflight.headers["access-control-allow-methods"] == "GET, POST"
     assert "*" not in preflight.headers["access-control-allow-headers"]
     assert "access-control-allow-credentials" not in preflight.headers
     provider.assert_not_awaited()
@@ -117,9 +118,7 @@ def test_duplicate_origins_fail_closed(api, caplog, origins, method):
     {"Origin": "null", "Access-Control-Request-Method": "POST"},
     {"Origin": "", "Access-Control-Request-Method": "POST"},
     {"Origin": ORIGINS[0], "Access-Control-Request-Method": "DELETE"},
-    {"Origin": ORIGINS[0], "Access-Control-Request-Method": "GET"},
     {"Origin": ORIGINS[0], "Access-Control-Request-Method": "POST", "Access-Control-Request-Headers": "X-Secret-" + PRIVATE},
-    {"Origin": ORIGINS[0], "Access-Control-Request-Method": "POST", "Access-Control-Request-Headers": "Authorization"},
     {"Origin": ORIGINS[0], "Access-Control-Request-Method": "POST", "Access-Control-Request-Private-Network": "true"},
 ])
 def test_rejected_preflights_are_generic(api, caplog, headers):

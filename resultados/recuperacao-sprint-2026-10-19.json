@@ -1,0 +1,215 @@
+{
+  "date": "2026-10-19",
+  "base_commit": "001d30402a1c5900a8228111ac16301171c83083",
+  "scope": "controlled demo; one API process; synthetic data; simulated AI",
+  "regression": {
+    "tests": "362",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "time": "274.666"
+  },
+  "e6": {
+    "total_amostras": 56,
+    "total_identificadores": 50,
+    "removidos": 50,
+    "bloqueados": 0,
+    "vazados": 0,
+    "casos_bloqueados": 0,
+    "negativos": 25,
+    "fp": 0,
+    "recall": 100.0,
+    "precisao": 100.0,
+    "taxa_fp": 0.0,
+    "por_classe": {
+      "ipv4": {
+        "total": 10,
+        "removidos": 10,
+        "bloqueados": 0,
+        "vazados": 0
+      },
+      "mac": {
+        "total": 3,
+        "removidos": 3,
+        "bloqueados": 0,
+        "vazados": 0
+      },
+      "ipv6": {
+        "total": 5,
+        "removidos": 5,
+        "bloqueados": 0,
+        "vazados": 0
+      },
+      "hostname": {
+        "total": 8,
+        "removidos": 8,
+        "bloqueados": 0,
+        "vazados": 0
+      },
+      "email": {
+        "total": 4,
+        "removidos": 4,
+        "bloqueados": 0,
+        "vazados": 0
+      },
+      "cpf": {
+        "total": 5,
+        "removidos": 5,
+        "bloqueados": 0,
+        "vazados": 0
+      },
+      "cns": {
+        "total": 3,
+        "removidos": 3,
+        "bloqueados": 0,
+        "vazados": 0
+      },
+      "prontuario": {
+        "total": 3,
+        "removidos": 3,
+        "bloqueados": 0,
+        "vazados": 0
+      },
+      "nome": {
+        "total": 9,
+        "removidos": 9,
+        "bloqueados": 0,
+        "vazados": 0
+      }
+    },
+    "aprovado": true
+  },
+  "browser": {
+    "passed": 3,
+    "failed": 0,
+    "scenarios": [
+      "login-alert-diagnosis-logout-revocation",
+      "reload-requires-login",
+      "401-403-network-messages"
+    ]
+  },
+  "infrastructure_policy": {
+    "credentials_checks": 32,
+    "configuration_scenarios": 12,
+    "official_images": 4,
+    "passed": true
+  },
+  "pending": [
+    "independent review",
+    "approved integration",
+    "remote CI",
+    "complete operational requirements of #5/#6"
+  ],
+  "http_acceptance": {
+    "passed": 20,
+    "failed": 0,
+    "transport": "real HTTP over loopback / Uvicorn",
+    "provider": "httpx2.MockTransport; no real AI provider called",
+    "timeout_seconds": 14.031
+  },
+  "installation": {
+    "project": "sigma-acceptance-8547f31c3d",
+    "checks": [
+      {
+        "name": "isolated_config",
+        "passed": true
+      },
+      {
+        "name": "postgres_authentication",
+        "passed": true
+      },
+      {
+        "name": "postgres_rejects_wrong_password",
+        "passed": true
+      },
+      {
+        "name": "n8n_native_owner_setup",
+        "passed": true,
+        "observed": {
+          "status": 200,
+          "content_type": "application/json; charset=utf-8"
+        }
+      },
+      {
+        "name": "n8n_protected_api",
+        "passed": true,
+        "observed": 401
+      },
+      {
+        "name": "n8n_login",
+        "passed": true
+      },
+      {
+        "name": "n8n_authenticated_api",
+        "passed": true
+      },
+      {
+        "name": "n8n_rejects_wrong_password",
+        "passed": true
+      },
+      {
+        "name": "grafana_authentication",
+        "passed": true
+      },
+      {
+        "name": "grafana_rejects_wrong_password",
+        "passed": true
+      },
+      {
+        "name": "grafana_write_preference",
+        "passed": true
+      },
+      {
+        "name": "zabbix_database_ready",
+        "passed": true
+      },
+      {
+        "name": "zabbix_database_rejects_wrong_password",
+        "passed": true
+      },
+      {
+        "name": "db_write_marker",
+        "passed": true
+      },
+      {
+        "name": "postgres-server_write_marker",
+        "passed": true
+      },
+      {
+        "name": "postgres_persistence",
+        "passed": true
+      },
+      {
+        "name": "n8n_config_persistence",
+        "passed": true
+      },
+      {
+        "name": "n8n_owner_persistence",
+        "passed": true
+      },
+      {
+        "name": "grafana_user_persistence",
+        "passed": true
+      },
+      {
+        "name": "grafana_preference_persistence",
+        "passed": true
+      },
+      {
+        "name": "zabbix_database_persistence",
+        "passed": true
+      }
+    ],
+    "status": "passed",
+    "ports": {
+      "grafana": 60051,
+      "n8n": 60052,
+      "zabbix-server": 60053
+    },
+    "n8n_setup_content_type": "application/json; charset=utf-8",
+    "n8n_setup_json_keys": [
+      "data"
+    ],
+    "cleanup_exit_code": 0
+  }
+}

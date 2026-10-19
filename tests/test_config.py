@@ -177,11 +177,12 @@ def test_actual_app_import_requires_configuration(name, bad_value):
 
 
 @pytest.fixture
-def api(environment, monkeypatch):
+def api(environment, monkeypatch, legacy_identity):
     settings = config.load_settings(environment)
     monkeypatch.setattr(config, "load_settings", lambda: settings)
     previous = sys.modules.pop("main", None)
     module = importlib.import_module("main")
+    legacy_identity(module)
     provider = AsyncMock(side_effect=AssertionError("Unexpected external request"))
     fake_client = Mock(post=provider)
     module.app.dependency_overrides[module.get_provider_client] = lambda: fake_client

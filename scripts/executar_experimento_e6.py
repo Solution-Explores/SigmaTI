@@ -1,197 +1,110 @@
-"""Script de execução e avaliação do Experimento E6: Avaliação Empírica de Anonimização LGPD (RF05).
-
-Calcula Recall, Precisão, Falsos Positivos e gera o relatório científico em resultados/experimento-e6-anonimizacao.md.
-"""
-
-from __future__ import annotations
-
+"""E6: avalia cada identificador anotado, separando vazamento e bloqueio seguro."""
+import argparse
+from collections import defaultdict
 import json
-import os
-import sys
-from datetime import datetime
 from pathlib import Path
+import re
+import sys
 
-# Adiciona a raiz do projeto ao sys.path para importar o sanitizer
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-
 from sanitizer import sanitizar_texto
 
 
-def carregar_corpus(caminho: Path) -> list[dict]:
-    with open(caminho, "r", encoding="utf-8") as f:
-        return json.load(f)
+def carregar_corpus(caminho):
+    corpus = json.loads(Path(caminho).read_text(encoding="utf-8"))
+    for caso in corpus:
+        anotacoes = caso["identificadores"]
+        if caso["tipo"] == "positivo" and not anotacoes:
+            raise ValueError("Caso positivo sem anotações individuais.")
+        for a in anotacoes:
+            if (not isinstance(a, dict) or not a.get("classe") or not a.get("valor")
+                    or not a.get("substituto") or a["valor"] not in caso["entrada"]):
+                raise ValueError("Anotação individual inválida.")
+    return corpus
 
 
-def executar_experimento(corpus: list[dict]) -> dict:
-    tp = 0  # Identificador/PII presente e devidamente sanitizado
-    fn = 0  # PII presente mas não neutralizada (vazamento)
-    tn = 0  # Log puramente técnico preservado sem falsas sanitizações
-    fp = 0  # Log técnico corrompido ou falsamente bloqueado
-
-    detalhes_positivos = []
-    detalhes_negativos = []
-
-    for item in corpus:
-        entrada = item["entrada"]
-        resultado = sanitizar_texto(entrada)
-
-        if item["tipo"] == "positivo":
-            # Caso positivo: espera que identificadores tenham sido removidos e sem resíduo
-            if resultado.sucesso and len(resultado.identificadores_removidos) > 0 and len(resultado.residuos) == 0:
-                tp += 1
-                detalhes_positivos.append({
-                    "id": item["id"],
-                    "status": "PASS",
-                    "removidos": resultado.identificadores_removidos,
-                })
+def executar_experimento(corpus):
+    classes = defaultdict(lambda: {"total": 0, "removidos": 0, "bloqueados": 0, "vazados": 0})
+    detalhes = []
+    negativos = fp = bloqueados = 0
+    for caso in corpus:
+        resultado = sanitizar_texto(caso["entrada"])
+        if not resultado.sucesso:
+            bloqueados += 1
+        if caso["tipo"] == "negativo":
+            negativos += 1
+            fp += int(not resultado.sucesso or resultado.texto_sanitizado != caso["entrada"])
+            continue
+        if not caso["identificadores"]:
+            raise ValueError("Caso positivo sem anotações individuais.")
+        for a in caso["identificadores"]:
+            if not isinstance(a, dict):
+                raise ValueError("E6 exige identificadores anotados individualmente.")
+            estat = classes[a["classe"]]
+            estat["total"] += 1
+            if not resultado.sucesso:
+                estado = "bloqueados"
             else:
-                fn += 1
-                detalhes_positivos.append({
-                    "id": item["id"],
-                    "status": "FAIL",
-                    "residuos": resultado.residuos,
-                    "motivo": resultado.motivo_bloqueio,
-                })
-        else:
-            # Caso negativo: log técnico puro não deve sofrer falsos positivos graves
-            if resultado.sucesso and len(resultado.identificadores_removidos) == 0:
-                tn += 1
-                detalhes_negativos.append({
-                    "id": item["id"],
-                    "status": "CORRETO_SEM_ALTERACAO",
-                })
-            else:
-                fp += 1
-                detalhes_negativos.append({
-                    "id": item["id"],
-                    "status": "FALSO_POSITIVO",
-                    "alteracoes": resultado.identificadores_removidos,
-                })
-
-    total_positivos = tp + fn
-    total_negativos = tn + fp
-    total_amostras = total_positivos + total_negativos
-
-    recall = (tp / total_positivos * 100) if total_positivos > 0 else 0.0
-    precisao = (tp / (tp + fp) * 100) if (tp + fp) > 0 else 0.0
-    taxa_fp = (fp / total_negativos * 100) if total_negativos > 0 else 0.0
-    acuracia = ((tp + tn) / total_amostras * 100) if total_amostras > 0 else 0.0
-
-    return {
-        "total_amostras": total_amostras,
-        "total_positivos": total_positivos,
-        "total_negativos": total_negativos,
-        "tp": tp,
-        "fn": fn,
-        "tn": tn,
-        "fp": fp,
-        "recall": recall,
-        "precisao": precisao,
-        "taxa_fp": taxa_fp,
-        "acuracia": acuracia,
-        "detalhes_positivos": detalhes_positivos,
-        "detalhes_negativos": detalhes_negativos,
-    }
+                saida = resultado.texto_sanitizado
+                restante = saida.replace(a["substituto"], "")
+                preservado = any(re.search(re.escape(v), restante, re.IGNORECASE)
+                                 for v in a.get("proibidos", [a["valor"]]))
+                estado = "removidos" if not preservado and a["substituto"] in saida else "vazados"
+            estat[estado] += 1
+            detalhes.append({"caso": caso["id"], "classe": a["classe"], "estado": estado})
+    total = sum(c["total"] for c in classes.values())
+    removidos = sum(c["removidos"] for c in classes.values())
+    vazados = sum(c["vazados"] for c in classes.values())
+    bloqueados_id = sum(c["bloqueados"] for c in classes.values())
+    recall = 100 * removidos / total if total else 0
+    precisao = 100 * removidos / (removidos + fp) if removidos + fp else 0
+    taxa_fp = 100 * fp / negativos if negativos else 0
+    return {"total_amostras": len(corpus), "total_identificadores": total,
+            "removidos": removidos, "bloqueados": bloqueados_id, "vazados": vazados,
+            "casos_bloqueados": bloqueados, "negativos": negativos, "fp": fp,
+            "recall": recall, "precisao": precisao, "taxa_fp": taxa_fp,
+            "por_classe": dict(classes), "detalhes": detalhes,
+            "aprovado": total > 0 and vazados == 0 and recall >= 99 and taxa_fp <= 5}
 
 
-def gerar_relatorio_markdown(metricas: dict, destino: Path) -> None:
+def gerar_relatorio_markdown(m, destino):
+    linhas = ["# E6 — avaliação por identificador do corpus sintético", "",
+              f"Amostras: {m['total_amostras']}; identificadores: {m['total_identificadores']}.",
+              f"Recall de transformação: {m['recall']:.2f}%; precisão operacional: {m['precisao']:.2f}%.",
+              f"Falsos positivos por mensagem negativa: {m['taxa_fp']:.2f}%.",
+              f"Identificadores bloqueados: {m['bloqueados']}; vazados: {m['vazados']}.", "",
+              "| Classe | Total | Removidos/generalizados | Bloqueados | Vazados |",
+              "|---|---:|---:|---:|---:|"]
+    for classe, d in sorted(m["por_classe"].items()):
+        linhas.append(f"| {classe} | {d['total']} | {d['removidos']} | {d['bloqueados']} | {d['vazados']} |")
+    linhas += ["", "## Método e limites", "",
+               "Cada ocorrência tem valor original, classe e substituição esperada anotados. "
+               "Nomes também têm fragmentos proibidos. Remover outro identificador da mensagem não aprova a ocorrência.",
+               "Bloqueio seguro é contado separadamente e não aumenta o recall de transformação. "
+               "A precisão operacional combina ocorrências transformadas com mensagens negativas alteradas; "
+               "não equivale à precisão por span de um modelo de reconhecimento de entidades.",
+               "Os resultados descrevem somente este corpus sintético. Não demonstram anonimização universal, "
+               "conformidade jurídica ou ausência de vazamentos em dados hospitalares. Nomes sem contexto e "
+               "hostnames fora dos padrões/lista configurados exigem novos casos e regras.",
+               "IPv4 é generalizado para /24 e IPv6 para /64. A identificação contextual não substitui "
+               "avaliação de risco de reidentificação.", "",
+               f"Resultado do corpus: {'APROVADO' if m['aprovado'] else 'REPROVADO'}."]
+    destino = Path(destino)
     destino.parent.mkdir(parents=True, exist_ok=True)
-    conteudo = f"""# Relatório do Experimento E6: Avaliação Empírica do Módulo de Anonimização LGPD (RF05)
-
-**Data de Execução**: {datetime.now().strftime("%d/%m/%Y %H:%M:%S")}  
-**Projeto**: SIGMA — Sistema Integrado de Gestão e Monitoramento de Alertas  
-**Objetivo do Experimento**: Avaliar a eficácia da generalização e remoção de dados pessoais identificáveis (PII) e de infraestrutura hospitalar com base nos requisitos **RF05** e **RNF08** para o Trabalho de Conclusão de Curso (TCC).
-
----
-
-## 1. Resumo Executivo e Métricas Principais
-
-| Métrica | Meta Estipulada | Valor Obtido no Experimento E6 | Status |
-|---|---|---|---|
-| **Recall de PII** | >= 99.0% | **{metricas['recall']:.2f}%** | {"APROVADO" if metricas['recall'] >= 99.0 else "REPROVADO"} |
-| **Precisão** | Alta | **{metricas['precisao']:.2f}%** | {"APROVADO" if metricas['precisao'] >= 90.0 else "ATENÇÃO"} |
-| **Taxa de Falsos Positivos** | <= 5.0% | **{metricas['taxa_fp']:.2f}%** | {"APROVADO" if metricas['taxa_fp'] <= 5.0 else "ATENÇÃO"} |
-| **Acurácia Global** | >= 95.0% | **{metricas['acuracia']:.2f}%** | {"APROVADO" if metricas['acuracia'] >= 95.0 else "REPROVADO"} |
-
----
-
-## 2. Matriz de Confusão
-
-O corpus sintético contém **{metricas['total_amostras']} amostras**, balanceadas entre logs contendo PII/dados hospitalares ({metricas['total_positivos']} casos) e logs puramente técnicos ({metricas['total_negativos']} casos):
-
-| | Classificado como Sensível (Sanitizado) | Classificado como Não Sensível | Total Real |
-|---|---|---|---|
-| **Casos Reais com PII (Positivos)** | **{metricas['tp']}** (Verdadeiros Positivos) | **{metricas['fn']}** (Falsos Negativos / Vazamento) | **{metricas['total_positivos']}** |
-| **Casos Reais Técnicos (Negativos)** | **{metricas['fp']}** (Falsos Positivos) | **{metricas['tn']}** (Verdadeiros Negativos) | **{metricas['total_negativos']}** |
-
-> **Nota sobre Vazamento (Falsos Negativos):** O valor de FN foi **{metricas['fn']}**, comprovando que nenhum identificador do corpus escapou do pipeline de sanitização.
-
----
-
-## 3. Classes de Identificadores Testados
-
-As seguintes classes foram submetidas ao teste no corpus com 100% de cobertura individual:
-
-1. **Endereçamento de Rede**:
-   - IPv4 generalizado para sub-redes `/24` (ex: `192.168.1.0/24`).
-   - IPv6 generalizado para prefixo `/64` (ex: `2001:db8:85a3::/64`).
-   - Endereços MAC substituídos por `[MAC_MASCARADO]`.
-2. **Equipamentos e Topologia**:
-   - Hostnames e switches clínicos convertidos em categorias funcionais (`[SWITCH_REDE]`, `[ROTEADOR_REDE]`, `[SERVIDOR_HOSPITALAR]`, `[EQUIPAMENTO_IMAGEM]`, `[DISPOSITIVO_BIOMEDICO]`).
-3. **Dados Civis e Clínicos (LGPD)**:
-   - CPFs substituídos por `[CPF_REMOVIDO]`.
-   - Cartões Nacionais de Saúde (CNS / SUS) substituídos por `[CNS_REMOVIDO]`.
-   - Números de Prontuário médico substituídos por `[PRONTUARIO_REMOVIDO]`.
-   - Contatos eletrônicos substituídos por `[EMAIL_REMOVIDO]`.
-4. **Nomes Próprios**:
-   - Nomes precedidos por pronomes de tratamento/papéis clínicos (Dr., Dra., Enf., Paciente) substituídos por `[NOME_REMOVIDO]`.
-   - Nomes configurados legados (como `dr.joao`) substituídos por `[USUARIO_MEDICO]`.
-
----
-
-## 4. Garantia de Falha Segura (*Fail-Closed*)
-
-Além da transformação determinística, o módulo foi auditado sob:
-- **Detecção Residual (Two-Pass Verification)**: Reexecução estrita dos detectores sobre o texto de saída. Qualquer resquício aborta imediatamente o envio externo.
-- **Injeção de Falhas**: Simulação de exceções durante o processamento comprovou que a chamada externa para a nuvem é cancelada (`mock_client.post.assert_not_called()`).
-- **Conformidade com o Art. 12 da LGPD**: Ausência total de tabelas de correspondência reversíveis (zero-pseudonimização).
-
----
-
-## 5. Conclusão para o TCC
-
-O Experimento E6 confirma empiricamente que o módulo de anonimização do SIGMA atinge **{metricas['recall']:.2f}% de Recall de PII**, atendendo à meta de >= 99% estipulada no planejamento do TCC, com **0 vazamentos de dados pessoais** e taxa controlada de falsos positivos ({metricas['taxa_fp']:.2f}%), preservando a clareza técnica dos logs para diagnóstico pela IA.
-"""
-    with open(destino, "w", encoding="utf-8") as f:
-        f.write(conteudo)
+    destino.write_text("\n".join(linhas) + "\n", encoding="utf-8")
 
 
-def main() -> None:
-    corpus_path = ROOT / "tests" / "data" / "corpus_sintetico_pii.json"
-    relatorio_path = ROOT / "resultados" / "experimento-e6-anonimizacao.md"
-
-    if not corpus_path.exists():
-        print(f"Erro: Corpus não encontrado em {corpus_path}")
-        sys.exit(1)
-
-    print(f"Carregando corpus de {corpus_path}...")
-    corpus = carregar_corpus(corpus_path)
-
-    print(f"Executando Experimento E6 em {len(corpus)} amostras...")
-    metricas = executar_experimento(corpus)
-
-    print("\nResultados do Experimento E6:")
-    print(f"- Amostras analisadas: {metricas['total_amostras']}")
-    print(f"- Recall de PII: {metricas['recall']:.2f}% (Meta: >= 99%)")
-    print(f"- Precisão: {metricas['precisao']:.2f}%")
-    print(f"- Falsos Positivos: {metricas['fp']} ({metricas['taxa_fp']:.2f}%)")
-    print(f"- Falsos Negativos (Vazamentos): {metricas['fn']}")
-    print(f"- Acurácia Geral: {metricas['acuracia']:.2f}%\n")
-
-    gerar_relatorio_markdown(metricas, relatorio_path)
-    print(f"Relatório gerado com sucesso em: {relatorio_path}")
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--corpus", type=Path, default=ROOT / "tests/data/corpus_sintetico_pii.json")
+    parser.add_argument("--output", type=Path, default=ROOT / "resultados/experimento-e6-anonimizacao.md")
+    args = parser.parse_args()
+    m = executar_experimento(carregar_corpus(args.corpus))
+    gerar_relatorio_markdown(m, args.output)
+    print(json.dumps({k: v for k, v in m.items() if k not in {"detalhes", "por_classe"}}, ensure_ascii=False))
+    return 0 if m["aprovado"] else 1
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

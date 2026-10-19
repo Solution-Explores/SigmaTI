@@ -1,3 +1,5 @@
+> Atualização 19/10/2026: entrega parcial em correção/revisão. As afirmações de conclusão abaixo são históricas e não equivalem ao aceite integral. Consulte [a revisão da sprint](../011-recuperacao-sprint/evidencias.md).
+
 # Evidências de Testes e Validação — Issue #5
 
 **Data**: 2026-10-18  

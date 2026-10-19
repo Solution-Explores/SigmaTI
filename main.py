@@ -11,8 +11,7 @@ import httpx2 as httpx
 
 from config import load_settings
 from api_errors import PublicError, configure_public_errors
-from auth import Usuario, exige_papel, usuario_repo
-from routers.auth import router as auth_router
+from auth import Usuario, configure_auth, exige_papel, usuario_repo
 
 import sys
 from pathlib import Path
@@ -22,6 +21,8 @@ if _eng_dir.exists() and str(_eng_dir) not in sys.path:
     sys.path.insert(0, str(_eng_dir))
 
 settings = load_settings()
+configure_auth(settings.jwt_secret)
+from routers.auth import router as auth_router
 
 logger = logging.getLogger(__name__)
 IA_TIMEOUT_SECONDS = 14.0
@@ -55,11 +56,8 @@ configure_public_errors(app, settings.cors_origins)
 # Registro de roteadores da aplicação
 app.include_router(auth_router)
 
-try:
-    from engenharia.sigma_eng.api import router as eng_router
-    app.include_router(eng_router)
-except ImportError:
-    logger.info("Módulo sigma_eng não carregado no roteador principal")
+from engenharia.sigma_eng.api import router as eng_router
+app.include_router(eng_router)
 # --------------------------------------------------
 
 class AlertaRede(BaseModel):
@@ -189,7 +187,7 @@ async def relatorios_gerenciais(usuario: Annotated[Usuario, Depends(exige_papel(
 @app.get("/api/usuarios")
 async def listar_usuarios(usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))]):
     """Gerenciar usuários (Exclusivo Gestor de TI)."""
-    return {"usuarios": ["suporte.n1", "analista.redes", "gestor.ti"]}
+    return {"usuarios": list(usuario_repo._usuarios)}
 
 
 class NovoUsuarioIn(BaseModel):

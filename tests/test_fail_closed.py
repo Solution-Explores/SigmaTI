@@ -20,7 +20,7 @@ SUCCESS_PAYLOAD = {"choices": [{"message": {"content": "Diagnóstico de teste"}}
 
 
 @pytest.fixture
-def api(monkeypatch):
+def api(monkeypatch, legacy_identity):
     monkeypatch.setenv("OPENROUTER_API_KEY", FAKE_KEY)
     monkeypatch.setenv("SIGMA_LLM_MODEL", "test-provider/test-model")
     monkeypatch.setenv("SIGMA_CORS_ORIGINS", "http://localhost:5173")
@@ -28,6 +28,7 @@ def api(monkeypatch):
 
     previous = sys.modules.pop("main", None)
     module = importlib.import_module("main")
+    legacy_identity(module)
     provider_handler = AsyncMock(return_value=httpx.Response(200, json=SUCCESS_PAYLOAD))
 
     def client_factory():
@@ -99,7 +100,7 @@ class TestFailClosedSanitizacao:
             with pytest.raises(SanitizationResidualError) as exc_info:
                 anonimizar_dados(texto_com_falha)
 
-            assert "Resíduo de CPF e MAC detectado" in str(exc_info.value)
+            assert "bloqueou o envio externo" in str(exc_info.value)
             # Verifica se foi registrado evento na trilha de auditoria
             assert any("AUDIT_PRIVACY" in record.getMessage() for record in caplog.records)
         finally:

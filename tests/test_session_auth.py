@@ -25,12 +25,11 @@ SUCCESS_IA = {"choices": [{"message": {"content": "Diagnóstico validado"}}]}
 
 
 @pytest.fixture
-def auth_app(monkeypatch, tmp_path):
+def auth_app(monkeypatch, tmp_path, temporary_identity):
     audit_file = str(tmp_path / "audit_test.jsonl")
     monkeypatch.setenv("OPENROUTER_API_KEY", FAKE_OPENROUTER_KEY)
     monkeypatch.setenv("SIGMA_LLM_MODEL", "test-provider/test-model")
     monkeypatch.setenv("SIGMA_CORS_ORIGINS", "http://localhost:5173")
-    monkeypatch.setenv("SIGMA_AUTH_ENFORCED", "1")
     monkeypatch.setenv("SIGMA_AUDIT_PATH", audit_file)
     monkeypatch.setenv("PYTHON_DOTENV_DISABLED", "1")
 
@@ -78,9 +77,9 @@ class TestHashingESenhas:
 class TestFluxoLoginESessaoJWT:
     """Valida ciclo de vida do token de sessão JWT e proteção de segredos do servidor."""
 
-    def test_login_sucesso_retorna_jwt_e_nao_expoe_chave_permanente(self, auth_app):
+    def test_login_sucesso_retorna_jwt_e_nao_expoe_chave_permanente(self, auth_app, temporary_identity):
         client, _ = auth_app
-        payload = {"username": "analista.redes", "password": "SenhaAnalista@123"}
+        payload = {"username": "analista.redes", "password": temporary_identity}
         response = client.post("/api/auth/login", json=payload)
 
         assert response.status_code == 200
@@ -101,9 +100,9 @@ class TestFluxoLoginESessaoJWT:
         assert token_claims["papel"] == "analista_redes"
         assert token_claims["exp"] > token_claims["iat"]
 
-    def test_rota_me_e_logout(self, auth_app):
+    def test_rota_me_e_logout(self, auth_app, temporary_identity):
         client, audit_file = auth_app
-        login_res = client.post("/api/auth/login", json={"username": "suporte.n1", "password": "SenhaN1@123"})
+        login_res = client.post("/api/auth/login", json={"username": "suporte.n1", "password": temporary_identity})
         token = login_res.json()["access_token"]
         headers = {"Authorization": f"Bearer {token}"}
 
