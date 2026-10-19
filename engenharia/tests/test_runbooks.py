@@ -110,7 +110,7 @@ def test_executor_real_sem_shell():
     if sys.platform == "win32":
         py_exe = sys.executable.replace("\\", "/")
         r = RunbookRunner([py_exe])
-        ex = r.executar("r", parsear(f"```sigma:step{{id=a}}\n{py_exe} -c \"print('oi; id')\"\n```"), {}, dry_run=False)
+        ex = r.executar("r", parsear(f"```sigma:step{{id=a}}\n\"{py_exe}\" -c \"print('oi; id')\"\n```"), {}, dry_run=False)
         assert ex.status == "completed"
         assert ex.resultados[0].saida.strip() == "oi; id"
     else:

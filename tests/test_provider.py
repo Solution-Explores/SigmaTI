@@ -56,6 +56,20 @@ def provider(module, monkeypatch):
     return handler, clients
 
 
+@pytest.fixture
+def authenticated_client(module, provider, monkeypatch, tmp_path):
+    """K07: exercita a rota real com login e autenticação habilitada."""
+    monkeypatch.setenv("SIGMA_AUTH_ENFORCED", "1")
+    monkeypatch.setenv("SIGMA_AUDIT_PATH", str(tmp_path / "audit.jsonl"))
+    with TestClient(module.app) as client:
+        login = client.post("/api/auth/login", json={
+            "username": "suporte.n1", "password": "SenhaN1@123",
+        })
+        assert login.status_code == 200
+        client.headers["Authorization"] = f"Bearer {login.json()['access_token']}"
+        yield client
+
+
 def assert_generic(module, response):
     assert response.status_code == 200
     assert set(response.json()) == {"status", "dados_enviados_nuvem", "diagnostico_ia"}
@@ -177,7 +191,9 @@ def test_invalid_json_is_generic(module, provider, caplog):
     assert_safe_log(caplog, "invalid_response", "200")
 
 
-def test_real_budget_cancels_slow_provider_within_15_seconds(module, provider, caplog):
+def test_real_budget_cancels_slow_provider_within_15_seconds(
+    module, provider, authenticated_client, caplog,
+):
     handler, _ = provider
     cancelled = []
 
@@ -191,16 +207,67 @@ def test_real_budget_cancels_slow_provider_within_15_seconds(module, provider, c
 
     handler.side_effect = slow
     assert module.IA_TIMEOUT_SECONDS == 14.0
-    with TestClient(module.app) as client:
-        start = monotonic()
-        response = client.post("/api/alertas", json=ALERT)
-        elapsed = monotonic() - start
+    start = monotonic()
+    response = authenticated_client.post("/api/alertas", json=ALERT)
+    elapsed = monotonic() - start
     assert 14.0 <= elapsed <= 15.0
     assert cancelled == [True]
     assert_generic(module, response)
     assert_safe_log(caplog, "timeout")
     handler.assert_awaited_once()
-    print(f"K05 production budget: response in {elapsed:.3f}s; provider cancelled")
+    print(f"K07 authenticated budget: response in {elapsed:.3f}s; provider cancelled")
+
+
+@pytest.mark.parametrize("outcome", ["success", "http_error", "timeout", "invalid_json"])
+def test_authenticated_alert_reaches_simulated_provider(
+    module, provider, authenticated_client, caplog, outcome,
+):
+    handler, _ = provider
+    if outcome == "http_error":
+        handler.return_value = httpx.Response(503, text=PRIVATE_DETAIL)
+    elif outcome == "timeout":
+        handler.side_effect = httpx.ReadTimeout(PRIVATE_DETAIL)
+    elif outcome == "invalid_json":
+        handler.return_value = httpx.Response(200, text=PRIVATE_DETAIL)
+
+    response = authenticated_client.post("/api/alertas", json=ALERT)
+    handler.assert_awaited_once()
+    if outcome == "success":
+        assert response.status_code == 200
+        assert response.json()["diagnostico_ia"] == "Diagnóstico simulado"
+        payload = json.loads(handler.await_args.args[0].content)
+        assert ALERT["ip_origem"] not in json.dumps(payload)
+        assert "dr.joao" not in json.dumps(payload)
+    else:
+        assert_generic(module, response)
+        category, status = {
+            "http_error": ("http", "503"),
+            "timeout": ("timeout", "None"),
+            "invalid_json": ("invalid_response", "200"),
+        }[outcome]
+        assert_safe_log(caplog, category, status)
+
+
+@pytest.mark.parametrize("authorization", [None, "", "Bearer invalid-token", "expired"])
+def test_unauthenticated_alert_never_calls_provider(
+    module, provider, authenticated_client, authorization,
+):
+    from auth import criar_token_sessao
+
+    if authorization == "expired":
+        token = criar_token_sessao("suporte.n1", "suporte_n1", expira_em_segundos=-1)
+        authorization = f"Bearer {token}"
+    if authorization is None:
+        authenticated_client.headers.pop("Authorization")
+        headers = {}
+    else:
+        headers = {"Authorization": authorization}
+    response = authenticated_client.post(
+        "/api/alertas", json=ALERT, headers=headers,
+    )
+    assert response.status_code == 401
+    assert response.json() == {"detail": "Autenticação necessária."}
+    provider[0].assert_not_awaited()
 
 
 def test_continuous_slow_chunks_do_not_reset_total_budget(module, provider, monkeypatch, caplog):

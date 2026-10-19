@@ -2,7 +2,9 @@
 
 Funcionalidades inspiradas no Sentinel Vigilark (plataforma de monitoramento e segurança do mesmo autor), reescritas aqui, para transformar o SIGMA de um MVP de monitoramento em um **sistema de engenharia da computação**: com requisitos rastreáveis, métricas definidas, experimentos reproduzíveis e propriedades de segurança testadas.
 
-Esta pasta é **autocontida**. Não altera o MVP existente (`main.py`, `sigma-frontend/`); a integração é opt-in (ver [guia](docs/02-guia-de-implementacao.md)).
+O núcleo está integrado ao `main.py` do SIGMA, com proteção por perfil nas rotas
+`/api/eng/*`. Os módulos de cálculo usam a biblioteca padrão; a API e seus testes
+usam as dependências fixadas na raiz.
 
 ## O que tem aqui
 
@@ -20,14 +22,20 @@ Esta pasta é **autocontida**. Não altera o MVP existente (`main.py`, `sigma-fr
 ## Como rodar
 
 ```bash
+# Na raiz do repositório, com Python 3.12+ e ambiente virtual ativo:
+python -m pip install -r requirements-dev.txt
+python -m pytest engenharia/tests -q -p no:cacheprovider
+
+# Experimento E1 → engenharia/resultados/e1_deteccao.{csv,md}
 cd engenharia
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-pytest -q                          # 58 testes
-python -m experimentos.exp_deteccao   # experimento E1 → resultados/e1_deteccao.{csv,md}
+python -m experimentos.exp_deteccao
 ```
 
 O núcleo (tudo exceto `api.py`) usa só a biblioteca padrão do Python 3.10+.
+
+O `pytest.ini` da raiz configura o caminho de `sigma_eng`, inclusive ao executar
+a suíte isolada. Não é necessário exportar `PYTHONPATH`. Veja o
+[roteiro de instalação K08](../doc/instalacao-desenvolvimento.md).
 
 ## Documentação
 

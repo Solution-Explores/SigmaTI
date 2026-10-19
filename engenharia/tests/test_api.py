@@ -1,20 +1,22 @@
 import pytest
 
-pytest.importorskip("fastapi")
-pytest.importorskip("httpx")
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
+from auth import criar_token_sessao
 from sigma_eng import api
 
 
 @pytest.fixture()
 def client(tmp_path, monkeypatch):
     from sigma_eng.audit_chain import AuditChain
+    monkeypatch.setenv("SIGMA_AUTH_ENFORCED", "1")
     monkeypatch.setattr(api, "auditoria", AuditChain(tmp_path / "audit.jsonl"))
     app = FastAPI()
     app.include_router(api.router)
-    return TestClient(app)
+    token = criar_token_sessao("k08-engenharia", "gestor_ti")
+    with TestClient(app, headers={"Authorization": f"Bearer {token}"}) as client:
+        yield client
 
 
 def test_probe_bloqueia_alvo_externo(client):

@@ -63,6 +63,9 @@ Implantação híbrida: `db` (PostgreSQL) e `n8n` orquestrados via Docker Compos
 
 ## Como instalar
 
+Consulte o [roteiro de instalação e validação de desenvolvimento (K08)](doc/instalacao-desenvolvimento.md),
+com comandos de Windows e Linux, testes offline, autenticação e pendências da K09/K10.
+
 Pré-requisitos: Docker, Docker Compose e um servidor ou VM Linux com acesso à interface de rede a ser monitorada.
 
 ### Instalação nova — ambiente de desenvolvimento
@@ -106,8 +109,9 @@ planejadas, sem procedimento executável de instalação nesta entrega.
    docker compose --profile monitoring up -d
    ```
 4. Inicie a API e o frontend conforme [Executar a API no desenvolvimento](#executar-a-api-no-desenvolvimento).
-   O Compose não os inicia. Sonda/pfSense, autenticação e implantação operacional
-   permanecem pendentes; não trate o MVP como instalação hospitalar homologada.
+   O Compose não os inicia. Sonda/pfSense, integração do login ao painel e
+   implantação operacional permanecem pendentes; não trate o MVP como instalação
+   hospitalar homologada. A API já exige JWT nas rotas protegidas.
 
 ### Atualização futura de uma instalação com dados
 
@@ -308,8 +312,10 @@ de um modelo real em produção.
 Veja a [solução K05](specs/004-chamada-assincrona-timeout/spec.md),
 as [evidências](specs/004-chamada-assincrona-timeout/evidencias.md) e
 as [pendências de revisão](specs/004-chamada-assincrona-timeout/tasks.md).
-K06 complementa as restrições de origens e os erros HTTP. K07, revisão independente
-e conferência final da issue #4 continuam pendentes; K05/K06 são entregas parciais.
+K06 complementa as restrições de origens e os erros HTTP. A cobertura complementar
+K07, a correção de coleta K08 e a revisão estão registradas nas
+[evidências K07/K08](specs/007-008-ci-provedor-simulado/evidencias.md).
+O aceite integral K10 da issue #4 continua separado; K05/K06 são entregas parciais.
 
 Para executar os testes sem uma chave real ou chamadas externas:
 
