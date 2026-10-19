@@ -54,9 +54,12 @@ def test_probe_tcp_up():
 
 
 def test_probe_porta_fechada_down():
-    srv, port = _servidor(None)
-    srv.close()
-    r = probe.probe_service("127.0.0.1", port, "tcp", timeout=0.5)
+    # Reserva uma porta sem listen(): nenhum servidor/thread pode aceitá-la e
+    # outro processo não pode reutilizá-la entre a escolha e a sondagem.
+    with socket.socket() as reserved:
+        reserved.bind(("127.0.0.1", 0))
+        port = reserved.getsockname()[1]
+        r = probe.probe_service("127.0.0.1", port, "tcp", timeout=0.5)
     assert r.status == "down" and r.findings[0]["code"] == "unreachable"
 
 

@@ -19,6 +19,7 @@ nem execução manual de testes pelo usuário ou por outro integrante.
 | Comando de CI: `python -m pytest -q -p no:cacheprovider --junitxml=test-results/api.xml` (acrescido de `--durations=5` somente para medir esta execução) | **346 aprovados em 55,09 s; zero falhas, erros e ignorados.** |
 | Timeout real da K07 com login/JWT ativo | Caso aprovado; duração da chamada do teste: **14,03 s**. O teste mede a requisição, exige 14 ≤ tempo ≤ 15 s e comprova cancelamento do provedor. |
 | `python -m pytest engenharia/tests -q -p no:cacheprovider` | **58 aprovados em 3,03 s**, sem depender de importar `main.py` antes da coleta. |
+| Correção do teste de porta fechada: `python -m pytest engenharia/tests/test_stats_probe.py -q -p no:cacheprovider` | **10 aprovados em 1,57 s** no Windows após reservar a porta sem iniciar listener. Validação Linux pelo CI indicada abaixo. |
 | `python scripts/validate_compose_credentials.py` | **32 verificações aprovadas** com credenciais fictícias, sem iniciar contêineres. |
 | `python scripts/validate_infrastructure.py --verify-registry` | **12 cenários aprovados**, com confirmação dos quatro manifests oficiais e digests; nenhum contêiner iniciado ou camada baixada. |
 | `git diff --check` | Aprovado. |
@@ -59,6 +60,7 @@ incluídos na regressão.
 | Importação de `sigma_eng` dependia de configuração externa do caminho. | **Corrigido na K08** por configuração do pytest da raiz; execução isolada da engenharia aprovada. Empacotamento instalável permanece issue #9. |
 | `importorskip("httpx")` escondia os testes HTTP apesar de HTTPX2 ser a dependência instalada. | **Corrigido na K08**: imports obrigatórios e JWT de gestor no cliente de teste; quatro testes reativados. |
 | Executável de runbook sem aspas em caminho Windows com espaços. | **Corrigido na K08** no teste; preservado `shell=False` e a verificação de `;` como argumento literal. |
+| Teste de porta fechada criava servidor em thread e fechava o socket enquanto `accept()` aguardava; no Linux a conexão ainda era aceita. | **Corrigido na K08**: socket reservado sem `listen()`, mantido durante a sondagem. Evita tanto o listener residual quanto a reutilização da porta por outro processo. |
 | Preflight da origem permitida com `content-type,authorization` recebe 400. | **K11, prioridade alta**: CORS ainda permite somente Content-Type. Reproduzido em processo isolado com TestClient; bloqueia o painel autenticado. |
 | Login → status 200 → logout 200 → mesmo token ainda acessa status com 200. | **K11 / issue #6**: logout registra auditoria, mas não revoga a sessão. Reproduzido sem provedor externo. |
 | Chave JWT possui fallback literal; contas de demonstração e usuários em memória permanecem. | **K11 / issue #6**: inspeção de `auth.py`. A proposta da issue pede usuários em PostgreSQL e Argon2id/bcrypt; implementação usa memória/PBKDF2. Não declarar aceite integral da issue #6. |
@@ -80,5 +82,14 @@ dados fictícios e sem imprimir JWT ou credenciais.
 
 ## Publicação
 
-Resultados locais concluídos. Publicação na `dev`, CI remoto e situação da
-integração serão registrados após a verificação dos respectivos commits.
+Implementação inicial publicada na `dev` em
+[`6c8533e`](https://github.com/Solution-Explores/SigmaTI/commit/6c8533e9b99bd4375cf76eec716e7bdcd2f0dcd0).
+O [CI de infraestrutura](https://github.com/Solution-Explores/SigmaTI/actions/runs/39264758423)
+foi aprovado. O [CI da API](https://github.com/Solution-Explores/SigmaTI/actions/runs/39264758284)
+coletou as duas suítes corretamente, mas expôs a corrida do teste de porta fechada
+no Linux: 345 aprovados e uma falha, sem testes ignorados. Não houve tentativa de
+mascarar a falha reexecutando o mesmo código até obter sucesso.
+
+Conforme o fluxo, a correção foi isolada na branch
+`codex/fix-k08-porta-fechada`, testada localmente e preparada para retornar à `dev`.
+Os resultados remotos do conjunto corrigido serão registrados após verificação.

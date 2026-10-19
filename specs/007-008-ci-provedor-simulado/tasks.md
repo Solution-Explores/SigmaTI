@@ -17,10 +17,12 @@
 - [x] Revisar a alteração nesta conversa, conforme solicitado pelo usuário.
 - [x] Reproduzir e registrar achados existentes de autenticação/CORS para K11.
 - [x] Conferir diferenças e ausência de segredos ou arquivos locais na entrega.
+- [x] Corrigir em branch separada a corrida do teste de porta fechada revelada no CI Linux.
 
 ## Publicação e entrega
 
-- [ ] Publicar os commits na `dev` e verificar o CI remoto do conjunto.
+- [x] Publicar a implementação inicial na `dev` e inspecionar os dois CIs.
+- [ ] Integrar a correção à `dev` e verificar o CI remoto do conjunto corrigido.
 - [ ] Registrar referências de publicação e atualizar a situação dos cartões.
 - [ ] Conferir a integração antes de declarar entrega final na `main`.
 
