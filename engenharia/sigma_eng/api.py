@@ -21,14 +21,7 @@ from pathlib import Path
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 
-try:
-    from auth import exige_papel
-except ImportError:  # pragma: no cover
-    try:
-        from SigmaTI.auth import exige_papel
-    except ImportError:
-        def exige_papel(papel: str):
-            return lambda: None
+from auth import exige_papel
 
 from . import anomaly, incidents, probe, slo
 from .audit_chain import AuditChain

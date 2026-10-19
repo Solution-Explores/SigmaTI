@@ -1,3 +1,5 @@
+> Atualização 19/10/2026: entrega parcial em correção/revisão. As afirmações de conclusão abaixo são históricas e não equivalem ao aceite integral. Consulte [a revisão da sprint](../011-recuperacao-sprint/evidencias.md).
+
 # Feature Specification: Autenticação e Perfis (RF07): Login com JWT de Sessão e RBAC #6
 
 **Feature Branch**: `006-autenticacao-jwt-rbac`  

@@ -61,6 +61,18 @@ Técnicos (login + perfil) ──► Frontend (alerta original + chat com IA)
 
 Implantação híbrida: `db` (PostgreSQL) e `n8n` orquestrados via Docker Compose. Os serviços `api` e `frontend` estão em fase de conteinerização. A stack de observabilidade legada/opcional (Zabbix e Grafana) está disponível via perfil (`--profile monitoring`). A sonda roda no host, porque precisa de acesso à interface física de rede. O pfSense fica na rede.
 
+## Demonstração controlada e aceite
+
+A [revisão K11/K12](specs/011-recuperacao-sprint/evidencias.md) documenta as
+correções de sessão, painel e anonimização. A API exige `SIGMA_JWT_SECRET` e
+`SIGMA_USERS_FILE`, além da configuração da IA. Crie hashes locais com
+`python scripts/create_demo_users.py`; consulte o [roteiro atualizado](doc/instalacao-desenvolvimento.md).
+
+O painel tem login e logout, mas sessões/usuários alterados continuam em memória.
+O E6 avalia cada identificador anotado; seus resultados valem apenas para o corpus
+sintético. As issues #5/#6 continuam abertas. A resposta `Incidente Registrado`
+é um contrato legado e não comprova gravação de incidente em PostgreSQL.
+
 ## Como instalar
 
 Consulte o [roteiro de instalação e validação de desenvolvimento (K08)](doc/instalacao-desenvolvimento.md),
@@ -113,7 +125,7 @@ planejadas, sem procedimento executável de instalação nesta entrega.
    docker compose --profile monitoring up -d
    ```
 4. Inicie a API e o frontend conforme [Executar a API no desenvolvimento](#executar-a-api-no-desenvolvimento).
-   O Compose não os inicia. Sonda/pfSense, integração do login ao painel e
+   O Compose não os inicia. Sonda/pfSense e
    implantação operacional permanecem pendentes; não trate o MVP como instalação
    hospitalar homologada. A API já exige JWT nas rotas protegidas.
 
@@ -230,11 +242,13 @@ Copie `.env.example` para `.env` (`Copy-Item .env.example .env` no PowerShell ou
 | `OPENROUTER_API_KEY` | Chave da sua conta OpenRouter; mantenha-a somente no ambiente ou no `.env` ignorado pelo Git. |
 | `SIGMA_LLM_MODEL` | Identificador do modelo disponível na sua conta OpenRouter; sem modelo padrão fixo no código. |
 | `SIGMA_CORS_ORIGINS` | Origens HTTP/HTTPS exatas do painel, separadas por vírgulas, como `http://localhost:5173,http://127.0.0.1:5173`. |
+| `SIGMA_JWT_SECRET` | Segredo local aleatório com pelo menos 32 bytes; sem fallback. |
+| `SIGMA_USERS_FILE` | Caminho absoluto para o arquivo local de hashes criado por `scripts/create_demo_users.py`. |
 
 O backend carrega exclusivamente o `.env` da raiz, independentemente da pasta de
 execução. Variáveis já definidas no processo têm prioridade, inclusive se vazias;
 os valores do arquivo são literais, sem interpolação de `${...}`. O arquivo pode
-ser omitido quando as três variáveis estiverem definidas no ambiente. Configuração
+ser omitido quando todas as variáveis obrigatórias estiverem definidas no ambiente. Configuração
 ausente, vazia ou com origens inválidas impede a inicialização. A chave aceita
 somente caracteres ASCII visíveis, sem espaços internos. Não inclua caminhos,
 barra final, credenciais, curingas ou itens vazios na lista de origens. Domínios
@@ -261,11 +275,10 @@ autorizado, vazio, `null` ou duplicado é recusado **antes de executar a rota ou
 chamar a IA**. Chamadas comuns recusadas recebem HTTP 403; preflights recusados
 recebem HTTP 400 (origens duplicadas recebem 403 também no preflight).
 
-O preflight permite somente `POST` e `Content-Type`, além dos cabeçalhos simples
-permitidos pelo padrão CORS. Não há curingas de métodos/cabeçalhos, autorização de
-rede privada ou compartilhamento de credenciais/cookies pelo CORS. O painel atual
-não usa cookies nem autenticação no fetch. Uma futura integração de login deve
-reavaliar essa política explicitamente.
+O preflight permite `GET`/`POST`, `Content-Type` e `Authorization`, além dos
+cabeçalhos simples do padrão CORS. O painel envia Bearer JWT, sem cookies, e
+mantém o token somente em memória. Recarregar exige novo login; logout revoga a
+sessão no servidor. Não há curingas nem autorização de rede privada.
 
 Clientes de serviço sem `Origin` continuam possíveis. O cabeçalho pode ser omitido
 ou forjado fora do navegador: **esta política não substitui autenticação da API**.

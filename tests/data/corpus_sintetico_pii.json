@@ -2,175 +2,410 @@
   {
     "id": "POS-001",
     "tipo": "positivo",
-    "identificadores": ["ipv4"],
+    "identificadores": [
+      {
+        "classe": "ipv4",
+        "valor": "192.168.1.1",
+        "substituto": "192.168.1.0/24"
+      }
+    ],
     "entrada": "Timeout ao conectar no gateway 192.168.1.1 após 3 tentativas.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-002",
     "tipo": "positivo",
-    "identificadores": ["ipv4", "mac"],
+    "identificadores": [
+      {
+        "classe": "ipv4",
+        "valor": "10.0.1.50",
+        "substituto": "10.0.1.0/24"
+      },
+      {
+        "classe": "mac",
+        "valor": "00:1B:44:11:3A:B7",
+        "substituto": "[MAC_MASCARADO]"
+      }
+    ],
     "entrada": "Conflito de ARP: IP 10.0.1.50 associado ao MAC 00:1B:44:11:3A:B7 na vlan 10.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-003",
     "tipo": "positivo",
-    "identificadores": ["ipv6"],
+    "identificadores": [
+      {
+        "classe": "ipv6",
+        "valor": "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+        "substituto": "2001:db8:85a3::/64"
+      }
+    ],
     "entrada": "Falha de rota para 2001:0db8:85a3:0000:0000:8a2e:0370:7334 via interface eth0.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-004",
     "tipo": "positivo",
-    "identificadores": ["hostname", "ipv4"],
+    "identificadores": [
+      {
+        "classe": "hostname",
+        "valor": "sw-core-01",
+        "substituto": "[SWITCH_REDE]"
+      },
+      {
+        "classe": "ipv4",
+        "valor": "172.16.0.10",
+        "substituto": "172.16.0.0/24"
+      }
+    ],
     "entrada": "Queda de porta no switch sw-core-01 com destino ao host 172.16.0.10.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-005",
     "tipo": "positivo",
-    "identificadores": ["email"],
+    "identificadores": [
+      {
+        "classe": "email",
+        "valor": "ti.suporte@fcecon.am.gov.br",
+        "substituto": "[EMAIL_REMOVIDO]"
+      }
+    ],
     "entrada": "Alerta gerado por ti.suporte@fcecon.am.gov.br referente à indisponibilidade de rede.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-006",
     "tipo": "positivo",
-    "identificadores": ["cpf"],
+    "identificadores": [
+      {
+        "classe": "cpf",
+        "valor": "123.456.789-00",
+        "substituto": "[CPF_REMOVIDO]"
+      }
+    ],
     "entrada": "Acesso recusado para o operador CPF 123.456.789-00 no módulo de imagens.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-007",
     "tipo": "positivo",
-    "identificadores": ["cns"],
+    "identificadores": [
+      {
+        "classe": "cns",
+        "valor": "700001234567890",
+        "substituto": "[CNS_REMOVIDO]"
+      }
+    ],
     "entrada": "Erro de sincronização no cadastro do Cartão SUS 700001234567890 no totem.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-008",
     "tipo": "positivo",
-    "identificadores": ["prontuario"],
+    "identificadores": [
+      {
+        "classe": "prontuario",
+        "valor": "987654",
+        "substituto": "[PRONTUARIO_REMOVIDO]"
+      }
+    ],
     "entrada": "Falha de gravação de laudo para prontuário #987654 no servidor PACS.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-009",
     "tipo": "positivo",
-    "identificadores": ["nome_medico"],
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "Ricardo Mendes",
+        "substituto": "[NOME_REMOVIDO]",
+        "proibidos": [
+          "Ricardo",
+          "Mendes"
+        ]
+      }
+    ],
     "entrada": "Sessão encerrada inesperadamente durante consulta do Dr. Ricardo Mendes.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-010",
     "tipo": "positivo",
-    "identificadores": ["nome_legado"],
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "dr.joao",
+        "substituto": "[USUARIO_MEDICO]"
+      }
+    ],
     "entrada": "Incidente registrado por dr.joao no terminal da radioterapia.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-011",
     "tipo": "positivo",
-    "identificadores": ["hostname", "biomedico"],
+    "identificadores": [
+      {
+        "classe": "hostname",
+        "valor": "tomografo-ge-01",
+        "substituto": "[EQUIPAMENTO_IMAGEM]"
+      }
+    ],
     "entrada": "Perda de telemetria no equipamento tomografo-ge-01 após pico de energia.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-012",
     "tipo": "positivo",
-    "identificadores": ["hostname", "servidor"],
+    "identificadores": [
+      {
+        "classe": "hostname",
+        "valor": "srv-prontuario-db.fcecon",
+        "substituto": "[SERVIDOR_HOSPITALAR]"
+      }
+    ],
     "entrada": "Processo travado no servidor srv-prontuario-db.fcecon por falta de memória.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-013",
     "tipo": "positivo",
-    "identificadores": ["mac"],
+    "identificadores": [
+      {
+        "classe": "mac",
+        "valor": "00-14-22-01-23-45",
+        "substituto": "[MAC_MASCARADO]"
+      }
+    ],
     "entrada": "Port security violada pelo dispositivo físico 00-14-22-01-23-45 na porta fa0/1.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-014",
     "tipo": "positivo",
-    "identificadores": ["ipv4", "email"],
+    "identificadores": [
+      {
+        "classe": "email",
+        "valor": "enfermagem@hospital.org",
+        "substituto": "[EMAIL_REMOVIDO]"
+      },
+      {
+        "classe": "ipv4",
+        "valor": "192.168.10.45",
+        "substituto": "192.168.10.0/24"
+      }
+    ],
     "entrada": "Notificação enviada para enfermagem@hospital.org sobre o host 192.168.10.45.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-015",
     "tipo": "positivo",
-    "identificadores": ["cpf", "nome_medico"],
+    "identificadores": [
+      {
+        "classe": "cpf",
+        "valor": "987.654.321-99",
+        "substituto": "[CPF_REMOVIDO]"
+      },
+      {
+        "classe": "nome",
+        "valor": "Fernando Soares",
+        "substituto": "[NOME_REMOVIDO]",
+        "proibidos": [
+          "Fernando",
+          "Soares"
+        ]
+      }
+    ],
     "entrada": "Médico Dr. Fernando Soares (CPF 987.654.321-99) solicitou reinicialização de link.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-016",
     "tipo": "positivo",
-    "identificadores": ["cns", "prontuario"],
+    "identificadores": [
+      {
+        "classe": "cns",
+        "valor": "890123456789012",
+        "substituto": "[CNS_REMOVIDO]"
+      },
+      {
+        "classe": "prontuario",
+        "valor": "PAC-102938",
+        "substituto": "[PRONTUARIO_REMOVIDO]"
+      }
+    ],
     "entrada": "Inconsistência entre CNS 890123456789012 e prontuário: PAC-102938.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-017",
     "tipo": "positivo",
-    "identificadores": ["nome_enfermeiro"],
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "Claudia Souza",
+        "substituto": "[NOME_REMOVIDO]",
+        "proibidos": [
+          "Claudia",
+          "Souza"
+        ]
+      }
+    ],
     "entrada": "Chamado aberto pela enfermeira Claudia Souza da UTI Oncológica.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-018",
     "tipo": "positivo",
-    "identificadores": ["ipv6", "hostname"],
+    "identificadores": [
+      {
+        "classe": "ipv6",
+        "valor": "fe80::1ff:fe23:4567:890a",
+        "substituto": "fe80::/64"
+      },
+      {
+        "classe": "hostname",
+        "valor": "fw-pfsense-01",
+        "substituto": "[FIREWALL_REDE]"
+      }
+    ],
     "entrada": "Roteamento instável entre fw-pfsense-01 e fe80::1ff:fe23:4567:890a.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-019",
     "tipo": "positivo",
-    "identificadores": ["biomedico", "ipv4"],
+    "identificadores": [
+      {
+        "classe": "hostname",
+        "valor": "bomba-infusao-uti",
+        "substituto": "[DISPOSITIVO_BIOMEDICO]"
+      },
+      {
+        "classe": "ipv4",
+        "valor": "10.20.30.40",
+        "substituto": "10.20.30.0/24"
+      }
+    ],
     "entrada": "Bomba de infusão bomba-infusao-uti offline no IP 10.20.30.40.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-020",
     "tipo": "positivo",
-    "identificadores": ["access_point", "mac"],
+    "identificadores": [
+      {
+        "classe": "hostname",
+        "valor": "ap-wifi-bloco-c",
+        "substituto": "[ACCESS_POINT]"
+      },
+      {
+        "classe": "mac",
+        "valor": "c4:7d:4f:01:aa:bb",
+        "substituto": "[MAC_MASCARADO]"
+      }
+    ],
     "entrada": "Ponto de acesso ap-wifi-bloco-c detectou interferência do MAC c4:7d:4f:01:aa:bb.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-021",
     "tipo": "positivo",
-    "identificadores": ["prontuario", "ipv4"],
+    "identificadores": [
+      {
+        "classe": "prontuario",
+        "valor": "887766",
+        "substituto": "[PRONTUARIO_REMOVIDO]"
+      },
+      {
+        "classe": "ipv4",
+        "valor": "192.168.2.100",
+        "substituto": "192.168.2.0/24"
+      }
+    ],
     "entrada": "Consulta ao prontuário #887766 originada do terminal 192.168.2.100 falhou.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-022",
     "tipo": "positivo",
-    "identificadores": ["nome_medico", "email"],
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "Beatriz Santos",
+        "substituto": "[NOME_REMOVIDO]",
+        "proibidos": [
+          "Beatriz",
+          "Santos"
+        ]
+      },
+      {
+        "classe": "email",
+        "valor": "beatriz.santos@saude.gov.br",
+        "substituto": "[EMAIL_REMOVIDO]"
+      }
+    ],
     "entrada": "Mensagem da Dra. Beatriz Santos (beatriz.santos@saude.gov.br) sem resposta.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-023",
     "tipo": "positivo",
-    "identificadores": ["hostname", "ipv4"],
+    "identificadores": [
+      {
+        "classe": "hostname",
+        "valor": "switch-borda-bloco-a",
+        "substituto": "[SWITCH_REDE]"
+      },
+      {
+        "classe": "ipv4",
+        "valor": "172.16.1.1",
+        "substituto": "172.16.1.0/24"
+      }
+    ],
     "entrada": "Switch switch-borda-bloco-a perdeu sincronismo NTP com 172.16.1.1.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-024",
     "tipo": "positivo",
-    "identificadores": ["cpf", "ipv4"],
+    "identificadores": [
+      {
+        "classe": "cpf",
+        "valor": "333.444.555-66",
+        "substituto": "[CPF_REMOVIDO]"
+      },
+      {
+        "classe": "ipv4",
+        "valor": "10.50.0.12",
+        "substituto": "10.50.0.0/24"
+      }
+    ],
     "entrada": "Login do CPF 333.444.555-66 a partir de 10.50.0.12 recusado por política de segurança.",
     "espera_sanitizacao": true
   },
   {
     "id": "POS-025",
     "tipo": "positivo",
-    "identificadores": ["cns", "nome_paciente"],
+    "identificadores": [
+      {
+        "classe": "cns",
+        "valor": "102938475610293",
+        "substituto": "[CNS_REMOVIDO]"
+      },
+      {
+        "classe": "nome",
+        "valor": "Carlos Eduardo",
+        "substituto": "[NOME_REMOVIDO]",
+        "proibidos": [
+          "Carlos",
+          "Eduardo"
+        ]
+      }
+    ],
     "entrada": "Atendimento do paciente Carlos Eduardo portador do CNS 102938475610293 travado no sistema.",
     "espera_sanitizacao": true
   },
@@ -348,5 +583,176 @@
     "identificadores": [],
     "entrada": "Link aggregation group (LACP) partner lost on member port bundle.",
     "espera_sanitizacao": false
+  },
+  {
+    "id": "POS-026",
+    "tipo": "positivo",
+    "entrada": "Contato teste@example.invalid; identificador 52998224725.",
+    "identificadores": [
+      {
+        "classe": "email",
+        "valor": "teste@example.invalid",
+        "substituto": "[EMAIL_REMOVIDO]"
+      },
+      {
+        "classe": "cpf",
+        "valor": "52998224725",
+        "substituto": "[CPF_REMOVIDO]"
+      }
+    ],
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "POS-027",
+    "tipo": "positivo",
+    "entrada": "Falha em ::1 e 2001:db8::abcd.",
+    "identificadores": [
+      {
+        "classe": "ipv6",
+        "valor": "::1",
+        "substituto": "::/64"
+      },
+      {
+        "classe": "ipv6",
+        "valor": "2001:db8::abcd",
+        "substituto": "2001:db8::/64"
+      }
+    ],
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "POS-028",
+    "tipo": "positivo",
+    "entrada": "Destino 2001:db8:abcd:12:: e paciente Ana Maria.",
+    "identificadores": [
+      {
+        "classe": "ipv6",
+        "valor": "2001:db8:abcd:12::",
+        "substituto": "2001:db8:abcd:12::/64"
+      },
+      {
+        "classe": "nome",
+        "valor": "Ana Maria",
+        "substituto": "[NOME_REMOVIDO]",
+        "proibidos": [
+          "Ana",
+          "Maria"
+        ]
+      }
+    ],
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "POS-029",
+    "tipo": "positivo",
+    "entrada": "CPF 12345678900 no host srv-demo.local.",
+    "identificadores": [
+      {
+        "classe": "cpf",
+        "valor": "12345678900",
+        "substituto": "[CPF_REMOVIDO]"
+      },
+      {
+        "classe": "hostname",
+        "valor": "srv-demo.local",
+        "substituto": "[SERVIDOR_HOSPITALAR]"
+      }
+    ],
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "POS-030",
+    "tipo": "positivo",
+    "entrada": "Dra. Julia Silva reporta falha em 192.0.2.22.",
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "Julia Silva",
+        "substituto": "[NOME_REMOVIDO]",
+        "proibidos": [
+          "Julia",
+          "Silva"
+        ]
+      },
+      {
+        "classe": "ipv4",
+        "valor": "192.0.2.22",
+        "substituto": "192.0.2.0/24"
+      }
+    ],
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "POS-031",
+    "tipo": "positivo",
+    "entrada": "dra. julia silva reporta falha no IP 192.0.2.23.",
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "julia silva",
+        "proibidos": [
+          "julia",
+          "silva"
+        ],
+        "substituto": "[NOME_REMOVIDO]"
+      },
+      {
+        "classe": "ipv4",
+        "valor": "192.0.2.23",
+        "substituto": "192.0.2.0/24"
+      }
+    ],
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "POS-032",
+    "tipo": "positivo",
+    "entrada": "Dr. Joao Silva relatou falha no enlace.",
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "Dr. Joao Silva",
+        "substituto": "[USUARIO_MEDICO]",
+        "proibidos": [
+          "Joao",
+          "Silva"
+        ]
+      }
+    ],
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "POS-033",
+    "tipo": "positivo",
+    "entrada": "dr.joao Silva relatou falha no enlace.",
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "dr.joao Silva",
+        "substituto": "[USUARIO_MEDICO]",
+        "proibidos": [
+          "joao",
+          "Silva"
+        ]
+      }
+    ],
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "POS-034",
+    "tipo": "positivo",
+    "entrada": "Dra.Maria Souza relatou falha no enlace.",
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "Dra.Maria Souza",
+        "substituto": "[USUARIO_MEDICO]",
+        "proibidos": [
+          "Maria",
+          "Souza"
+        ]
+      }
+    ],
+    "espera_sanitizacao": true
   }
 ]

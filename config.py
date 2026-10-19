@@ -19,6 +19,7 @@ class Settings:
     openrouter_api_key: str = field(repr=False)
     llm_model: str
     cors_origins: tuple[str, ...]
+    jwt_secret: str = field(repr=False)
 
 
 def _required(name: str) -> str:
@@ -74,4 +75,7 @@ def load_settings(env_file: Path | None = None) -> Settings:
             "SIGMA_CORS_ORIGINS deve conter origens HTTP/HTTPS explícitas, "
             "separadas por vírgulas, sem curingas, caminhos ou credenciais."
         )
-    return Settings(key, model, origins)
+    jwt_secret = _required("SIGMA_JWT_SECRET")
+    if len(jwt_secret.encode("utf-8")) < 32:
+        raise ConfigurationError("SIGMA_JWT_SECRET deve ter pelo menos 32 bytes.")
+    return Settings(key, model, origins, jwt_secret)

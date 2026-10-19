@@ -21,8 +21,8 @@ import os
 import secrets
 import time
 import uuid
-from dataclasses import dataclass, field
-from datetime import datetime, timezone
+import threading
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
@@ -38,10 +38,12 @@ PAPEIS: dict[str, int] = {
 }
 
 # Configurações de Sessão e Segurança
-JWT_SECRET = os.getenv("SIGMA_JWT_SECRET", "sigma-hospital-secure-session-key-32chars-min!")
-JWT_EXPIRATION_SECONDS = int(os.getenv("SIGMA_JWT_EXPIRATION_SECONDS", "3600"))  # 1 hora
-MAX_LOGIN_ATTEMPTS = int(os.getenv("SIGMA_MAX_LOGIN_ATTEMPTS", "5"))
-LOCKOUT_DURATION_SECONDS = int(os.getenv("SIGMA_LOCKOUT_DURATION_SECONDS", "900"))  # 15 minutos
+JWT_SECRET = None
+_sessions: dict[str, dict] = {}
+_session_lock = threading.Lock()
+JWT_EXPIRATION_SECONDS = 3600
+MAX_LOGIN_ATTEMPTS = 5
+LOCKOUT_DURATION_SECONDS = 900
 
 
 # --- Funções Criptográficas Auxiliares (Base64URL e JWT puro sem dependências pesadas) ---
@@ -101,11 +103,18 @@ class TokenError(HTTPException):
 def criar_token_sessao(
     usuario: str,
     papel: str,
-    expira_em_segundos: int = JWT_EXPIRATION_SECONDS,
-    secret_key: str = JWT_SECRET,
+    expira_em_segundos: int | None = None,
+    secret_key: str | None = None,
 ) -> str:
     """Emite token JWT de sessão assinado com HS256 e expiração delimitada."""
     agora = int(time.time())
+    if expira_em_segundos is None:
+        expira_em_segundos = JWT_EXPIRATION_SECONDS
+    key = secret_key or JWT_SECRET
+    if not key:
+        raise RuntimeError("Configure SIGMA_JWT_SECRET antes de emitir sessões.")
+    if papel not in PAPEIS or not usuario:
+        raise ValueError("Usuário ou papel inválido.")
     header = {"alg": "HS256", "typ": "JWT"}
     payload = {
         "sub": usuario,
@@ -118,18 +127,25 @@ def criar_token_sessao(
     h_bytes = _b64url_encode(json.dumps(header, separators=(",", ":")).encode("utf-8"))
     p_bytes = _b64url_encode(json.dumps(payload, separators=(",", ":")).encode("utf-8"))
     assinatura = hmac.new(
-        secret_key.encode("utf-8"),
+        key.encode("utf-8"),
         f"{h_bytes}.{p_bytes}".encode("ascii"),
         hashlib.sha256,
     ).digest()
     s_bytes = _b64url_encode(assinatura)
 
+    with _session_lock:
+        for jti in [j for j, sessao in _sessions.items() if sessao["exp"] <= agora]:
+            _sessions.pop(jti, None)
+        _sessions[payload["jti"]] = payload.copy()
     return f"{h_bytes}.{p_bytes}.{s_bytes}"
 
 
-def decodificar_token_sessao(token: str, secret_key: str = JWT_SECRET) -> dict:
+def decodificar_token_sessao(token: str, secret_key: str | None = None) -> dict:
     """Verifica e decodifica um JWT de sessão HS256."""
     try:
+        key = secret_key or JWT_SECRET
+        if not key:
+            raise TokenError()
         partes = token.strip().split(".")
         if len(partes) != 3:
             raise TokenError("Token malformado.")
@@ -138,7 +154,7 @@ def decodificar_token_sessao(token: str, secret_key: str = JWT_SECRET) -> dict:
 
         # Valida assinatura em tempo constante
         assinatura_esperada = hmac.new(
-            secret_key.encode("utf-8"),
+            key.encode("utf-8"),
             f"{h_bytes}.{p_bytes}".encode("ascii"),
             hashlib.sha256,
         ).digest()
@@ -154,8 +170,16 @@ def decodificar_token_sessao(token: str, secret_key: str = JWT_SECRET) -> dict:
 
         agora = int(time.time())
         exp = payload.get("exp", 0)
-        if agora >= exp:
+        if type(exp) is not int or agora >= exp:
             raise TokenError("Token expirado.")
+
+        if not isinstance(payload.get("sub"), str) or payload.get("papel") not in PAPEIS:
+            raise TokenError()
+        if not isinstance(payload.get("jti"), str) or type(payload.get("iat")) is not int:
+            raise TokenError()
+        with _session_lock:
+            if _sessions.get(payload["jti"]) != payload:
+                raise TokenError("Sessão encerrada.")
 
         return payload
 
@@ -181,13 +205,31 @@ class UsuarioRepository:
 
     def __init__(self):
         self._usuarios: dict[str, Usuario] = {}
-        self._seed_usuarios()
 
-    def _seed_usuarios(self):
-        # Usuários padrão para cada um dos perfis oficiais do SIGMA (README / RF07)
-        self.adicionar_usuario("suporte.n1", "SenhaN1@123", "suporte_n1")
-        self.adicionar_usuario("analista.redes", "SenhaAnalista@123", "analista_redes")
-        self.adicionar_usuario("gestor.ti", "SenhaGestor@123", "gestor_ti")
+    def carregar(self, caminho: str) -> None:
+        """Carrega hashes de um arquivo local; nenhum usuário é criado implicitamente."""
+        from config import ConfigurationError
+        try:
+            dados = json.loads(Path(caminho).read_text(encoding="utf-8-sig"))
+            if not isinstance(dados, list) or not dados:
+                raise ValueError()
+            usuarios = {}
+            for item in dados:
+                user = Usuario(**item)
+                if (not isinstance(user.username, str) or not 1 <= len(user.username) <= 100
+                        or user.papel not in PAPEIS or type(user.ativo) is not bool
+                        or user.username in usuarios):
+                    raise ValueError()
+                partes = user.senha_hash.split("$")
+                if (len(partes) != 4 or partes[0] != "pbkdf2_sha256"
+                        or not 100_000 <= int(partes[1]) <= 1_000_000
+                        or len(bytes.fromhex(partes[2])) < 16
+                        or len(bytes.fromhex(partes[3])) != 32):
+                    raise ValueError()
+                usuarios[user.username] = user
+            self._usuarios = usuarios
+        except Exception:
+            raise ConfigurationError("SIGMA_USERS_FILE deve apontar para usuários e hashes válidos.") from None
 
     def adicionar_usuario(self, username: str, senha_clara: str, papel: str) -> Usuario:
         if papel not in PAPEIS:
@@ -198,7 +240,12 @@ class UsuarioRepository:
             papel=papel,
             ativo=True,
         )
-        self._usuarios[username] = user
+        # Recriar uma conta não pode preservar as sessões da identidade anterior.
+        with _session_lock:
+            for jti in [j for j, sessao in _sessions.items()
+                        if self is usuario_repo and sessao["sub"] == username]:
+                _sessions.pop(jti, None)
+            self._usuarios[username] = user
         return user
 
     def obter_por_username(self, username: str) -> Usuario | None:
@@ -206,6 +253,41 @@ class UsuarioRepository:
 
 
 usuario_repo = UsuarioRepository()
+
+
+def configure_auth(secret: str) -> None:
+    """Executado depois de load_settings, antes de registrar os roteadores."""
+    from config import ConfigurationError
+    global JWT_SECRET, JWT_EXPIRATION_SECONDS
+    caminho = os.getenv("SIGMA_USERS_FILE", "").strip()
+    if not caminho:
+        raise ConfigurationError("Configure a variável obrigatória SIGMA_USERS_FILE.")
+    def positive_setting(name: str, default: int, maximum: int) -> int:
+        try:
+            value = int(os.getenv(name, str(default)))
+            if not 1 <= value <= maximum:
+                raise ValueError()
+            return value
+        except ValueError:
+            raise ConfigurationError(f"{name} deve estar entre 1 e {maximum}.") from None
+
+    expiration = positive_setting("SIGMA_JWT_EXPIRATION_SECONDS", 3600, 86400)
+    attempts = positive_setting("SIGMA_MAX_LOGIN_ATTEMPTS", 5, 100)
+    duration = positive_setting("SIGMA_LOCKOUT_DURATION_SECONDS", 900, 86400)
+    usuario_repo.carregar(caminho)
+    JWT_EXPIRATION_SECONDS = expiration
+    JWT_SECRET = secret
+    rate_limiter.max_falhas = attempts
+    rate_limiter.tempo_bloqueio = duration
+    rate_limiter._tentativas.clear()
+    with _session_lock:
+        _sessions.clear()
+
+
+def revogar_token(token: str) -> None:
+    payload = decodificar_token_sessao(token)
+    with _session_lock:
+        _sessions.pop(payload["jti"], None)
 
 
 # --- Limite de Tentativas (Rate Limiting contra Força Bruta) ---
@@ -263,7 +345,7 @@ def obter_auditor():
         chave = os.getenv("SIGMA_AUDIT_KEY")
         return AuditChain(caminho, chave=chave.encode() if chave else None)
     except Exception as exc:
-        logger.warning("Falha ao inicializar AuditChain: %s", exc)
+        logger.warning("Falha ao inicializar AuditChain: %s", type(exc).__name__)
         return None
 
 
@@ -271,12 +353,6 @@ def obter_auditor():
 
 def obter_usuario_atual(request: Request, authorization: str | None = Header(None)) -> Usuario:
     """Extrai e valida o token Bearer JWT da requisição."""
-    # Permite opt-out em testes unitários legados onde SIGMA_AUTH_ENFORCED=0
-    auth_enforced = os.getenv("SIGMA_AUTH_ENFORCED", "1") != "0"
-    if not auth_enforced and not authorization:
-        # Modo bypass exclusivo para regressão controlada de testes anteriores
-        return Usuario(username="bypass_user", senha_hash="", papel="gestor_ti")
-
     if not authorization or not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Autenticação necessária.")
 
@@ -289,7 +365,10 @@ def obter_usuario_atual(request: Request, authorization: str | None = Header(Non
     if not username or not papel:
         raise HTTPException(status_code=401, detail="Autenticação necessária.")
 
-    return Usuario(username=username, senha_hash="", papel=papel, ativo=True)
+    usuario = usuario_repo.obter_por_username(username)
+    if not usuario or not usuario.ativo or usuario.papel != papel:
+        raise TokenError()
+    return usuario
 
 
 def exige_papel(papel_minimo: str) -> Callable:

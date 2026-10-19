@@ -1,3 +1,5 @@
+> Atualização 19/10/2026: entrega parcial em correção/revisão. As afirmações de conclusão abaixo são históricas e não equivalem ao aceite integral. Consulte [a revisão da sprint](../011-recuperacao-sprint/evidencias.md).
+
 # Registro da Entrega — Issue #5
 
 **Título do PR / Issue**: `feat(seguranca): modulo anonimizador com fail-closed e experimento E6 (RF05 #5)`  
