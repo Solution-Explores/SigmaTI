@@ -90,7 +90,7 @@ def test_success_payload_and_shared_client_lifecycle(module, provider, caplog):
     assert first.status_code == second.status_code == 200
     assert first.json() == second.json() == {
         "status": "Incidente Registrado",
-        "dados_enviados_nuvem": "Equipamento: Switch de teste | Erro: Falha [USUARIO_MEDICO] no IP [IP_MASCARADO]. Forneça um diagnóstico de rede curto e direto.",
+        "dados_enviados_nuvem": "Equipamento: [SWITCH_REDE] | Erro: Falha [USUARIO_MEDICO] no IP 192.0.2.0/24. Forneça um diagnóstico de rede curto e direto.",
         "diagnostico_ia": "Diagnóstico simulado",
     }
     assert handler.await_count == 2
@@ -234,7 +234,7 @@ def test_pending_provider_does_not_block_another_alert(module, provider):
 
         async def respond(request):
             payload = json.loads(request.content)
-            if "Slow switch" in payload["messages"][1]["content"]:
+            if not started.is_set():
                 started.set()
                 await release.wait()
             return httpx.Response(200, json=SUCCESS)

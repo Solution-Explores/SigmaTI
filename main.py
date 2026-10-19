@@ -49,10 +49,13 @@ class AlertaRede(BaseModel):
     ip_origem: str
     descricao_erro: str
 
-def anonimizar_dados(texto: str) -> str:
-    texto_limpo = re.sub(r'\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b', '[IP_MASCARADO]', texto)
-    texto_limpo = texto_limpo.replace("dr.joao", "[USUARIO_MEDICO]")
-    return texto_limpo
+from sanitizer import (
+    SanitizationError,
+    SanitizationResidualError,
+    anonimizar_dados,
+    categorizar_equipamento,
+    sanitizar_texto,
+)
 
 async def consultar_ia(client: httpx.AsyncClient, headers: dict, payload: dict) -> str:
     inicio = monotonic()
@@ -100,10 +103,11 @@ async def receber_alerta(
     alerta: AlertaRede,
     client: Annotated[httpx.AsyncClient, Depends(get_provider_client)],
 ):
-    # 1. Aplica a anonimização irreversível (Conformidade com a LGPD)
+    # 1. Aplica a anonimização irreversível e fail-closed (Conformidade com a LGPD - RF05)
+    equipamento_categorizado = categorizar_equipamento(alerta.equipamento)
     erro_anonimizado = anonimizar_dados(alerta.descricao_erro)
     
-    prompt_enviado = f"Equipamento: {alerta.equipamento} | Erro: {erro_anonimizado}. Forneça um diagnóstico de rede curto e direto."
+    prompt_enviado = f"Equipamento: {equipamento_categorizado} | Erro: {erro_anonimizado}. Forneça um diagnóstico de rede curto e direto."
     
     # 2. Chamada ao OpenRouter com chave e modelo definidos no ambiente.
     

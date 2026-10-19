@@ -3,3 +3,4 @@ __pycache__/
 sigma-frontend/node_modules/
 .env
 /test-results/
+spec-kit/
