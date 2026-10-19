@@ -63,6 +63,10 @@ Implantação híbrida: `db` (PostgreSQL) e `n8n` orquestrados via Docker Compos
 
 ## Demonstração controlada e aceite
 
+O [plano de conclusão para 20/10 às 18h (Manaus)](doc/plano-conclusao-2026-10-20.md)
+registra a ordem de implementação, os cortes de escopo e as dependências externas.
+Itens planejados nesse documento ainda não constituem funcionalidades entregues.
+
 A [revisão K11/K12](specs/011-recuperacao-sprint/evidencias.md) documenta as
 correções de sessão, painel e anonimização. A API exige `SIGMA_JWT_SECRET` e
 `SIGMA_USERS_FILE`, além da configuração da IA. Crie hashes locais com
