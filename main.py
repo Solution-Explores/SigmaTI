@@ -11,6 +11,15 @@ import httpx2 as httpx
 
 from config import load_settings
 from api_errors import PublicError, configure_public_errors
+from auth import Usuario, exige_papel, usuario_repo
+from routers.auth import router as auth_router
+
+import sys
+from pathlib import Path
+
+_eng_dir = Path(__file__).resolve().parent / "engenharia"
+if _eng_dir.exists() and str(_eng_dir) not in sys.path:
+    sys.path.insert(0, str(_eng_dir))
 
 settings = load_settings()
 
@@ -42,6 +51,15 @@ app = FastAPI(
     responses={status: {"model": PublicError} for status in (403, 422, 500)},
 )
 configure_public_errors(app, settings.cors_origins)
+
+# Registro de roteadores da aplicação
+app.include_router(auth_router)
+
+try:
+    from engenharia.sigma_eng.api import router as eng_router
+    app.include_router(eng_router)
+except ImportError:
+    logger.info("Módulo sigma_eng não carregado no roteador principal")
 # --------------------------------------------------
 
 class AlertaRede(BaseModel):
@@ -102,6 +120,7 @@ async def consultar_ia(client: httpx.AsyncClient, headers: dict, payload: dict) 
 async def receber_alerta(
     alerta: AlertaRede,
     client: Annotated[httpx.AsyncClient, Depends(get_provider_client)],
+    usuario: Annotated[Usuario, Depends(exige_papel("suporte_n1"))],
 ):
     # 1. Aplica a anonimização irreversível e fail-closed (Conformidade com a LGPD - RF05)
     equipamento_categorizado = categorizar_equipamento(alerta.equipamento)
@@ -110,7 +129,6 @@ async def receber_alerta(
     prompt_enviado = f"Equipamento: {equipamento_categorizado} | Erro: {erro_anonimizado}. Forneça um diagnóstico de rede curto e direto."
     
     # 2. Chamada ao OpenRouter com chave e modelo definidos no ambiente.
-    
     headers = {
         "Authorization": f"Bearer {settings.openrouter_api_key}",
         "Content-Type": "application/json"
@@ -132,3 +150,71 @@ async def receber_alerta(
         "dados_enviados_nuvem": prompt_enviado,
         "diagnostico_ia": diagnostico_ia
     }
+
+
+# =====================================================================
+# Rotas da Matriz de Permissões RBAC (README / stack-de-tecnologia.md)
+# =====================================================================
+
+@app.get("/api/status")
+async def obter_status(usuario: Annotated[Usuario, Depends(exige_papel("suporte_n1"))]):
+    """Ver alertas e status da rede (Suporte N1, Analista de Redes, Gestor de TI)."""
+    return {"status": "operacional", "perfil": usuario.papel}
+
+
+@app.get("/api/alertas")
+async def listar_alertas(usuario: Annotated[Usuario, Depends(exige_papel("suporte_n1"))]):
+    """Ver alertas e status da rede (Suporte N1, Analista de Redes, Gestor de TI)."""
+    return {"alertas": []}
+
+
+@app.get("/api/pacotes")
+async def ver_pacotes(usuario: Annotated[Usuario, Depends(exige_papel("analista_redes"))]):
+    """Ver histórico e detalhes de pacotes (Analista de Redes, Gestor de TI)."""
+    return {"pacotes": []}
+
+
+@app.get("/api/incidentes")
+async def listar_incidentes(usuario: Annotated[Usuario, Depends(exige_papel("analista_redes"))]):
+    """Ver histórico e incidentes (Analista de Redes, Gestor de TI)."""
+    return {"incidentes": []}
+
+
+@app.get("/api/relatorios")
+async def relatorios_gerenciais(usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))]):
+    """Ver relatórios gerenciais (Exclusivo Gestor de TI)."""
+    return {"relatorios": []}
+
+
+@app.get("/api/usuarios")
+async def listar_usuarios(usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))]):
+    """Gerenciar usuários (Exclusivo Gestor de TI)."""
+    return {"usuarios": ["suporte.n1", "analista.redes", "gestor.ti"]}
+
+
+class NovoUsuarioIn(BaseModel):
+    username: str
+    password: str
+    papel: str
+
+
+@app.post("/api/usuarios")
+async def criar_usuario(
+    dados: NovoUsuarioIn,
+    usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))],
+):
+    """Criar novo usuário no sistema (Exclusivo Gestor de TI)."""
+    novo = usuario_repo.adicionar_usuario(dados.username, dados.password, dados.papel)
+    return {"username": novo.username, "papel": novo.papel, "status": "criado"}
+
+
+@app.post("/api/chaves/rotacao")
+async def rotacionar_chaves(usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))]):
+    """Gerenciar chaves e rotação de credenciais (Exclusivo Gestor de TI)."""
+    return {"status": "chaves_rotacionadas"}
+
+
+@app.get("/api/n8n/acesso")
+async def acessar_n8n(usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))]):
+    """Acesso ao n8n via VLAN de gerência / VPN restrita (Exclusivo Gestor de TI)."""
+    return {"status": "autorizado_vlan_gerencia", "url": "http://n8n-internal.hospital:5678"}

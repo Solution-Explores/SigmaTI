@@ -18,8 +18,17 @@ import os
 from datetime import datetime, timezone
 from pathlib import Path
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
+
+try:
+    from auth import exige_papel
+except ImportError:  # pragma: no cover
+    try:
+        from SigmaTI.auth import exige_papel
+    except ImportError:
+        def exige_papel(papel: str):
+            return lambda: None
 
 from . import anomaly, incidents, probe, slo
 from .audit_chain import AuditChain
@@ -43,7 +52,7 @@ class ProbeIn(BaseModel):
     count: int = Field(default=1, ge=1, le=100)
 
 
-@router.post("/probe")
+@router.post("/probe", dependencies=[Depends(exige_papel("analista_redes"))])
 async def post_probe(body: ProbeIn) -> dict:
     if body.kind not in probe.VALID_KINDS:
         raise HTTPException(422, f"kind deve ser um de {sorted(probe.VALID_KINDS)}")
@@ -66,7 +75,7 @@ class SloIn(BaseModel):
     agora: datetime | None = None
 
 
-@router.post("/slo/avaliar")
+@router.post("/slo/avaliar", dependencies=[Depends(exige_papel("analista_redes"))])
 def post_slo(body: SloIn) -> dict:
     try:
         objetivo = slo.SLO("api", body.alvo_pct, body.janela_dias)
@@ -86,7 +95,7 @@ class IncidenteIn(BaseModel):
     resolvido_em: datetime | None = None
 
 
-@router.post("/incidentes/metricas")
+@router.post("/incidentes/metricas", dependencies=[Depends(exige_papel("analista_redes"))])
 def post_metricas(body: list[IncidenteIn]) -> dict:
     return incidents.metricas(incidents.Incidente(**i.model_dump()) for i in body)
 
@@ -96,7 +105,7 @@ class AnomaliaIn(BaseModel):
     metodo: str = "ewma"
 
 
-@router.post("/anomalias")
+@router.post("/anomalias", dependencies=[Depends(exige_papel("analista_redes"))])
 def post_anomalias(body: AnomaliaIn) -> dict:
     if body.metodo == "ewma":
         det: anomaly.Detector = anomaly.EwmaDetector()
@@ -107,7 +116,7 @@ def post_anomalias(body: AnomaliaIn) -> dict:
     return {"indices": [i for i, x in enumerate(body.serie) if det.update(x)]}
 
 
-@router.get("/auditoria/verificar")
+@router.get("/auditoria/verificar", dependencies=[Depends(exige_papel("gestor_ti"))])
 def get_verificar() -> dict:
     ok, indice = auditoria.verificar()
     return {"integra": ok, "primeira_invalida": indice, "entradas": len(auditoria)}

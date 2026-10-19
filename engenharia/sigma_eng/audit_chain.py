@@ -40,6 +40,9 @@ class AuditChain:
             with self.caminho.open(encoding="utf-8") as fh:
                 self._entradas = [json.loads(linha) for linha in fh if linha.strip()]
 
+    def __bool__(self) -> bool:
+        return True
+
     def _hash(self, corpo: dict) -> str:
         dados = _canonico(corpo)
         if self.chave:
