@@ -92,3 +92,19 @@ Sessões/usuários ainda usam memória; uma instância de API, dados fictícios 
 simulada são os limites desta demonstração. O relatório E6 não atesta anonimização
 universal nem conformidade jurídica. A mensagem legada "Incidente Registrado"
 não significa persistência de incidente no PostgreSQL.
+
+## Publicação e CI remoto
+
+Implementação publicada em `21347528012b1291f1caaf4289f9316eff71e053`.
+[PR #32](https://github.com/Solution-Explores/SigmaTI/pull/32), em rascunho, com base na dev.
+O conector GitHub recusou criação com 403; o PR foi criado e conferido pela interface,
+sem solicitar revisores nem alterar permissões. Não houve integração à dev/main.
+
+CI da implementação, consultado após conclusão:
+
+- [API, aceite HTTP, E6, build/lint e Chromium — sucesso](https://github.com/Solution-Explores/SigmaTI/actions/runs/39305376074).
+- [Infraestrutura — sucesso](https://github.com/Solution-Explores/SigmaTI/actions/runs/39305376159).
+
+K09/K10/K11/K12 foram movidos para Revisão e testes com links, resultados e limites.
+Revisão de outro integrante e aprovação continuam pendentes; nenhuma issue foi fechada.
+Esta atualização de documentação não modifica os arquivos executáveis validados.

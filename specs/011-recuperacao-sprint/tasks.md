@@ -13,7 +13,7 @@ Escopo autorizado: demonstração controlada; roteiro futuro permanece separado.
 - [x] CI inclui aceite HTTP, E6, build/lint e navegador.
 - [x] K09/K12: validação isolada de prontidão, autenticação e persistência; recursos removidos.
 - [ ] Revisão de outro integrante e integração aprovada na dev/main.
-- [ ] Conferir CI remoto e atualizar o quadro com links da entrega.
+- [x] Conferir CI remoto da implementação e atualizar o quadro com PR #32 e links da entrega.
 
 Não fechar #5/#6 por este escopo parcial. PostgreSQL de usuários/sessões,
 Argon2id/bcrypt e homologação hospitalar permanecem fora desta demonstração.

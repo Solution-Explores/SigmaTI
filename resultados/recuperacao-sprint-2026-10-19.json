@@ -97,7 +97,6 @@
   "pending": [
     "independent review",
     "approved integration",
-    "remote CI",
     "complete operational requirements of #5/#6"
   ],
   "http_acceptance": {
@@ -211,5 +210,12 @@
       "data"
     ],
     "cleanup_exit_code": 0
+  },
+  "implementation_commit": "21347528012b1291f1caaf4289f9316eff71e053",
+  "pull_request": "https://github.com/Solution-Explores/SigmaTI/pull/32",
+  "remote_ci": {
+    "api": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39305376074",
+    "infrastructure": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39305376159",
+    "conclusion": "success"
   }
 }
