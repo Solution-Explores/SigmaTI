@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 2,
+  "components": [
+    {
+      "css": ".ds-primary{min-height:44px;padding:10px 18px;border:1px solid var(--accent,#91caff);border-radius:6px;cursor:pointer;font:16px system-ui,sans-serif; background:var(--button,#12568e);color:var(--button-fg,#ffffff)} .ds-primary:hover:not(:disabled){filter:brightness(1.12)} .ds-primary:focus-visible{outline:3px solid var(--focus,#f5d773);outline-offset:3px} .ds-primary:disabled{opacity:.65;cursor:not-allowed}",
+      "kind": "button",
+      "description": "Ação do painel.",
+      "refersTo": "button-primary",
+      "name": "Button primary",
+      "html": "<button class=\"ds-primary\">Atualizar</button>"
+    },
+    {
+      "css": ".ds-secondary{min-height:44px;padding:10px 18px;border:1px solid var(--accent,#91caff);border-radius:6px;cursor:pointer;font:16px system-ui,sans-serif; background:var(--surface,#202632);color:var(--accent,#91caff)} .ds-secondary:hover:not(:disabled){filter:brightness(1.12)} .ds-secondary:focus-visible{outline:3px solid var(--focus,#f5d773);outline-offset:3px} .ds-secondary:disabled{opacity:.65;cursor:not-allowed}",
+      "kind": "button",
+      "description": "Ação do painel.",
+      "refersTo": "button-secondary",
+      "name": "Button secondary",
+      "html": "<button class=\"ds-secondary\">Atualizar</button>"
+    },
+    {
+      "css": ".ds-label{display:block;color:var(--fg,#eef2f8);font:16px system-ui,sans-serif}.ds-input{display:block;width:100%;background:var(--field,#121722);color:var(--fg,#eef2f8);border:1px solid var(--line,#65748a);border-radius:5px;padding:10px;font:inherit}.ds-input:focus-visible{outline:3px solid var(--focus,#f5d773);outline-offset:3px}",
+      "kind": "input",
+      "description": "Entrada com rótulo.",
+      "refersTo": "input",
+      "name": "Campo",
+      "html": "<label class=\"ds-label\">Usuário<input class=\"ds-input\" autocomplete=\"username\"></label>"
+    },
+    {
+      "css": ".ds-panel{padding:24px;background:var(--surface,#202632);color:var(--fg,#eef2f8);border:1px solid var(--line,#65748a);border-radius:12px;font:16px system-ui,sans-serif}",
+      "kind": "card",
+      "description": "Superfície operacional.",
+      "refersTo": "panel",
+      "name": "Painel",
+      "html": "<section class=\"ds-panel\">Saúde dos serviços</section>"
+    },
+    {
+      "kind": "chip",
+      "name": "Estado",
+      "description": "Estado com texto.",
+      "css": ".ds-badge{display:inline-block;padding:3px 8px;border:1px solid currentColor;border-radius:16px;font:.85rem system-ui,sans-serif;color:var(--good,#abebcf)}",
+      "html": "<span class=\"ds-badge\">Disponível</span>"
+    },
+    {
+      "kind": "nav",
+      "name": "Navegação",
+      "description": "Áreas visíveis conforme o papel.",
+      "css": ".ds-nav{display:flex;gap:8px;flex-wrap:wrap;padding:12px 0;border-top:1px solid var(--line,#65748a)}.ds-nav button{min-height:44px;padding:10px 18px;border:1px solid var(--accent,#91caff);border-radius:6px;cursor:pointer;font:16px system-ui,sans-serif;background:transparent;color:var(--fg,#eef2f8);border-color:var(--line,#65748a)}.ds-nav button[aria-current]{background:var(--button,#12568e);color:white;border-color:var(--accent,#91caff)}.ds-nav button:hover{filter:brightness(1.12)}.ds-nav button:focus-visible{outline:3px solid var(--focus,#f5d773);outline-offset:3px}",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Áreas\"><button aria-current=\"page\">Saúde dos serviços</button><button>Incidentes</button></nav>"
+    }
+  ],
+  "generatedAt": "2026-10-20T12:56:04.9557176Z",
+  "title": "Design System: SIGMA",
+  "narrative": {
+    "rules": [
+      {
+        "name": "The Semantic State Rule",
+        "section": "colors",
+        "body": "Estados mantêm rótulos textuais; cor apenas reforça a informação."
+      }
+    ],
+    "northStar": "Não definido; identidade existente preservada.",
+    "keyCharacteristics": [
+      "Painéis planos com borda.",
+      "Tema escuro inicial e alternância para claro.",
+      "Tabelas, formulários e estados em português."
+    ],
+    "donts": [
+      "Don't apresente ausência de medição como disponibilidade.",
+      "Don't use cor como único sinal de estado."
+    ],
+    "overview": "Registro factual da identidade existente: azul sobre fundo escuro, fonte de sistema e painéis planos com borda. O tema claro foi requerido pela issue #15. Metáfora criativa e adjetivos de marca não foram definidos; não se afirma aprovação humana de uma composição.",
+    "dos": [
+      "Do preserve os papéis semânticos nos dois temas.",
+      "Do mantenha rótulos textuais para estados e foco visível.",
+      "Do permita rolagem horizontal nas tabelas em telas estreitas."
+    ]
+  },
+  "extensions": {
+    "breakpoints": [
+      {
+        "name": "single-column",
+        "value": "720px"
+      }
+    ],
+    "shadows": [],
+    "motion": []
+  }
+}

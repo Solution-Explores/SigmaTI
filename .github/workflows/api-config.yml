@@ -38,7 +38,7 @@ jobs:
           cache-dependency-path: sigma-frontend/package-lock.json
       - run: npm ci --include=optional
         working-directory: sigma-frontend
-      - run: npm run build && npm run lint
+      - run: npm run build && npm run lint && npm test
         working-directory: sigma-frontend
       - run: npx playwright install --with-deps chromium
         working-directory: sigma-frontend
@@ -82,9 +82,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m venv .venv
+      - run: .venv/bin/python -m pip install -r requirements-dev.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: sigma-frontend/package-lock.json
+      - run: npm ci --include=optional
+        working-directory: sigma-frontend
+      - run: npx playwright install --with-deps chromium
+        working-directory: sigma-frontend
       - name: Real PostgreSQL migration and identity recovery regression
-        run: python scripts/validate_postgres.py
+        run: .venv/bin/python scripts/validate_postgres.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -95,3 +105,6 @@ jobs:
             test-results/collection-e2.json
             test-results/collection-e2.csv
             test-results/collection-e2.load.json
+            test-results/panel-run.json
+            test-results/panel-browser.xml
+            test-results/panel-*.png

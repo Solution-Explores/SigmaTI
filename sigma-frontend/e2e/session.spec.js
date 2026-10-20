@@ -6,6 +6,7 @@ async function login(page) {
   await page.getByLabel('Senha', { exact: true }).fill(process.env.SIGMA_BROWSER_PASSWORD);
   await page.getByRole('button', { name: 'Entrar', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Sair', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Diagnóstico', exact: true }).click();
 }
 
 test('login → diagnóstico simulado → logout com revogação real', async ({ page, request }) => {

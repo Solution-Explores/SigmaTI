@@ -166,3 +166,33 @@ def slo(identifier: Identifier, request: Request, user: Reader):
 @router.get("/auditoria/eventos")
 def events(request: Request, user: Manager, after: int = Query(0, ge=0), limit: int = Query(100, ge=1, le=500)):
     return {"eventos": repository(request).events(after, limit)}
+
+
+@router.get("/saude")
+def health(request: Request, user: Reader, limit: int = Query(500,ge=1,le=500)):
+    return repository(request).health_snapshot(limit)
+
+
+@router.get("/incidentes/resumo")
+def incident_summary(request: Request, user: Analyst):
+    from sigma_eng.incidents import Incidente, metricas
+    store=repository(request)
+    rows=store.incidents(limit=500)
+    names={target["id"]:target["nome"] for target in store.list_targets(500)}
+    values=[Incidente(id=row["id"],severidade=row["severidade"],detectado_em=row["detectado_em"],
+        reconhecido_em=row["reconhecido_em"],resolvido_em=row["resolvido_em"]) for row in rows]
+    return {"incidentes":[dict(row,nome_alvo=names.get(row["alvo_id"])) for row in rows],
+            "metricas":metricas(values),"limite":500}
+
+
+@router.get("/aprovacoes/{identifier}")
+def approval_detail(identifier: Identifier, request: Request, user: Analyst):
+    with errors():
+        store=repository(request)
+        store.get("approvals",identifier)
+        return ApprovalService(repository=store).obter(identifier)
+
+
+@router.get("/auditoria/recentes")
+def recent_events(request: Request, user: Manager):
+    return {"eventos":repository(request).recent_events(100)}

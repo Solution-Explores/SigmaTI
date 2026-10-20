@@ -436,3 +436,20 @@ MVP (TCC).
 - **Euler Azevedo** — [LinkedIn](https://www.linkedin.com/in/eulerazevedo/)
 
 Guia da coleta contínua e SSE autenticado: [configuração, contratos e ensaio E2](engenharia/docs/09-coleta-eventos.md).
+
+
+## Painel operacional (#15)
+
+O frontend em `sigma-frontend/` usa a API configurada em `VITE_API_URL` (padrão `http://localhost:8000`). Execute `npm ci` e `npm run dev` nessa pasta; a API precisa de `SIGMA_DATABASE_URL`, migrações aplicadas e usuários cadastrados conforme os guias de identidade e coleta. Sem persistência operacional, as áreas exibem indisponibilidade (503), sem dados fictícios substituindo a API.
+
+| Perfil | Áreas do painel |
+|---|---|
+| `suporte_n1` | Saúde dos serviços e diagnóstico |
+| `analista_redes` | Áreas anteriores, incidentes e aprovações |
+| `gestor_ti` | Todas as áreas, incluindo auditoria |
+
+A API também aplica autorização; ocultar a navegação não substitui o RBAC. O tema claro/escuro pode ser alternado no cabeçalho. Sessões e cursor SSE ficam apenas em memória; recarregar exige login. O SSE usa Bearer e `Last-Event-ID`, reconecta com espera progressiva e atualiza novamente os dados ao conectar. Há consulta de recuperação a cada 15 segundos.
+
+Saúde distingue dados ausentes/desatualizados de disponibilidade. O orçamento parcial é um limite máximo e a projeção exige cobertura integral da janela. MTTD aparece sem amostras enquanto não houver início real da falha registrado. Aprovar/rejeitar exige justificativa na interface, outro operador e o papel mínimo; essa página registra decisões, sem executar comandos. A integridade JSONL exibida na auditoria cobre a trilha de sondas; os eventos PostgreSQL são apresentados separadamente.
+
+Validação e limites: [evidências da #15](specs/017-painel-operacional/brief.md). Testes de componentes: `npm test`; diagnóstico: `npm run test:e2e`; ensaio completo com banco descartável: `python scripts/validate_postgres.py --tests "tests/test_panel_api.py tests/test_panel_e2e.py"`. O runner prepara um schema isolado e publica capturas em `test-results/`; Chromium deve estar instalado com `npx playwright install chromium`. No Windows, `SIGMA_BROWSER_CHANNEL=chrome` permite usar o Chrome já instalado.

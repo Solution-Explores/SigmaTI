@@ -11,3 +11,5 @@ sigma-frontend/playwright-report/
 *.egg-info/
 engenharia/build/
 engenharia/dist/
+
+.impeccable/review/
