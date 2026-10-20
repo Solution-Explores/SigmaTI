@@ -92,3 +92,6 @@ jobs:
           path: |
             test-results/postgres-regression.xml
             test-results/postgres-run.json
+            test-results/collection-e2.json
+            test-results/collection-e2.csv
+            test-results/collection-e2.load.json

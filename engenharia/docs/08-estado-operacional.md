@@ -1,3 +1,5 @@
+> Fundação integrada no PR #36. Para coleta opt-in, migração 003_collection, detector conectado e SSE, consulte [coleta e eventos](09-coleta-eventos.md).
+
 # Persistência operacional (#7)
 
 Incremento posterior ao PR #35. O núcleo `sigma_eng` não importa SQLAlchemy,
@@ -81,7 +83,7 @@ banco operacional; o teste só usa bancos descartáveis.
   ou janela MAD. A recuperação foi testada em outro processo Python.
 - Eventos transacionais usam uma ordem de IDs serializada até o commit. Isso
   prepara leitura incremental sem ultrapassar eventos ainda não confirmados.
-  Ainda não é SSE nem uma cadeia criptográfica/âncora externa da issue #13.
+  O SSE é acrescentado na #8; os eventos não são uma cadeia criptográfica/âncora externa da issue #13.
 
 ## API e perfis
 
@@ -95,7 +97,7 @@ banco operacional; o teste só usa bancos descartáveis.
 401 sem sessão, 403 por perfil, 409 por conflito de estado, 422 por entrada
 inválida e 503 na indisponibilidade/configuração do banco. O ator vem da sessão.
 A resposta da execução omite comandos, variáveis e saída bruta; expõe status
-e resultados resumidos. Essas APIs não iniciam sondas, scheduler ou comandos arbitrários. A criação e
+e resultados resumidos. Com coleta opt-in habilitada, alvos ativos passam a ser sondados pelo scheduler. Essas APIs não executam comandos arbitrários. A criação e
 retomada de runbooks por interface ficam para #21/#22; os testes usam executor
 simulado. O painel de gestão está na #15 e ainda não consome essas rotas.
 
@@ -109,5 +111,4 @@ confirmando o mesmo JWT, a aprovação pendente e a execução aguardando aprova
 Nenhum comando externo ou IA real é executado. Também há testes de concorrência,
 rollback, particionamento, agregação, retenção e detectores em outro processo.
 
-Próximas etapas do plano: #14 para sondagem segura; #8 para coleta contínua,
-estado dos detectores na coleta e SSE; #15 para páginas; #25 para restauração.
+Sondagem segura (#14) integrada no PR #37. A coleta/SSE (#8) está detalhada no guia 09; próximas frentes: #15 para páginas e #25 para restauração.
