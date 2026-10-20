@@ -21,6 +21,7 @@ def main():
     password = secrets.token_hex(24)
     evidence = Path("test-results")
     evidence.mkdir(exist_ok=True)
+    (evidence / 'postgres-regression.xml').unlink(missing_ok=True)
     env_file = evidence / (name + ".env")
     env_file.write_text("POSTGRES_USER=sigma_test\nPOSTGRES_DB=sigma_test\nPOSTGRES_PASSWORD=" + password + "\n")
     try:

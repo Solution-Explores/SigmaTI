@@ -16,6 +16,10 @@ class SchedulerMetrics:
     started: int = 0
     completed: int = 0
     missed: int = 0
+    missed_clock: int = 0
+    missed_overlap: int = 0
+    missed_capacity: int = 0
+    capacity_deferrals: int = 0
     timeouts: int = 0
     errors: int = 0
     active: int = 0
@@ -53,7 +57,10 @@ class Scheduler:
         self._jobs = {}
         self._workers = set()
         self._writes = set()
+        self._pending_batch = []
+        self._batch_task = None
         self._due = {}
+        self._capacity_deferred = set()
         self._executor = ThreadPoolExecutor(max_workers=concurrency, thread_name_prefix="sigma-probe")
         # Não disputar as poucas threads padrão do event loop com auth/SSE/inventário.
         # Reserva até 12 persistências para o pool PostgreSQL padrão de 15 conexões.
@@ -80,6 +87,8 @@ class Scheduler:
         self._jobs.clear()
         if self._writes:
             await asyncio.gather(*list(self._writes), return_exceptions=True)
+        if self._batch_task is not None:
+            await self._batch_task
         if self._refresh_task is not None:
             await self._refresh_task
             self._refresh_task = None
@@ -108,6 +117,41 @@ class Scheduler:
         self.metrics.max_write_seconds = max(self.metrics.max_write_seconds, elapsed)
         if not future.cancelled():
             future.exception()
+
+    async def _flush_batch(self):
+        loop = asyncio.get_running_loop()
+        # Coalesce as conclusões já prontas sem acrescentar prazo artificial.
+        # Novas chegadas se agrupam naturalmente enquanto o commit está em curso.
+        await asyncio.sleep(0)
+        while self._pending_batch:
+            batch = self._pending_batch[:32]
+            del self._pending_batch[:32]
+            try:
+                results = await loop.run_in_executor(self._repository_executor,
+                    self.repository.record_measurements, [row for _, row in batch])
+                if len(results) != len(batch):
+                    raise RuntimeError('resultado de lote inválido')
+            except Exception as exc:
+                for future, _ in batch:
+                    if not future.done():
+                        future.set_exception(exc)
+            else:
+                for (future, _), result in zip(batch, results):
+                    if not future.done():
+                        future.set_result(result)
+
+    def _submit_write(self, target, available, latency):
+        loop = asyncio.get_running_loop()
+        if callable(getattr(self.repository, 'record_measurements', None)):
+            future = loop.create_future()
+            self._pending_batch.append((future, dict(target_id=target['id'], success=available,
+                latency_ms=latency, ts=datetime.now(timezone.utc), detector_kind=target['detector'])))
+            if self._batch_task is None or self._batch_task.done():
+                self._batch_task = asyncio.create_task(self._flush_batch())
+            return future
+        return loop.run_in_executor(self._repository_executor, partial(
+            self.repository.record_measurement, target['id'], available, latency,
+            ts=datetime.now(timezone.utc), detector_kind=target['detector']))
 
     async def _collect(self, target):
         timeout = target["timeout_s"]
@@ -146,9 +190,7 @@ class Scheduler:
             available = result.status != "down" and (target["kind"] == "tcp" or
                 result.http_status is not None and 200 <= result.http_status < 500)
             write_started = time.monotonic()
-            write = loop.run_in_executor(self._repository_executor, partial(
-                self.repository.record_measurement, target["id"], available,
-                result.latency_ms, ts=datetime.now(timezone.utc), detector_kind=target["detector"]))
+            write = self._submit_write(target, available, result.latency_ms)
             self._writes.add(write)
             write.add_done_callback(partial(self._write_done, started=write_started))
             await asyncio.shield(write)
@@ -196,6 +238,7 @@ class Scheduler:
                     # reservados até terminarem evita acumular writes em cada failover.
                     identifiers = {t["id"] for t in targets}
                     self._due = {key: value for key, value in self._due.items() if key in identifiers}
+                    self._capacity_deferred.intersection_update(identifiers)
                     for target in targets:
                         self._due.setdefault(target["id"], now + self.random.uniform(0, target["intervalo_s"]))
                 if now >= refresh_at and self._refresh_task is None:
@@ -210,12 +253,29 @@ class Scheduler:
                     interval = target["intervalo_s"]
                     self.metrics.max_lag_seconds = max(self.metrics.max_lag_seconds, now - due)
                     # Descartar atrasos; nunca enfileirar ciclos de recuperação.
-                    self.metrics.missed += int((now - due) // interval)
-                    self._due[identifier] = now + interval * self.random.uniform(0.9, 1.1)
-                    if (identifier in self._jobs or len(self._jobs) >= self.concurrency
-                            or len(self._workers) >= self.concurrency):
+                    skipped = int((now - due) // interval)
+                    self.metrics.missed += skipped
+                    if skipped:
+                        self._due[identifier] = due + skipped * interval
+                        if identifier in self._capacity_deferred:
+                            self.metrics.missed_capacity += skipped
+                        else:
+                            self.metrics.missed_clock += skipped
+                    if identifier in self._jobs:
                         self.metrics.missed += 1
+                        self.metrics.missed_overlap += 1
+                        self._due[identifier] = now + interval * self.random.uniform(0.9, 1.1)
+                        self._capacity_deferred.discard(identifier)
                         continue
+                    if len(self._jobs) >= self.concurrency or len(self._workers) >= self.concurrency:
+                        # Manter apenas a próxima oportunidade no calendário.
+                        # Não submeter/enfileirar sonda nem descartar um período
+                        # inteiro por uma indisponibilidade momentânea de vaga.
+                        self._capacity_deferred.add(identifier)
+                        self.metrics.capacity_deferrals += 1
+                        continue
+                    self._due[identifier] = now + interval * self.random.uniform(0.9, 1.1)
+                    self._capacity_deferred.discard(identifier)
                     self._jobs[identifier] = asyncio.create_task(self._collect(target))
                     self.metrics.started += 1
                     self.metrics.active = len(self._jobs)
