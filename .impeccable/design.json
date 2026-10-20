@@ -48,7 +48,7 @@
       "html": "<nav class=\"ds-nav\" aria-label=\"Áreas\"><button aria-current=\"page\">Saúde dos serviços</button><button>Incidentes</button></nav>"
     }
   ],
-  "generatedAt": "2026-10-20T12:49:52.0949653Z",
+  "generatedAt": "2026-10-20T12:56:04.9557176Z",
   "title": "Design System: SIGMA",
   "narrative": {
     "rules": [
@@ -83,12 +83,6 @@
       }
     ],
     "shadows": [],
-    "motion": [
-      {
-        "name": "button-color",
-        "value": "background-color 140ms ease-out, color 140ms ease-out",
-        "purpose": "Somente com prefers-reduced-motion: no-preference."
-      }
-    ]
+    "motion": []
   }
 }

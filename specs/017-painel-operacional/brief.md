@@ -20,3 +20,6 @@ MTTD não é inventado: não existe início real da falha persistido. Janelas pa
 
 ## Revisão técnica
 Impeccable finish reviewer, contexto novo e seis capturas: sem defeito visual material identificado na extensão. Disposição inicial `fix` pela ausência de PRODUCT.md. Documenter extraiu PRODUCT.md, DESIGN.md e `.impeccable/design.json` do código existente; verdict pass: achado documental `resolved`, disposição `ship` no escopo dessa correção. Não é revisão humana independente nem certificação integral. Nenhuma alteração de interface ocorreu após as capturas revisadas.
+
+## Correção após CI
+O primeiro CI da #15 aprovou pacote e configuração/API, mas o job PostgreSQL terminou com 458 aprovados e 1 falha: axe encontrou contraste 2,1:1 no botão Atualizar saúde durante a transição de cores ao mudar de tema (run 39425590466). Removida a transição; a troca é imediata, sem relaxar o teste. Build/lint aprovados. Regressão local completa: 459 aprovados em 417,89s (Chrome/PG17). O ensaio focado após a correção aprovou as 4 histórias do navegador (orquestrador 1 aprovado em 29,59s), regenerando as seis capturas.

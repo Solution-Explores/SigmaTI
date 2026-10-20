@@ -54,6 +54,5 @@ td small, th small { display: block; color: var(--muted); font-weight: 400; marg
 .skip-link:focus { top: 8px; }
 ::selection { background: #2166a5; color: white; }
 @media (max-width: 720px) { .columns, .metric-grid { grid-template-columns: 1fr; } .session, .masthead { flex-wrap: wrap; } .workspace { padding: 18px 14px; } .sigma-panel { width: calc(100% - 24px); } .sigma-panel nav button { flex: 1 1 130px; } }
-@media (prefers-reduced-motion: no-preference) { .sigma-panel button { transition: background-color 140ms ease-out, color 140ms ease-out; } }
 
 .approval-item h3 { overflow-wrap: anywhere; }

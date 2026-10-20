@@ -108,7 +108,7 @@ Contêiner central com máximo de 1180px e margem lateral total de 32px. Cabeça
 
 ## Elevation & Depth
 
-Sem sombras definidas; fundos e bordas separam níveis. Botões transitam cores em 140ms ease-out somente quando não há preferência por redução de movimento.
+Sem sombras definidas; fundos e bordas separam níveis. Botões mudam de cor sem transição temporal; a troca de tema aplica as cores finais diretamente.
 
 ## Shapes
 
