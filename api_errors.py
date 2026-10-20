@@ -125,6 +125,6 @@ def configure_public_errors(app: FastAPI, origins: tuple[str, ...]) -> None:
         RestrictedCORSMiddleware,
         allow_origins=list(origins),
         allow_credentials=False,
-        allow_methods=["GET", "POST"],
-        allow_headers=["Content-Type", "Authorization"],
+        allow_methods=["GET", "POST", "PATCH"],
+        allow_headers=["Content-Type", "Authorization", "Last-Event-ID"],
     )

@@ -39,7 +39,7 @@ GET /api/eng/coleta/status, por Analista/Gestor, retorna liderança, started/com
 
 GET /api/eng/eventos permite Suporte N1/Analista/Gestor. Enviar Bearer no cabeçalho Authorization. Parâmetros de URL são recusados; não colocar tokens em URL. Um cliente browser deve usar fetch com leitura de stream, pois EventSource nativo não permite esse cabeçalho.
 
-Enviar `Last-Event-ID: <inteiro>` para reconectar a partir do último evento recebido. Sem cursor, reproduz o histórico de incidentes. Eventos possuem id monotônico persistido; polling de 200 ms lê somente registros confirmados. Não há fila volátil por cliente: leitura em lotes de até 100 e limite de 32 conexões por processo. Heartbeats não avançam cursor. Clientes lentos podem atrasar a própria entrega; não existe garantia de 5 s sob rede/consumidor travados.
+O CORS permite Authorization/Last-Event-ID e PATCH somente para as origens configuradas; as demais continuam recusadas. Enviar `Last-Event-ID: <inteiro>` para reconectar a partir do último evento recebido. Sem cursor, reproduz o histórico de incidentes. Eventos possuem id monotônico persistido; polling de 200 ms lê somente registros confirmados. Não há fila volátil por cliente: leitura em lotes de até 100 e limite de 32 conexões por processo. Heartbeats não avançam cursor. Clientes lentos podem atrasar a própria entrega; não existe garantia de 5 s sob rede/consumidor travados.
 
 Formato:
 

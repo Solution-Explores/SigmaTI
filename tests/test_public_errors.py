@@ -66,7 +66,7 @@ def test_allowed_origins_can_preflight_and_post(api, origin):
     })
     assert preflight.status_code == 200
     assert preflight.headers["access-control-allow-origin"] == origin
-    assert preflight.headers["access-control-allow-methods"] == "GET, POST"
+    assert preflight.headers["access-control-allow-methods"] == "GET, POST, PATCH"
     assert "*" not in preflight.headers["access-control-allow-headers"]
     assert "access-control-allow-credentials" not in preflight.headers
     provider.assert_not_awaited()
@@ -254,3 +254,19 @@ def test_error_boundary_never_starts_second_response():
             await PublicErrorBoundary(fail)({"type": "http"}, AsyncMock(), send)
         send.assert_awaited_once()
     asyncio.run(run())
+
+
+@pytest.mark.parametrize("origin,expected", [(ORIGINS[0],200),("https://untrusted.example",400)])
+@pytest.mark.parametrize("method,path,headers", [
+    ("GET","/api/eng/eventos","Authorization,Last-Event-ID"),
+    ("PATCH","/api/eng/alvos/synthetic","Authorization,Content-Type"),
+])
+def test_collection_browser_preflight_reconnect_and_control(api,origin,expected,method,path,headers):
+    _,client,provider=api
+    response=client.options(path,headers={"Origin":origin,
+        "Access-Control-Request-Method":method,"Access-Control-Request-Headers":headers})
+    assert response.status_code == expected
+    if expected == 200:
+        assert response.headers["access-control-allow-origin"] == origin
+        assert "last-event-id" in response.headers["access-control-allow-headers"].lower()
+    provider.assert_not_awaited()
