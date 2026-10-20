@@ -59,6 +59,12 @@ async def persistence_error(request: Request, exc: PersistenceUnavailable):
 # Registro de roteadores da aplicação
 app.include_router(auth_router)
 
+from persistence.operational import PostgresOperationalStore
+from routers.operational import router as operational_router
+app.state.operational_store = (PostgresOperationalStore(usuario_repo.backend.engine)
+                               if usuario_repo.backend is not None else None)
+app.include_router(operational_router)
+
 from sigma_eng.api import create_router
 from sigma_eng.audit_chain import AuditChain
 
@@ -185,9 +191,9 @@ async def ver_pacotes(usuario: Annotated[Usuario, Depends(exige_papel("analista_
 
 
 @app.get("/api/incidentes")
-async def listar_incidentes(usuario: Annotated[Usuario, Depends(exige_papel("analista_redes"))]):
+def listar_incidentes(usuario: Annotated[Usuario, Depends(exige_papel("analista_redes"))]):
     """Ver histórico e incidentes (Analista de Redes, Gestor de TI)."""
-    return {"incidentes": []}
+    return {"incidentes": app.state.operational_store.incidents() if app.state.operational_store else []}
 
 
 @app.get("/api/relatorios")

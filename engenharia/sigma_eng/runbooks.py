@@ -21,6 +21,7 @@ from dataclasses import dataclass, field
 from typing import Callable, Sequence
 
 from .approvals import Aprovacao
+from .state import StateConflict, StateRepository, snapshot
 
 _PASSO = re.compile(r"```sigma:step\{([^}]*)\}\n(.*?)```", re.DOTALL)
 _ATTR = re.compile(r"(\w+)\s*=\s*([^,}\s]+)")
@@ -59,6 +60,8 @@ class Execucao:
     status: str = "running"  # running | waiting_approval | completed | failed
     resultados: list[ResultadoPasso] = field(default_factory=list)
     aguardando: str | None = None  # id do passo que espera aprovação
+    versao: int = 1
+    passo_em_execucao: str | None = None
 
 
 def _timeout(valor: str) -> int:
@@ -109,9 +112,28 @@ def executor_subprocess(argv: Sequence[str], timeout_s: int) -> ResultadoPasso:
 
 
 class RunbookRunner:
-    def __init__(self, allowlist: Sequence[str], executor: Executor = executor_subprocess) -> None:
+    def __init__(self, allowlist: Sequence[str], executor: Executor = executor_subprocess,
+                 repository: StateRepository | None = None) -> None:
         self.allowlist = set(allowlist)
         self.executor = executor
+        self.repository = repository
+
+    def _persist(self, ex: Execucao, create: bool = False) -> None:
+        if self.repository is not None:
+            try:
+                data = (self.repository.create("executions", ex.id, snapshot(ex)) if create else
+                        self.repository.save("executions", ex.id, snapshot(ex), ex.versao))
+                ex.versao = data["versao"]
+            except StateConflict as exc:
+                raise RunbookError(str(exc)) from exc
+
+    def obter(self, identifier: str) -> Execucao:
+        if self.repository is None:
+            raise RunbookError("repositório de execução não configurado")
+        data = dict(self.repository.get("executions", identifier))
+        data["passos"] = [Passo(**item) for item in data["passos"]]
+        data["resultados"] = [ResultadoPasso(**item) for item in data["resultados"]]
+        return Execucao(**data)
 
     def _argv(self, passo: Passo, variaveis: dict[str, str]) -> list[str]:
         argv = shlex.split(interpolar(passo.comando, variaveis))
@@ -130,31 +152,45 @@ class RunbookRunner:
                  dry_run: bool = True) -> Execucao:
         self.validar(passos, variaveis)
         ex = Execucao(execucao_id, list(passos), dict(variaveis), dry_run)
+        self._persist(ex, create=True)
         return self._seguir(ex)
 
     def retomar(self, ex: Execucao, aprovacao: Aprovacao) -> Execucao:
+        if self.repository is not None:
+            current = self.obter(ex.id)
+            if ex.versao != current.versao:
+                raise RunbookError("execução alterada; recarregue antes de retomar")
+            ex = current
         if ex.status != "waiting_approval" or ex.aguardando is None:
             raise RunbookError("execução não está aguardando aprovação")
         if aprovacao.estado != "approved" or aprovacao.acao != f"runbook:{ex.id}:{ex.aguardando}":
             raise RunbookError("aprovação ausente, não concedida ou de outro passo")
         ex.status, ex.aguardando = "running", None
+        self._persist(ex)
         return self._seguir(ex, aprovado=True)
 
     def _seguir(self, ex: Execucao, aprovado: bool = False) -> Execucao:
         for passo in ex.passos[len(ex.resultados):]:
             if passo.requer_aprovacao and not aprovado and not ex.dry_run:
                 ex.status, ex.aguardando = "waiting_approval", passo.id
+                self._persist(ex)
                 return ex
             aprovado = False  # a aprovação vale para um único passo
             argv = self._argv(passo, ex.variaveis)
+            ex.passo_em_execucao = passo.id
+            self._persist(ex)
             if ex.dry_run:
                 res = ResultadoPasso(passo.id, True, saida=" ".join(shlex.quote(a) for a in argv), simulado=True)
             else:
                 res = self.executor(argv, passo.timeout_s)
                 res.passo_id = passo.id
             ex.resultados.append(res)
+            ex.passo_em_execucao = None
+            self._persist(ex)
             if not res.ok:
                 ex.status = "failed"
+                self._persist(ex)
                 return ex
         ex.status = "completed"
+        self._persist(ex)
         return ex

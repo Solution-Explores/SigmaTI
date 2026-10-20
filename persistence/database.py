@@ -18,7 +18,7 @@ def open_database(url: str):
                                connect_args={"connect_timeout": 5}, pool_timeout=5)
         with engine.connect() as connection:
             version = connection.scalar(text("SELECT version_num FROM alembic_version"))
-            if version != "001_identity":
+            if version != "002_operational":
                 raise ValueError()
         return engine
     except (SQLAlchemyError, ValueError):

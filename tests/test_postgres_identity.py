@@ -13,19 +13,6 @@ from persistence.database import open_database, PersistenceUnavailable
 from persistence.identity import PostgresIdentityStore
 
 
-@pytest.fixture
-def pg(monkeypatch):
-    url = os.getenv("SIGMA_TEST_DATABASE_URL")
-    if not url:
-        pytest.skip("PostgreSQL descartável não solicitado; CI executa este grupo obrigatoriamente.")
-    monkeypatch.setenv("SIGMA_DATABASE_URL", url)
-    command.upgrade(Config("alembic.ini"), "head")
-    engine = open_database(url)
-    store = PostgresIdentityStore(engine)
-    yield store
-    engine.dispose()
-    monkeypatch.delenv("SIGMA_DATABASE_URL")
-    auth.configure_auth(auth.JWT_SECRET)
 
 
 def identity(store):
@@ -193,23 +180,6 @@ def test_two_valid_logins_can_share_legacy_rehash(pg):
         assert auth.decodificar_token_sessao(token)["sub"] == username
 
 
-@pytest.fixture
-def pg_client(pg, monkeypatch):
-    import importlib
-    from fastapi.testclient import TestClient
-    monkeypatch.setenv("OPENROUTER_API_KEY", "fake-only")
-    monkeypatch.setenv("SIGMA_LLM_MODEL", "test/model")
-    monkeypatch.setenv("SIGMA_CORS_ORIGINS", "http://localhost:5173")
-    monkeypatch.setenv("PYTHON_DOTENV_DISABLED", "1")
-    previous = sys.modules.pop("main", None)
-    try:
-        module = importlib.import_module("main")
-        with TestClient(module.app) as client:
-            yield client
-    finally:
-        sys.modules.pop("main", None)
-        if previous is not None:
-            sys.modules["main"] = previous
 
 
 def test_user_routes_offload_synchronous_storage(pg_client, monkeypatch):

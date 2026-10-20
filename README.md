@@ -12,6 +12,10 @@ as colunas do quadro e quando uma issue pode ser encerrada.
 
 ## Problema que resolve
 
+[Estado operacional PostgreSQL](engenharia/docs/08-estado-operacional.md): esquema,
+recuperação de aprovações/execuções, medições, retenção e APIs. Coleta contínua
+e páginas de gestão são os próximos incrementos do plano.
+
 Persistência de identidades em desenvolvimento: [migrações, Argon2id e sessões
 PostgreSQL](engenharia/docs/07-persistencia-identidades.md). Esse incremento não
 conclui a persistência operacional nem o aceite da demonstração.
