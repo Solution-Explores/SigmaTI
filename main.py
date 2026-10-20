@@ -5,10 +5,10 @@ import os
 from pathlib import Path
 import re
 from time import monotonic
-from typing import Annotated
+from typing import Annotated, Literal
 
 from fastapi import Depends, FastAPI, Request
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import httpx2 as httpx
 
 from config import load_settings
@@ -47,6 +47,14 @@ app = FastAPI(
     responses={status: {"model": PublicError} for status in (403, 422, 500)},
 )
 configure_public_errors(app, settings.cors_origins)
+
+from persistence.database import PersistenceUnavailable
+from fastapi.responses import JSONResponse
+
+
+@app.exception_handler(PersistenceUnavailable)
+async def persistence_error(request: Request, exc: PersistenceUnavailable):
+    return JSONResponse(status_code=503, content={"detail": "Serviço temporariamente indisponível."})
 
 # Registro de roteadores da aplicação
 app.include_router(auth_router)
@@ -189,19 +197,19 @@ async def relatorios_gerenciais(usuario: Annotated[Usuario, Depends(exige_papel(
 
 
 @app.get("/api/usuarios")
-async def listar_usuarios(usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))]):
+def listar_usuarios(usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))]):
     """Gerenciar usuários (Exclusivo Gestor de TI)."""
-    return {"usuarios": list(usuario_repo._usuarios)}
+    return {"usuarios": usuario_repo.listar()}
 
 
 class NovoUsuarioIn(BaseModel):
-    username: str
-    password: str
-    papel: str
+    username: str = Field(min_length=1, max_length=100)
+    password: str = Field(min_length=1, max_length=128)
+    papel: Literal["suporte_n1", "analista_redes", "gestor_ti"]
 
 
 @app.post("/api/usuarios")
-async def criar_usuario(
+def criar_usuario(
     dados: NovoUsuarioIn,
     usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))],
 ):

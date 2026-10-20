@@ -1,7 +1,7 @@
 """Módulo central de autenticação, JWT de sessão e RBAC (RF07).
 
 Implementa:
-- Hashing de senhas seguro (PBKDF2-HMAC-SHA256 com salt individual por usuário);
+- Argon2id para novas contas PostgreSQL; PBKDF2 legado migra após login válido;
 - Emissão e validação de JWT de sessão RFC 7519 (HS256) com tempo de expiração;
 - Hierarquia de papéis RBAC idêntica ao approvals.py do SigmaTI:
     suporte_n1 (1) < analista_redes (2) < gestor_ti (3);
@@ -24,9 +24,16 @@ import uuid
 import threading
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Callable
+from typing import Callable, TYPE_CHECKING
 
 from fastapi import Depends, Header, HTTPException, Request
+from argon2 import PasswordHasher
+from persistence.database import PersistenceUnavailable
+
+if TYPE_CHECKING:
+    from persistence.identity import IdentityStore
+
+password_hasher = PasswordHasher()
 
 logger = logging.getLogger("sigma.auth")
 
@@ -75,6 +82,8 @@ def hash_senha(senha: str, salt: str | None = None) -> str:
 def verificar_senha(senha: str, hash_armazenado: str) -> bool:
     """Compara em tempo constante uma senha com o hash armazenado."""
     try:
+        if hash_armazenado.startswith("$argon2id$"):
+            return password_hasher.verify(hash_armazenado, senha)
         partes = hash_armazenado.split("$")
         if len(partes) != 4 or partes[0] != "pbkdf2_sha256":
             return False
@@ -105,6 +114,8 @@ def criar_token_sessao(
     papel: str,
     expira_em_segundos: int | None = None,
     secret_key: str | None = None,
+    expected_hash: str | None = None,
+    expected_version: int | None = None,
 ) -> str:
     """Emite token JWT de sessão assinado com HS256 e expiração delimitada."""
     agora = int(time.time())
@@ -133,10 +144,16 @@ def criar_token_sessao(
     ).digest()
     s_bytes = _b64url_encode(assinatura)
 
-    with _session_lock:
-        for jti in [j for j, sessao in _sessions.items() if sessao["exp"] <= agora]:
-            _sessions.pop(jti, None)
-        _sessions[payload["jti"]] = payload.copy()
+    if usuario_repo.backend is not None:
+        try:
+            usuario_repo.backend.save_session(payload, expected_hash, expected_version)
+        except ValueError:
+            raise TokenError() from None
+    else:
+        with _session_lock:
+            for jti in [j for j, sessao in _sessions.items() if sessao["exp"] <= agora]:
+                _sessions.pop(jti, None)
+            _sessions[payload["jti"]] = payload.copy()
     return f"{h_bytes}.{p_bytes}.{s_bytes}"
 
 
@@ -177,13 +194,17 @@ def decodificar_token_sessao(token: str, secret_key: str | None = None) -> dict:
             raise TokenError()
         if not isinstance(payload.get("jti"), str) or type(payload.get("iat")) is not int:
             raise TokenError()
-        with _session_lock:
-            if _sessions.get(payload["jti"]) != payload:
+        if usuario_repo.backend is not None:
+            if not usuario_repo.backend.valid_session(payload):
                 raise TokenError("Sessão encerrada.")
+        else:
+            with _session_lock:
+                if _sessions.get(payload["jti"]) != payload:
+                    raise TokenError("Sessão encerrada.")
 
         return payload
 
-    except TokenError:
+    except (TokenError, PersistenceUnavailable):
         raise
     except Exception as exc:
         logger.warning("Falha ao decodificar token JWT: %s", type(exc).__name__)
@@ -198,6 +219,7 @@ class Usuario:
     senha_hash: str
     papel: str
     ativo: bool = True
+    versao: int = 1
 
 
 class UsuarioRepository:
@@ -205,6 +227,26 @@ class UsuarioRepository:
 
     def __init__(self):
         self._usuarios: dict[str, Usuario] = {}
+        self.backend: IdentityStore | None = None
+
+    def listar(self) -> list[str]:
+        return self.backend.list_users() if self.backend is not None else list(self._usuarios)
+
+    def atualizar_hash(self, user: Usuario, senha: str) -> Usuario:
+        if self.backend is not None and (not user.senha_hash.startswith("$argon2id$")
+                                        or password_hasher.check_needs_rehash(user.senha_hash)):
+            novo = password_hasher.hash(senha)
+            if self.backend.upgrade_hash(user.username, user.senha_hash, novo):
+                user.senha_hash = novo
+            else:
+                # Outro login pode ter refeito o hash. Mudança administrativa,
+                # por outro lado, nunca pode reutilizar a verificação anterior.
+                current = self.obter_por_username(user.username)
+                if (current is None or not current.ativo or current.versao != user.versao
+                        or current.papel != user.papel or not verificar_senha(senha, current.senha_hash)):
+                    raise TokenError()
+                return current
+        return user
 
     def carregar(self, caminho: str) -> None:
         """Carrega hashes de um arquivo local; nenhum usuário é criado implicitamente."""
@@ -234,12 +276,20 @@ class UsuarioRepository:
     def adicionar_usuario(self, username: str, senha_clara: str, papel: str) -> Usuario:
         if papel not in PAPEIS:
             raise ValueError(f"Papel desconhecido: {papel}")
+        if not isinstance(username, str) or not 1 <= len(username) <= 100:
+            raise ValueError("Usuário deve ter entre 1 e 100 caracteres.")
+        if not isinstance(senha_clara, str) or not 1 <= len(senha_clara) <= 128:
+            raise ValueError("Senha deve ter entre 1 e 128 caracteres.")
         user = Usuario(
             username=username,
-            senha_hash=hash_senha(senha_clara),
+            senha_hash=(password_hasher.hash(senha_clara) if self.backend is not None
+                        else hash_senha(senha_clara)),
             papel=papel,
             ativo=True,
         )
+        if self.backend is not None:
+            self.backend.save_user(username, user.senha_hash, papel)
+            return user
         # Recriar uma conta não pode preservar as sessões da identidade anterior.
         with _session_lock:
             for jti in [j for j, sessao in _sessions.items()
@@ -249,6 +299,9 @@ class UsuarioRepository:
         return user
 
     def obter_por_username(self, username: str) -> Usuario | None:
+        if self.backend is not None:
+            data = self.backend.get_user(username)
+            return Usuario(**data) if data is not None else None
         return self._usuarios.get(username)
 
 
@@ -260,7 +313,8 @@ def configure_auth(secret: str) -> None:
     from config import ConfigurationError
     global JWT_SECRET, JWT_EXPIRATION_SECONDS
     caminho = os.getenv("SIGMA_USERS_FILE", "").strip()
-    if not caminho:
+    database_url = os.getenv("SIGMA_DATABASE_URL", "").strip()
+    if not caminho and not database_url:
         raise ConfigurationError("Configure a variável obrigatória SIGMA_USERS_FILE.")
     def positive_setting(name: str, default: int, maximum: int) -> int:
         try:
@@ -274,7 +328,21 @@ def configure_auth(secret: str) -> None:
     expiration = positive_setting("SIGMA_JWT_EXPIRATION_SECONDS", 3600, 86400)
     attempts = positive_setting("SIGMA_MAX_LOGIN_ATTEMPTS", 5, 100)
     duration = positive_setting("SIGMA_LOCKOUT_DURATION_SECONDS", 900, 86400)
-    usuario_repo.carregar(caminho)
+    if database_url:
+        from persistence.database import open_database
+        from persistence.identity import PostgresIdentityStore
+        novo_backend = PostgresIdentityStore(open_database(database_url))
+        anterior = usuario_repo.backend
+        usuario_repo.backend = novo_backend
+        usuario_repo._usuarios.clear()
+        if anterior is not None:
+            anterior.engine.dispose()
+    else:
+        usuario_repo.carregar(caminho)
+        anterior = usuario_repo.backend
+        usuario_repo.backend = None
+        if anterior is not None:
+            anterior.engine.dispose()
     JWT_EXPIRATION_SECONDS = expiration
     JWT_SECRET = secret
     rate_limiter.max_falhas = attempts
@@ -286,6 +354,9 @@ def configure_auth(secret: str) -> None:
 
 def revogar_token(token: str) -> None:
     payload = decodificar_token_sessao(token)
+    if usuario_repo.backend is not None:
+        usuario_repo.backend.revoke_session(payload["jti"])
+        return
     with _session_lock:
         _sessions.pop(payload["jti"], None)
 

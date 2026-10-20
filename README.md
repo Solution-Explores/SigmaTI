@@ -12,6 +12,10 @@ as colunas do quadro e quando uma issue pode ser encerrada.
 
 ## Problema que resolve
 
+Persistência de identidades em desenvolvimento: [migrações, Argon2id e sessões
+PostgreSQL](engenharia/docs/07-persistencia-identidades.md). Esse incremento não
+conclui a persistência operacional nem o aceite da demonstração.
+
 A equipe de TI trabalha sem visibilidade em tempo real da rede. Descobre as falhas só quando os usuários reclamam, o que gera:
 
 - Demora para detectar e consertar incidentes (MTTD e MTTR altos).

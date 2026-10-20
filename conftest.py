@@ -8,6 +8,7 @@ import pytest
 @pytest.fixture(autouse=True)
 def temporary_identity(monkeypatch, tmp_path):
     import auth
+    monkeypatch.delenv("SIGMA_DATABASE_URL", raising=False)
     password = secrets.token_urlsafe(24)
     secret = secrets.token_hex(32)
     users = [

@@ -3,3 +3,7 @@ uvicorn==0.54.0
 httpx2==2.13.1
 python-dotenv==1.2.4
 ./engenharia[api]
+SQLAlchemy==2.0.55
+psycopg[binary]==3.3.6
+alembic==1.20.0
+argon2-cffi==25.1.0
