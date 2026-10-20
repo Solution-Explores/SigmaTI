@@ -163,6 +163,7 @@ def test_shutdown_finishes_started_write_before_releasing_leadership():
         store.targets[0]["timeout_s"]=1
         scheduler=Scheduler(store,concurrency=1,refresh=0.05,lease=lease,seed=1,
             probe_fn=lambda *a,**k: ProbeResult(status="up",latency_ms=1))
+        scheduler.random.uniform=lambda low,high: low
         scheduler.start()
         for _ in range(500):
             if writing.is_set():
@@ -187,11 +188,10 @@ def test_http_health_distinguishes_error_from_security_finding(status,expected):
         store.targets[0].update(kind="http",timeout_s=1)
         scheduler=Scheduler(store,refresh=0.05,seed=1,
             probe_fn=lambda *a,**k: ProbeResult(status="degraded",latency_ms=1,http_status=status))
-        scheduler.start()
-        for _ in range(200):
-            if store.results:
-                break
-            await asyncio.sleep(0.01)
-        await scheduler.stop()
-        assert store.results and store.results[0][0][1] is expected
+        try:
+            # Classificação de uma coleta, sem depender da fase do relógio periódico.
+            await scheduler._collect(store.targets[0])
+        finally:
+            await scheduler.stop()
+        assert store.results and store.results[0][0][1] is expected, scheduler.status()
     asyncio.run(scenario())
