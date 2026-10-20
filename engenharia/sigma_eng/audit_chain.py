@@ -13,15 +13,19 @@ Formato JSONL, uma entrada por linha, anexado com fsync.
 from __future__ import annotations
 
 import hashlib
+import errno
 import hmac
 import json
 import os
 import threading
+import time
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
 GENESIS = "0" * 64
+LOCK_TIMEOUT_SECONDS = 10
 
 
 def _canonico(obj: Any) -> bytes:
@@ -36,9 +40,60 @@ class AuditChain:
         self.relogio = relogio
         self._lock = threading.Lock()
         self._entradas: list[dict] = []
-        if self.caminho and self.caminho.exists():
-            with self.caminho.open(encoding="utf-8") as fh:
-                self._entradas = [json.loads(linha) for linha in fh if linha.strip()]
+        if self.caminho:
+            with self._coordenar():
+                pass
+
+    @contextmanager
+    def _coordenar(self):
+        """Lock lateral estável: coordena instâncias e processos cooperantes."""
+        with self._lock:
+            if self.caminho is None:
+                yield
+                return
+            self.caminho.parent.mkdir(parents=True, exist_ok=True)
+            resolved = self.caminho.resolve()
+            lock_path = resolved.with_name(resolved.name + ".lock")
+            with open(lock_path, "a+b") as lock:
+                # Windows permite bloquear além do EOF; não inicializar bytes
+                # fora do lock, evitando outra corrida no primeiro uso.
+                deadline = time.monotonic() + LOCK_TIMEOUT_SECONDS
+                while True:
+                    try:
+                        lock.seek(0)
+                        if os.name == "nt":
+                            import msvcrt
+                            msvcrt.locking(lock.fileno(), msvcrt.LK_NBLCK, 1)
+                        else:
+                            import fcntl
+                            fcntl.flock(lock.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+                        break
+                    except OSError as exc:
+                        if exc.errno not in (errno.EACCES, errno.EAGAIN, errno.EDEADLK):
+                            raise
+                        if time.monotonic() >= deadline:
+                            raise TimeoutError("Auditoria ocupada.") from None
+                        time.sleep(0.01)
+                try:
+                    if self.caminho.exists():
+                        with self.caminho.open(encoding="utf-8") as stream:
+                            self._entradas = []
+                            for line in stream:
+                                if line.strip():
+                                    try:
+                                        row = json.loads(line)
+                                    except ValueError:
+                                        row = {}
+                                    self._entradas.append(row if isinstance(row, dict) else {})
+                    else:
+                        self._entradas = []
+                    yield
+                finally:
+                    lock.seek(0)
+                    if os.name == "nt":
+                        msvcrt.locking(lock.fileno(), msvcrt.LK_UNLCK, 1)
+                    else:
+                        fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
 
     def __bool__(self) -> bool:
         return True
@@ -51,7 +106,9 @@ class AuditChain:
 
     def registrar(self, ator: str, acao: str, recurso: str | None = None, detalhes: dict | None = None) -> dict:
         """Anexa um evento e devolve a entrada (com ``hash``)."""
-        with self._lock:
+        with self._coordenar():
+            if not self._verificar()[0]:
+                raise ValueError("Trilha de auditoria inválida; gravação recusada.")
             anterior = self._entradas[-1]["hash"] if self._entradas else GENESIS
             corpo = {
                 "seq": len(self._entradas),
@@ -65,8 +122,13 @@ class AuditChain:
             entrada = {**corpo, "hash": self._hash(corpo)}
             if self.caminho:
                 self.caminho.parent.mkdir(parents=True, exist_ok=True)
-                with self.caminho.open("a", encoding="utf-8") as fh:
-                    fh.write(json.dumps(entrada, ensure_ascii=False) + "\n")
+                with self.caminho.open("a+b") as fh:
+                    fh.seek(0, os.SEEK_END)
+                    if fh.tell():
+                        fh.seek(-1, os.SEEK_END)
+                        if fh.read(1) != b"\n":
+                            fh.write(b"\n")
+                    fh.write((json.dumps(entrada, ensure_ascii=False) + "\n").encode("utf-8"))
                     fh.flush()
                     os.fsync(fh.fileno())
             self._entradas.append(entrada)
@@ -74,19 +136,32 @@ class AuditChain:
 
     def verificar(self) -> tuple[bool, int | None]:
         """(íntegra?, índice da primeira entrada inválida)."""
+        with self._coordenar():
+            return self._verificar()
+
+    def resumo(self) -> dict:
+        """Contagem e integridade pertencem à mesma leitura protegida."""
+        with self._coordenar():
+            ok, indice = self._verificar()
+            return {"integra": ok, "primeira_invalida": indice, "entradas": len(self._entradas)}
+
+    def _verificar(self) -> tuple[bool, int | None]:
         anterior = GENESIS
         for i, e in enumerate(self._entradas):
             corpo = {k: v for k, v in e.items() if k != "hash"}
             if e.get("seq") != i or e.get("anterior") != anterior:
                 return False, i
-            if not hmac.compare_digest(self._hash(corpo), str(e.get("hash"))):
+            actual = e.get("hash")
+            if not isinstance(actual, str) or not actual.isascii() or not hmac.compare_digest(self._hash(corpo), actual):
                 return False, i
             anterior = e["hash"]
         return True, None
 
     @property
     def entradas(self) -> list[dict]:
-        return list(self._entradas)
+        with self._coordenar():
+            return json.loads(json.dumps(self._entradas))
 
     def __len__(self) -> int:
-        return len(self._entradas)
+        with self._coordenar():
+            return len(self._entradas)
