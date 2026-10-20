@@ -24,8 +24,8 @@ a issue nem substitui a revisão e a validação operacional.
 
 | Risco | Mitigação |
 |---|---|
-| Sonda usada como proxy para varrer a rede (SSRF) | `is_target_allowed` exige que **todos** os IPs resolvidos estejam nas redes autorizadas; padrão = RFC 1918 + loopback |
-| Troca de DNS entre a checagem e a conexão (TOCTOU/rebinding) | Limitação conhecida: a conexão resolve de novo. Mitigar conectando ao IP já validado (issue) |
+| Sonda usada como proxy para varrer a rede (SSRF) | `resolve_target` exige que **todos** os IPs resolvidos estejam nas redes autorizadas; padrão = RFC 1918 + loopback. Política aplicada também nas funções de sondagem; entrada inválida, falha DNS, resposta vazia/mista ou IP fora da política são recusados antes da conexão. |
+| Troca de DNS entre a checagem e a conexão (TOCTOU/rebinding) | **Implementado para revisão — #14:** uma resolução por série, IP numérico fixado e socket direto, incluindo HTTPS, com Host/SNI original (IDNA para domínio internacional). Sem nova resolução/fallback durante a série; redirects não são seguidos. Regressões com resolvedor alternante e conexão HTTP real em `engenharia/tests/test_probe_pinning.py`. |
 | Execução de comandos via runbook | Sem shell, allowlist, validação de variáveis, dry-run padrão, aprovação por passo |
 | Trilha de auditoria alterada por quem tem acesso ao arquivo | HMAC com `SIGMA_AUDIT_KEY` fora do disco da trilha; cópia periódica do último hash para outro host |
 | Rotas `/api/eng/*` sem autenticação | **Implementação parcial #6 / revisão de 19/10:** Rotas `/api/eng/*` protegidas via dependência FastAPI `exige_papel("analista_redes")` para operações de engenharia e `exige_papel("gestor_ti")` para auditoria. |
@@ -37,3 +37,12 @@ a issue nem substitui a revisão e a validação operacional.
 - `ApprovalService` e `RunbookRunner` guardam estado em memória; reiniciar o processo perde pendências. Persistência em PostgreSQL está nas issues.
 - A latência medida é a do *handshake* TCP, não a do serviço de aplicação.
 - Um `EwmaDetector` por alvo é mantido em memória; o estado se perde ao reiniciar (re-aquecimento de 20 amostras).
+
+
+## Limites da correção #14
+
+- O primeiro IP da resposta autorizada é usado; indisponibilidade não dispara tentativa em outro endereço. Nova operação resolve e valida novamente.
+- IPv6 usa socket AF_INET6 e autoridade HTTP entre colchetes. Endereços com scope/interface são recusados. Portas não padrão aparecem no Host.
+- A sonda HTTPS continua sendo inspeção de certificado: não valida cadeia de confiança, não autentica o serviço e não envia credenciais. Preservar SNI não constitui validação PKI. Essa política não foi ampliada neste bloco.
+- DNS e cada operação de socket não têm prazo global compartilhado; limites de coleta/scheduler permanecem na #8. Redes permitidas devem refletir a política do ambiente, incluindo o risco de acesso a serviços internos.
+- A auditoria JSONL existente continua sem âncora externa/rotação (#13). A correção de destino não resolve essas pendências.

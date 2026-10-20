@@ -84,9 +84,13 @@ def create_router(
     async def post_probe(body: ProbeIn) -> dict:
         if body.kind not in probe.VALID_KINDS:
             raise HTTPException(422, f"kind deve ser um de {sorted(probe.VALID_KINDS)}")
-        if not await asyncio.to_thread(probe.is_target_allowed, body.host, _redes()):
-            raise HTTPException(403, "alvo fora das redes autorizadas")
-        stats = await asyncio.to_thread(probe.probe_many, body.host, body.port, body.kind, body.count)
+        try:
+            stats = await asyncio.to_thread(
+                probe.probe_many, body.host, body.port, body.kind, body.count,
+                allowed_networks=_redes(),
+            )
+        except probe.TargetNotAllowed as exc:
+            raise HTTPException(403, "alvo fora das redes autorizadas") from exc
         auditoria.registrar("api", "probe.executed", f"{body.host}:{body.port}", {"kind": body.kind, "count": body.count})
         return stats.as_dict()
 

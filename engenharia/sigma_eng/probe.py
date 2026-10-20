@@ -57,21 +57,69 @@ def _finding(code: str, severity: str, message: str) -> dict[str, str]:
     return {"code": code, "severity": severity, "message": message}
 
 
-def is_target_allowed(host: str, allowed_networks: Iterable[str] = DEFAULT_ALLOWED_NETWORKS) -> bool:
-    """True se *todos* os endereços do ``host`` caem em redes autorizadas.
+class TargetNotAllowed(ValueError):
+    """Destino inválido ou fora das redes autorizadas."""
 
-    Exigir todos (e não algum) bloqueia DNS rebinding com respostas mistas.
-    Falha de resolução conta como não autorizado.
-    """
-    nets = [ipaddress.ip_network(n) for n in allowed_networks]
+
+def _hostname(host: str) -> str:
+    if not host or any(c.isspace() or ord(c) < 32 or ord(c) == 127 for c in host):
+        raise TargetNotAllowed("alvo inválido")
     try:
-        infos = socket.getaddrinfo(host, None)
-    except OSError:
+        return str(ipaddress.ip_address(host))
+    except ValueError:
+        if any(c in host for c in "/\\:@[]%"):
+            raise TargetNotAllowed("alvo inválido")
+        try:
+            name = host.encode("idna").decode("ascii")
+        except UnicodeError as exc:
+            raise TargetNotAllowed("alvo inválido") from exc
+        if len(name) > 253 or any(not label or len(label) > 63 or
+                label.startswith("-") or label.endswith("-") or
+                any(not (c.isalnum() or c == "-") for c in label)
+                for label in name.removesuffix(".").split(".")):
+            raise TargetNotAllowed("alvo inválido")
+        return name
+
+
+def resolve_target(host: str, allowed_networks: Iterable[str] = DEFAULT_ALLOWED_NETWORKS) -> str:
+    """Resolve uma vez e fixa IP somente se TODOS os endereços forem autorizados."""
+    host = _hostname(host)
+    nets = tuple(ipaddress.ip_network(n) for n in allowed_networks)
+    try:
+        addresses = [ipaddress.ip_address(host)]
+    except ValueError:
+        try:
+            infos = socket.getaddrinfo(host, None, type=socket.SOCK_STREAM)
+            addresses = list(dict.fromkeys(ipaddress.ip_address(info[4][0]) for info in infos))
+        except (OSError, ValueError) as exc:
+            raise TargetNotAllowed("alvo não autorizado") from exc
+    if not addresses or not all(any(addr in net for net in nets) for addr in addresses):
+        raise TargetNotAllowed("alvo não autorizado")
+    if any("%" in str(addr) for addr in addresses):
+        raise TargetNotAllowed("alvo não autorizado")
+    return str(addresses[0])
+
+
+def is_target_allowed(host: str, allowed_networks: Iterable[str] = DEFAULT_ALLOWED_NETWORKS) -> bool:
+    try:
+        resolve_target(host, allowed_networks)
+        return True
+    except TargetNotAllowed:
         return False
-    addrs = {ipaddress.ip_address(info[4][0]) for info in infos}
-    if not addrs:
-        return False
-    return all(any(addr in net for net in nets) for addr in addrs)
+
+
+def _connect_ip(address: tuple[str, int], *, timeout: float) -> socket.socket:
+    """Socket numérico direto: não chama getaddrinfo novamente."""
+    ip, port = address
+    family = socket.AF_INET6 if ipaddress.ip_address(ip).version == 6 else socket.AF_INET
+    sock = socket.socket(family, socket.SOCK_STREAM)
+    try:
+        sock.settimeout(timeout)
+        sock.connect((ip, port, 0, 0) if family == socket.AF_INET6 else (ip, port))
+        return sock
+    except BaseException:
+        sock.close()
+        raise
 
 
 def _is_ip(host: str) -> bool:
@@ -147,7 +195,10 @@ def probe_service(
     kind: str,
     tls_warn_days: int = 30,
     timeout: float = 3.0,
-    connector: Callable[..., socket.socket] = socket.create_connection,
+    connector: Callable[..., socket.socket] | None = None,
+    *,
+    resolved_ip: str | None = None,
+    allowed_networks: Iterable[str] = DEFAULT_ALLOWED_NETWORKS,
 ) -> ProbeResult:
     """Mede uma vez. A latência é o tempo do handshake TCP (SYN → ESTABLISHED)."""
     if kind not in VALID_KINDS:
@@ -155,9 +206,16 @@ def probe_service(
     if not 0 < port < 65536:
         raise ValueError("porta fora de 1-65535")
 
+    host = _hostname(host)
+    if resolved_ip is not None:
+        try:
+            ipaddress.ip_address(resolved_ip)
+        except ValueError as exc:
+            raise TargetNotAllowed("destino fixado deve ser um IP") from exc
+    ip = resolve_target(resolved_ip if resolved_ip is not None else host, allowed_networks)
     started = time.perf_counter()
     try:
-        sock = connector((host, port), timeout=timeout)
+        sock = (connector or _connect_ip)((ip, port), timeout=timeout)
     except OSError as exc:
         return ProbeResult(
             status="down",
@@ -193,7 +251,10 @@ def probe_service(
                 if not hostname_ok:
                     findings.append(_finding("tls_hostname", "medium", f"Certificado não cobre {host}"))
 
-        request = f"GET / HTTP/1.0\r\nHost: {host}\r\nConnection: close\r\nUser-Agent: SigmaProbe/0.1\r\n\r\n"
+        authority = f"[{host}]" if ":" in host else host
+        if port != (443 if kind == "https" else 80):
+            authority += f":{port}"
+        request = f"GET / HTTP/1.0\r\nHost: {authority}\r\nConnection: close\r\nUser-Agent: SigmaProbe/0.1\r\n\r\n"
         sock.sendall(request.encode("ascii", errors="ignore"))
         sock.settimeout(timeout)
         chunks = bytearray()
@@ -262,9 +323,15 @@ def probe_many(
     sleep: Callable[[float], None] = time.sleep,
     **kwargs: Any,
 ) -> ProbeStats:
-    """Repete ``probe_service`` ``count`` vezes e resume perda, latência e jitter."""
+    """Repete medições contra um único IP autorizado, mantendo Host/SNI.
+
+    Todos os IPs DNS precisam ser permitidos. Usa o primeiro e não tenta outro
+    endereço nem segue redirects; nova chamada realiza nova resolução/política.
+    """
     if count < 1:
         raise ValueError("count deve ser >= 1")
+    kwargs["allowed_networks"] = tuple(kwargs.get("allowed_networks", DEFAULT_ALLOWED_NETWORKS))
+    kwargs["resolved_ip"] = resolve_target(host, kwargs["allowed_networks"])
     latencies: list[float] = []
     failures = 0
     for i in range(count):
@@ -290,6 +357,8 @@ __all__ = [
     "ProbeResult",
     "ProbeStats",
     "is_target_allowed",
+    "resolve_target",
+    "TargetNotAllowed",
     "parse_http",
     "probe_many",
     "probe_service",
