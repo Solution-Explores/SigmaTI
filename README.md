@@ -434,3 +434,5 @@ MVP (TCC).
 ### Docente
 
 - **Euler Azevedo** — [LinkedIn](https://www.linkedin.com/in/eulerazevedo/)
+
+Guia da coleta contínua e SSE autenticado: [configuração, contratos e ensaio E2](engenharia/docs/09-coleta-eventos.md).

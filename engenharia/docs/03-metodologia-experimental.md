@@ -20,7 +20,7 @@ Princípios: **semente fixa**, **repetições** (n ≥ 30), **saída em CSV**, *
 | ID | Objetivo | Hipótese | Status |
 |---|---|---|---|
 | **E1** | Qualidade dos detectores com falha injetada em séries sintéticas | H1 | ✅ Implementado (`experimentos/exp_deteccao.py`) |
-| **E2** | Latência ponta a ponta do alerta até o painel (RF01 ≤ 5 s) | H4 | ⬜ A fazer |
+| **E2** | Latência ponta a ponta do alerta até o painel (RF01 ≤ 5 s) | H4 | Ensaio local implementado: scripts/validate_collection.py; tela pendente #15 |
 | **E3** | Burn rate em rede real: tempo até `page` com sonda caída | H2 | ⬜ A fazer |
 | **E4** | Fuzzing da cadeia de hash (adulterar, remover, reordenar N entradas) | H3 | ⬜ A fazer (há testes unitários) |
 | **E5** | Latência da resposta da IA (RNF04 ≤ 15 s) com anonimização | H4 | ⬜ A fazer |
@@ -45,11 +45,11 @@ Setup: 600 amostras lognormais (mediana ≈ 20 ms, σ = 0,15), uma falha por sé
 
 Reproduzir: `python -m experimentos.exp_deteccao`.
 
-### E2 · Latência alerta → painel (a fazer)
+### E2 · Latência falha → SSE (ensaio local implementado; painel pendente)
 
-1. Injetar a falha em um alvo (`iptables -A INPUT -p tcp --dport X -j DROP` no alvo de teste).
-2. Registrar `t0` (comando de injeção) e `t1` (evento SSE recebido por um cliente de teste).
-3. n ≥ 30 repetições; reportar mediana, p95 e proporção ≤ 5 s.
+O script `scripts/validate_collection.py` injeta 30 quedas de um serviço TCP em loopback, depois de comprovar uma medição disponível. Registra t0 antes de fechar o listener e t1 ao receber o evento por SSE HTTP real; produz CSV e JSON com mediana, p95, máximo e proporção ≤5 s. Mede também 200 alvos lógicos locais, reinício da API, replay e revogação da sessão. PostgreSQL em schema descartável, nomes e credenciais fictícios.
+
+Reprodução, limites e configuração: [coleta e eventos](09-coleta-eventos.md). Os resultados do laboratório não comprovam renderização do painel (#15), 200 equipamentos físicos nem comportamento de DROP/firewall real. Repetir no ambiente de homologação com relógios sincronizados e condições representativas.
 
 ### E3 · Burn rate em rede real (a fazer)
 

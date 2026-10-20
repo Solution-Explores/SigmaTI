@@ -10,6 +10,7 @@ def temporary_identity(monkeypatch, tmp_path):
     import auth
     # Valor vazio impede que load_dotenv reintroduza um banco real do operador.
     monkeypatch.setenv("SIGMA_DATABASE_URL", "")
+    monkeypatch.setenv("SIGMA_COLLECTION_ENABLED", "0")
     password = secrets.token_urlsafe(24)
     secret = secrets.token_hex(32)
     users = [

@@ -40,6 +40,9 @@ class TargetIn(BaseModel):
     host: str = Field(min_length=1, max_length=253)
     porta: int = Field(ge=1, le=65535)
     kind: Literal["tcp", "http", "https"] = "tcp"
+    intervalo_s: float = Field(default=1.0, ge=0.1, le=3600, allow_inf_nan=False)
+    timeout_s: float = Field(default=1.0, ge=0.05, le=10, allow_inf_nan=False)
+    detector: Literal["ewma", "mad"] = "ewma"
 
 
 class ApprovalIn(BaseModel):
@@ -61,6 +64,23 @@ class SloIn(BaseModel):
 def create_target(body: TargetIn, request: Request, user: Analyst):
     with errors():
         return repository(request).create_target(**body.model_dump(), actor=user.username)
+
+
+class TargetActiveIn(BaseModel):
+    ativo: bool
+
+
+@router.patch("/alvos/{identifier}")
+def configure_target(identifier: Identifier, body: TargetActiveIn, request: Request, user: Analyst):
+    with errors():
+        return repository(request).configure_target(identifier, body.ativo, user.username)
+
+
+@router.get("/coleta/status")
+def collection_status(request: Request, user: Analyst):
+    scheduler = getattr(request.app.state, "scheduler", None)
+    return {"habilitada": scheduler is not None,
+            "metricas": scheduler.status() if scheduler is not None else {}}
 
 
 @router.get("/alvos")

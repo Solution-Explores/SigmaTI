@@ -34,7 +34,25 @@ async def lifespan(app: FastAPI):
     # Um pool por aplicação, criado no event loop e fechado no desligamento.
     async with create_provider_client() as client:
         app.state.provider_client = client
-        yield
+        app.state.scheduler = None
+        if os.getenv("SIGMA_COLLECTION_ENABLED", "0") == "1":
+            if app.state.operational_store is None:
+                raise RuntimeError("Coleta requer PostgreSQL configurado e migrado.")
+            from sigma_eng.scheduler import Scheduler
+            from sigma_eng.api import _redes
+            from persistence.scheduler_lease import SchedulerLease
+            scheduler = Scheduler(app.state.operational_store,
+                concurrency=int(os.getenv("SIGMA_COLLECTION_CONCURRENCY", "32")),
+                allowed_networks=_redes(),
+                seed=int(os.environ["SIGMA_COLLECTION_SEED"]) if os.getenv("SIGMA_COLLECTION_SEED", "").strip() else None,
+                lease=SchedulerLease(app.state.operational_store.engine))
+            app.state.scheduler = scheduler
+            scheduler.start()
+        try:
+            yield
+        finally:
+            if app.state.scheduler is not None:
+                await app.state.scheduler.stop()
 
 
 async def get_provider_client(request: Request) -> httpx.AsyncClient:
@@ -64,6 +82,8 @@ from routers.operational import router as operational_router
 app.state.operational_store = (PostgresOperationalStore(usuario_repo.backend.engine)
                                if usuario_repo.backend is not None else None)
 app.include_router(operational_router)
+from routers.events import router as events_router
+app.include_router(events_router)
 
 from sigma_eng.api import create_router
 from sigma_eng.audit_chain import AuditChain

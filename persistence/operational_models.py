@@ -12,7 +12,10 @@ from .models import Base
 class TargetRow(Base):
     __tablename__ = "alvos"
     __table_args__ = (CheckConstraint("porta BETWEEN 1 AND 65535"),
-                     CheckConstraint("kind IN ('tcp','http','https')"))
+                     CheckConstraint("kind IN ('tcp','http','https')"),
+                     CheckConstraint("intervalo_s BETWEEN 0.1 AND 3600", name="ck_alvos_interval"),
+                     CheckConstraint("timeout_s BETWEEN 0.05 AND 10", name="ck_alvos_timeout"),
+                     CheckConstraint("detector IN ('ewma','mad')", name="ck_alvos_detector"))
     id: Mapped[str] = mapped_column(String(36), primary_key=True)
     nome: Mapped[str] = mapped_column(String(100))
     host: Mapped[str] = mapped_column(String(253))
@@ -20,6 +23,9 @@ class TargetRow(Base):
     kind: Mapped[str] = mapped_column(String(10), default="tcp")
     ativo: Mapped[bool] = mapped_column(Boolean, default=True)
     criado_em: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    intervalo_s: Mapped[float] = mapped_column(Float, default=1.0, server_default="1")
+    timeout_s: Mapped[float] = mapped_column(Float, default=1.0, server_default="1")
+    detector: Mapped[str] = mapped_column(String(10), default="ewma", server_default="ewma")
 
 
 class MeasurementRow(Base):
@@ -93,6 +99,8 @@ class SloRow(Base):
 
 class EventRow(Base):
     __tablename__ = "eventos_operacionais"
+    __table_args__ = (Index("ix_eventos_incidentes_id", "id", postgresql_where=text(
+        "acao IN ('incident.created','incident.ack','incident.resolve')")),)
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
     ts: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
     ator: Mapped[str] = mapped_column(String(100))

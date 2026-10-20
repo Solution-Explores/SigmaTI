@@ -34,9 +34,9 @@ a issue nem substitui a revisão e a validação operacional.
 ## Limitações conhecidas do núcleo
 
 - A cadeia de hash detecta adulteração, mas **não impede** que alguém com acesso total apague o arquivo inteiro e comece outro; é preciso ancorar o último hash fora da máquina.
-- `ApprovalService` e `RunbookRunner` guardam estado em memória; reiniciar o processo perde pendências. Persistência em PostgreSQL está nas issues.
+- `ApprovalService` e `RunbookRunner` preservam estado em PostgreSQL quando configurados (#7/PR #36); o modo legado sem banco continua em memória. Ver [estado operacional](08-estado-operacional.md).
 - A latência medida é a do *handshake* TCP, não a do serviço de aplicação.
-- Um `EwmaDetector` por alvo é mantido em memória; o estado se perde ao reiniciar (re-aquecimento de 20 amostras).
+- Na coleta persistente (#8), snapshots EWMA/MAD confirmam com a medição e são recuperados após reinício. Uso isolado sem repositório permanece em memória; parâmetros exigem calibração. Ver [coleta e eventos](09-coleta-eventos.md).
 
 
 ## Limites da correção #14
