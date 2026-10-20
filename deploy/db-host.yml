@@ -1,0 +1,8 @@
+# Overlay opcional para API no host; não publica PostgreSQL na rede externa.
+services:
+  db:
+    ports:
+      - target: 5432
+        published: "5432"
+        host_ip: 127.0.0.1
+        protocol: tcp

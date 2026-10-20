@@ -108,3 +108,27 @@ jobs:
             test-results/panel-run.json
             test-results/panel-browser.xml
             test-results/panel-*.png
+
+  test-recovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m venv .venv
+      - run: .venv/bin/python -m pip install -r requirements-dev.txt
+      - name: Validate shell syntax
+        run: |
+          for script in scripts/install.sh scripts/update.sh scripts/backup.sh scripts/restore.sh scripts/smoke.sh; do bash -n "$script"; done
+      - name: Backup integrity and refusal tests
+        run: .venv/bin/python -m pytest -q -p no:cacheprovider tests/test_recovery.py
+      - name: Real recovery smoke
+        run: bash scripts/smoke.sh --install --output test-results/recovery
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: recovery-test-results
+          path: test-results/recovery/report.json
+          if-no-files-found: warn

@@ -453,3 +453,8 @@ A API também aplica autorização; ocultar a navegação não substitui o RBAC.
 Saúde distingue dados ausentes/desatualizados de disponibilidade. O orçamento parcial é um limite máximo e a projeção exige cobertura integral da janela. MTTD aparece sem amostras enquanto não houver início real da falha registrado. Aprovar/rejeitar exige justificativa na interface, outro operador e o papel mínimo; essa página registra decisões, sem executar comandos. A integridade JSONL exibida na auditoria cobre a trilha de sondas; os eventos PostgreSQL são apresentados separadamente.
 
 Validação e limites: [evidências da #15](specs/017-painel-operacional/brief.md). Testes de componentes: `npm test`; diagnóstico: `npm run test:e2e`; ensaio completo com banco descartável: `python scripts/validate_postgres.py --tests "tests/test_panel_api.py tests/test_panel_e2e.py"`. O runner prepara um schema isolado e publica capturas em `test-results/`; Chromium deve estar instalado com `npx playwright install chromium`. No Windows, `SIGMA_BROWSER_CHANNEL=chrome` permite usar o Chrome já instalado.
+
+
+## Backup, restauração e smoke (#25)
+
+Procedimento executável: [implantação e recuperação](doc/backup-restauracao.md). `scripts/backup.sh`/`restore.sh` envolvem o CLI Python `scripts/recovery.py`; exigem escritores parados, chave fora do pacote e destino novo. `scripts/smoke.sh` exercita falha real, SSE, backup autenticado, restauração e recriação em contêineres descartáveis. O CI publica somente relatório sem dump/chave. O ensaio em outra máquina e a ativação do modelo systemd continuam pendentes; não confundir validação local com aceite integral da #25.
