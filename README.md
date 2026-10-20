@@ -458,3 +458,5 @@ Validação e limites: [evidências da #15](specs/017-painel-operacional/brief.m
 ## Backup, restauração e smoke (#25)
 
 Procedimento executável: [implantação e recuperação](doc/backup-restauracao.md). `scripts/backup.sh`/`restore.sh` envolvem o CLI Python `scripts/recovery.py`; exigem escritores parados, chave fora do pacote e destino novo. `scripts/smoke.sh` exercita falha real, SSE, backup autenticado, restauração e recriação em contêineres descartáveis. O CI publica somente relatório sem dump/chave. O ensaio em outra máquina e a ativação do modelo systemd continuam pendentes; não confundir validação local com aceite integral da #25.
+
+Planejamento do aceite em outro local: [VM VirtualBox e roteiro da #25](doc/planejamento-validacao-25-virtualbox.md).
