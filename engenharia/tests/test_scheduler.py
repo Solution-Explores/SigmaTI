@@ -2,6 +2,8 @@ import asyncio
 import threading
 import time
 
+import pytest
+
 from sigma_eng.probe import ProbeResult, TargetNotAllowed
 from sigma_eng.scheduler import Scheduler
 
@@ -175,4 +177,21 @@ def test_shutdown_finishes_started_write_before_releasing_leadership():
             release.set()
             await stopping
         assert lease.released
+    asyncio.run(scenario())
+
+
+@pytest.mark.parametrize("status,expected", [(503,False),(200,True),(None,False)])
+def test_http_health_distinguishes_error_from_security_finding(status,expected):
+    async def scenario():
+        store=Store()
+        store.targets[0].update(kind="http",timeout_s=1)
+        scheduler=Scheduler(store,refresh=0.05,seed=1,
+            probe_fn=lambda *a,**k: ProbeResult(status="degraded",latency_ms=1,http_status=status))
+        scheduler.start()
+        for _ in range(200):
+            if store.results:
+                break
+            await asyncio.sleep(0.01)
+        await scheduler.stop()
+        assert store.results and store.results[0][0][1] is expected
     asyncio.run(scenario())

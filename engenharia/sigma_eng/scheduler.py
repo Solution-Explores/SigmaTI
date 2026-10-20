@@ -124,8 +124,10 @@ class Scheduler:
                 self.metrics.missed += 1
                 self.metrics.errors += 1
                 return
+            available = result.status != "down" and (target["kind"] == "tcp" or
+                result.http_status is not None and 200 <= result.http_status < 500)
             write = loop.run_in_executor(self._repository_executor, partial(
-                self.repository.record_measurement, target["id"], result.status != "down",
+                self.repository.record_measurement, target["id"], available,
                 result.latency_ms, ts=datetime.now(timezone.utc), detector_kind=target["detector"]))
             self._writes.add(write)
             write.add_done_callback(self._write_done)

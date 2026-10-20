@@ -63,3 +63,8 @@ A primeira carga revelou atraso ao aguardar inventário no laço; atualização 
 Não comprova 200 equipamentos físicos, rede hospitalar, DROP/firewall, renderização no painel ou cenário de múltiplos proxies. DNS bloqueado não pode ser interrompido em thread Python: limita-se a ocupação e descartam-se resultados tardios. Persistência/consumidor lento ainda podem atrasar o evento; calibrar intervalo/timeout/capacidade no ambiente real. Failover de conexão pode concluir gravações já iniciadas; unicidade do incidente continua protegida no banco. Sem âncora/rotação criptográfica #13, backup/restore #25 ou fechamento automático de issue.
 
 CSV/JSON do experimento são produzidos em test-results e publicados no artefato postgres-test-results do CI. Estado final do CI será registrado no PR após conferência do SHA e logs.
+
+
+## Revisão da classificação HTTP
+
+Na revisão foi corrigida a classificação de uma resposta 5xx como disponível apenas porque o socket abriu. A coleta agora considera HTTP ilegível/5xx como falha e distingue achado de segurança em HTTP 200 de indisponibilidade. Três casos de regressão acrescentados ao grupo scheduler/stream; a medição E2 local acima continua sendo da execução anterior a esta correção HTTP, com alvos TCP. O CI do head final revalida todo o conjunto.
