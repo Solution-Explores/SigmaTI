@@ -195,3 +195,29 @@ def test_http_health_distinguishes_error_from_security_finding(status,expected):
             await scheduler.stop()
         assert store.results and store.results[0][0][1] is expected, scheduler.status()
     asyncio.run(scenario())
+
+
+def test_leadership_flapping_does_not_queue_writes_beyond_work_limit():
+    async def scenario():
+        release=threading.Event()
+        calls=[]
+        class SlowStore(Store):
+            def record_measurement(self,*args,**kwargs):
+                release.wait(3)
+        class FlappingLease:
+            n=0
+            def acquire(self):
+                self.n+=1
+                return self.n % 2 == 1
+            def release(self):
+                pass
+        scheduler=Scheduler(SlowStore(20),concurrency=2,refresh=0.05,lease=FlappingLease(),seed=1,
+            probe_fn=lambda *a,**k: (calls.append(1) or ProbeResult(status="up",latency_ms=1)))
+        scheduler.start()
+        try:
+            await asyncio.sleep(0.4)
+            assert len(calls) <= 2
+        finally:
+            release.set()
+            await scheduler.stop()
+    asyncio.run(scenario())

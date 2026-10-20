@@ -68,3 +68,8 @@ CSV/JSON do experimento são produzidos em test-results e publicados no artefato
 ## Revisão da classificação HTTP
 
 Na revisão foi corrigida a classificação de uma resposta 5xx como disponível apenas porque o socket abriu. A coleta agora considera HTTP ilegível/5xx como falha e distingue achado de segurança em HTTP 200 de indisponibilidade. Três casos de regressão acrescentados ao grupo scheduler/stream; a medição E2 local acima continua sendo da execução anterior a esta correção HTTP, com alvos TCP. O CI do head final revalida todo o conjunto.
+
+
+## Revisão de contrapressão durante failover
+
+Um teste com liderança alternante e gravação bloqueada reproduziu seis novas sondas para limite de dois trabalhos: cancelar o wrapper liberava a vaga enquanto a gravação protegida ainda aguardava. Corrigido mantendo a reserva até terminar, suspendendo novos ciclos sem liderança e descartando resultado de sonda se a liderança já se perdeu antes da gravação. Transações já iniciadas continuam sendo drenadas. A regressão passa sem ampliar a fila, inclusive quando a liderança oscila repetidamente.

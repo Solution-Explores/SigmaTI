@@ -124,6 +124,9 @@ class Scheduler:
                 self.metrics.missed += 1
                 self.metrics.errors += 1
                 return
+            if self.lease is not None and not self.leader:
+                self.metrics.missed += 1
+                return
             available = result.status != "down" and (target["kind"] == "tcp" or
                 result.http_status is not None and 200 <= result.http_status < 500)
             write = loop.run_in_executor(self._repository_executor, partial(
@@ -172,9 +175,8 @@ class Scheduler:
                     self.leader, targets = self._refresh_task.result()
                     self._refresh_task = None
                     refresh_at = now + self.refresh
-                    if not self.leader:
-                        for task in self._jobs.values():
-                            task.cancel()
+                    # Sem liderança, targets fica vazio. Manter trabalhos em andamento
+                    # reservados até terminarem evita acumular writes em cada failover.
                     identifiers = {t["id"] for t in targets}
                     self._due = {key: value for key, value in self._due.items() if key in identifiers}
                     for target in targets:
