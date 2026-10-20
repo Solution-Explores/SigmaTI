@@ -115,6 +115,7 @@ def criar_token_sessao(
     expira_em_segundos: int | None = None,
     secret_key: str | None = None,
     expected_hash: str | None = None,
+    expected_version: int | None = None,
 ) -> str:
     """Emite token JWT de sessão assinado com HS256 e expiração delimitada."""
     agora = int(time.time())
@@ -145,7 +146,7 @@ def criar_token_sessao(
 
     if usuario_repo.backend is not None:
         try:
-            usuario_repo.backend.save_session(payload, expected_hash)
+            usuario_repo.backend.save_session(payload, expected_hash, expected_version)
         except ValueError:
             raise TokenError() from None
     else:
@@ -218,6 +219,7 @@ class Usuario:
     senha_hash: str
     papel: str
     ativo: bool = True
+    versao: int = 1
 
 
 class UsuarioRepository:
@@ -234,9 +236,16 @@ class UsuarioRepository:
         if self.backend is not None and (not user.senha_hash.startswith("$argon2id$")
                                         or password_hasher.check_needs_rehash(user.senha_hash)):
             novo = password_hasher.hash(senha)
-            self.backend.upgrade_hash(user.username, user.senha_hash, novo)
-            # A emissão usa este hash como CAS e recusa troca concorrente.
-            user.senha_hash = novo
+            if self.backend.upgrade_hash(user.username, user.senha_hash, novo):
+                user.senha_hash = novo
+            else:
+                # Outro login pode ter refeito o hash. Mudança administrativa,
+                # por outro lado, nunca pode reutilizar a verificação anterior.
+                current = self.obter_por_username(user.username)
+                if (current is None or not current.ativo or current.versao != user.versao
+                        or current.papel != user.papel or not verificar_senha(senha, current.senha_hash)):
+                    raise TokenError()
+                return current
         return user
 
     def carregar(self, caminho: str) -> None:

@@ -63,10 +63,10 @@ def test_identity_change_invalidates_sessions_permanently(pg, change):
         row["papel"] = "gestor_ti"
     else:
         row["ativo"] = False
-    pg.save_user(**row)
+    pg.save_user(**{k: v for k, v in row.items() if k != "versao"})
     if change == "reactivate":
         row["ativo"] = True
-        pg.save_user(**row)
+        pg.save_user(**{k: v for k, v in row.items() if k != "versao"})
     with pytest.raises(auth.TokenError):
         auth.decodificar_token_sessao(token)
 
@@ -166,3 +166,96 @@ def test_expired_session_and_wrong_password(pg):
     token = auth.criar_token_sessao(username, "analista_redes", expira_em_segundos=-1)
     with pytest.raises(auth.TokenError):
         auth.decodificar_token_sessao(token)
+
+
+def test_login_started_before_deactivate_reactivate_is_rejected(pg):
+    username = identity(pg)
+    auth.configure_auth(auth.JWT_SECRET)
+    stale = auth.usuario_repo.obter_por_username(username)
+    pg.save_user(username, stale.senha_hash, stale.papel, ativo=False)
+    pg.save_user(username, stale.senha_hash, stale.papel, ativo=True)
+    with pytest.raises(auth.TokenError):
+        auth.criar_token_sessao(username, stale.papel, expected_hash=stale.senha_hash,
+                               expected_version=stale.versao)
+
+
+def test_two_valid_logins_can_share_legacy_rehash(pg):
+    username = "rehash-" + uuid.uuid4().hex
+    pg.save_user(username, auth.hash_senha("synthetic-password"), "analista_redes")
+    auth.configure_auth(auth.JWT_SECRET)
+    first = auth.usuario_repo.obter_por_username(username)
+    second = auth.usuario_repo.obter_por_username(username)
+    # Ambos leram o mesmo PBKDF2 antes do primeiro commit de rehash.
+    first = auth.usuario_repo.atualizar_hash(first, "synthetic-password")
+    second = auth.usuario_repo.atualizar_hash(second, "synthetic-password")
+    for user in [first, second]:
+        token = auth.criar_token_sessao(username, user.papel, expected_hash=user.senha_hash)
+        assert auth.decodificar_token_sessao(token)["sub"] == username
+
+
+@pytest.fixture
+def pg_client(pg, monkeypatch):
+    import importlib
+    from fastapi.testclient import TestClient
+    monkeypatch.setenv("OPENROUTER_API_KEY", "fake-only")
+    monkeypatch.setenv("SIGMA_LLM_MODEL", "test/model")
+    monkeypatch.setenv("SIGMA_CORS_ORIGINS", "http://localhost:5173")
+    monkeypatch.setenv("PYTHON_DOTENV_DISABLED", "1")
+    previous = sys.modules.pop("main", None)
+    try:
+        module = importlib.import_module("main")
+        with TestClient(module.app) as client:
+            yield client
+    finally:
+        sys.modules.pop("main", None)
+        if previous is not None:
+            sys.modules["main"] = previous
+
+
+def test_user_routes_offload_synchronous_storage(pg_client, monkeypatch):
+    import asyncio
+    manager = auth.usuario_repo.adicionar_usuario("manager-" + uuid.uuid4().hex,
+                                                   "synthetic-password", "gestor_ti")
+    headers = {"Authorization": "Bearer " + auth.criar_token_sessao(manager.username, manager.papel)}
+    original_list = auth.usuario_repo.listar
+    original_add = auth.usuario_repo.adicionar_usuario
+    def check_thread():
+        with pytest.raises(RuntimeError, match="no running event loop"):
+            asyncio.get_running_loop()
+    def list_users():
+        check_thread()
+        return original_list()
+    def add_user(*args):
+        check_thread()
+        return original_add(*args)
+    monkeypatch.setattr(auth.usuario_repo, "listar", list_users)
+    monkeypatch.setattr(auth.usuario_repo, "adicionar_usuario", add_user)
+    assert pg_client.get("/api/usuarios", headers=headers).status_code == 200
+    assert pg_client.post("/api/usuarios", headers=headers, json={
+        "username": "created-" + uuid.uuid4().hex, "password": "synthetic-password", "papel": "suporte_n1",
+    }).status_code == 200
+
+
+def test_failed_session_creation_does_not_audit_success(pg, pg_client, monkeypatch):
+    import json
+    from pathlib import Path
+    username = identity(pg)
+    def changed(*args):
+        raise ValueError("Identidade alterada.")
+    monkeypatch.setattr(auth.usuario_repo.backend, "save_session", changed)
+    response = pg_client.post("/api/auth/login", json={"username": username, "password": "synthetic-password"})
+    assert response.status_code == 401
+    audit_path = Path(os.environ["SIGMA_AUDIT_PATH"])
+    events = [json.loads(line) for line in audit_path.read_text().splitlines()] if audit_path.exists() else []
+    assert not any(event["acao"] == "auth.login.success" for event in events)
+
+
+def test_user_input_validation_is_public_422(pg_client):
+    manager = auth.usuario_repo.adicionar_usuario("manager-" + uuid.uuid4().hex,
+                                                   "synthetic-password", "gestor_ti")
+    headers = {"Authorization": "Bearer " + auth.criar_token_sessao(manager.username, manager.papel)}
+    base = {"username": "invalid-create", "password": "synthetic-password", "papel": "suporte_n1"}
+    for change in [{"username": ""}, {"username": "x" * 101}, {"password": "x" * 129}, {"papel": "admin"}]:
+        response = pg_client.post("/api/usuarios", headers=headers, json=base | change)
+        assert response.status_code == 422
+        assert "synthetic-password" not in response.text

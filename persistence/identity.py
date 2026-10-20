@@ -14,11 +14,12 @@ from .models import SessionRow, UserRow
 class IdentityStore(Protocol):
     def get_user(self, username: str) -> dict | None: ...
     def save_user(self, username: str, senha_hash: str, papel: str, ativo: bool = True) -> None: ...
-    def save_session(self, payload: dict, expected_hash: str | None = None) -> None: ...
+    def save_session(self, payload: dict, expected_hash: str | None = None,
+                     expected_version: int | None = None) -> None: ...
     def valid_session(self, payload: dict) -> bool: ...
     def revoke_session(self, jti: str) -> None: ...
     def list_users(self) -> list[str]: ...
-    def upgrade_hash(self, username: str, old_hash: str, new_hash: str) -> None: ...
+    def upgrade_hash(self, username: str, old_hash: str, new_hash: str) -> bool: ...
 
 
 class PostgresIdentityStore:
@@ -37,7 +38,7 @@ class PostgresIdentityStore:
         with self.transaction() as session:
             row = session.get(UserRow, username)
             return None if row is None else {k: getattr(row, k) for k in
-                                              ("username", "senha_hash", "papel", "ativo")}
+                                              ("username", "senha_hash", "papel", "ativo", "versao")}
 
     def list_users(self):
         with self.transaction() as session:
@@ -69,15 +70,17 @@ class PostgresIdentityStore:
     def upgrade_hash(self, username, old_hash, new_hash):
         with self.transaction() as session:
             # Rehash não é troca de senha: preserva sessões e não sobrescreve troca concorrente.
-            session.execute(update(UserRow).where(UserRow.username == username,
+            result = session.execute(update(UserRow).where(UserRow.username == username,
                                                  UserRow.senha_hash == old_hash).values(senha_hash=new_hash))
+            return result.rowcount == 1
 
-    def save_session(self, payload, expected_hash=None):
+    def save_session(self, payload, expected_hash=None, expected_version=None):
         with self.transaction() as session:
             user = session.scalar(select(UserRow).where(UserRow.username == payload["sub"])
                                   .with_for_update())
             if (user is None or not user.ativo or user.papel != payload["papel"]
-                    or (expected_hash is not None and user.senha_hash != expected_hash)):
+                    or (expected_hash is not None and user.senha_hash != expected_hash)
+                    or (expected_version is not None and user.versao != expected_version)):
                 raise ValueError("Identidade alterada durante autenticação.")
             session.add(SessionRow(jti=payload["jti"], username=user.username, papel=user.papel,
                                    versao_usuario=user.versao,

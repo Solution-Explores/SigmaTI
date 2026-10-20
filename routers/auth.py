@@ -79,6 +79,15 @@ def login(dados: LoginIn, request: Request) -> dict:
         )
 
     usuario = usuario_repo.atualizar_hash(usuario, dados.password)
+    # Confirma a sessão antes de registrar sucesso; nunca devolve a chave permanente.
+    token = criar_token_sessao(
+        usuario=usuario.username,
+        papel=usuario.papel,
+        expira_em_segundos=auth.JWT_EXPIRATION_SECONDS,
+        expected_hash=usuario.senha_hash,
+        expected_version=usuario.versao,
+    )
+
     # 3. Credenciais válidas: limpa histórico de falhas e registra sucesso na AuditChain
     rate_limiter.limpar(chave_bloqueio)
     if auditor is not None:
@@ -88,14 +97,6 @@ def login(dados: LoginIn, request: Request) -> dict:
             recurso="session",
             detalhes={"papel": usuario.papel, "ip": ip_origem},
         )
-
-    # 4. Emite JWT de sessão com prazo de expiração (nunca devolve chaves permanentes do servidor)
-    token = criar_token_sessao(
-        usuario=usuario.username,
-        papel=usuario.papel,
-        expira_em_segundos=auth.JWT_EXPIRATION_SECONDS,
-        expected_hash=usuario.senha_hash,
-    )
 
     return {
         "access_token": token,
