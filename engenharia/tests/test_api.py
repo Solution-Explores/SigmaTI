@@ -62,3 +62,39 @@ def test_packaged_routes_require_auth_and_role(client, method, path, payload):
 def test_router_cannot_be_created_without_host_authorization():
     with pytest.raises(TypeError):
         api.create_router()
+
+
+def test_probe_dns_misto_nao_conecta(client, monkeypatch):
+    import socket
+    from sigma_eng import probe
+    monkeypatch.setattr(socket, "getaddrinfo", lambda *a, **k: [
+        (socket.AF_INET, socket.SOCK_STREAM, 6, "", (ip, 0))
+        for ip in ("127.0.0.1", "8.8.8.8")])
+    def forbidden(*args, **kwargs):
+        pytest.fail("API tentou conexão não autorizada")
+    monkeypatch.setattr(probe, "_connect_ip", forbidden)
+    response = client.post("/api/eng/probe", json={"host": "hospital.test", "port": 80})
+    assert response.status_code == 403
+
+
+def test_probe_api_fixa_destino_para_toda_serie(client, monkeypatch):
+    import socket
+    from sigma_eng import probe
+    calls, destinations = [], []
+    def dns(*args, **kwargs):
+        calls.append(args[0])
+        ip = "127.0.0.1" if len(calls) == 1 else "8.8.8.8"
+        return [(socket.AF_INET, socket.SOCK_STREAM, 6, "", (ip, 0))]
+    class Connection:
+        def close(self):
+            pass
+    def connect(address, **kwargs):
+        destinations.append(address)
+        return Connection()
+    monkeypatch.setattr(socket, "getaddrinfo", dns)
+    monkeypatch.setattr(probe, "_connect_ip", connect)
+    response = client.post("/api/eng/probe", json={"host": "hospital.test", "port": 80, "count": 3})
+    assert response.status_code == 200
+    assert response.json()["failures"] == 0
+    assert calls == ["hospital.test"]
+    assert destinations == [("127.0.0.1", 80)] * 3
