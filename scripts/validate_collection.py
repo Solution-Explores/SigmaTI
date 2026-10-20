@@ -27,6 +27,7 @@ from persistence.database import open_database
 from persistence.identity import PostgresIdentityStore
 from persistence.operational import PostgresOperationalStore
 from auth import password_hasher
+from sigma_eng.stats import percentile
 
 
 class TCPService:
@@ -276,7 +277,7 @@ def run(database_url, output, *, repeats=30, targets=200):
         assert token not in logs and password not in logs and env["SIGMA_JWT_SECRET"] not in logs
         samples = sorted(row["seconds"] for row in rows)
         report = {"seed":0,"repetitions":repeats,"median_seconds":statistics.median(samples),
-            "p95_seconds":samples[int(0.95*(len(samples)-1))],"max_seconds":max(samples),
+            "p95_seconds":percentile(samples,95),"max_seconds":max(samples),
             "within_5_seconds":sum(t<=5 for t in samples)/len(samples),
             "load":{"targets":targets,"interval_seconds":2,"observation_seconds":6,
                     "measurements":observed,"window_measurements":sum(window_counts),

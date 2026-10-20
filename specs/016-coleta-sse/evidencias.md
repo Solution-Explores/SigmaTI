@@ -36,7 +36,7 @@ Guia: engenharia/docs/09-coleta-eventos.md. Metodologia E2 e riscos atualizados.
 | Medida | Resultado local |
 |---|---:|
 | Mediana | 0,690 s |
-| p95 | 0,803 s |
+| p95 (interpolação linear, recalculado do CSV) | 0,831 s |
 | Máximo | 0,869 s |
 | Proporção ≤5 s | 30/30 (100%) |
 
