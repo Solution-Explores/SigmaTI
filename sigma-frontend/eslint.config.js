@@ -18,5 +18,5 @@ export default defineConfig([
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
   },
-  { files: ['playwright.config.js', 'e2e/**/*.js'], languageOptions: { globals: globals.node } },
+  { files: ['playwright*.config.js', 'e2e/**/*.js', 'e2e-operational/**/*.js'], languageOptions: { globals: globals.node } },
 ])

@@ -9,7 +9,7 @@ export default defineConfig({
   testDir: './e2e',
   workers: 1,
   retries: 0,
-  use: { baseURL: 'http://127.0.0.1:5173', trace: 'retain-on-failure' },
+  use: { baseURL: 'http://127.0.0.1:5173', trace: 'retain-on-failure', channel: process.env.SIGMA_BROWSER_CHANNEL || undefined },
   reporter: [['list'], ['junit', { outputFile: '../test-results/browser.xml' }]],
   outputDir: '../test-results/playwright',
   webServer: [

@@ -318,3 +318,76 @@ class PostgresOperationalStore:
                         dropped.append(name)
             self._event(session, "maintenance", "measurements.retained", "medicoes", {"dias": days, "removidas": deleted})
             return {"removidas": deleted, "particoes": dropped}
+
+
+    def health_snapshot(self, limit=500, now=None):
+        """Estado recente e cobertura temporal; lacunas nunca contam como uptime."""
+        now = utc(now)
+        with self.transaction() as session:
+            session.execute(text("SET LOCAL statement_timeout = '5s'"))
+            targets = session.execute(text("""
+                SELECT t.*, s.alvo_pct, s.janela_dias, m.ts AS ultima_em,
+                       m.sucesso AS ultimo_sucesso, m.latencia_ms
+                FROM (SELECT * FROM alvos ORDER BY criado_em LIMIT :limit) t
+                LEFT JOIN slo s ON s.alvo_id=t.id
+                LEFT JOIN LATERAL (SELECT ts,sucesso,latencia_ms FROM medicoes
+                    WHERE alvo_id=t.id AND ts<=:now ORDER BY ts DESC,id DESC LIMIT 1) m ON TRUE
+            """), {"limit":min(limit,500),"now":now}).mappings().all()
+            ids=[row["id"] for row in targets if row["alvo_pct"] is not None]
+            coverage = {}
+            if ids:
+                rows=session.execute(text("""
+                    WITH spans AS (
+                        SELECT m.alvo_id,m.sucesso,m.ts,
+                            LEAD(m.ts,1,:now) OVER (PARTITION BY m.alvo_id ORDER BY m.ts,m.id) AS next_ts,
+                            :now-make_interval(days=>s.janela_dias) AS window_start,
+                            (t.intervalo_s*2+t.timeout_s)*INTERVAL '1 second' AS freshness
+                        FROM medicoes m JOIN alvos t ON t.id=m.alvo_id JOIN slo s ON s.alvo_id=t.id
+                        WHERE m.alvo_id=ANY(:ids) AND m.ts<=:now
+                          AND m.ts>=:now-make_interval(days=>s.janela_dias)
+                              -(t.intervalo_s*2+t.timeout_s)*INTERVAL '1 second'
+                    ), clipped AS (
+                        SELECT alvo_id,sucesso,GREATEST(ts,window_start) AS start_ts,
+                            LEAST(next_ts,ts+freshness,:now) AS end_ts FROM spans
+                    ) SELECT alvo_id,
+                        SUM(GREATEST(0,EXTRACT(EPOCH FROM end_ts-start_ts))) AS covered,
+                        SUM(CASE WHEN sucesso THEN 0 ELSE GREATEST(0,EXTRACT(EPOCH FROM end_ts-start_ts)) END) AS down,
+                        SUM(CASE WHEN sucesso THEN 0 ELSE GREATEST(0,EXTRACT(EPOCH FROM end_ts-GREATEST(start_ts,:now-INTERVAL '7 days'))) END) AS down_ref
+                    FROM clipped GROUP BY alvo_id
+                """),{"now":now,"ids":ids}).mappings().all()
+                coverage={row["alvo_id"]:row for row in rows}
+            result=[]
+            for source in targets:
+                row=dict(source)
+                fresh=row["intervalo_s"]*2+row["timeout_s"]
+                row["status"]=("inactive" if not row["ativo"] else "unknown"
+                    if row["ultima_em"] is None or (now-row["ultima_em"]).total_seconds()>fresh
+                    else "up" if row["ultimo_sucesso"] else "down")
+                row["orcamento"]=None
+                if row["alvo_pct"] is not None:
+                    data=coverage.get(row["id"],{})
+                    covered=float(data.get("covered") or 0)
+                    down=float(data.get("down") or 0)
+                    seconds=row["janela_dias"]*86400
+                    total=seconds*(1-row["alvo_pct"]/100)
+                    remaining=max(0,total-down)
+                    complete=covered>=seconds-0.01
+                    reference=min(7,row["janela_dias"])
+                    rate=float(data.get("down_ref") or 0)/reference
+                    projected_days=remaining/rate if rate>0 else None
+                    row["orcamento"]={"cobertura_pct":round(min(100,covered/seconds*100),2),
+                        "completo":complete,"consumido_min":round(down/60,3),
+                        "total_min":round(total/60,3),"restante_max_min":round(remaining/60,3),
+                        "disponibilidade_observada_pct":round((1-down/covered)*100,3) if covered else None,
+                        "status":"breaching" if down>=total else "partial" if not complete else
+                            "at_risk" if remaining/total<=0.25 else "healthy",
+                        "esgota_em":(now+timedelta(days=projected_days)).isoformat()
+                            if complete and projected_days is not None and 0<projected_days<=3650 else None}
+                result.append(row)
+            return {"servicos":result,"gerado_em":now,"limite":min(limit,500)}
+
+
+    def recent_events(self, limit=100):
+        with self.transaction() as session:
+            return [columns(row) for row in session.scalars(select(EventRow)
+                .order_by(EventRow.id.desc()).limit(min(limit,100)))]
