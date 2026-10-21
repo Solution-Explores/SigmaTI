@@ -5,3 +5,6 @@ sigma-frontend/node_modules/
 /test-results/
 spec-kit/
 *.jsonl
+
+# graft's local graph cache — regenerable, not committed (run `graft build`).
+/graft/
