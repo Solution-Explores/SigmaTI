@@ -17,7 +17,7 @@ mock funciona com a API real, desde que o contrato da seção 6 seja respeitado.
 | 4 | [Fluxos de usuário](04-fluxos-de-usuario.md) | O caminho de cada perfil pelo sistema |
 | 5 | [Modelagem de baixo nível](05-modelagem-baixo-nivel.md) | Componentes, estados de tela e sequências com a API |
 | 6 | [Contrato da API para o front](06-contrato-api-front.md) | Quais dados cada tela recebe e envia |
-| 7 | [Exemplo](exemplo/) | Referência visual do projeto |
+| 7 | [Exemplo: protótipo do Vinny](exemplo/) | 106 telas no FigCraft: a referência visual de onde queremos chegar |
 
 Os diagramas estão em Mermaid: o GitHub os desenha direto na página.
 
