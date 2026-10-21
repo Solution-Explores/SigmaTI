@@ -106,6 +106,17 @@ class TestFailClosedSanitizacao:
         finally:
             monkeypatch_fun.undo()
 
+    def test_auditoria_indisponivel_mantem_erro_de_sanitizacao(self, monkeypatch):
+        import auth
+        import sanitizer
+
+        def auditoria_indisponivel():
+            raise RuntimeError("Auditoria indisponível.")
+
+        monkeypatch.setattr(auth, "obter_auditor", auditoria_indisponivel)
+        with pytest.raises(SanitizationError, match="Auditoria de privacidade indisponível"):
+            sanitizer.registrar_auditoria_privacidade("sanitization_failed", "teste")
+
     def test_fluxo_completo_com_dados_sensiveis_sanitiza_e_chama_ia(self, api):
         module, client, provider_handler = api
         alerta = {
