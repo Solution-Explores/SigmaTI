@@ -50,6 +50,9 @@ continua descartando o ciclo, preservando a reserva de threads lentas.
 A atomicidade agrupa as falhas: se uma medição inválida ou um evento falhar,
 o lote inteiro é revertido e os seus futures falham. Não há confirmação parcial
 nem retry automático ilimitado. A memória em voo não é fila durável.
+O mesmo vale para um alvo que deixe de existir entre a sonda e o commit: o
+`KeyError` descarta as até 32 medições do lote, não apenas a dele. Hoje não há
+remoção de alvos (o `PATCH` só desativa); se ela for criada, isolar esse caso.
 
 O pipeline utiliza a conexão Psycopg da transação SQLAlchemy existente; o
 adaptador não emite commit antecipado. A biblioteca binária fixada nas
