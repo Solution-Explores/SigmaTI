@@ -101,3 +101,45 @@ def test_non_ascii_hash_is_invalid_instead_of_crashing(tmp_path):
     row['hash'] = '\u2603'
     path.write_text(json.dumps(row) + '\n', encoding='utf-8')
     assert audit.verificar() == (False, 0)
+
+
+def test_invalid_utf8_is_reported_as_tampering_instead_of_crashing(tmp_path):
+    path = tmp_path / 'audit.jsonl'
+    audit = AuditChain(path)
+    audit.registrar('test', 'first')
+    with path.open('ab') as fh:
+        fh.write(b'\xff\xfe\n')
+    assert AuditChain(path).resumo() == {'integra': False, 'primeira_invalida': 1, 'entradas': 2}
+    with pytest.raises(ValueError, match='inválida'):
+        audit.registrar('test', 'refused')
+
+
+def test_unlock_failure_does_not_mask_original_error(tmp_path, monkeypatch):
+    from sigma_eng import audit_chain
+    path = tmp_path / 'audit.jsonl'
+    audit = AuditChain(path)
+    if os.name == 'nt':
+        import msvcrt
+        real = msvcrt.locking
+
+        def locking(fd, mode, nbytes):
+            if mode == msvcrt.LK_UNLCK:
+                raise OSError('unlock failed')
+            return real(fd, mode, nbytes)
+        monkeypatch.setattr(msvcrt, 'locking', locking)
+    else:
+        import fcntl
+        real = fcntl.flock
+
+        def flock(fd, op):
+            if op == fcntl.LOCK_UN:
+                raise OSError('unlock failed')
+            return real(fd, op)
+        monkeypatch.setattr(fcntl, 'flock', flock)
+    with pytest.raises(KeyError):
+        with audit._coordenar():
+            raise KeyError('original')
+    monkeypatch.undo()
+    # O close() liberou o lock: outra instância grava sem esperar o timeout.
+    monkeypatch.setattr(audit_chain, 'LOCK_TIMEOUT_SECONDS', 0)
+    AuditChain(path).registrar('test', 'after')

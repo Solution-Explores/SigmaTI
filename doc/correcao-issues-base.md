@@ -42,6 +42,21 @@ público genérico, sem copiar detalhes da exceção.
 - Se a confirmação da gravação falhar após bytes terem sido escritos, o cliente
   recebe erro; não se promete exatamente uma vez de eventos sob falha de I/O.
 - O JSONL e os eventos operacionais transacionais PostgreSQL são trilhas distintas.
+- Linha ilegível (JSON truncado por queda no meio da gravação ou byte UTF-8
+  inválido) é reportada por `/api/eng/auditoria/verificar` como
+  `integra: false` com `primeira_invalida`, sem erro 500. Enquanto isso, toda
+  gravação é recusada: login e logout respondem 500 e o envio à IA bloqueado
+  pelo sanitizer permanece bloqueado. Recuperação: parar os escritores,
+  preservar uma cópia íntegra do arquivo (hash anotado), identificar a linha
+  pelo índice reportado e decidir com o responsável; nunca editar a cópia
+  preservada nem reconstruir hashes. Se a linha final truncada for removida da
+  trilha ativa, registrar o fato e a cópia preservada como evidência.
+- A espera pelo lock (até 10 s) é síncrona. Em `POST /api/alertas`, a
+  anonimização e sua auditoria rodam em `asyncio.to_thread`, fora do event loop,
+  para não congelar SSE e coleta. Novos chamadores assíncronos devem fazer o mesmo.
+- O padrão `resultados/audit.jsonl` relativo em `sigma_eng.api.create_router`
+  vale só para o pacote usado isoladamente, sem `auditoria=`. A aplicação
+  (`main.py`) sempre injeta a instância com o caminho canônico acima.
 
 ## #7 e #14
 

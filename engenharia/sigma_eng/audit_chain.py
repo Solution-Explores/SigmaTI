@@ -76,12 +76,15 @@ class AuditChain:
                         time.sleep(0.01)
                 try:
                     if self.caminho.exists():
-                        with self.caminho.open(encoding="utf-8") as stream:
+                        # Binário + decodificação por linha: byte UTF-8 inválido
+                        # vira entrada inválida e a verificação o reporta, em vez
+                        # de lançar UnicodeDecodeError e derrubar o endpoint.
+                        with self.caminho.open("rb") as stream:
                             self._entradas = []
                             for line in stream:
                                 if line.strip():
                                     try:
-                                        row = json.loads(line)
+                                        row = json.loads(line.decode("utf-8"))
                                     except ValueError:
                                         row = {}
                                     self._entradas.append(row if isinstance(row, dict) else {})
@@ -89,11 +92,16 @@ class AuditChain:
                         self._entradas = []
                     yield
                 finally:
-                    lock.seek(0)
-                    if os.name == "nt":
-                        msvcrt.locking(lock.fileno(), msvcrt.LK_UNLCK, 1)
-                    else:
-                        fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
+                    # Falha no unlock não deve mascarar a exceção original;
+                    # o close() do handle libera o bloqueio de qualquer forma.
+                    try:
+                        lock.seek(0)
+                        if os.name == "nt":
+                            msvcrt.locking(lock.fileno(), msvcrt.LK_UNLCK, 1)
+                        else:
+                            fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
+                    except OSError:
+                        pass
 
     def __bool__(self) -> bool:
         return True

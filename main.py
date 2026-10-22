@@ -160,7 +160,9 @@ async def receber_alerta(
 ):
     # 1. Aplica a anonimização irreversível e fail-closed (Conformidade com a LGPD - RF05)
     equipamento_categorizado = categorizar_equipamento(alerta.equipamento)
-    erro_anonimizado = anonimizar_dados(alerta.descricao_erro)
+    # Em bloqueio, a auditoria espera o lock do arquivo (até 10 s) e faz fsync;
+    # executar fora do event loop para não congelar SSE e coleta.
+    erro_anonimizado = await asyncio.to_thread(anonimizar_dados, alerta.descricao_erro)
     
     prompt_enviado = f"Equipamento: {equipamento_categorizado} | Erro: {erro_anonimizado}. Forneça um diagnóstico de rede curto e direto."
     

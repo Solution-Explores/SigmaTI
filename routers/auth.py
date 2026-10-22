@@ -106,6 +106,8 @@ def login(dados: LoginIn, request: Request) -> dict:
 
 @router.post("/logout", response_model=LogoutOut)
 def logout(usuario: Usuario = Depends(obter_usuario_atual), authorization: str = Header(...)) -> dict:
+    # Revoga antes de auditar (falha segura): se a auditoria estiver
+    # indisponível, o cliente recebe 500, mas o token já não vale mais.
     revogar_token(authorization.split(" ", 1)[1].strip())
     obter_auditor().registrar(
         ator=usuario.username,
