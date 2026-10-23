@@ -4,8 +4,8 @@ Data: 19/10/2026. Base testada: `dev@142efd2`.
 
 Referências: [K09](https://trello.com/c/KfknLcok),
 [K10](https://trello.com/c/z1CLDzjj), [issue #4](https://github.com/Solution-Explores/SigmaTI/issues/4),
-[roteiro K08](../../doc/instalacao-desenvolvimento.md) e
-[fluxo do TCC](../../doc/fluxo-de-trabalho-tcc.md).
+[roteiro K08](../../docs/guias/instalacao.md) e
+[fluxo do TCC](../../docs/guias/fluxo-de-trabalho-tcc.md).
 
 ## Objetivo e execução
 

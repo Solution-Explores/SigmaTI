@@ -10,4 +10,4 @@ python3 -c 'import sys; assert sys.version_info >= (3,12), "Python 3.12+ obrigat
 .venv/bin/python -m pip install -r requirements.txt
 .venv/bin/python -m pip check
 .venv/bin/python -m alembic upgrade head
-printf '%s\n' 'API/coleta instalada e migrada. Cadastre o gestor e siga doc/backup-restauracao.md.'
+printf '%s\n' 'API/coleta instalada e migrada. Cadastre o gestor e siga docs/guias/backup-restauracao.md.'

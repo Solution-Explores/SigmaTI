@@ -59,7 +59,7 @@ As verificações técnicas do escopo de demonstração passaram após as corre�
 O PR pode seguir para revisão da equipe quando o CI do novo commit confirmar
 os resultados. Não há aprovação de integração nesta revisão técnica.
 
-O [fluxo do repositório](../../doc/fluxo-de-trabalho-tcc.md) exige:
+O [fluxo do repositório](../../docs/guias/fluxo-de-trabalho-tcc.md) exige:
 “Peça revisão a outro integrante” e “não dispensa os testes nem a aprovação do colega”.
 A aprovação de outro integrante continua pendente; `dev` e `main` não foram alteradas.
 Após aprovação, validar o conjunto integrado na `dev` antes da `main`.

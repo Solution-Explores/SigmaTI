@@ -55,7 +55,7 @@ roteador, HTTPException, 500 com CORS, logs seguros, contrato K05 e OpenAPI.
 
 Consulte [evidências](evidencias.md) e [atividades](tasks.md). Revisão por outro
 integrante, aprovação e validação conjunta na `dev` antecedem qualquer integração
-à `main`, conforme o [fluxo do TCC](../../doc/fluxo-de-trabalho-tcc.md).
+à `main`, conforme o [fluxo do TCC](../../docs/guias/fluxo-de-trabalho-tcc.md).
 
 ## Referências
 

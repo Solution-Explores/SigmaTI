@@ -1,0 +1,5898 @@
+{
+  "file": "sigma-fluxos.figcraft",
+  "frames": {
+    "library": {
+      "ref": {
+        "$step": 29
+      },
+      "title": "Biblioteca · Componentes e tokens",
+      "page": "00 · Biblioteca",
+      "width": 1440,
+      "height": 1080,
+      "role": "",
+      "dark": false,
+      "id": 2
+    },
+    "map": {
+      "ref": {
+        "$step": 146
+      },
+      "title": "Comece aqui · Fluxos e escopo",
+      "page": "01 · Comece aqui",
+      "width": 1440,
+      "height": 1080,
+      "role": "",
+      "dark": false,
+      "id": 39
+    },
+    "login": {
+      "ref": {
+        "$step": 214
+      },
+      "title": "Acesso da equipe de TI",
+      "page": "02 · Acesso",
+      "width": 1440,
+      "height": 960,
+      "role": "",
+      "dark": false,
+      "id": 69
+    },
+    "first-access": {
+      "ref": {
+        "$step": 272
+      },
+      "title": "Defina sua senha",
+      "page": "02 · Acesso",
+      "width": 1440,
+      "height": 960,
+      "role": "",
+      "dark": false,
+      "id": 93
+    },
+    "login-help": {
+      "ref": {
+        "$step": 332
+      },
+      "title": "Recuperar acesso",
+      "page": "02 · Acesso",
+      "width": 1440,
+      "height": 960,
+      "role": "",
+      "dark": false,
+      "id": 117
+    },
+    "login-error": {
+      "ref": {
+        "$step": 377
+      },
+      "title": "Acesso da equipe de TI",
+      "page": "02 · Acesso",
+      "width": 1440,
+      "height": 960,
+      "role": "",
+      "dark": false,
+      "id": 136
+    },
+    "overview-n1": {
+      "ref": {
+        "$step": 440
+      },
+      "title": "Visão geral",
+      "page": "03 · Operação",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 162
+    },
+    "overview-analyst": {
+      "ref": {
+        "$step": 656
+      },
+      "title": "Visão geral",
+      "page": "03 · Operação",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 245
+    },
+    "overview-manager": {
+      "ref": {
+        "$step": 879
+      },
+      "title": "Visão geral",
+      "page": "03 · Operação",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 331
+    },
+    "queue-n1": {
+      "ref": {
+        "$step": 1109
+      },
+      "title": "Incidentes",
+      "page": "03 · Operação",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 420
+    },
+    "queue-analyst": {
+      "ref": {
+        "$step": 1374
+      },
+      "title": "Incidentes",
+      "page": "03 · Operação",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 528
+    },
+    "queue-manager": {
+      "ref": {
+        "$step": 1651
+      },
+      "title": "Incidentes",
+      "page": "03 · Operação",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 641
+    },
+    "history": {
+      "ref": {
+        "$step": 1935
+      },
+      "title": "Histórico",
+      "page": "03 · Operação",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 757
+    },
+    "history-manager": {
+      "ref": {
+        "$step": 2189
+      },
+      "title": "Histórico",
+      "page": "03 · Operação",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 861
+    },
+    "incident-new": {
+      "ref": {
+        "$step": 2452
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 969
+    },
+    "incident-owned": {
+      "ref": {
+        "$step": 2647
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 1047
+    },
+    "incident-logged": {
+      "ref": {
+        "$step": 2854
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 1131
+    },
+    "incident-escalated": {
+      "ref": {
+        "$step": 3072
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 1219
+    },
+    "incident-analyst": {
+      "ref": {
+        "$step": 3287
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 1303
+    },
+    "incident-validation": {
+      "ref": {
+        "$step": 3510
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 1392
+    },
+    "incident-closed": {
+      "ref": {
+        "$step": 3736
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 1481
+    },
+    "incident-reopened": {
+      "ref": {
+        "$step": 3968
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 1572
+    },
+    "incident-ai-response": {
+      "ref": {
+        "$step": 4191
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 1661
+    },
+    "incident-ai-response-analyst": {
+      "ref": {
+        "$step": 4398
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 1745
+    },
+    "incident-ai-response-manager": {
+      "ref": {
+        "$step": 4621
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 1834
+    },
+    "incident-awaiting": {
+      "ref": {
+        "$step": 4851
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 1926
+    },
+    "incident-incoming": {
+      "ref": {
+        "$step": 5072
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 2012
+    },
+    "incident-manager": {
+      "ref": {
+        "$step": 5292
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 2099
+    },
+    "incident-validation-manager": {
+      "ref": {
+        "$step": 5522
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 2191
+    },
+    "incident-closed-manager": {
+      "ref": {
+        "$step": 5755
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "04 · Atendimento",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 2283
+    },
+    "action-form": {
+      "ref": {
+        "$step": 5996
+      },
+      "title": "Registrar ação",
+      "page": "05 · Ações e evidências",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 2378
+    },
+    "escalation-form": {
+      "ref": {
+        "$step": 6123
+      },
+      "title": "Escalar para analista",
+      "page": "05 · Ações e evidências",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 2430
+    },
+    "validation-form": {
+      "ref": {
+        "$step": 6253
+      },
+      "title": "Solicitar validação",
+      "page": "05 · Ações e evidências",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 2483
+    },
+    "analyst-action-form": {
+      "ref": {
+        "$step": 6380
+      },
+      "title": "Registrar ação",
+      "page": "05 · Ações e evidências",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 2535
+    },
+    "resolution-form": {
+      "ref": {
+        "$step": 6514
+      },
+      "title": "Registrar resolução",
+      "page": "05 · Ações e evidências",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 2590
+    },
+    "reopen-form": {
+      "ref": {
+        "$step": 6657
+      },
+      "title": "Reabrir incidente",
+      "page": "05 · Ações e evidências",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 2648
+    },
+    "resolution-form-manager": {
+      "ref": {
+        "$step": 6785
+      },
+      "title": "Registrar resolução",
+      "page": "05 · Ações e evidências",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 2701
+    },
+    "reopen-form-manager": {
+      "ref": {
+        "$step": 6935
+      },
+      "title": "Reabrir incidente",
+      "page": "05 · Ações e evidências",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 2762
+    },
+    "manager-action-form": {
+      "ref": {
+        "$step": 7070
+      },
+      "title": "Registrar ação",
+      "page": "05 · Ações e evidências",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 2818
+    },
+    "evidence": {
+      "ref": {
+        "$step": 7211
+      },
+      "title": "Evidências do incidente",
+      "page": "05 · Ações e evidências",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 2876
+    },
+    "evidence-manager": {
+      "ref": {
+        "$step": 7401
+      },
+      "title": "Evidências do incidente",
+      "page": "05 · Ações e evidências",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 2954
+    },
+    "generalized": {
+      "ref": {
+        "$step": 7598
+      },
+      "title": "Conteúdo generalizado",
+      "page": "05 · Ações e evidências",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 3035
+    },
+    "generalized-analyst": {
+      "ref": {
+        "$step": 7703
+      },
+      "title": "Conteúdo generalizado",
+      "page": "05 · Ações e evidências",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 3079
+    },
+    "generalized-manager": {
+      "ref": {
+        "$step": 7815
+      },
+      "title": "Conteúdo generalizado",
+      "page": "05 · Ações e evidências",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 3126
+    },
+    "devices-n1": {
+      "ref": {
+        "$step": 7936
+      },
+      "title": "Equipamentos",
+      "page": "06 · Equipamentos",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 3177
+    },
+    "device-n1": {
+      "ref": {
+        "$step": 8139
+      },
+      "title": "Switch de teste A",
+      "page": "06 · Equipamentos",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 3258
+    },
+    "devices-analyst": {
+      "ref": {
+        "$step": 8297
+      },
+      "title": "Equipamentos",
+      "page": "06 · Equipamentos",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 3321
+    },
+    "device-analyst": {
+      "ref": {
+        "$step": 8510
+      },
+      "title": "Switch de teste A",
+      "page": "06 · Equipamentos",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 3407
+    },
+    "devices-manager": {
+      "ref": {
+        "$step": 8683
+      },
+      "title": "Equipamentos",
+      "page": "06 · Equipamentos",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 3477
+    },
+    "device-manager": {
+      "ref": {
+        "$step": 8903
+      },
+      "title": "Switch de teste A",
+      "page": "06 · Equipamentos",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 3566
+    },
+    "device-form": {
+      "ref": {
+        "$step": 9083
+      },
+      "title": "Cadastrar equipamento",
+      "page": "06 · Equipamentos",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 3639
+    },
+    "device-form-manager": {
+      "ref": {
+        "$step": 9225
+      },
+      "title": "Cadastrar equipamento",
+      "page": "06 · Equipamentos",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 3696
+    },
+    "reports": {
+      "ref": {
+        "$step": 9376
+      },
+      "title": "Relatórios",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 3757
+    },
+    "users": {
+      "ref": {
+        "$step": 9585
+      },
+      "title": "Administração",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 3840
+    },
+    "user-detail": {
+      "ref": {
+        "$step": 9794
+      },
+      "title": "Usuário · Ana Lima",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 3927
+    },
+    "user-form": {
+      "ref": {
+        "$step": 9909
+      },
+      "title": "Criar ou editar usuário",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 3977
+    },
+    "sources": {
+      "ref": {
+        "$step": 10046
+      },
+      "title": "Origens e integrações",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 4032
+    },
+    "source-detail": {
+      "ref": {
+        "$step": 10245
+      },
+      "title": "Sonda de teste A",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 4115
+    },
+    "source-form": {
+      "ref": {
+        "$step": 10360
+      },
+      "title": "Cadastrar origem",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 4164
+    },
+    "rules": {
+      "ref": {
+        "$step": 10488
+      },
+      "title": "Regras de monitoramento",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 4216
+    },
+    "rule-form": {
+      "ref": {
+        "$step": 10663
+      },
+      "title": "Editar regra",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 4289
+    },
+    "rules-manager": {
+      "ref": {
+        "$step": 10802
+      },
+      "title": "Regras de monitoramento",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 4344
+    },
+    "rule-form-manager": {
+      "ref": {
+        "$step": 10984
+      },
+      "title": "Editar regra",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 4420
+    },
+    "health": {
+      "ref": {
+        "$step": 11130
+      },
+      "title": "Saúde do sistema",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 4478
+    },
+    "audit": {
+      "ref": {
+        "$step": 11362
+      },
+      "title": "Auditoria",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 4573
+    },
+    "lab": {
+      "ref": {
+        "$step": 11558
+      },
+      "title": "Laboratório",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 4654
+    },
+    "lab-result": {
+      "ref": {
+        "$step": 11730
+      },
+      "title": "Resultado da simulação",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 4724
+    },
+    "schedules": {
+      "ref": {
+        "$step": 11849
+      },
+      "title": "Agendamentos de relatórios",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 4774
+    },
+    "schedule-form": {
+      "ref": {
+        "$step": 11996
+      },
+      "title": "Configurar agendamento",
+      "page": "07 · Gestão e administração",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 4836
+    },
+    "disable-user": {
+      "ref": {
+        "$step": 12144
+      },
+      "title": "Desativar Ana Lima?",
+      "page": "08 · Confirmações e conta",
+      "width": 640,
+      "height": 440,
+      "role": "manager",
+      "dark": false,
+      "id": 4895
+    },
+    "reset-user": {
+      "ref": {
+        "$step": 12160
+      },
+      "title": "Redefinir o acesso?",
+      "page": "08 · Confirmações e conta",
+      "width": 640,
+      "height": 440,
+      "role": "manager",
+      "dark": false,
+      "id": 4903
+    },
+    "rotate-key": {
+      "ref": {
+        "$step": 12176
+      },
+      "title": "Rotacionar a credencial?",
+      "page": "08 · Confirmações e conta",
+      "width": 640,
+      "height": 440,
+      "role": "manager",
+      "dark": false,
+      "id": 4911
+    },
+    "revoke-key": {
+      "ref": {
+        "$step": 12192
+      },
+      "title": "Revogar a credencial?",
+      "page": "08 · Confirmações e conta",
+      "width": 640,
+      "height": 440,
+      "role": "manager",
+      "dark": false,
+      "id": 4919
+    },
+    "export-ready": {
+      "ref": {
+        "$step": 12208
+      },
+      "title": "Exportação preparada",
+      "page": "08 · Confirmações e conta",
+      "width": 640,
+      "height": 440,
+      "role": "manager",
+      "dark": false,
+      "id": 4927
+    },
+    "account-n1": {
+      "ref": {
+        "$step": 12224
+      },
+      "title": "Minha conta",
+      "page": "08 · Confirmações e conta",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 4935
+    },
+    "account-analyst": {
+      "ref": {
+        "$step": 12341
+      },
+      "title": "Minha conta",
+      "page": "08 · Confirmações e conta",
+      "width": 1440,
+      "height": 960,
+      "role": "analyst",
+      "dark": false,
+      "id": 4983
+    },
+    "account-manager": {
+      "ref": {
+        "$step": 12465
+      },
+      "title": "Minha conta",
+      "page": "08 · Confirmações e conta",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 5034
+    },
+    "user-disabled": {
+      "ref": {
+        "$step": 12596
+      },
+      "title": "Usuário desativado",
+      "page": "08 · Confirmações e conta",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 5088
+    },
+    "user-reset": {
+      "ref": {
+        "$step": 12707
+      },
+      "title": "Acesso redefinido",
+      "page": "08 · Confirmações e conta",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 5135
+    },
+    "key-rotated": {
+      "ref": {
+        "$step": 12818
+      },
+      "title": "Credencial rotacionada",
+      "page": "08 · Confirmações e conta",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 5182
+    },
+    "key-revoked": {
+      "ref": {
+        "$step": 12929
+      },
+      "title": "Credencial revogada",
+      "page": "08 · Confirmações e conta",
+      "width": 1440,
+      "height": 960,
+      "role": "manager",
+      "dark": false,
+      "id": 5229
+    },
+    "states": {
+      "ref": {
+        "$step": 13042
+      },
+      "title": "Estados e exceções",
+      "page": "09 · Estados e exceções",
+      "width": 1440,
+      "height": 1080,
+      "role": "",
+      "dark": false,
+      "id": 5277
+    },
+    "empty-active": {
+      "ref": {
+        "$step": 13158
+      },
+      "title": "Incidentes",
+      "page": "09 · Estados e exceções",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 5325
+    },
+    "empty-search": {
+      "ref": {
+        "$step": 13308
+      },
+      "title": "Incidentes",
+      "page": "09 · Estados e exceções",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 5385
+    },
+    "load-error": {
+      "ref": {
+        "$step": 13458
+      },
+      "title": "Incidentes",
+      "page": "09 · Estados e exceções",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 5445
+    },
+    "ai-unavailable": {
+      "ref": {
+        "$step": 13608
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "09 · Estados e exceções",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 5505
+    },
+    "ai-blocked": {
+      "ref": {
+        "$step": 13808
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "09 · Estados e exceções",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 5587
+    },
+    "ai-loading": {
+      "ref": {
+        "$step": 14008
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "09 · Estados e exceções",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 5669
+    },
+    "stale": {
+      "ref": {
+        "$step": 14208
+      },
+      "title": "Coleta interrompida",
+      "page": "09 · Estados e exceções",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 5751
+    },
+    "conflict": {
+      "ref": {
+        "$step": 14328
+      },
+      "title": "Bruno Reis já assumiu este incidente",
+      "page": "09 · Estados e exceções",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 5802
+    },
+    "save-error": {
+      "ref": {
+        "$step": 14425
+      },
+      "title": "Não foi possível salvar a ação",
+      "page": "09 · Estados e exceções",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 5843
+    },
+    "session-expired": {
+      "ref": {
+        "$step": 14531
+      },
+      "title": "Sua sessão expirou",
+      "page": "09 · Estados e exceções",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 5887
+    },
+    "overview-dark": {
+      "ref": {
+        "$step": 14630
+      },
+      "title": "Visão geral",
+      "page": "10 · Responsivo e tema escuro",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": true,
+      "id": 5929
+    },
+    "incident-dark": {
+      "ref": {
+        "$step": 14847
+      },
+      "title": "INC-008 · Perda de pacotes",
+      "page": "10 · Responsivo e tema escuro",
+      "width": 1440,
+      "height": 960,
+      "role": "n1",
+      "dark": true,
+      "id": 6012
+    },
+    "mobile-summary": {
+      "ref": {
+        "$step": 15055
+      },
+      "title": "Incidente · 375px · Resumo",
+      "page": "10 · Responsivo e tema escuro",
+      "width": 375,
+      "height": 1000,
+      "role": "n1",
+      "dark": false,
+      "id": 6096
+    },
+    "mobile-activity": {
+      "ref": {
+        "$step": 15129
+      },
+      "title": "Incidente · 375px · Atividade",
+      "page": "10 · Responsivo e tema escuro",
+      "width": 375,
+      "height": 1000,
+      "role": "n1",
+      "dark": false,
+      "id": 6127
+    },
+    "mobile-ai": {
+      "ref": {
+        "$step": 15197
+      },
+      "title": "Incidente · 375px · IA",
+      "page": "10 · Responsivo e tema escuro",
+      "width": 375,
+      "height": 1000,
+      "role": "n1",
+      "dark": false,
+      "id": 6155
+    },
+    "mobile-dark": {
+      "ref": {
+        "$step": 15277
+      },
+      "title": "Incidente · 375px · Resumo · Escuro",
+      "page": "10 · Responsivo e tema escuro",
+      "width": 375,
+      "height": 1000,
+      "role": "n1",
+      "dark": true,
+      "id": 6187
+    },
+    "tablet": {
+      "ref": {
+        "$step": 15352
+      },
+      "title": "Incidente · 768px · Resumo",
+      "page": "10 · Responsivo e tema escuro",
+      "width": 768,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 6218
+    },
+    "tablet-dark": {
+      "ref": {
+        "$step": 15426
+      },
+      "title": "Incidente · 768px · Resumo · Escuro",
+      "page": "10 · Responsivo e tema escuro",
+      "width": 768,
+      "height": 960,
+      "role": "n1",
+      "dark": true,
+      "id": 6249
+    },
+    "desktop-small": {
+      "ref": {
+        "$step": 15501
+      },
+      "title": "Incidente · 1024px · Resumo",
+      "page": "10 · Responsivo e tema escuro",
+      "width": 1024,
+      "height": 960,
+      "role": "n1",
+      "dark": false,
+      "id": 6280
+    },
+    "desktop-small-dark": {
+      "ref": {
+        "$step": 15591
+      },
+      "title": "Incidente · 1024px · Resumo · Escuro",
+      "page": "10 · Responsivo e tema escuro",
+      "width": 1024,
+      "height": 960,
+      "role": "n1",
+      "dark": true,
+      "id": 6317
+    },
+    "mobile-action-form": {
+      "ref": {
+        "$step": 15682
+      },
+      "title": "Registrar ação",
+      "page": "10 · Responsivo e tema escuro",
+      "width": 375,
+      "height": 1000,
+      "role": "n1",
+      "dark": false,
+      "id": 6354
+    },
+    "mobile-escalation-form": {
+      "ref": {
+        "$step": 15713
+      },
+      "title": "Escalar para analista",
+      "page": "10 · Responsivo e tema escuro",
+      "width": 375,
+      "height": 1000,
+      "role": "n1",
+      "dark": false,
+      "id": 6367
+    },
+    "mobile-logged": {
+      "ref": {
+        "$step": 15744
+      },
+      "title": "Ação registrada",
+      "page": "10 · Responsivo e tema escuro",
+      "width": 375,
+      "height": 1000,
+      "role": "n1",
+      "dark": false,
+      "id": 6380
+    },
+    "mobile-escalated": {
+      "ref": {
+        "$step": 15764
+      },
+      "title": "Encaminhado ao analista",
+      "page": "10 · Responsivo e tema escuro",
+      "width": 375,
+      "height": 1000,
+      "role": "n1",
+      "dark": false,
+      "id": 6389
+    }
+  },
+  "links": [
+    {
+      "fromStep": 166,
+      "to": "login",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 178,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 190,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 198,
+      "to": "states",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 201,
+      "to": "mobile-summary",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 204,
+      "to": "library",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 257,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 263,
+      "to": "login-help",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 267,
+      "to": "first-access",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 271,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 325,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 331,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 370,
+      "to": "login",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 376,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 423,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 429,
+      "to": "login-help",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 433,
+      "to": "first-access",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 437,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 455,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 462,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 469,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 486,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 504,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 524,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 536,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 548,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 583,
+      "to": "incident-new",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 653,
+      "to": "incident-awaiting",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 671,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 678,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 685,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 692,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 709,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 727,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 747,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 759,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 771,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 806,
+      "to": "incident-incoming",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 876,
+      "to": "incident-validation",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 894,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 901,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 908,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 915,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 922,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 939,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 957,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 977,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 989,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1001,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1036,
+      "to": "incident-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1106,
+      "to": "incident-validation-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1124,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1131,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1138,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1155,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1173,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1195,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1202,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1207,
+      "to": "incident-awaiting",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1260,
+      "to": "incident-new",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1371,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1389,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1396,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1403,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1410,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1427,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1445,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1467,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1474,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1479,
+      "to": "incident-validation",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1484,
+      "to": "history",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1537,
+      "to": "incident-incoming",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1648,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1666,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1673,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1680,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1687,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1694,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1711,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1729,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1751,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1758,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1763,
+      "to": "incident-validation-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1768,
+      "to": "history-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1821,
+      "to": "incident-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1932,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1950,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1957,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1964,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1971,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 1988,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2006,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2028,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2033,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2038,
+      "to": "incident-validation",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2043,
+      "to": "history",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2098,
+      "to": "incident-closed",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2186,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2204,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2211,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2218,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2225,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2232,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2249,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2267,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2289,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2294,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2299,
+      "to": "incident-validation-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2304,
+      "to": "history-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2359,
+      "to": "incident-closed-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2447,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2467,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2474,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2481,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2498,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2516,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2539,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2572,
+      "to": "incident-new",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2579,
+      "to": "incident-new",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2608,
+      "to": "incident-owned",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2640,
+      "to": "incident-ai-response",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2646,
+      "to": "generalized",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2662,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2669,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2676,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2693,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2711,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2734,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2767,
+      "to": "incident-owned",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2774,
+      "to": "incident-owned",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2809,
+      "to": "action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2812,
+      "to": "escalation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2815,
+      "to": "validation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2847,
+      "to": "incident-ai-response",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2853,
+      "to": "generalized",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2869,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2876,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2883,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2900,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2918,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2941,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2974,
+      "to": "incident-logged",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 2981,
+      "to": "incident-logged",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3022,
+      "to": "action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3025,
+      "to": "escalation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3028,
+      "to": "validation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3060,
+      "to": "incident-ai-response",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3066,
+      "to": "generalized",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3087,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3094,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3101,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3118,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3136,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3159,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3192,
+      "to": "incident-escalated",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3199,
+      "to": "incident-escalated",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3280,
+      "to": "incident-ai-response",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3286,
+      "to": "generalized",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3302,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3309,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3316,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3323,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3340,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3358,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3381,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3414,
+      "to": "incident-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3421,
+      "to": "evidence",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3468,
+      "to": "analyst-action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3471,
+      "to": "incident-validation",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3503,
+      "to": "incident-ai-response-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3509,
+      "to": "generalized-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3525,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3532,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3539,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3546,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3563,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3581,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3604,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3637,
+      "to": "incident-validation",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3644,
+      "to": "evidence",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3697,
+      "to": "resolution-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3729,
+      "to": "incident-ai-response-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3735,
+      "to": "generalized-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3751,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3758,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3765,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3772,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3789,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3807,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3830,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3863,
+      "to": "incident-closed",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3870,
+      "to": "evidence",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3929,
+      "to": "reopen-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3961,
+      "to": "incident-ai-response-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3967,
+      "to": "generalized-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3983,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3990,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 3997,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4004,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4021,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4039,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4062,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4095,
+      "to": "incident-reopened",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4102,
+      "to": "evidence",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4149,
+      "to": "analyst-action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4152,
+      "to": "incident-validation",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4184,
+      "to": "incident-ai-response-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4190,
+      "to": "generalized-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4206,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4213,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4220,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4237,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4255,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4278,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4311,
+      "to": "incident-ai-response",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4318,
+      "to": "incident-ai-response",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4353,
+      "to": "action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4356,
+      "to": "escalation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4359,
+      "to": "validation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4391,
+      "to": "incident-ai-response",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4397,
+      "to": "generalized",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4413,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4420,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4427,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4434,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4451,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4469,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4492,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4525,
+      "to": "incident-ai-response-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4532,
+      "to": "evidence",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4579,
+      "to": "analyst-action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4582,
+      "to": "incident-validation",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4614,
+      "to": "incident-ai-response-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4620,
+      "to": "generalized-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4636,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4643,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4650,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4657,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4664,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4681,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4699,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4722,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4755,
+      "to": "incident-ai-response-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4762,
+      "to": "evidence-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4809,
+      "to": "manager-action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4812,
+      "to": "incident-validation-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4844,
+      "to": "incident-ai-response-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4850,
+      "to": "generalized-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4866,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4873,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4880,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4897,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4915,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4938,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4971,
+      "to": "incident-awaiting",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 4978,
+      "to": "incident-awaiting",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5065,
+      "to": "incident-ai-response",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5071,
+      "to": "generalized",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5087,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5094,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5101,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5108,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5125,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5143,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5166,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5199,
+      "to": "incident-incoming",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5206,
+      "to": "evidence",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5253,
+      "to": "incident-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5285,
+      "to": "incident-ai-response-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5291,
+      "to": "generalized-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5307,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5314,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5321,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5328,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5335,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5352,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5370,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5393,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5426,
+      "to": "incident-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5433,
+      "to": "evidence-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5480,
+      "to": "manager-action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5483,
+      "to": "incident-validation-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5515,
+      "to": "incident-ai-response-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5521,
+      "to": "generalized-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5537,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5544,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5551,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5558,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5565,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5582,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5600,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5623,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5656,
+      "to": "incident-validation-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5663,
+      "to": "evidence-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5716,
+      "to": "resolution-form-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5748,
+      "to": "incident-ai-response-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5754,
+      "to": "generalized-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5770,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5777,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5784,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5791,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5798,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5815,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5833,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5856,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5889,
+      "to": "incident-closed-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5896,
+      "to": "evidence-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5955,
+      "to": "reopen-form-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5987,
+      "to": "incident-ai-response-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 5993,
+      "to": "generalized-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6011,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6018,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6025,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6042,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6060,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6083,
+      "to": "incident-owned",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6108,
+      "to": "incident-logged",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6111,
+      "to": "incident-owned",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6138,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6145,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6152,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6169,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6187,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6210,
+      "to": "incident-owned",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6238,
+      "to": "incident-escalated",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6241,
+      "to": "incident-owned",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6268,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6275,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6282,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6299,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6317,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6340,
+      "to": "incident-owned",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6365,
+      "to": "incident-awaiting",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6368,
+      "to": "incident-owned",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6395,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6402,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6409,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6416,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6433,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6451,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6474,
+      "to": "incident-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6499,
+      "to": "incident-validation",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6502,
+      "to": "incident-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6529,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6536,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6543,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6550,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6567,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6585,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6608,
+      "to": "incident-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6642,
+      "to": "incident-closed",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6645,
+      "to": "incident-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6672,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6679,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6686,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6693,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6710,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6728,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6751,
+      "to": "incident-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6770,
+      "to": "incident-reopened",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6773,
+      "to": "incident-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6800,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6807,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6814,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6821,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6828,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6845,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6863,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6886,
+      "to": "incident-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6920,
+      "to": "incident-closed-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6923,
+      "to": "incident-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6950,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6957,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6964,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6971,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6978,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 6995,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7013,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7036,
+      "to": "incident-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7055,
+      "to": "incident-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7058,
+      "to": "incident-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7085,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7092,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7099,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7106,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7113,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7130,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7148,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7171,
+      "to": "incident-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7196,
+      "to": "incident-validation-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7199,
+      "to": "incident-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7226,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7233,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7240,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7247,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7264,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7282,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7304,
+      "to": "incident-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7309,
+      "to": "evidence",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7398,
+      "to": "incident-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7416,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7423,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7430,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7437,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7444,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7461,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7479,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7501,
+      "to": "incident-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7506,
+      "to": "evidence-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7595,
+      "to": "incident-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7613,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7620,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7627,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7644,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7662,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7700,
+      "to": "incident-owned",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7718,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7725,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7732,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7739,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7756,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7774,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7812,
+      "to": "incident-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7830,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7837,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7844,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7851,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7858,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7875,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7893,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7931,
+      "to": "incident-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7951,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7958,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7965,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 7982,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8000,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8057,
+      "to": "device-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8154,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8161,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8168,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8185,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8203,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8225,
+      "to": "device-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8232,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8294,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8312,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8319,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8326,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8333,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8350,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8368,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8415,
+      "to": "device-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8428,
+      "to": "device-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8525,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8532,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8539,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8546,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8563,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8581,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8603,
+      "to": "device-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8610,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8615,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8677,
+      "to": "device-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8680,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8698,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8705,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8712,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8719,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8726,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8743,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8761,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8808,
+      "to": "device-form-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8821,
+      "to": "device-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8918,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8925,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8932,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8939,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8946,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8963,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 8981,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9003,
+      "to": "device-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9010,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9015,
+      "to": "rules-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9077,
+      "to": "device-form-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9080,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9098,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9105,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9112,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9119,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9136,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9154,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9219,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9222,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9240,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9247,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9254,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9261,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9268,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9285,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9303,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9368,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9371,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9391,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9398,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9405,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9412,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9419,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9436,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9454,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9492,
+      "to": "schedules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9576,
+      "to": "history-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9579,
+      "to": "export-ready",
+      "kind": "openOverlay"
+    },
+    {
+      "fromStep": 9582,
+      "to": "export-ready",
+      "kind": "openOverlay"
+    },
+    {
+      "fromStep": 9600,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9607,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9614,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9621,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9628,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9645,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9663,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9685,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9692,
+      "to": "sources",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9697,
+      "to": "rules-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9702,
+      "to": "health",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9707,
+      "to": "audit",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9712,
+      "to": "lab",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9717,
+      "to": "user-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9730,
+      "to": "user-detail",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9809,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9816,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9823,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9830,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9837,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9854,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9872,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9900,
+      "to": "user-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9903,
+      "to": "reset-user",
+      "kind": "openOverlay"
+    },
+    {
+      "fromStep": 9906,
+      "to": "disable-user",
+      "kind": "openOverlay"
+    },
+    {
+      "fromStep": 9924,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9931,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9938,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9945,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9952,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9969,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 9987,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10043,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10061,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10068,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10075,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10082,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10089,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10106,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10124,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10146,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10151,
+      "to": "sources",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10158,
+      "to": "rules-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10163,
+      "to": "health",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10168,
+      "to": "audit",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10173,
+      "to": "lab",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10178,
+      "to": "source-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10209,
+      "to": "source-detail",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10260,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10267,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10274,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10281,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10288,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10305,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10323,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10354,
+      "to": "rotate-key",
+      "kind": "openOverlay"
+    },
+    {
+      "fromStep": 10357,
+      "to": "revoke-key",
+      "kind": "openOverlay"
+    },
+    {
+      "fromStep": 10375,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10382,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10389,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10396,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10403,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10420,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10438,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10485,
+      "to": "sources",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10503,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10510,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10517,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10524,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10541,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10559,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10579,
+      "to": "rule-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10594,
+      "to": "rule-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10617,
+      "to": "rule-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10640,
+      "to": "rule-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10678,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10685,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10692,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10699,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10716,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10734,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10799,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10817,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10824,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10831,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10838,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10845,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10862,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10880,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10900,
+      "to": "rule-form-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10915,
+      "to": "rule-form-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10938,
+      "to": "rule-form-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10961,
+      "to": "rule-form-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 10999,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11006,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11013,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11020,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11027,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11044,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11062,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11127,
+      "to": "rules-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11145,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11152,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11159,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11166,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11173,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11190,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11208,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11230,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11235,
+      "to": "sources",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11240,
+      "to": "rules-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11245,
+      "to": "health",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11252,
+      "to": "audit",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11257,
+      "to": "lab",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11377,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11384,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11391,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11398,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11405,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11422,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11440,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11462,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11467,
+      "to": "sources",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11472,
+      "to": "rules-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11477,
+      "to": "health",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11482,
+      "to": "audit",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11489,
+      "to": "lab",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11573,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11580,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11587,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11594,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11601,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11618,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11636,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11658,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11663,
+      "to": "sources",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11668,
+      "to": "rules-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11673,
+      "to": "health",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11678,
+      "to": "audit",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11683,
+      "to": "lab",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11727,
+      "to": "lab-result",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11745,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11752,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11759,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11766,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11773,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11790,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11808,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11846,
+      "to": "lab",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11864,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11871,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11878,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11885,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11892,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11909,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11927,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11957,
+      "to": "schedule-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11975,
+      "to": "schedule-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 11993,
+      "to": "schedule-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12011,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12018,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12025,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12032,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12039,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12056,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12074,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12139,
+      "to": "schedules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12151,
+      "to": "user-disabled",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12154,
+      "to": "@close",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12167,
+      "to": "user-reset",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12170,
+      "to": "@close",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12183,
+      "to": "key-rotated",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12186,
+      "to": "@close",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12199,
+      "to": "key-revoked",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12202,
+      "to": "@close",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12215,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12218,
+      "to": "@close",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12239,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12246,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12253,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12270,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12288,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12335,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12338,
+      "to": "login",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12356,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12363,
+      "to": "queue-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12370,
+      "to": "devices-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12377,
+      "to": "rules",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12394,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12412,
+      "to": "account-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12459,
+      "to": "overview-analyst",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12462,
+      "to": "login",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12480,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12487,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12494,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12501,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12508,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12525,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12543,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12590,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12593,
+      "to": "login",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12611,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12618,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12625,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12632,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12639,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12656,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12674,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12704,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12722,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12729,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12736,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12743,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12750,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12767,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12785,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12815,
+      "to": "user-detail",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12833,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12840,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12847,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12854,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12861,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12878,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12896,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12926,
+      "to": "sources",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12944,
+      "to": "overview-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12951,
+      "to": "queue-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12958,
+      "to": "devices-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12965,
+      "to": "reports",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12972,
+      "to": "users",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 12989,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13007,
+      "to": "account-manager",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13037,
+      "to": "sources",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13059,
+      "to": "empty-active",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13071,
+      "to": "empty-search",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13083,
+      "to": "load-error",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13095,
+      "to": "ai-unavailable",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13107,
+      "to": "ai-blocked",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13119,
+      "to": "stale",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13131,
+      "to": "conflict",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13143,
+      "to": "save-error",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13155,
+      "to": "session-expired",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13173,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13180,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13187,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13204,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13222,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13244,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13251,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13256,
+      "to": "incident-awaiting",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13305,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13323,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13330,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13337,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13354,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13372,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13394,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13401,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13406,
+      "to": "incident-awaiting",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13455,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13473,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13480,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13487,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13504,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13522,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13544,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13551,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13556,
+      "to": "incident-awaiting",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13605,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13623,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13630,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13637,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13654,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13672,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13695,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13728,
+      "to": "ai-unavailable",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13735,
+      "to": "ai-unavailable",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13770,
+      "to": "action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13773,
+      "to": "escalation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13776,
+      "to": "validation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13801,
+      "to": "incident-owned",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13807,
+      "to": "generalized",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13823,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13830,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13837,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13854,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13872,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13895,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13928,
+      "to": "ai-blocked",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13935,
+      "to": "ai-blocked",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13970,
+      "to": "action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13973,
+      "to": "escalation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 13976,
+      "to": "validation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14001,
+      "to": "incident-owned",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14007,
+      "to": "generalized",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14023,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14030,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14037,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14054,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14072,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14095,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14128,
+      "to": "ai-loading",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14135,
+      "to": "ai-loading",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14170,
+      "to": "action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14173,
+      "to": "escalation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14176,
+      "to": "validation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14201,
+      "to": "incident-owned",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14207,
+      "to": "generalized",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14223,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14230,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14237,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14254,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14272,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14325,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14343,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14350,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14357,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14374,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14392,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14422,
+      "to": "incident-escalated",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14440,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14447,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14454,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14471,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14489,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14528,
+      "to": "action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14546,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14553,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14560,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14577,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14595,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14625,
+      "to": "login",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14646,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14653,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14660,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14677,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14695,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14715,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14727,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14739,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14774,
+      "to": "incident-new",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14844,
+      "to": "incident-awaiting",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14863,
+      "to": "overview-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14870,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14877,
+      "to": "devices-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14894,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14912,
+      "to": "account-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14935,
+      "to": "queue-n1",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14968,
+      "to": "incident-dark",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 14975,
+      "to": "incident-dark",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15010,
+      "to": "action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15013,
+      "to": "escalation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15016,
+      "to": "validation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15048,
+      "to": "incident-ai-response",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15054,
+      "to": "generalized",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15067,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15091,
+      "to": "mobile-summary",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15098,
+      "to": "mobile-activity",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15103,
+      "to": "mobile-ai",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15120,
+      "to": "mobile-action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15123,
+      "to": "mobile-escalation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15141,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15165,
+      "to": "mobile-summary",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15170,
+      "to": "mobile-activity",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15177,
+      "to": "mobile-ai",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15191,
+      "to": "mobile-action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15209,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15233,
+      "to": "mobile-summary",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15238,
+      "to": "mobile-activity",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15243,
+      "to": "mobile-ai",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15271,
+      "to": "mobile-ai",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15290,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15314,
+      "to": "mobile-summary",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15321,
+      "to": "mobile-activity",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15326,
+      "to": "mobile-ai",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15343,
+      "to": "mobile-action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15346,
+      "to": "mobile-escalation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15364,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15388,
+      "to": "mobile-summary",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15395,
+      "to": "mobile-activity",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15400,
+      "to": "mobile-ai",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15417,
+      "to": "mobile-action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15420,
+      "to": "mobile-escalation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15439,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15463,
+      "to": "mobile-summary",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15470,
+      "to": "mobile-activity",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15475,
+      "to": "mobile-ai",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15492,
+      "to": "mobile-action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15495,
+      "to": "mobile-escalation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15529,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15553,
+      "to": "mobile-summary",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15560,
+      "to": "mobile-activity",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15565,
+      "to": "mobile-ai",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15582,
+      "to": "mobile-action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15585,
+      "to": "mobile-escalation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15620,
+      "to": "map",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15644,
+      "to": "mobile-summary",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15651,
+      "to": "mobile-activity",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15656,
+      "to": "mobile-ai",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15673,
+      "to": "mobile-action-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15676,
+      "to": "mobile-escalation-form",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15707,
+      "to": "mobile-logged",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15710,
+      "to": "mobile-summary",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15738,
+      "to": "mobile-escalated",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15741,
+      "to": "mobile-summary",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15761,
+      "to": "mobile-activity",
+      "kind": "navigate"
+    },
+    {
+      "fromStep": 15781,
+      "to": "mobile-activity",
+      "kind": "navigate"
+    }
+  ],
+  "flows": [
+    [
+      "map",
+      "Comece aqui"
+    ],
+    [
+      "login",
+      "Suporte N1 · Triagem e encaminhamento"
+    ],
+    [
+      "overview-analyst",
+      "Analista · Verificar e encerrar"
+    ],
+    [
+      "overview-manager",
+      "Gestor · Indicadores e administração"
+    ]
+  ],
+  "commandCount": 16716
+}

@@ -12,4 +12,4 @@ Não preencher como aprovado com dois contêineres no mesmo host. Usuário escol
 - Nova escrita e avanço dos IDs sem colisão:
 - Evidências e resultado final:
 
-Guia: ../../doc/backup-restauracao.md. Não anexar dump, trilha bruta, chaves, tokens ou configurações reais ao GitHub/Trello. Somente após esse aceite conferir o primeiro critério da #25. O job smoke verde comprova apenas o segundo critério, no ambiente CI descrito.
+Guia: ../../docs/guias/backup-restauracao.md. Não anexar dump, trilha bruta, chaves, tokens ou configurações reais ao GitHub/Trello. Somente após esse aceite conferir o primeiro critério da #25. O job smoke verde comprova apenas o segundo critério, no ambiente CI descrito.

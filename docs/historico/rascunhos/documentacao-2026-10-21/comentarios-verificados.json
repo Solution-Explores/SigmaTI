@@ -1,0 +1,44 @@
+[
+  {
+    "number": 6,
+    "url": "https://github.com/Solution-Explores/SigmaTI/issues/6#issuecomment-6314605890",
+    "body": "## Situação em 21/10/2026\n[Certo] #6 está **validado em VM; aceite final em 23/10**, com a correção de auditoria no PR #43 (`8662ea9`), aberto e com CI verde.\nEvidência local: `rodada-2026-10-22b`: auditoria concorrente **7/7**; regressão do #43 **476/478**, com falhas no E2 de carga (depende do #44) e no teste temporal DNS. O candidato conjunto `ddd4840` passou **489/489**.\nPróximo passo: revisão independente por @iohanjheremy até **22/10 às 8h (UTC−4)**; @Vinny1313 trata achados e integra em 22/10, conforme o plano.\nAinda não houve revisão aprovada, merge do #43 ou aceite final no SHA da demo. Âncora externa e rotação HMAC pertencem à #13 e seguem pendentes.\r\n",
+    "author": "Vinny1313"
+  },
+  {
+    "number": 8,
+    "url": "https://github.com/Solution-Explores/SigmaTI/issues/8#issuecomment-6314606444",
+    "body": "## Situação em 21/10/2026\n[Certo] #8 está **validado em VM; aceite final em 23/10**: PR #44 (`ddd4840`), aberto, CI verde e ainda com alvo `fix/base-issues`.\nEvidências locais: `rodada-2026-10-22`, baseline `8cb1e23`: carga **0/5**; `rodada-2026-10-22b`, candidato: **5/5**, **489/489**, p95 queda→SSE **≤0,410 s**, atraso máximo **0,093396 s**, **0 erros** e **0 timeouts**. p95 mede as quedas sintéticas anteriores à janela da carga.\nPróximo passo: @Vinny1313 altera o alvo após integrar #43 em **22/10**; @iohanjheremy revisa #44 na noite de 22/10; integração e aceite por @Vinny1313 em **23/10**, com SHA congelado às **18h (UTC−4)**.\nAinda faltam revisão independente, integração, aceite e ensaios finais. São 200 alvos lógicos em loopback, sem homologação de equipamentos físicos ou operação prolongada.\r\n",
+    "author": "Vinny1313"
+  },
+  {
+    "number": 25,
+    "url": "https://github.com/Solution-Explores/SigmaTI/issues/25#issuecomment-6314607004",
+    "body": "## Situação em 21/10/2026\n[Certo] A restauração da #25 passou **17 verificações em VM no mesmo host**; **falta outra máquina física**, critério ainda aberto da issue.\nAs pastas `rodada-2026-10-22`, `rodada-2026-10-22b` e `rodada-2026-10-22c` preservaram o ambiente restaurado, mas **não repetiram o aceite de restauração**; as 17 verificações são do ensaio de 20/10, registrado no LEIA-ME do laboratório.\nPróximo passo: @Vinny1313 solicita ao orientador em **24/10** a decisão VM versus máquina física e agenda a validação restante para **03/11**, prazo proposto; revisão independente por @iohanjheremy.\nNão foram demonstrados recuperação após perda do computador físico, ativação systemd ou atualização em host real. A issue permanece aberta.\r\n",
+    "author": "Vinny1313"
+  },
+  {
+    "number": 5,
+    "url": "https://github.com/Solution-Explores/SigmaTI/issues/5#issuecomment-6314607480",
+    "body": "## Situação em 21/10/2026\n[Certo] #5 tem implementação parcial integrada, mas os critérios completos de anonimização e novos casos adversariais continuam pendentes; não há PR aberto exclusivo para essa etapa.\nEvidência local: o candidato passou **489/489** em `rodada-2026-10-22b`; isso é regressão geral, **não comprova o aceite completo da #5** nem anonimização de dados reais. As rodadas usaram dados fictícios e IA simulada.\nPróximo passo: @Vinny1313 consolida a matriz de identificadores, falha injetada e relatório de recall/precisão; revisão por @iohanjheremy, com entrega proposta para **03/11**, sujeita ao orientador em 24/10.\nAinda não foram concluídos os critérios completos, a avaliação adversarial adicional ou validação com dados reais. A demonstração usa o corpus sintético avaliado.\r\n",
+    "author": "Vinny1313"
+  },
+  {
+    "number": 13,
+    "url": "https://github.com/Solution-Explores/SigmaTI/issues/13#issuecomment-6314607918",
+    "body": "## Situação em 21/10/2026\n[Certo] #13 permanece pendente: âncora externa, rotação HMAC preservando o histórico e verificação agendada não foram entregues pelo PR #43.\nEvidência local: `rodada-2026-10-22b` aprovou **7/7** testes de auditoria compartilhada do #43; esses testes comprovam concorrência local, **não os critérios da #13**.\nPróximo passo: @Vinny1313 planeja a implementação e os testes de remoção total/rotação, com revisão por @iohanjheremy e prazo proposto de **03/11**, a confirmar com o orientador em 24/10.\nAinda faltam a âncora fora da máquina, a rotação verificável, o job com alerta e a atualização do ADR 0002. Não há PR aberto exclusivo dessa entrega.\r\n",
+    "author": "Vinny1313"
+  },
+  {
+    "number": 43,
+    "url": "https://github.com/Solution-Explores/SigmaTI/pull/43#issuecomment-6314608476",
+    "body": "### Evidência da VM — atualização de 21/10/2026\n[Certo] Resultados locais, sem links inventados para os artefatos:\n\n| Versão | Regressão Python | Carga adicional de 200 alvos |\n|---|---:|---:|\n| `develop@8cb1e23` — `rodada-2026-10-22` | 464/467 | 0/5 |\n| #43 `8662ea9` — `rodada-2026-10-22b` | 476/478; auditoria focada 7/7 | não repetida; E2 da suíte falhou |\n| Candidato `ddd4840` (#43 + #44) — `rodada-2026-10-22b` | **489/489** | **5/5**, mais validador explícito aprovado |\n\nNo candidato: p95 queda→SSE **≤0,410 s**, atraso máximo **0,093396 s**, **0 erros**, **0 timeouts** e nenhum aumento de `missed_*` na janela. p95 vem de 30 quedas sintéticas anteriores à janela de carga; ensaio curto, 200 alvos lógicos em loopback.\n\nTrês instabilidades anteriores aos PRs, separadas do aceite:\n- Provedor: baseline **9/10** na `rodada-2026-10-22c`; candidato **7/10** isolado na rodada 2. Timer de 14 s atrasou até **1,263 s** antes do cancelamento; não se isolou selector, scheduler ou hipervisor. Zero avisos de callback lento não descarta bloqueio.\n- Sonda: baseline **5/10**; candidato **26/30**, variante com `shutdown` **30/30** na rodada 3. Causa confirmada no teardown; branch remoto `fix/teste-sonda-instavel@3cca38d`, ainda sem PR.\n- DNS: falhou na suíte da baseline na rodada 1 e no #43 na rodada 2; candidato **10/10** isolado. Causa temporal ainda inconclusiva.\n\n**Validado em VM; aceite final em 23/10.** A revisão independente e a integração permanecem pendentes. As rodadas não são homologação externa.\n\nPróximo passo: @iohanjheremy revisa até **22/10 às 8h (UTC−4)**; @Vinny1313 trata achados e integra em 22/10. Esta tabela não atribui a correção da carga ao #43 isolado.\r\n",
+    "author": "Vinny1313"
+  },
+  {
+    "number": 44,
+    "url": "https://github.com/Solution-Explores/SigmaTI/pull/44#issuecomment-6314608988",
+    "body": "### Evidência da VM — atualização de 21/10/2026\n[Certo] Resultados locais, sem links inventados para os artefatos:\n\n| Versão | Regressão Python | Carga adicional de 200 alvos |\n|---|---:|---:|\n| `develop@8cb1e23` — `rodada-2026-10-22` | 464/467 | 0/5 |\n| #43 `8662ea9` — `rodada-2026-10-22b` | 476/478; auditoria focada 7/7 | não repetida; E2 da suíte falhou |\n| Candidato `ddd4840` (#43 + #44) — `rodada-2026-10-22b` | **489/489** | **5/5**, mais validador explícito aprovado |\n\nNo candidato: p95 queda→SSE **≤0,410 s**, atraso máximo **0,093396 s**, **0 erros**, **0 timeouts** e nenhum aumento de `missed_*` na janela. p95 vem de 30 quedas sintéticas anteriores à janela de carga; ensaio curto, 200 alvos lógicos em loopback.\n\nTrês instabilidades anteriores aos PRs, separadas do aceite:\n- Provedor: baseline **9/10** na `rodada-2026-10-22c`; candidato **7/10** isolado na rodada 2. Timer de 14 s atrasou até **1,263 s** antes do cancelamento; não se isolou selector, scheduler ou hipervisor. Zero avisos de callback lento não descarta bloqueio.\n- Sonda: baseline **5/10**; candidato **26/30**, variante com `shutdown` **30/30** na rodada 3. Causa confirmada no teardown; branch remoto `fix/teste-sonda-instavel@3cca38d`, ainda sem PR.\n- DNS: falhou na suíte da baseline na rodada 1 e no #43 na rodada 2; candidato **10/10** isolado. Causa temporal ainda inconclusiva.\n\n**Validado em VM; aceite final em 23/10.** A revisão independente e a integração permanecem pendentes. As rodadas não são homologação externa.\n\nPróximo passo: @Vinny1313 muda o alvo somente após a integração do #43 em **22/10**; @iohanjheremy revisa na noite de 22/10; integração e aceite em **23/10**, congelamento às **18h (UTC−4)**. Este comentário não altera o alvo do PR.\r\n",
+    "author": "Vinny1313"
+  }
+]

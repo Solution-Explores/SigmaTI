@@ -4,7 +4,7 @@ Data: 19/10/2026. Base: `dev@f4c2a5e`.
 
 Referências: [K08](https://trello.com/c/sTTArNVt),
 [K07](https://trello.com/c/D3LstOrT), [issue #4](https://github.com/Solution-Explores/SigmaTI/issues/4)
-e [fluxo de trabalho do TCC](../../doc/fluxo-de-trabalho-tcc.md).
+e [fluxo de trabalho do TCC](../../docs/guias/fluxo-de-trabalho-tcc.md).
 
 ## Escopo e plano
 

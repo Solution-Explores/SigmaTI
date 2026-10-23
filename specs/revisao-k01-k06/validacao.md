@@ -23,8 +23,8 @@ foi identificado como pendente em vez de apresentar comandos de instalação
 inexistentes. Não se criou uma imagem do SIGMA: a API/frontend ainda não estão
 conteinerizados nesta entrega, e o Compose referencia as imagens dos serviços.
 
-Consulte o [roteiro de migração](../../doc/migracao-volume-postgresql.md) e o
-[fluxo da equipe](../../doc/fluxo-de-trabalho-tcc.md). A autorização registrada
+Consulte o [roteiro de migração](../../docs/guias/migracao-volume-postgresql.md) e o
+[fluxo da equipe](../../docs/guias/fluxo-de-trabalho-tcc.md). A autorização registrada
 abrange esta entrega com resultados apresentados, sem assinatura forjada ou
 declaração de homologação operacional.
 

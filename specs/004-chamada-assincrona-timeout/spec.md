@@ -52,7 +52,7 @@ exceção, traceback, credenciais, prompt ou corpo bruto do provedor.
   validação completa K07, autenticação, revisão da anonimização e infraestrutura
   não foram ampliadas nesta tarefa. A issue #4 permanece aberta.
 - A equipe precisa indicar outro integrante para revisar e reproduzir os testes
-  antes da integração à `main`, conforme o [fluxo do TCC](../../doc/fluxo-de-trabalho-tcc.md).
+  antes da integração à `main`, conforme o [fluxo do TCC](../../docs/guias/fluxo-de-trabalho-tcc.md).
 
 ## Referências técnicas
 

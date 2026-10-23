@@ -1,0 +1,350 @@
+[
+  {
+    "title": "GUIA — Issues, PRs e fluxo do Kanban",
+    "url": "/c/RH2Ftdst/21-guia-issues-prs-e-fluxo-do-kanban"
+  },
+  {
+    "title": "ÉPICO #31 — Expansão: runbooks, IA e relatórios",
+    "url": "/c/fDovwdzt/31-%C3%A9pico-31-expans%C3%A3o-runbooks-ia-e-relat%C3%B3rios"
+  },
+  {
+    "title": "ÉPICO #31 — Experimentos e validações externas",
+    "url": "/c/fxR7XxOZ/32-%C3%A9pico-31-experimentos-e-valida%C3%A7%C3%B5es-externas"
+  },
+  {
+    "title": "ISSUE #46 — Custo da auditoria (não bloqueia a demo)",
+    "url": "/c/qAz30ebN/36-issue-46-custo-da-auditoria-n%C3%A3o-bloqueia-a-demo"
+  },
+  {
+    "title": "DS-35 · Joyce — Mostre responsabilidade e assunção [bloqueado]",
+    "url": "/c/rYUmaIVE/71-ds-35-joyce-mostre-responsabilidade-e-assun%C3%A7%C3%A3o-bloqueado"
+  },
+  {
+    "title": "DS-37 · Joyce — Apresente IA contextual [bloqueado]",
+    "url": "/c/Pf73WNDA/73-ds-37-joyce-apresente-ia-contextual-bloqueado"
+  },
+  {
+    "title": "DS-36 · Joyce — Apresente escalonamento [bloqueado]",
+    "url": "/c/DJttS1os/72-ds-36-joyce-apresente-escalonamento-bloqueado"
+  },
+  {
+    "title": "DS-38 · Joyce — Apresente relatórios disponíveis [bloqueado]",
+    "url": "/c/M7eo4Nbe/74-ds-38-joyce-apresente-relat%C3%B3rios-dispon%C3%ADveis-bloqueado"
+  },
+  {
+    "title": "DS-39 · Joyce — Apresente metadados de credenciais [bloqueado]",
+    "url": "/c/AiyXHizW/75-ds-39-joyce-apresente-metadados-de-credenciais-bloqueado"
+  },
+  {
+    "title": "DS-40 · Joyce — Apresente equipamentos cadastrados [bloqueado]",
+    "url": "/c/2XV8QxTt/76-ds-40-joyce-apresente-equipamentos-cadastrados-bloqueado"
+  },
+  {
+    "title": "DS-41 · Joyce — Apresente saúde global da coleta [bloqueado]",
+    "url": "/c/MnlBaqIF/77-ds-41-joyce-apresente-sa%C3%BAde-global-da-coleta-bloqueado"
+  },
+  {
+    "title": "DS-42 · Joyce — Apresente usuários [bloqueado]",
+    "url": "/c/CjY6dDrz/78-ds-42-joyce-apresente-usu%C3%A1rios-bloqueado"
+  },
+  {
+    "title": "API-01 — Planejar assunção concorrente [libera DS-35]",
+    "url": "/c/ncMdST2J/85-api-01-planejar-assun%C3%A7%C3%A3o-concorrente-libera-ds-35"
+  },
+  {
+    "title": "API-02 — Planejar escalonamento auditado [libera DS-36]",
+    "url": "/c/4SQR2pIs/86-api-02-planejar-escalonamento-auditado-libera-ds-36"
+  },
+  {
+    "title": "API-03 — Planejar IA contextual [libera DS-37]",
+    "url": "/c/nRdm4DCn/87-api-03-planejar-ia-contextual-libera-ds-37"
+  },
+  {
+    "title": "API-04 — Planejar relatórios reais [libera DS-38]",
+    "url": "/c/TzZ1BZZn/88-api-04-planejar-relat%C3%B3rios-reais-libera-ds-38"
+  },
+  {
+    "title": "API-05 — Planejar credenciais seguras [libera DS-39]",
+    "url": "/c/utUUoA5P/89-api-05-planejar-credenciais-seguras-libera-ds-39"
+  },
+  {
+    "title": "API-06 — Integrar alvos existentes ao cliente/mock [libera DS-40]",
+    "url": "/c/S42NwUye/90-api-06-integrar-alvos-existentes-ao-cliente-mock-libera-ds-40"
+  },
+  {
+    "title": "API-07 — Integrar coleta/status [libera DS-41]",
+    "url": "/c/MzYyNPxu/91-api-07-integrar-coleta-status-libera-ds-41"
+  },
+  {
+    "title": "API-08 — Integrar usuários e separar administração [libera DS-42]",
+    "url": "/c/Qmyo6884/92-api-08-integrar-usu%C3%A1rios-e-separar-administra%C3%A7%C3%A3o-libera-ds-42"
+  },
+  {
+    "title": "ÉPICO #31 — Plano de entrega e release",
+    "url": "/c/YGVH2Pg9/25-%C3%A9pico-31-plano-de-entrega-e-release"
+  },
+  {
+    "title": "ISSUE #5 — Anonimização e bloqueio de dados sensíveis",
+    "url": "/c/WzIvGyKq/22-issue-5-anonimiza%C3%A7%C3%A3o-e-bloqueio-de-dados-sens%C3%ADveis"
+  },
+  {
+    "title": "ÉPICO #31 — Finalizar README e roteiro da demonstração",
+    "url": "/c/HMFmBFhp/19-%C3%A9pico-31-finalizar-readme-e-roteiro-da-demonstra%C3%A7%C3%A3o"
+  },
+  {
+    "title": "ÉPICO #31 — Consolidar aceite e preparar release",
+    "url": "/c/zOyTl0LP/20-%C3%A9pico-31-consolidar-aceite-e-preparar-release"
+  },
+  {
+    "title": "ÉPICO #31 — Validar instalação limpa da demonstração",
+    "url": "/c/KfknLcok/14-%C3%A9pico-31-validar-instala%C3%A7%C3%A3o-limpa-da-demonstra%C3%A7%C3%A3o"
+  },
+  {
+    "title": "ÉPICO #31 — Manter CI e roteiro de instalação",
+    "url": "/c/sTTArNVt/13-%C3%A9pico-31-manter-ci-e-roteiro-de-instala%C3%A7%C3%A3o"
+  },
+  {
+    "title": "ISSUES #4/#5/#6 — Executar aceite integrado da API",
+    "url": "/c/z1CLDzjj/15-issues-4-5-6-executar-aceite-integrado-da-api"
+  },
+  {
+    "title": "ISSUE #13 — Âncora externa, rotação HMAC e verificação agendada",
+    "url": "/c/e7us28WV/33-issue-13-%C3%A2ncora-externa-rota%C3%A7%C3%A3o-hmac-e-verifica%C3%A7%C3%A3o-agendada"
+  },
+  {
+    "title": "ISSUE #25 — Validar restauração em outra máquina física",
+    "url": "/c/9zGDTCQp/34-issue-25-validar-restaura%C3%A7%C3%A3o-em-outra-m%C3%A1quina-f%C3%ADsica"
+  },
+  {
+    "title": "ISSUE #45 — Testes instáveis (não bloqueia a demo)",
+    "url": "/c/tr4WuXPv/35-issue-45-testes-inst%C3%A1veis-n%C3%A3o-bloqueia-a-demo"
+  },
+  {
+    "title": "DS-01 · Joyce — Percorra o mock e registre a matriz de perfis",
+    "url": "/c/Wrc04SSu/37-ds-01-joyce-percorra-o-mock-e-registre-a-matriz-de-perfis"
+  },
+  {
+    "title": "DS-02 · Joyce — Corrija os títulos do Diagnóstico",
+    "url": "/c/6llECScF/38-ds-02-joyce-corrija-os-t%C3%ADtulos-do-diagn%C3%B3stico"
+  },
+  {
+    "title": "DS-03 · Joyce — Escolha a marca e a paleta oficial",
+    "url": "/c/6hxxMEqu/39-ds-03-joyce-escolha-a-marca-e-a-paleta-oficial"
+  },
+  {
+    "title": "DS-04 · Joyce — Entregue os logotipos SVG dos dois temas",
+    "url": "/c/0WqEOyMF/40-ds-04-joyce-entregue-os-logotipos-svg-dos-dois-temas"
+  },
+  {
+    "title": "DS-05 · Joyce — Defina a fonte e os direitos de uso",
+    "url": "/c/66V57K8v/41-ds-05-joyce-defina-a-fonte-e-os-direitos-de-uso"
+  },
+  {
+    "title": "DS-06 · Joyce — Centralize os tokens",
+    "url": "/c/QTqRuhON/42-ds-06-joyce-centralize-os-tokens"
+  },
+  {
+    "title": "DS-07 · Joyce — Aplique as escalas de espaço e tipografia",
+    "url": "/c/iZCZ8bRy/43-ds-07-joyce-aplique-as-escalas-de-espa%C3%A7o-e-tipografia"
+  },
+  {
+    "title": "DS-08 · Joyce — Implemente os temas e confira contraste",
+    "url": "/c/PEgyAF7W/44-ds-08-joyce-implemente-os-temas-e-confira-contraste"
+  },
+  {
+    "title": "DS-09 · Joyce — Extraia o botão e seus estados",
+    "url": "/c/MqxhCz2e/45-ds-09-joyce-extraia-o-bot%C3%A3o-e-seus-estados"
+  },
+  {
+    "title": "DS-10 · Joyce — Padronize etiquetas de estado e severidade",
+    "url": "/c/p3f2INN2/46-ds-10-joyce-padronize-etiquetas-de-estado-e-severidade"
+  },
+  {
+    "title": "DS-11 · Joyce — Extraia painéis semânticos",
+    "url": "/c/WebBaVjt/47-ds-11-joyce-extraia-pain%C3%A9is-sem%C3%A2nticos"
+  },
+  {
+    "title": "DS-12 · Joyce — Extraia a tabela acessível",
+    "url": "/c/xNyoLk8C/48-ds-12-joyce-extraia-a-tabela-acess%C3%ADvel"
+  },
+  {
+    "title": "DS-13 · Joyce — Extraia alertas e mensagens",
+    "url": "/c/xQKcOuCM/49-ds-13-joyce-extraia-alertas-e-mensagens"
+  },
+  {
+    "title": "DS-14 · Joyce — Extraia vazio e carregamento",
+    "url": "/c/cW0329a8/50-ds-14-joyce-extraia-vazio-e-carregamento"
+  },
+  {
+    "title": "DS-15 · Joyce — Extraia campos e ajuda",
+    "url": "/c/WYOucKQj/51-ds-15-joyce-extraia-campos-e-ajuda"
+  },
+  {
+    "title": "DS-16 · Joyce — Monte cabeçalho com marca e papel",
+    "url": "/c/KTUBQTxN/52-ds-16-joyce-monte-cabe%C3%A7alho-com-marca-e-papel"
+  },
+  {
+    "title": "DS-17 · Joyce — Organize a navegação lateral",
+    "url": "/c/c8we0QdU/53-ds-17-joyce-organize-a-navega%C3%A7%C3%A3o-lateral"
+  },
+  {
+    "title": "DS-18 · Joyce — Adapte o menu para celular",
+    "url": "/c/MBLorEaE/54-ds-18-joyce-adapte-o-menu-para-celular"
+  },
+  {
+    "title": "DS-19 · Joyce — Compacte os avisos da demo",
+    "url": "/c/VvKXPFZ0/55-ds-19-joyce-compacte-os-avisos-da-demo"
+  },
+  {
+    "title": "DS-20 · Joyce — Aplique o visual ao Login",
+    "url": "/c/KLL8L35C/56-ds-20-joyce-aplique-o-visual-ao-login"
+  },
+  {
+    "title": "DS-21 · Joyce — Reorganize a Saúde sem reinterpretar dados",
+    "url": "/c/jo2gyk7c/57-ds-21-joyce-reorganize-a-sa%C3%BAde-sem-reinterpretar-dados"
+  },
+  {
+    "title": "DS-22 · Joyce — Transforme a Saúde em cartões no celular",
+    "url": "/c/vmxaUjBc/58-ds-22-joyce-transforme-a-sa%C3%BAde-em-cart%C3%B5es-no-celular"
+  },
+  {
+    "title": "DS-23 · Joyce — Traduza tipos e formate durações",
+    "url": "/c/a1mvCn2e/59-ds-23-joyce-traduza-tipos-e-formate-dura%C3%A7%C3%B5es"
+  },
+  {
+    "title": "DS-24 · Joyce — Destaque estado e ações de incidentes",
+    "url": "/c/WPlJsbLy/60-ds-24-joyce-destaque-estado-e-a%C3%A7%C3%B5es-de-incidentes"
+  },
+  {
+    "title": "DS-25 · Joyce — Adapte incidentes para celular",
+    "url": "/c/ORY6bnTH/61-ds-25-joyce-adapte-incidentes-para-celular"
+  },
+  {
+    "title": "DS-26 · Joyce — Reorganize a solicitação de aprovação",
+    "url": "/c/msh8Cg5Y/62-ds-26-joyce-reorganize-a-solicita%C3%A7%C3%A3o-de-aprova%C3%A7%C3%A3o"
+  },
+  {
+    "title": "DS-27 · Joyce — Padronize decisões e bloqueios de aprovação",
+    "url": "/c/JanTqFag/63-ds-27-joyce-padronize-decis%C3%B5es-e-bloqueios-de-aprova%C3%A7%C3%A3o"
+  },
+  {
+    "title": "DS-28 · Joyce — Separe trilhas no visual da Auditoria",
+    "url": "/c/F4NAEtPR/64-ds-28-joyce-separe-trilhas-no-visual-da-auditoria"
+  },
+  {
+    "title": "DS-29 · Joyce — Adapte eventos de Auditoria para celular",
+    "url": "/c/xXuSwiTD/65-ds-29-joyce-adapte-eventos-de-auditoria-para-celular"
+  },
+  {
+    "title": "DS-30 · Joyce — Aplique o visual ao formulário do Diagnóstico",
+    "url": "/c/cDncFkWy/66-ds-30-joyce-aplique-o-visual-ao-formul%C3%A1rio-do-diagn%C3%B3stico"
+  },
+  {
+    "title": "DS-31 · Joyce — Reorganize resultado e conteúdo generalizado",
+    "url": "/c/XvybhCOU/67-ds-31-joyce-reorganize-resultado-e-conte%C3%BAdo-generalizado"
+  },
+  {
+    "title": "DS-32 · Joyce — Capture Login, Saúde e Incidentes",
+    "url": "/c/fPsMLNu9/68-ds-32-joyce-capture-login-sa%C3%BAde-e-incidentes"
+  },
+  {
+    "title": "DS-33 · Joyce — Capture Aprovações, Auditoria e Diagnóstico",
+    "url": "/c/QMQm7SDt/69-ds-33-joyce-capture-aprova%C3%A7%C3%B5es-auditoria-e-diagn%C3%B3stico"
+  },
+  {
+    "title": "DS-34 · Joyce — Atualize DESIGN e o estado atual",
+    "url": "/c/DcbOYYVW/70-ds-34-joyce-atualize-design-e-o-estado-atual"
+  },
+  {
+    "title": "DEMO — Congelar e registrar SHA após aceite",
+    "url": "/c/8rPHLLDJ/79-demo-congelar-e-registrar-sha-ap%C3%B3s-aceite"
+  },
+  {
+    "title": "DEMO — Executar roteiro independente no SHA congelado",
+    "url": "/c/wsAdCuzy/80-demo-executar-roteiro-independente-no-sha-congelado"
+  },
+  {
+    "title": "DEMO — Smoke de sábado às 7h30",
+    "url": "/c/CrvfTOsN/81-demo-smoke-de-s%C3%A1bado-%C3%A0s-7h30"
+  },
+  {
+    "title": "DEMO — Apresentar SigmaTI ao orientador às 9h",
+    "url": "/c/pTOLHID5/82-demo-apresentar-sigmati-ao-orientador-%C3%A0s-9h"
+  },
+  {
+    "title": "PÓS-DEMO — Organizar documentação e README em PR próprio",
+    "url": "/c/ijKGqD5U/83-p%C3%B3s-demo-organizar-documenta%C3%A7%C3%A3o-e-readme-em-pr-pr%C3%B3prio"
+  },
+  {
+    "title": "PÓS-DEMO — Reorganizar diretórios em PR separado",
+    "url": "/c/uAgIxVlR/84-p%C3%B3s-demo-reorganizar-diret%C3%B3rios-em-pr-separado"
+  },
+  {
+    "title": "ISSUE #6 — Autenticação, sessões e auditoria de login",
+    "url": "/c/taEBIf5c/23-issue-6-autentica%C3%A7%C3%A3o-sess%C3%B5es-e-auditoria-de-login"
+  },
+  {
+    "title": "ISSUES #4/#5/#6 — Corrigir achados da API e autenticação",
+    "url": "/c/9tWbeAYN/16-issues-4-5-6-corrigir-achados-da-api-e-autentica%C3%A7%C3%A3o"
+  },
+  {
+    "title": "ÉPICO #31 — Revisar PRs e validar integrações",
+    "url": "/c/NRkslN8y/18-%C3%A9pico-31-revisar-prs-e-validar-integra%C3%A7%C3%B5es"
+  },
+  {
+    "title": "ISSUE #8 — Monitoramento contínuo e eventos SSE",
+    "url": "/c/NbEHZVro/28-issue-8-monitoramento-cont%C3%ADnuo-e-eventos-sse"
+  },
+  {
+    "title": "ISSUE #2 — Corrigir conflitos do Docker Compose",
+    "url": "/c/wSoIrYrs/6-issue-2-corrigir-conflitos-do-docker-compose"
+  },
+  {
+    "title": "ISSUE #4 — Configurar chave, modelo e origens por ambiente",
+    "url": "/c/JtOo3Hii/7-issue-4-configurar-chave-modelo-e-origens-por-ambiente"
+  },
+  {
+    "title": "ISSUE #3 — Remover credenciais fixas do Compose",
+    "url": "/c/AwLuYdLm/8-issue-3-remover-credenciais-fixas-do-compose"
+  },
+  {
+    "title": "ISSUE #3 — Restringir portas e fixar imagens",
+    "url": "/c/qbdZ7ZTy/9-issue-3-restringir-portas-e-fixar-imagens"
+  },
+  {
+    "title": "ISSUE #4 — Implementar chamada assíncrona e timeout",
+    "url": "/c/7c6DJxjl/10-issue-4-implementar-chamada-ass%C3%ADncrona-e-timeout"
+  },
+  {
+    "title": "ISSUE #4 — Restringir CORS e padronizar erros públicos",
+    "url": "/c/C9pNKEwW/11-issue-4-restringir-cors-e-padronizar-erros-p%C3%BAblicos"
+  },
+  {
+    "title": "ISSUES #3/#4 — Corrigir instalação e infraestrutura",
+    "url": "/c/v84QJxtu/17-issues-3-4-corrigir-instala%C3%A7%C3%A3o-e-infraestrutura"
+  },
+  {
+    "title": "ISSUE #4 — Testar API com provedor de IA simulado",
+    "url": "/c/D3LstOrT/12-issue-4-testar-api-com-provedor-de-ia-simulado"
+  },
+  {
+    "title": "ISSUE #7 — Persistir estado e recuperar após reinício",
+    "url": "/c/yzjP3r8n/26-issue-7-persistir-estado-e-recuperar-ap%C3%B3s-rein%C3%ADcio"
+  },
+  {
+    "title": "ISSUE #9 — Empacotar e instalar sigma_eng",
+    "url": "/c/049SEWxu/24-issue-9-empacotar-e-instalar-sigmaeng"
+  },
+  {
+    "title": "ISSUE #15 — Painel de saúde, incidentes, aprovações e auditoria",
+    "url": "/c/bXyKzOg4/29-issue-15-painel-de-sa%C3%BAde-incidentes-aprova%C3%A7%C3%B5es-e-auditoria"
+  },
+  {
+    "title": "ISSUE #25 — Backup e restauração local (etapa entregue)",
+    "url": "/c/I4LgoTUv/30-issue-25-backup-e-restaura%C3%A7%C3%A3o-local-etapa-entregue"
+  },
+  {
+    "title": "ISSUE #14 — Sondagem segura (etapa entregue)",
+    "url": "/c/cEBw3yYz/27-issue-14-sondagem-segura-etapa-entregue"
+  }
+]

@@ -5,7 +5,7 @@ pytest 9.1.1, FastAPI 0.142.2, HTTPX2 2.13.1 e Docker Compose v5.5.1.
 
 ## Escopo e resultado local
 
-O [fluxo de trabalho do TCC](../../doc/fluxo-de-trabalho-tcc.md) foi incorporado à
+O [fluxo de trabalho do TCC](../../docs/guias/fluxo-de-trabalho-tcc.md) foi incorporado à
 execução: leitura dos cartões e da issue, implementação na `dev`, testes,
 registro de evidências e revisão técnica. O usuário solicitou que a revisão
 fosse feita nesta conversa, sem aguardar outro integrante. Implementação,

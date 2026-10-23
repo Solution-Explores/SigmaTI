@@ -1,6 +1,10 @@
 # Painel SIGMA
 
-Use Node.js 24 e o lockfile versionado:
+Frontend em React e Vite. O guia completo de ambiente está em [Instalação para desenvolvimento](../docs/guias/instalacao.md).
+
+## Rodar
+
+Use Node.js 24 (versão do CI) e o lockfile versionado:
 
 ```bash
 npm ci --include=optional
@@ -9,19 +13,19 @@ npm run build
 npm run lint
 ```
 
-A API é configurada por `VITE_API_URL` (padrão `http://localhost:8000`).
-Não coloque segredo do servidor em variáveis `VITE_*`.
-O login usa `/api/auth/login` e `/api/auth/me`; o token fica só em memória.
-Logout revoga a sessão e recarregar a página exige nova autenticação.
+## Configuração
 
-Testes de navegador com API e provedor simulado:
+- `VITE_API_URL` define o endereço da API. O padrão é `http://localhost:8000`.
+- Não coloque segredos do servidor em variáveis `VITE_*`.
+- O login usa `/api/auth/login` e `/api/auth/me`. O token fica só em memória, o logout revoga a sessão e recarregar a página exige novo login.
+
+## Testes de navegador
+
+Rodam com a API e um provedor de IA simulados:
 
 ```bash
 npx playwright install chromium
 npm run test:e2e
 ```
 
-Prepare antes `.venv` na raiz com `requirements-dev.txt`. O Playwright cria
-credenciais efêmeras e inicia API/Vite isolados em 18000/5173. Saídas e credenciais
-ficam em `test-results/` ignorado; não publique arquivos `.users.json` ou `.browser.json`.
-Veja [o roteiro completo](../doc/instalacao-desenvolvimento.md).
+Antes, crie o `.venv` na raiz e instale `requirements-dev.txt`. O Playwright gera credenciais temporárias e inicia a API e o Vite isolados nas portas 18000 e 5173. Saídas e credenciais ficam em `test-results/`, que o Git ignora. Não publique arquivos `.users.json` ou `.browser.json`.

@@ -64,7 +64,7 @@ não descreve instalações externas ao repositório.
 
 Zabbix 6.4 está sem suporte; planejar migração separada. Fixar imagens não
 comprova ausência de CVEs. Consultar avisos oficiais e a
-[política](../../doc/politica-imagens-e-portas.md) antes da homologação.
+[política](../../docs/guias/politica-imagens-e-portas.md) antes da homologação.
 
 Não foram iniciados contêineres, consultado o Engine, acessados volumes/dados,
 rotacionadas credenciais ou homologados runtime, firewall, VPN e `.env` real.

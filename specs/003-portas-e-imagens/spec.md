@@ -20,7 +20,7 @@ testes do agente não são revisão independente, não autorizam `main` e não e
   camadas: PostgreSQL 15.19/Alpine 3.24, n8n 1.80.0, Zabbix 6.4.21 e Grafana 10.4.0.
 - Linhas/majors atuais preservadas. O Zabbix 6.4 continua não suportado; migração
   para uma linha suportada é tarefa separada, não uma alteração implícita da K04.
-- [Política de atualização e portas](../../doc/politica-imagens-e-portas.md)
+- [Política de atualização e portas](../../docs/guias/politica-imagens-e-portas.md)
   documentada; o CI verifica configurações e manifests, sem atualizar hashes sozinho.
 
 ## Validação
