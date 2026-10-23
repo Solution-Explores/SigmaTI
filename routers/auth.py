@@ -50,13 +50,12 @@ def login(dados: LoginIn, request: Request) -> dict:
 
     # 1. Verifica se a conta/IP está temporariamente bloqueada por excesso de falhas
     if rate_limiter.esta_bloqueado(chave_bloqueio):
-        if auditor is not None:
-            auditor.registrar(
-                ator=dados.username,
-                acao="auth.login.blocked_attempt",
-                recurso="session",
-                detalhes={"ip": ip_origem, "motivo": "lockout_ativo"},
-            )
+        auditor.registrar(
+            ator=dados.username,
+            acao="auth.login.blocked_attempt",
+            recurso="session",
+            detalhes={"ip": ip_origem, "motivo": "lockout_ativo"},
+        )
         raise HTTPException(
             status_code=429,
             detail="Limite de requisições excedido.",
@@ -66,13 +65,12 @@ def login(dados: LoginIn, request: Request) -> dict:
     usuario = usuario_repo.obter_por_username(dados.username)
     if not usuario or not usuario.ativo or not verificar_senha(dados.password, usuario.senha_hash):
         falhas, bloqueou_agora = rate_limiter.registrar_falha(chave_bloqueio)
-        if auditor is not None:
-            auditor.registrar(
-                ator=dados.username,
-                acao="auth.login.failed" if not bloqueou_agora else "auth.login.locked",
-                recurso="session",
-                detalhes={"ip": ip_origem, "tentativa": falhas},
-            )
+        auditor.registrar(
+            ator=dados.username,
+            acao="auth.login.failed" if not bloqueou_agora else "auth.login.locked",
+            recurso="session",
+            detalhes={"ip": ip_origem, "tentativa": falhas},
+        )
         raise HTTPException(
             status_code=401,
             detail="Autenticação necessária.",
@@ -90,13 +88,12 @@ def login(dados: LoginIn, request: Request) -> dict:
 
     # 3. Credenciais válidas: limpa histórico de falhas e registra sucesso na AuditChain
     rate_limiter.limpar(chave_bloqueio)
-    if auditor is not None:
-        auditor.registrar(
-            ator=usuario.username,
-            acao="auth.login.success",
-            recurso="session",
-            detalhes={"papel": usuario.papel, "ip": ip_origem},
-        )
+    auditor.registrar(
+        ator=usuario.username,
+        acao="auth.login.success",
+        recurso="session",
+        detalhes={"papel": usuario.papel, "ip": ip_origem},
+    )
 
     return {
         "access_token": token,
@@ -109,15 +106,15 @@ def login(dados: LoginIn, request: Request) -> dict:
 
 @router.post("/logout", response_model=LogoutOut)
 def logout(usuario: Usuario = Depends(obter_usuario_atual), authorization: str = Header(...)) -> dict:
+    # Revoga antes de auditar (falha segura): se a auditoria estiver
+    # indisponível, o cliente recebe 500, mas o token já não vale mais.
     revogar_token(authorization.split(" ", 1)[1].strip())
-    auditor = obter_auditor()
-    if auditor is not None:
-        auditor.registrar(
-            ator=usuario.username,
-            acao="auth.logout",
-            recurso="session",
-            detalhes={"papel": usuario.papel},
-        )
+    obter_auditor().registrar(
+        ator=usuario.username,
+        acao="auth.logout",
+        recurso="session",
+        detalhes={"papel": usuario.papel},
+    )
     return {
         "status": "sucesso",
         "mensagem": "Logout efetuado com sucesso.",

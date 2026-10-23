@@ -56,6 +56,18 @@ A sessão é revalidada a cada polling e antes de cada evento, inclusive após e
 
 ## Reprodução E2/carga
 
+Na branch de correção, o status expõe `probe_finished`, `probe_seconds_total`,
+`max_probe_seconds`, `write_finished`, `write_seconds_total`, `max_write_seconds`
+e `pending_writes`. Os tempos vão da submissão ao executor até a conclusão real
+do future, incluindo espera por trabalhador e resultados tardios de sondas.
+Os contadores incluem futures que falharam; `completed` continua contando
+coletas persistidas com sucesso. Isso permite separar sonda e persistência sem
+registrar hosts, saídas ou credenciais. Não constitui correção de capacidade.
+
+> Revisão de 20/10/2026: houve reprovação posterior da carga em VM no mesmo
+> host (`missed` de 150 para 200 na janela). CI anterior aprovado não constitui
+> correção dessa reprodução. Veja [achados e critérios de retomada](../../doc/revisao-achados-base-2026-10-20.md).
+
 ```powershell
 .venv/Scripts/python.exe scripts/validate_postgres.py --tests tests/test_collection_e2.py
 ```

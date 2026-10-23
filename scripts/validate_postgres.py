@@ -21,6 +21,7 @@ def main():
     password = secrets.token_hex(24)
     evidence = Path("test-results")
     evidence.mkdir(exist_ok=True)
+    (evidence / 'postgres-regression.xml').unlink(missing_ok=True)
     env_file = evidence / (name + ".env")
     env_file.write_text("POSTGRES_USER=sigma_test\nPOSTGRES_DB=sigma_test\nPOSTGRES_PASSWORD=" + password + "\n")
     try:
@@ -39,6 +40,7 @@ def main():
         env = dict(os.environ, SIGMA_TEST_DATABASE_URL=f"postgresql+psycopg://sigma_test:{password}@127.0.0.1:{port}/sigma_test")
         env.pop("SIGMA_DATABASE_URL", None)
         command = [sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
+                   "--basetemp=" + str(evidence / (name + "-tmp")),
                    "--junitxml=test-results/postgres-regression.xml"]
         command.extend(args.tests.split())
         result = subprocess.run(command, env=env)
