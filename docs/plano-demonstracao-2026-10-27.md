@@ -1,0 +1,291 @@
+# Plano até a demonstração de 27/10/2026
+
+Elaborado em 21/10/2026 e reajustado em 22/10/2026 (UTC−4, Manaus). A demonstração
+ao professor orientador deixou de ser no sábado, 24/10, às 9h. A entrega passou
+para a **terça, 27/10/2026, às 18h**. Este plano substitui, até essa data,
+o cronograma da sprint de 15 a 20/10, que não foi cumprido. O prazo das demais
+entregas depende do orientador.
+
+Os três dias a mais servem para reduzir risco (ensaios e revisão sem pressa).
+O escopo não cresce.
+
+Este plano funciona como a "Sprint 0" e termina na demonstração. O que vem depois
+(28/10 a 17/11, com a banca em 18/11) está em
+[plano-sprints-pos-demo.md](plano-sprints-pos-demo.md). Em 23/10 este plano foi
+alinhado a ele: disponibilidade do Vinícius, uso do fim de semana, proposta ao
+orientador e pendências herdadas.
+
+## Situação de partida
+
+[Certo] Atualização de 22/10 à noite (UTC−4): `develop` remoto em `75b1874ee5f83f55ab12837249a9c701fd67cef1`, após #43 (`dbc464d`, 22h25) e #44 (`75b1874`, 22h52). Os dois estão integrados; CI dos heads aprovado. Não há Approve formal no GitHub; o LGTM do Iohan no #44 é comentário.
+
+- #6 e #8 seguem abertas; o aceite final é em 23/10 e os critérios completos continuam pendentes.
+- #47 (`3cca38d`), só teste, aberto para Iohan; CI atual tem quatro verificações aprovadas e `validate-compose` reprovado (run 39894956404), divergindo do resumo recebido.
+- PRs documentais #41/#42 e reorganização ficam depois da demo, em 28/10.
+- A carga falhava na base `8cb1e23`; #44 já integrado. Resultados da VM no candidato antigo e do Windows no integrado têm origens/métodos distintos; aceite da rodada 7 ainda pendente.
+
+## Escopo
+
+Entra até terça:
+
+1. [Feito em 22/10] PR #43 integrado; aceite final ainda pendente.
+2. [Feito em 22/10] #44 retargetado para `develop`, CI aprovado e integrado após #43.
+3. Executar o aceite mínimo na `develop` integrada.
+4. Preparar o roteiro e os dados fictícios da demonstração.
+5. Fazer dois ensaios e gravar uma versão de contingência.
+
+Fica para depois da demonstração:
+
+- PRs #41, #42 e `feature/trail-fase1`, que não alteram o que será demonstrado.
+- #13: âncora externa, rotação da chave HMAC e verificação agendada.
+- #5: revisão contra os critérios completos e novos casos adversariais.
+- #25: restauração em outra máquina física (entra antes apenas se o aceite de sexta passar e sobrar tempo no fim de semana).
+- Release `v1.0.0` na `main`.
+
+## Equipe
+
+| Pessoa | Disponibilidade | Papel neste plano |
+|---|---|---|
+| Vinícius | Segunda a sexta, manhã e tarde; sábado o dia todo; domingo só de manhã (estimativa: ~6 h focadas por dia útil, ~8 h no sábado, ~4 h no domingo) | Integração, aceite, roteiro e apresentação |
+| Iohan | Dias úteis após as 22h; sábado à tarde e domingo | Revisão dos PRs e execução independente do roteiro |
+
+Joyce continua no projeto, mas não participa deste plano.
+
+## Regras
+
+- Quem revisa não é quem fez. Com duas pessoas, o revisor é sempre o outro.
+- O Vinícius abre os PRs até as 18h para o Iohan revisar na mesma noite.
+- Nenhum merge direto em `develop` ou `main`; integração somente por PR com CI aprovado.
+- Cada cartão do Trello registra responsável, revisor, prazo e link do PR.
+- Uma issue só é encerrada com todos os critérios atendidos.
+
+## Cronograma
+
+| Dia | Vinícius | Iohan (após 22h; sábado à tarde e domingo) | Codex (VM) |
+|---|---|---|---|
+| Qua 21/10 | Conferir o pacote vindo do estágio (`SHA256SUMS`), subir a VM e autenticar o `gh`. Conferir o CI do #43 e esboçar o roteiro. | Revisar o PR #43. | Rodadas 1 a 3. |
+| Qui 22/10 | Corrigir os achados e integrar o #43. Retargetar o #44 e rodar o CI. Preparar os dados da demonstração. | Revisar o PR #44. | Rodada 4 (custo da auditoria); rodada 5 (aceite do candidato `0a6ce35`). |
+| Sex 23/10 | Integrar o #44. Executar o aceite. Ensaio 1. | Revisar a correção da sonda e conferir o roteiro. | Aceite na `develop` integrada. |
+| Sáb 24/10 | Dia todo: painel manual (pendente desde o ensaio 1), ajustes do ensaio 1 e atender dúvidas do Iohan. Só leitura: levantar os caminhos (imports, uvicorn, alembic, CI, scripts) que a PR de estrutura vai mover em 28/10. | À tarde: executar o roteiro sozinho, no próprio computador, a partir da `develop` integrada. | — |
+| Dom 25/10 | Manhã: corrigir o que o Iohan achou e fechar o checklist de terça. Opcional: #25. | Segunda execução independente, se houver correções. Opcional: #25. | — |
+| Seg 26/10 | Corrigir pendências. Ensaio 2. Gravar a contingência. Atualizar os números dos slides. **Às 18h, congelar o SHA da entrega.** | Após 22h: conferir o SHA congelado e rodar o smoke. | Após 18h: bateria completa no SHA congelado. |
+| Ter 27/10 | Manhã: ensaio final e smoke no SHA congelado. Tarde: revisar proposta e slides. **16h: preparar o ambiente. 18h: demonstração.** | Apoio à noite; sem tarefa crítica. | — |
+
+O aceite de sexta usa os testes e scripts existentes. Os scripts do painel e da coleta
+exigem um PostgreSQL de teste em `SIGMA_TEST_DATABASE_URL`:
+
+```powershell
+$env:SIGMA_TEST_DATABASE_URL = '<url do PostgreSQL de teste>'
+python -m pytest
+python scripts/validate_api_acceptance.py
+python scripts/validate_panel.py
+python scripts/validate_collection.py
+```
+
+Os dados fictícios vêm de `scripts/serve_browser_acceptance.py`, que cria usuários dos
+quatro perfis, alvos, SLO, 25 horas de medições, uma aprovação e um registro de auditoria.
+
+### Caminho crítico
+
+Se o PR #44 não estiver integrado até sexta de manhã, a entrega usa a `develop`
+sem ele, com poucos alvos, e não apresenta o resultado de carga. O CI do #43 e do
+#44 depende de `validate_infrastructure.py --verify-registry`; a falha de 22/10
+(tag do postgres republicada no Docker Hub) foi tratada checando só o digest.
+A falha conhecida com 200 alvos não deve ser exibida como resolvida.
+
+## Roteiro da demonstração (cerca de 15 minutos)
+
+1. **Arquitetura (1 min).** Alvo → sonda → PostgreSQL → detector → SSE → painel.
+2. **Perfis de acesso (2 min).** Login como `suporte_n1`, `analista_redes` e `gestor_ti`;
+   mostrar uma ação recusada com 403.
+3. **Coleta ao vivo (4 min).** Derrubar o serviço TCP de teste. O incidente aparece no
+   painel sem recarregar. Reconhecer, resolver e mostrar MTTD, MTTA e MTTR.
+4. **SLO (2 min).** Orçamento de erros e burn rate do alvo com histórico.
+5. **Governança (2 min).** Aprovação e verificação da cadeia de auditoria.
+6. **IA e LGPD (2 min).** Enviar um alerta com nome e CPF fictícios e mostrar o texto
+   anonimizado antes da chamada ao provedor simulado.
+7. **Resultados (2 min).** Testes e ensaio de carga registrados, CI aprovado.
+
+### Limites a declarar
+
+- O provedor de IA é simulado.
+- Os testes usam loopback e dados fictícios.
+- Os números de carga do PR #44 (200 alvos, intervalo de 2 s, 32 trabalhos) foram
+  medidos em laboratório e não equivalem a homologação hospitalar.
+- Os resultados de anonimização valem para o corpus avaliado (E6), não para dados reais.
+
+## Proposta ao orientador
+
+A banca está marcada para 18/11/2026 e pode ser antecipada. Por isso a proposta
+original (tudo até 03/11) foi dividida em sprints semanais, de quarta a terça.
+
+- **Entregue:** #2, #3, #4, #7, #9, #14 e #15; #6 e #8 se o aceite de sexta passar.
+- **Sprint 1, 28/10 a 03/11:** #5, aceite final de #6 e #8, reorganização do
+  repositório e release `v1.0.0` (aceite em 31/10 e 01/11). Reserva para o retorno
+  do orientador sobre a demonstração.
+- **Sprint 2, 04/11 a 10/11:** #13 (âncora externa e rotação HMAC), #25 em outra
+  máquina, #45/#47 (testes instáveis e CI) e #46 (custo da auditoria). **Mudança
+  proposta:** #13 e #25 saem do prazo de 03/11 para 10/11, porque não cabem junto
+  com a `v1.0.0`. Depende da concordância do orientador.
+- **Sprint 3, 11/11 a 17/11:** código congelado em 11/11, texto do TCC, slides e
+  ensaio. Banca em 18/11.
+- **Trabalho futuro:** expansão (#10, #16–#19, #21, #22, #30, #23) e validações
+  externas (#11, #12, #20, #24, #26–#29), que dependem de hospital, hardware ou
+  coleta prolongada. Entram como capítulo de trabalho futuro do TCC, não como código
+  antes da banca.
+
+## Depois da demonstração: sprints
+
+Detalhes, estimativas e riscos em [plano-sprints-pos-demo.md](plano-sprints-pos-demo.md).
+
+| Sprint | Período | Meta |
+|---|---|---|
+| S1 | 28/10 a 03/11 | Fechar a `v1.0.0` (#5, #6, #8, estrutura, aceite da release) |
+| S2 | 04/11 a 10/11 | Robustez e evidências (#13, #45/#47, #46, #25) |
+| S3 | 11/11 a 17/11 | Congelamento, texto, slides e ensaio; banca em 18/11 |
+
+- Capacidade do Vinícius pela disponibilidade acima: ~36 h na S1 e ~42 h por semana
+  na S2 e na S3. A S1 tem só 4 dias úteis, porque 02/11 (segunda) é Finados.
+- O Iohan segue com ~10 h por semana (noites, sábado à tarde, domingo).
+- Nada da S1 entra antes do congelamento de 26/10; a PR de estrutura só começa em 28/10.
+
+## Andamento
+
+### Divisão do trabalho (definida em 21/10)
+
+| Quem | O quê |
+|---|---|
+| Vinícius + Claude | Ambiente local, integração dos PRs, aceite, roteiro, slides e proposta |
+| Codex | Todos os testes na VM: regressão, carga de 200 alvos (5 repetições por SHA) e o #25. Resultado em `validacao-vm/rodada-2026-10-22/RESULTADO.md`. Não faz push nem merge. |
+| Iohan | Revisão #47 em 23/10 à noite; roteiro independente em 24/10 à tarde; conferir SHA e smoke em 26/10 após 22h. Revisões anteriores preservadas nos registros históricos. |
+
+### Quarta, 21/10: feito
+- O pacote do estágio foi conferido: `SHA256SUMS` sem falhas nas 16 entradas.
+- `gh` autenticado. O worktree limpo da `develop@8cb1e23` está em `Desktop\sigmati-develop`, com `.venv`, `npm ci` e Chromium do Playwright.
+- Acesso à VM recuperado com uma chave nova em `D:\_virtual\sigma-restore-25\segredos\`. A VM ficou desligada para liberar memória do host.
+- Merge local de `develop` + #43 + #44 sem conflito, no worktree `Desktop\sigmati-integracao`. Resultado: 433 testes aprovados sem banco e 20/20 no aceite da API.
+- Os PRs foram conferidos antes da revisão, e os achados foram corrigidos e enviados:
+  - #43 (`8662ea9`): verificações mortas de auditoria removidas e `SanitizationError` mantido; 430 testes aprovados.
+  - #44 (`696ca7b` e `ddd4840`): nota sobre o lote inteiro ser descartado, e #43 incorporado ao branch.
+  - CI verde nos dois PRs.
+- Roteiro de revisão publicado no #43 para o Iohan.
+- Material da demo:
+  - [roteiro-demonstracao.md](roteiro-demonstracao.md);
+  - [demo/](demo/) com `subir_demo.py`, `demo.ps1`, a proposta ao orientador, o checklist de terça e os rascunhos de issue (custo da auditoria e testes instáveis, hoje as issues #46 e #45);
+  - slides em https://claude.ai/artifact/38N6oK7SdYLf5mxAM24ZZh.
+- Ajustes no roteiro:
+  - o 403 e o burn rate são mostrados por `curl`;
+  - o MTTD é calculado por `POST /api/eng/incidentes/metricas`;
+  - a anonimização foi conferida: `[NOME_REMOVIDO] [CPF_REMOVIDO] relatou falha no [SWITCH_REDE]`.
+
+### Quarta, 21/10: VM, rodada 1 (Codex), concluída às 02:41
+
+Fonte: `validacao-vm/rodada-2026-10-22/RESULTADO.md`. Os 171 hashes do `SHA256SUMS.txt` conferem.
+
+| Versão | Testes | Carga de 200 alvos |
+|---|---|---|
+| `develop` `8cb1e23` | 464/467 | 0 de 5 |
+| #43 `a97fe1b` | 476/477; só o E2 falha, o que era esperado | — |
+| #44 `4350632` | 487/488; o timeout de IA mediu 16,1 s, com limite de 15 s | 5 de 5 |
+| merge `develop` + #43 + #44 | **488/488** | **5 de 5**, mais o E2 e o validador |
+
+- No merge: p95 queda→SSE de 0,33 a 0,41 s, atraso máximo de 0,185 s, 0 erros e 0 ciclos perdidos.
+- **Caminho crítico:** o #44 sai do risco técnico e a demo tende a mostrar a carga. A confirmação vem no aceite de sexta.
+- A rodada 2 (`rodada-2026-10-22b`) está em andamento. Ela cobre os SHAs novos `8662ea9` e `ddd4840` e os 3 testes instáveis por tempo, com entrega até quinta às 10h.
+- Os slides de resultados já mostram esses números, marcados como provisórios.
+
+### Quarta, 21/10: VM, rodada 2 (Codex), concluída às 03:14
+
+Fonte: `validacao-vm/rodada-2026-10-22b/RESULTADO.md`. Os 179 hashes do `SHA256SUMS.txt` conferem.
+
+- Candidato **`ddd4840`** (develop + #43 + #44): **489/489** testes, carga **5/5** (atraso máximo de 0,093 s, 0 erros), painel aprovado.
+- O Codex concluiu "não apto" por causa de 3 testes instáveis. **Reclassificação:** os PRs não alteraram esses testes nem o código testado, então as falhas já existiam antes. **O candidato está apto para integração.**
+- A rodada 3 (`-22c`) está em andamento: linha de base `8cb1e23`, hipótese da sonda e diagnóstico do provedor.
+- A correção do teste da sonda está pronta no branch local `fix/teste-sonda-instavel` (`3cca38d`), sem push.
+- Rascunho de issue: [demo/issue-testes-instaveis.md](demo/issue-testes-instaveis.md).
+- Slides atualizados: 489/489 e atraso máximo de 0,093 s.
+
+### Quarta, 21/10: VM, rodada 3 (Codex), concluída às 03:56
+- Fonte: `validacao-vm/rodada-2026-10-22c/RESULTADO.md`. Os 471 hashes conferem e a VM está desligada.
+- **As instabilidades já existiam antes dos PRs:** na linha de base `8cb1e23`, o provedor passou 9/10 e a sonda 5/10.
+- **Sonda:** causa confirmada. A correção com `shutdown()` passou 30/30 (branch `fix/teste-sonda-instavel`).
+- **Provedor:** o timer de expiração atrasa até 1,26 s por causa do ambiente, e a margem entre o prazo de 14 s e a meta de 15 s é curta. A decisão vai para a issue, depois da demo.
+- **Codex:** não há mais nada a fazer na VM antes do aceite de sexta.
+
+### Depois da demo: organização do repositório (decidido em 21/10)
+
+Começa na quarta, 28/10, depois da apresentação, dividido em duas PRs para a revisão continuar viável. Nada disso entra antes da entrega, para não colidir com o congelamento de segunda, 26/10.
+
+1. **PR de documentação e README**, de baixo risco:
+   - `doc/` vira `docs/`, com subpastas por assunto (planejamento, processo, operação, arquitetura, tcc, demo e specs).
+   - README enxuto e apresentável:
+     - selos de CI, Python, Node e PostgreSQL;
+     - descrição curta e um print do painel, capturado no ensaio de sexta;
+     - diagrama de fluxo em Mermaid (alvo → sonda → PostgreSQL → detector → SSE → painel);
+     - funcionalidades, início rápido, resultados (488/488 e carga 5/5), limites e equipe.
+   - As instruções longas de instalação saem do README e vão para `docs/operacao/`.
+2. **PR de estrutura do código**, de risco maior:
+   - `backend/` recebe `main.py`, `auth.py`, `config.py`, `sanitizer.py`, `api_errors.py`, `routers/`, `persistence/`, `migrations/` e `tests/`;
+   - `sigma-frontend/` vira `frontend/`;
+   - `deploy/` recebe o compose e o lock de imagens.
+   - Só `git mv` e ajuste de caminhos: imports, uvicorn, alembic, CI e scripts. Nenhuma mudança de lógica.
+   - Depois disso: CI verde, regressão do Codex na VM e revisão do Iohan.
+   - Integrar até sexta, 30/10, para não apertar a release de 03/11.
+3. **Página do repositório no GitHub** (fora de PR, com confirmação): descrição "About" e tópicos, por exemplo `monitoramento`, `lgpd`, `fastapi`, `react`, `postgresql`, `sse`, `slo`, `rbac` e `tcc`.
+
+### Quinta, 22/10: ajuste de data, CI do #43 e rodada 4 do Codex
+
+- **Data nova:** entrega na terça, 27/10, às 18h. SHA congelado na segunda, 26/10, às 18h. Reorganização do repositório adiada para depois da entrega.
+- **CI do #43 vermelho em `validate-compose`:** a tag `postgres:15.19-alpine3.24` foi republicada no Docker Hub. Digest atual `sha256:a8e0425…`; o lock fixa `sha256:f7d2335…`, que continua disponível no registry. O código não mudou. Decisão: manter o digest antigo. O commit `8661916` faz o validador checar só o digest (as tags são mutáveis). Enviado ao `fix/base-issues`; `validate-compose` voltou a passar. `test-config` e `test-postgres` estavam em andamento ao registrar.
+- **Suíte sem banco no `fix/base-issues`:** 433 aprovados e 48 pulados. Cuidado de ambiente: o venv de `sigmati-develop` importa o `sigma_eng` do `develop`; ao testar um branch de PR, defina `PYTHONPATH` para o `engenharia\` do branch.
+- **Quarto teste instável:** em uma segunda execução da suíte sem banco, `engenharia/tests/test_scheduler.py::test_shutdown_finishes_started_write_before_releasing_leadership` falhou (1 falha, 432 aprovados, 48 pulados), e a primeira execução tinha passado 433. Isolado, 30 execuções em cada lado: `develop` `8cb1e23` **28/30** e `fix/base-issues` `8661916` **29/30**. Já existia antes do #43 e não é regressão. A issue #45 cobre três testes (provedor, sonda e DNS); este quarto precisa entrar nela.
+- **Iohan** empurrou `1db24a2` (UTF-8 inválido na auditoria e sanitização fora do event loop) e `3d32e79` (doc de code-review) no #43. Ainda não há Approve nem Request changes no GitHub.
+- **Codex, rodada 4** (`validacao-vm/rodada-2026-10-22d`, candidato `ddd4840`):
+  - Custo da verificação HMAC, gravação: 37,8 ms com 1 mil registros, 355,9 ms com 10 mil e 3.001,5 ms com 100 mil. Login total com 100 mil: 5.715,9 ms. O custo é linear e o limite de 50 ms da issue #46 não é atendido pelo desenho atual.
+  - Ensaio do roteiro: bloqueado. O roteiro exige Windows e PowerShell, e a VM é Linux. Os dois itens ⚠ continuam sem confirmação.
+- **Codex, rodada 5** (`rodada-2026-10-22e`): em andamento, no candidato local `0a6ce35` (develop + #43 com `8661916` + #44). Escopo: aceite completo, carga de 200 alvos × 5 e 10 execuções isoladas de cada teste instável.
+- As issues rascunhadas já existem: #45 (testes instáveis) e #46 (custo da auditoria). A evidência da rodada 4 ainda precisa ser anexada à #46.
+
+### Quinta, 22/10: noite
+
+[Certo] Registro consolidado; os relatos anteriores de PR aberto, CI em andamento e rodada 5 em execução ficam superados por esta seção. Horários UTC−4.
+
+- **Integração:** #43 em `dbc464d3712615c3a7cae7bada810b7b668db1ac`, 22h25; depois #44 em `75b1874ee5f83f55ab12837249a9c701fd67cef1`, 22h52. #44 tem base `develop`; CI dos heads dos dois aprovado. LGTM do Iohan no #44 às 21h53 é comentário, não review formal. Revisão adicional do Vinícius informada no pedido; não houve Approve formal.
+- **Windows do Vinícius, PostgreSQL descartável, `75b1874`:** aceite HTTP todos PASS (`test-results/k10-acceptance.json` do worktree `sigmati-develop`); painel automatizado 4/4 (`panel-browser.xml`). Pytest 491 aprovados/1 pulado informado no pedido; log bruto não localizado, **não medido nesta conferência**.
+- **Carga Windows:** 200 alvos lógicos/2 s, um serviço TCP loopback; 30 quedas, mediana 0,710 s, p95 0,806 s, máximo 0,819 s, 100% ≤5 s. Erros 0; `missed_capacity` 0, `missed_overlap` 187, timeouts 60, acumulados antes/depois e sem aumento na janela. Reinício preserva incidente único/sessão. Fonte: `sigmati-develop/test-results/collection-e2.json`. SSE mede chegada ao cliente; não 30 renderizações. Não comparar com VM `ddd4840` (p95 ≤0,410 s e atraso máximo 0,093396 s): hardware, SO e método distintos.
+- **Ensaio 1 Windows pela API:** 403/200 por perfil; incidente em 0,7 s, MTTD 0,45 s, MTTA/MTTR 29 s; burn rate `at_risk`, 12 min, `page`; solicitante recebe 409 e revisor aprova, auditoria íntegra. Anonimização e formato `{ "incidentes": [...] }` confirmados, helpers corrigidos em `demo.ps1`. Fonte: Achados do Ensaio 1 no roteiro e relato do Vinícius; não houve nova medição aqui. Painel manual permanece pendente.
+- **Cuidados:** subir o serviço antes de resolver o incidente; aprovação expira em 15 min (subir dados no máximo 10 min antes da etapa 5 ou criar pedido novo na hora); acentos no PowerShell 5.1 são problema de exibição.
+- **VM:** rodada 4 mediu HMAC (~3 s para 100 mil registros; limite proposto de 50 ms não atendido). Rodadas 5 e 6 bloqueadas **antes de testar**: objeto `0a6ce35` ausente na VM e bundle vazio recusado, respectivamente. Candidato antigo superado; resultados dessas rodadas: não medidos.
+- **Rodada 7:** pedida em `validacao-vm/rodada-2026-10-22g/PEDIDO-CODEX.md`, candidato `75b1874`, até 23/10 às 10h; sem RESULTADO disponível na conferência. Bundle SHA-256 `0e1129ccb8d12a10893d10360665dcdf9c5a6f69ea8164889863695fcafa87ea`.
+- **#47:** aberto, só teste da sonda, 26/30 → 30/30 na VM rodada 3; revisão do Iohan pendente. CI atual **4 aprovados + validate-compose reprovado**, run [39894956404](https://github.com/Solution-Explores/SigmaTI/actions/runs/39894956404); não publicar 5/5 atual.
+- **#45/#46:** comentários de 22/10 existem. A #45 registra o quarto teste 28/30 (`8cb1e23`) e 29/30 (`8661916`), sem causa isolada; #46 registra HMAC da rodada 4. A triagem “27/10 após demo às 18h” conflita com a nova apresentação; Trello propõe 28/10, sem alterar critérios GitHub.
+- **Agenda:** 23/10 aceite VM/painel manual/#47; 24/10 à tarde roteiro do Iohan; 25/10 correções e segunda execução se necessária, #25 opcional; 26/10 ensaio 2, gravação, slides, freeze às 18h e bateria completa do Codex depois, smoke do Iohan após 22h; 27/10 manhã ensaio/smoke, 16h preparar e desligar `sigma-restore-25`, 18h demo; 28/10 organização. Joyce/DS mantêm datas e gates, sem ampliar escopo até terça.
+
+### Pendente
+- [x] Ensaio de API Windows de 22/10 confirmou os itens ⚠; painel manual continua pendente.
+- [x] CI do #43 aprovado e integração feita; Approve formal não ocorreu e não é declarado.
+- [x] Base #44 mudada para `develop`, CI aprovado e integração em 22/10 após #43.
+- [x] PR #47 aberto e evidência da rodada 4 publicada na #46.
+- [ ] 23/10 até 10h: rodada 7 na VM e aceite final; critérios #6/#8 ainda abertos.
+- [ ] 23/10: painel manual por Vinícius; revisão #47 pelo Iohan à noite e tratamento do CI reprovado.
+- [ ] 24/10 à tarde: roteiro independente do Iohan; 25/10 correções, segunda execução se necessária, #25 opcional.
+- [ ] 26/10: ensaio 2, gravação, slides; congelar SHA às 18h e repetir bateria completa; smoke Iohan após 22h.
+- [ ] 27/10: ensaio/smoke de manhã; desligar VM e preparar ambiente às 16h; demo às 18h.
+- [ ] Trello/GitHub: publicação e conferência da atualização em `validacao-vm/rodada-2026-10-22h/RESULTADO.md`.
+
+Herdado para as sprints (ver [plano-sprints-pos-demo.md](plano-sprints-pos-demo.md)):
+
+- [ ] 27/10 à noite ou 28/10: registrar o retorno do orientador e converter em issues da S1.
+- [ ] 28/10: abrir a PR de documentação (`doc/` → `docs/`) e a PR de estrutura; integrar a estrutura até 30/10.
+- [ ] S2: #45 passa a cobrir também o 4º teste instável (`test_scheduler`, 28/30 na `develop`) e a margem do timer de IA (14 s contra 15 s).
+- [ ] S2: resolver o `validate-compose` reprovado do #47 antes de contá-lo como concluído.
+- [ ] S2 (stretch): painel exibir MTTD e burn rate, hoje só pela API.
+- [ ] Confirmar com o orientador: #13 e #25 em 10/11, data da banca e licença do repositório.
+
+## Referências
+
+- [Plano de sprints pós-demo](plano-sprints-pos-demo.md)
+- [Plano de conclusão de 20/10](historico/plano-conclusao-2026-10-20.md)
+- [Git Flow do SigmaTI](guias/gitflow.md)
+- [Fluxo de trabalho do TCC](guias/fluxo-de-trabalho-tcc.md)
+- [Quadro SigmaTI](https://trello.com/b/vswV1j1T/sigmati)
