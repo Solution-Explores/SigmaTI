@@ -1,10 +1,12 @@
 """Repositório PostgreSQL: alterações de estado e eventos confirmam juntos."""
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from datetime import datetime, timedelta, timezone
 import math
 import json
 import re
 import uuid
+from types import SimpleNamespace
+import psycopg
 
 from sqlalchemy import delete, select, text, update
 from sqlalchemy.dialects.postgresql import insert
@@ -35,6 +37,33 @@ AGGREGATE_UPSERT = text("INSERT INTO medicoes_agregadas "
     "latencia_min=LEAST(medicoes_agregadas.latencia_min,EXCLUDED.latencia_min), "
     "latencia_max=GREATEST(medicoes_agregadas.latencia_max,EXCLUDED.latencia_max)")
 
+BATCH_MEASUREMENTS = """INSERT INTO medicoes (id,ts,alvo_id,sucesso,latencia_ms)
+SELECT * FROM unnest(%s::varchar[],%s::timestamptz[],%s::varchar[],%s::boolean[],%s::float8[])
+ON CONFLICT (id,ts) DO NOTHING RETURNING id"""
+BATCH_DETECTORS = """INSERT INTO detectores (id,documento,versao,estado,atualizado_em)
+SELECT id,doc::jsonb,version,'ready',ts FROM
+unnest(%s::varchar[],%s::text[],%s::int[],%s::timestamptz[]) AS b(id,doc,version,ts)
+ON CONFLICT (id) DO UPDATE SET documento=EXCLUDED.documento,versao=EXCLUDED.versao,
+estado=EXCLUDED.estado,atualizado_em=EXCLUDED.atualizado_em"""
+BATCH_AGGREGATES = """INSERT INTO medicoes_agregadas
+(alvo_id,periodo,ts,total,sucessos,latencia_n,latencia_soma,latencia_min,latencia_max)
+SELECT * FROM unnest(%s::varchar[],%s::varchar[],%s::timestamptz[],%s::bigint[],
+%s::bigint[],%s::bigint[],%s::float8[],%s::float8[],%s::float8[])
+ON CONFLICT (alvo_id,periodo,ts) DO UPDATE SET
+total=medicoes_agregadas.total+EXCLUDED.total,sucessos=medicoes_agregadas.sucessos+EXCLUDED.sucessos,
+latencia_n=medicoes_agregadas.latencia_n+EXCLUDED.latencia_n,
+latencia_soma=medicoes_agregadas.latencia_soma+EXCLUDED.latencia_soma,
+latencia_min=LEAST(medicoes_agregadas.latencia_min,EXCLUDED.latencia_min),
+latencia_max=GREATEST(medicoes_agregadas.latencia_max,EXCLUDED.latencia_max)"""
+BATCH_INCIDENTS = """INSERT INTO incidentes (id,alvo_id,tipo,severidade,detectado_em)
+SELECT id,target,kind,'P3',ts FROM unnest(%s::varchar[],%s::varchar[],%s::varchar[],%s::timestamptz[])
+AS b(id,target,kind,ts) ON CONFLICT (alvo_id,tipo) WHERE resolvido_em IS NULL
+DO NOTHING RETURNING id,alvo_id,tipo"""
+
+
+def _arrays(rows, names):
+    return tuple([row[name] for row in rows] for name in names)
+
 
 
 def utc(value=None):
@@ -60,18 +89,24 @@ class PostgresOperationalStore:
         except SQLAlchemyError:
             raise PersistenceUnavailable("Operação de persistência indisponível.") from None
 
-    def _event(self, session, actor, action, resource, details=None):
+    def _event(self, session, actor, action, resource, details=None, *, batch=None):
         # Serializa a atribuição dos IDs até o commit: futura leitura incremental
         # não pode ultrapassar um evento anterior ainda não confirmado.
         # Flush dos dados antes do lock global e apenas uma ida para lock+evento.
         # O lock permanece até o commit, preservando ordem de replay entre workers.
         session.flush()
+        events = batch if batch is not None else [dict(actor=actor, action=action, resource=resource, details=details or {})]
+        if not 1 <= len(events) <= 32:
+            raise ValueError('lote de eventos inválido')
+        payload = [dict(ord=i, ts=utc().isoformat(), ator=e['actor'], acao=e['action'],
+            recurso=e['resource'], detalhes=e.get('details') or {}) for i, e in enumerate(events)]
         session.execute(text("WITH event_lock AS MATERIALIZED "
             "(SELECT pg_advisory_xact_lock(7417001)) "
             "INSERT INTO eventos_operacionais (ts, ator, acao, recurso, detalhes) "
-            "SELECT :ts, :actor, :action, :resource, CAST(:details AS JSONB) FROM event_lock"),
-            {"ts": utc(), "actor": actor, "action": action, "resource": resource,
-             "details": json.dumps(details or {}, allow_nan=False)})
+            "SELECT e.ts,e.ator,e.acao,e.recurso,e.detalhes FROM event_lock CROSS JOIN "
+            "jsonb_to_recordset(CAST(:events AS JSONB)) "
+            "AS e(ord int,ts timestamptz,ator text,acao text,recurso text,detalhes jsonb) ORDER BY e.ord"),
+            {'events': json.dumps(payload, allow_nan=False)})
 
     def create(self, kind, identifier, data):
         model = STATE_TABLES[kind]
@@ -175,7 +210,7 @@ class PostgresOperationalStore:
                                                       IncidentRow.tipo == kind, IncidentRow.resolvido_em.is_(None)))
         return columns(row), created is not None
 
-    def record_measurement(self, target_id, success, latency_ms=None, ts=None, identifier=None, *, detector_kind=None):
+    def record_measurement(self, target_id, success, latency_ms=None, ts=None, identifier=None, *, detector_kind=None, _session=None):
         ts = utc(ts)
         if type(success) is not bool or (latency_ms is not None and
                 (not math.isfinite(latency_ms) or latency_ms < 0)):
@@ -183,7 +218,7 @@ class PostgresOperationalStore:
         if detector_kind not in (None, "ewma", "mad"):
             raise ValueError("detector inválido")
         identifier = str(uuid.UUID(identifier)) if identifier else str(uuid.uuid4())
-        with self.transaction() as session:
+        with (self.transaction() if _session is None else nullcontext(_session)) as session:
             self._partition(session, ts)
             target = session.scalar(select(TargetRow).where(TargetRow.id == target_id).with_for_update())
             if target is None:
@@ -229,6 +264,106 @@ class PostgresOperationalStore:
                     self._event(session, "scheduler", "incident.created", latency_incident["id"],
                                 {"alvo_id": target_id, "tipo": "latency"})
             return {"inserted": True, "incident": incident or latency_incident}
+
+    def record_measurements(self, samples):
+        """Até 32 alvos distintos; commit único antes de confirmar os resultados."""
+        if not 1 <= len(samples) <= 32:
+            raise ValueError('lote inválido')
+        rows = []
+        for sample in samples:
+            row = dict(sample)
+            row['ts'] = utc(row.get('ts'))
+            row['identifier'] = str(uuid.UUID(row['identifier'])) if row.get('identifier') else str(uuid.uuid4())
+            if (type(row['success']) is not bool or row.get('detector_kind') not in ('ewma', 'mad')
+                    or row.get('latency_ms') is not None and
+                    (not math.isfinite(row['latency_ms']) or row['latency_ms'] < 0)):
+                raise ValueError('medição inválida')
+            if row.get('latency_ms') is not None:
+                row['latency_ms'] = float(row['latency_ms'])
+            rows.append(row)
+        ids = [row['target_id'] for row in rows]
+        if len(set(ids)) != len(ids) or len({row['identifier'] for row in rows}) != len(rows):
+            raise ValueError('lote exige alvos e identificadores distintos')
+        with self.transaction() as session:
+            # Mesma ordem da ingestão individual: partição antes dos alvos.
+            for month in sorted({r['ts'].replace(day=1, hour=0, minute=0, second=0, microsecond=0) for r in rows}):
+                self._partition(session, month)
+            # Ordem global dos locks evita deadlocks entre lotes concorrentes.
+            # Comandos separados mantêm snapshots READ COMMITTED posteriores
+            # ao lock, mas são enviados juntos para não pagar três roundtrips.
+            raw = session.connection().connection.driver_connection
+            try:
+                with raw.pipeline(), raw.cursor() as locks, raw.cursor() as state_cursor, raw.cursor() as previous:
+                    locks.execute('SELECT id FROM alvos WHERE id = ANY(%s::varchar[]) ORDER BY id FOR UPDATE', (ids,))
+                    state_cursor.execute('SELECT id, documento, versao FROM detectores WHERE id = ANY(%s::varchar[])', (ids,))
+                    previous.execute('SELECT id FROM medicoes WHERE id = ANY(%s::varchar[]) LIMIT 1',
+                        ([r['identifier'] for r in rows],))
+                    locked = {r[0] for r in locks.fetchall()}
+                    states = {r[0]: SimpleNamespace(documento=r[1], versao=r[2]) for r in state_cursor.fetchall()}
+                    existing = previous.fetchone()
+            except psycopg.Error:
+                raise PersistenceUnavailable('Operação de persistência indisponível.') from None
+            if locked != set(ids):
+                raise KeyError('alvo inexistente')
+            if existing is not None:
+                return [self.record_measurement(**row, _session=session) for row in rows]
+            measurements, detectors, aggregates, anomalies = [], [], [], set()
+            for row in rows:
+                target_id, ts, latency = row['target_id'], row['ts'], row.get('latency_ms')
+                stored = states.get(target_id)
+                kind = row['detector_kind']
+                detector = (restore_detector(stored.documento) if stored is not None
+                    and stored.documento['kind'] == kind else EwmaDetector() if kind == 'ewma' else MadDetector())
+                if row['success'] and latency is not None and detector.update(latency):
+                    anomalies.add(target_id)
+                version = stored.versao + 1 if stored is not None else 1
+                detectors.append(dict(id=target_id, documento=dict(detector_snapshot(detector), versao=version),
+                    versao=version, estado='ready', atualizado_em=ts))
+                measurements.append(dict(id=row['identifier'], ts=ts, alvo_id=target_id,
+                    sucesso=row['success'], latencia_ms=latency))
+                for period, start in (('minute', ts.replace(second=0, microsecond=0)),
+                                      ('hour', ts.replace(minute=0, second=0, microsecond=0))):
+                    aggregates.append(dict(alvo_id=target_id, periodo=period, ts=start, total=1,
+                        sucessos=int(row['success']), latencia_n=int(latency is not None),
+                        latencia_soma=float(latency or 0), latencia_min=latency, latencia_max=latency))
+            requests = []
+            for row in rows:
+                kinds = ([] if row['success'] else ['availability']) + (['latency'] if row['target_id'] in anomalies else [])
+                for kind in kinds:
+                    requests.append(dict(id=str(uuid.uuid4()), alvo_id=row['target_id'], tipo=kind,
+                        severidade='P3', detectado_em=row['ts']))
+            active = {}
+            created = []
+            try:
+                with (raw.pipeline(), raw.cursor() as measured, raw.cursor() as state_writer,
+                      raw.cursor() as aggregated, raw.cursor() as incidents, raw.cursor() as current):
+                    measured.execute(BATCH_MEASUREMENTS, _arrays(measurements, ('id','ts','alvo_id','sucesso','latencia_ms')))
+                    state_writer.execute(BATCH_DETECTORS, (
+                        [r['id'] for r in detectors], [json.dumps(r['documento'], allow_nan=False) for r in detectors],
+                        [r['versao'] for r in detectors], [r['atualizado_em'] for r in detectors]))
+                    aggregated.execute(BATCH_AGGREGATES, _arrays(aggregates, (
+                        'alvo_id','periodo','ts','total','sucessos','latencia_n','latencia_soma','latencia_min','latencia_max')))
+                    if requests:
+                        incidents.execute(BATCH_INCIDENTS, _arrays(requests, ('id','alvo_id','tipo','detectado_em')))
+                        current.execute('SELECT * FROM incidentes WHERE alvo_id = ANY(%s::varchar[]) AND resolvido_em IS NULL',
+                            ([r['alvo_id'] for r in requests],))
+                    if len(measured.fetchall()) != len(rows):
+                        raise StateConflict('identificador de medição concorrente')
+                    if requests:
+                        created = incidents.fetchall()
+                        records = current.fetchall()
+                        names = [c.name for c in current.description]
+                        active = {(r['alvo_id'], r['tipo']): r for r in (dict(zip(names, record)) for record in records)}
+            except psycopg.Error:
+                raise PersistenceUnavailable('Operação de persistência indisponível.') from None
+            if created:
+                self._event(session, 'scheduler', 'incident.created', None, batch=[dict(
+                    actor='scheduler', action='incident.created', resource=identifier,
+                    details={'alvo_id': target_id, **({'tipo': kind} if kind == 'latency' else {})})
+                    for identifier, target_id, kind in created])
+            return [{'inserted': True, 'incident':
+                (active.get((r['target_id'], 'availability')) if not r['success'] else None)
+                or (active.get((r['target_id'], 'latency')) if r['target_id'] in anomalies else None)} for r in rows]
 
     def measurements(self, target_id, limit=1000):
         with self.transaction() as session:

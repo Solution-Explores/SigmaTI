@@ -25,6 +25,152 @@ class Store:
         self.results.append((args, kwargs))
 
 
+def test_transient_capacity_waits_in_calendar_without_dropping_measurements(monkeypatch):
+    async def scenario():
+        complete = threading.Event()
+        class CompletionStore(Store):
+            def record_measurement(self, *args, **kwargs):
+                super().record_measurement(*args, **kwargs)
+                if len(self.results) == 4:
+                    complete.set()
+        store = CompletionStore(4)
+        for row in store.targets:
+            row.update(intervalo_s=2.0, timeout_s=1.0)
+        def probe(*args, **kwargs):
+            time.sleep(0.02)
+            return ProbeResult(status='up', latency_ms=20)
+        scheduler = Scheduler(store, concurrency=1, refresh=0.05, probe_fn=probe)
+        # Quatro vencimentos simultâneos; não depender da sorte do jitter.
+        monkeypatch.setattr(scheduler.random, 'uniform', lambda low, high: low)
+        scheduler.start()
+        try:
+            assert await asyncio.to_thread(complete.wait, 3)
+            assert {args[0] for args, _ in store.results} == {'0', '1', '2', '3'}, scheduler.status()
+            assert scheduler.metrics.missed == 0
+            assert scheduler.metrics.capacity_deferrals > 0
+            assert scheduler.metrics.peak_active == 1
+            assert scheduler.metrics.max_lag_seconds < 0.5
+            assert scheduler.status()['queued'] == 0
+        finally:
+            await scheduler.stop()
+    asyncio.run(scenario())
+
+
+def test_batch_waiters_are_acknowledged_only_after_store_finishes():
+    async def scenario():
+        entered, release = threading.Event(), threading.Event()
+        class BatchStore(Store):
+            def record_measurements(self, rows):
+                self.results.extend(rows)
+                entered.set()
+                assert release.wait(3)
+                return [{'inserted': True} for _ in rows]
+        store = BatchStore()
+        scheduler = Scheduler(store, probe_fn=lambda *a, **k: ProbeResult(status='up', latency_ms=1))
+        tasks = [asyncio.create_task(scheduler._collect(target(str(i)))) for i in range(12)]
+        try:
+            for _ in range(150):
+                if entered.is_set() and scheduler.status()['pending_writes'] == 12:
+                    break
+                await asyncio.sleep(0.01)
+            assert entered.is_set()
+            assert scheduler.status()['pending_writes'] == 12
+            assert scheduler.metrics.completed == 0
+            assert not any(t.done() for t in tasks)
+            release.set()
+            await asyncio.gather(*tasks)
+            assert scheduler.metrics.completed == 12
+            assert len(store.results) == 12
+        finally:
+            release.set()
+            await asyncio.gather(*tasks, return_exceptions=True)
+            await scheduler.stop()
+    asyncio.run(scenario())
+
+
+def test_stop_drains_reserved_batch_before_returning():
+    async def scenario():
+        release, entered = threading.Event(), threading.Event()
+        class BatchStore(Store):
+            def record_measurements(self, rows):
+                entered.set()
+                assert release.wait(3)
+                self.results.extend(rows)
+                return [{'inserted': True} for _ in rows]
+        store = BatchStore()
+        # Este caso testa drenagem, não o prazo mínimo da sonda no Windows.
+        store.targets[0]['timeout_s'] = 1.0
+        store.targets[0]['intervalo_s'] = 2.0
+        scheduler = Scheduler(store, refresh=0.05,
+            probe_fn=lambda *a, **k: ProbeResult(status='up', latency_ms=1), seed=1)
+        scheduler.start()
+        stopping = None
+        try:
+            assert await asyncio.to_thread(entered.wait, 3)
+            assert scheduler.status()['pending_writes'] == 1, scheduler.status()
+            stopping = asyncio.create_task(scheduler.stop())
+            await asyncio.sleep(0.03)
+            assert not stopping.done()
+            release.set()
+            await stopping
+            assert len(store.results) == 1
+            assert scheduler.status()['pending_writes'] == 0
+        finally:
+            release.set()
+            if stopping is None:
+                await scheduler.stop()
+            else:
+                await stopping
+    asyncio.run(scenario())
+
+
+def test_batch_failure_releases_all_waiters_without_confirming_samples():
+    async def scenario():
+        class BatchStore(Store):
+            def record_measurements(self, rows):
+                raise RuntimeError('synthetic')
+        scheduler = Scheduler(BatchStore(), probe_fn=lambda *a, **k: ProbeResult(status='up', latency_ms=1))
+        tasks = [asyncio.create_task(scheduler._collect(target(str(i)))) for i in range(4)]
+        await asyncio.gather(*tasks)
+        await scheduler.stop()
+        assert scheduler.metrics.errors == 4
+        assert scheduler.metrics.completed == 0
+        assert scheduler.status()['pending_writes'] == 0
+    asyncio.run(scenario())
+
+
+def test_persistence_latency_is_separate_from_probe_and_tracks_pending_writes():
+    async def scenario():
+        release = threading.Event()
+        class BlockedStore(Store):
+            def record_measurement(self, *args, **kwargs):
+                assert release.wait(3)
+                super().record_measurement(*args, **kwargs)
+        scheduler = Scheduler(BlockedStore(), probe_fn=lambda *a, **k: ProbeResult(status='up', latency_ms=1))
+        task = asyncio.create_task(scheduler._collect(target()))
+        try:
+            for _ in range(100):
+                if scheduler.status()['pending_writes']:
+                    break
+                await asyncio.sleep(0.01)
+            assert scheduler.status()['pending_writes'] == 1
+            assert scheduler.metrics.probe_finished == 1
+            assert scheduler.metrics.write_finished == 0
+            await asyncio.sleep(0.06)
+            release.set()
+            await task
+            assert scheduler.status()['pending_writes'] == 0
+            assert scheduler.metrics.write_finished == 1
+            assert scheduler.metrics.max_write_seconds >= 0.05
+            assert scheduler.metrics.write_seconds_total >= scheduler.metrics.max_write_seconds
+            assert scheduler.metrics.completed == 1
+        finally:
+            release.set()
+            await asyncio.gather(task, return_exceptions=True)
+            await scheduler.stop()
+    asyncio.run(scenario())
+
+
 def test_timeout_holds_slot_and_discards_late_success():
     async def scenario():
         release = threading.Event()
@@ -84,6 +230,7 @@ def test_saturated_scheduler_has_no_backlog_or_per_target_overlap():
         assert scheduler.metrics.peak_active <= 4
         assert scheduler.metrics.missed > 0
         assert scheduler.metrics.max_lag_seconds < 0.3
+        assert scheduler.metrics.missed_capacity > 0
     asyncio.run(scenario())
 
 
@@ -165,11 +312,7 @@ def test_shutdown_finishes_started_write_before_releasing_leadership():
             probe_fn=lambda *a,**k: ProbeResult(status="up",latency_ms=1))
         scheduler.random.uniform=lambda low,high: low
         scheduler.start()
-        for _ in range(500):
-            if writing.is_set():
-                break
-            await asyncio.sleep(0.01)
-        assert writing.is_set(), scheduler.status()
+        assert await asyncio.to_thread(writing.wait, 3), scheduler.status()
         stopping=asyncio.create_task(scheduler.stop())
         try:
             await asyncio.sleep(0.05)

@@ -206,10 +206,11 @@ def registrar_auditoria_privacidade(categoria: str, detalhe: str) -> None:
     """Audita somente códigos fixos; nunca inclui texto ou identificadores."""
     audit_logger.warning("AUDIT_PRIVACY event=sanitization_failed")
     from auth import obter_auditor
-    auditor = obter_auditor()
-    if auditor is None:
-        raise SanitizationError("Auditoria de privacidade indisponível.")
-    auditor.registrar("sanitizer", "privacy.sanitization_failed", "outbound_ai", {"motivo": "blocked"})
+    try:
+        obter_auditor().registrar("sanitizer", "privacy.sanitization_failed", "outbound_ai", {"motivo": "blocked"})
+    except (RuntimeError, ValueError, OSError):
+        # obter_auditor falha fechado; trilha inválida ou ocupada também bloqueia.
+        raise SanitizationError("Auditoria de privacidade indisponível.") from None
 
 
 def sanitizar_texto(texto: str) -> ResultadoSanitizacao:
