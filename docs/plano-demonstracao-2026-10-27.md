@@ -66,7 +66,7 @@ Joyce continua no projeto, mas não participa deste plano.
 | Qua 21/10 | Conferir o pacote vindo do estágio (`SHA256SUMS`), subir a VM e autenticar o `gh`. Conferir o CI do #43 e esboçar o roteiro. | Revisar o PR #43. | Rodadas 1 a 3. |
 | Qui 22/10 | Corrigir os achados e integrar o #43. Retargetar o #44 e rodar o CI. Preparar os dados da demonstração. | Revisar o PR #44. | Rodada 4 (custo da auditoria); rodada 5 (aceite do candidato `0a6ce35`). |
 | Sex 23/10 | Integrar o #44. Executar o aceite. Ensaio 1. | Revisar a correção da sonda e conferir o roteiro. | Aceite na `develop` integrada. |
-| Sáb 24/10 | Dia todo: painel manual (pendente desde o ensaio 1), ajustes do ensaio 1 e atender dúvidas do Iohan. Só leitura: levantar os caminhos (imports, uvicorn, alembic, CI, scripts) que a PR de estrutura vai mover em 28/10. | À tarde: executar o roteiro sozinho, no próprio computador, a partir da `develop` integrada. | — |
+| Sáb 24/10 | Dia todo: painel manual (feito em 23/10), ajustes do ensaio 1 e atender dúvidas do Iohan. Só leitura: levantar os caminhos (imports, uvicorn, alembic, CI, scripts) que a PR de estrutura vai mover em 28/10. | À tarde: executar o roteiro sozinho, no próprio computador, a partir da `develop` integrada. | — |
 | Dom 25/10 | Manhã: corrigir o que o Iohan achou e fechar o checklist de terça. Opcional: #25. | Segunda execução independente, se houver correções. Opcional: #25. | — |
 | Seg 26/10 | Corrigir pendências. Ensaio 2. Gravar a contingência. Atualizar os números dos slides. **Às 18h, congelar o SHA da entrega.** | Após 22h: conferir o SHA congelado e rodar o smoke. | Após 18h: bateria completa no SHA congelado. |
 | Ter 27/10 | Manhã: ensaio final e smoke no SHA congelado. Tarde: revisar proposta e slides. **16h: preparar o ambiente. 18h: demonstração.** | Apoio à noite; sem tarefa crítica. | — |
@@ -251,6 +251,7 @@ Começa na quarta, 28/10, depois da apresentação, dividido em duas PRs para a 
    - `deploy/` recebe o compose e o lock de imagens.
    - Só `git mv` e ajuste de caminhos: imports, uvicorn, alembic, CI e scripts. Nenhuma mudança de lógica.
    - Caminhos que mudam (levantamento de 23/10): `pytest.ini` (`testpaths`, `pythonpath`), `alembic.ini` (`script_location`), `.github/workflows/api-config.yml` (requirements, `sigma-frontend`, `scripts/`), `scripts/validate_panel.py` e `scripts/validate_infrastructure.py` (`sigma-frontend`, `docker-images.lock.json`), os `scripts/*.py` que importam `persistence`, os testes em `tests/` (imports de `main`, `routers` e `persistence`), `.gitignore`, o nome em `package.json` e o `docker-compose.yml`.
+   - **Complemento do levantamento (23/10, só leitura, `git grep` no `75b1874`):** faltavam na lista acima `deploy/sigma-coleta.service` (`WorkingDirectory=/opt/sigma` e `uvicorn main:app`; passa a apontar para `backend`), `scripts/validate_compose_credentials.py`, `scripts/validate_installation.py` e `tests/test_infrastructure_policy.py` (citam `docker-compose.yml` e `docker-images.lock.json`), e `migrations/env.py` (importa `persistence`; anda junto com `backend/migrations/`). Os scripts de shell (`install.sh`, `update.sh`, `backup.sh`, `restore.sh`, `smoke.sh`) não citam `main:app`, `sigma-frontend` nem o lock de imagens. Também citam os caminhos antigos só em texto: `README.md`, `DESIGN.md`, `PRODUCT.md`, `engenharia/README.md` e `engenharia/docs/02-guia-de-implementacao.md`.
    - **`scripts/` fica na raiz** (decidido em 23/10): todos usam `ROOT = Path(__file__).resolve().parents[1]` como raiz do repositório para achar o compose, o lock de imagens e o frontend; dentro de `backend/` essa raiz mudaria. Em vez disso, os scripts que importam módulos do backend (`create_demo_users`, `executar_experimento_e6`, `manage_identity`, `retain_measurements`, `serve_browser_acceptance`, `validate_api_acceptance`, `validate_collection`, `validate_recovery`) passam a inserir `ROOT / "backend"` no `sys.path`; `recovery.py` e `validate_postgres.py` entram na conferência por usarem esses caminhos de forma indireta. `engenharia/` (pacote `sigma_eng`) continua onde está.
    - Depois disso: CI verde, regressão do Codex na VM e revisão do Iohan.
    - Integrar até sexta, 30/10, para não apertar a release de 03/11.
@@ -284,13 +285,28 @@ Começa na quarta, 28/10, depois da apresentação, dividido em duas PRs para a 
 - **#45/#46:** comentários de 22/10 existem. A #45 registra o quarto teste 28/30 (`8cb1e23`) e 29/30 (`8661916`), sem causa isolada; #46 registra HMAC da rodada 4. A triagem “27/10 após demo às 18h” conflita com a nova apresentação; Trello propõe 28/10, sem alterar critérios GitHub.
 - **Agenda:** 23/10 aceite VM/painel manual/#47; 24/10 à tarde roteiro do Iohan; 25/10 correções e segunda execução se necessária, #25 opcional; 26/10 ensaio 2, gravação, slides, freeze às 18h e bateria completa do Codex depois, smoke do Iohan após 22h; 27/10 manhã ensaio/smoke, 16h preparar e desligar `sigma-restore-25`, 18h demo; 28/10 organização. Joyce/DS mantêm datas e gates, sem ampliar escopo até terça.
 
+### Sexta, 23/10: rodada 7 retomada e painel manual
+
+Horários UTC−4. Feito por Claude, com autorização do Vinícius para usar a VM e o Docker.
+
+- **Rodada 7 retomada na VM** (`validacao-vm/rodada-2026-10-23a/`, resultado em `RESULTADO.md`, 213 hashes em `SHA256SUMS.txt`). A rodada `22g` tinha parado em 22/10 às 23:45 e a VM estava desligada. Foram aproveitados os resultados já medidos nela (pytest 491 aprovados e 1 falha de ambiente, API 20/20, painel 4/4, infraestrutura PASS) e rodado o que faltava no mesmo candidato `75b1874`:
+  - e2e do painel pelo pytest, depois do `npm ci`: aprovado, o que explica a única falha do pytest completo (a suíte completa não foi repetida; **não se declara 492/492**);
+  - cinco cargas de 200 alvos: p95 queda→SSE de 0,395 a 0,496 s, máximo de 0,545 s, atraso máximo do calendário de 0,056 a 0,283 s, 0 erros, 0 timeouts, `missed_capacity` 0;
+  - 80 execuções isoladas: 79 aprovadas. A falha foi `test_real_budget_cancels_slow_provider_within_15_seconds` no worktree B, com 15,0248 s contra o limite de 15 s. Entra na #45 (margem do timer de 14 s).
+- **#47:** o head agora é `0b372cb` e as cinco verificações estão aprovadas, `validate-compose` incluído. Isso substitui o "4 aprovados + 1 reprovado" de 22/10. Falta a revisão do Iohan (sem Approve nem Request changes).
+- **#6 e #8** seguem abertas; o aceite é registrado, mas as issues só fecham com todos os critérios.
+- **Painel manual** (navegador embutido, `develop@75b1874`, banco `sigma-db` do Docker Desktop): etapas 2 a 6 passaram, com os achados em [roteiro-demonstracao.md](roteiro-demonstracao.md). Principais: incidente em 0,7 s sem recarregar, MTTA 17,07 s e MTTR 27,68 s no painel, MTTD 0,67 s pela API, auditoria íntegra e anonimização na tela. Dois cuidados novos: subir o serviço de novo abre um incidente extra de latência, e recarregar a página encerra a sessão.
+- A VM `sigma-restore-25` foi desligada depois da rodada. O Docker Desktop ficou ligado; a demo foi encerrada e o schema do ensaio foi removido (0 schemas `sigma_panel_*` restantes).
+
 ### Pendente
-- [x] Ensaio de API Windows de 22/10 confirmou os itens ⚠; painel manual continua pendente.
+- [x] Ensaio de API Windows de 22/10 confirmou os itens ⚠; painel manual feito em 23/10 (ver "Sexta, 23/10").
 - [x] CI do #43 aprovado e integração feita; Approve formal não ocorreu e não é declarado.
 - [x] Base #44 mudada para `develop`, CI aprovado e integração em 22/10 após #43.
 - [x] PR #47 aberto e evidência da rodada 4 publicada na #46.
-- [ ] 23/10 até 10h: rodada 7 na VM e aceite final; critérios #6/#8 ainda abertos.
-- [ ] 23/10: painel manual por Vinícius; revisão #47 pelo Iohan à noite e tratamento do CI reprovado.
+- [x] 23/10: rodada 7 retomada na VM e concluída (ver "Sexta, 23/10"); critérios #6/#8 seguem abertos.
+- [x] 23/10: painel manual feito; CI do #47 voltou a passar (`0b372cb`).
+- [ ] 23/10 à noite: revisão do #47 pelo Iohan.
+- [ ] 23/10: anexar o resultado da rodada 7 retomada à #45 (falha 1/20 do provedor) e à #6/#8, se o Vinícius quiser.
 - [ ] 24/10 à tarde: roteiro independente do Iohan; 25/10 correções, segunda execução se necessária, #25 opcional.
 - [ ] 26/10: ensaio 2, gravação, slides; congelar SHA às 18h e repetir bateria completa; smoke Iohan após 22h.
 - [ ] 27/10: ensaio/smoke de manhã; desligar VM e preparar ambiente às 16h; demo às 18h.

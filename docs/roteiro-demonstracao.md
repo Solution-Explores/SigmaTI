@@ -4,6 +4,8 @@ Base: [plano da demonstração](plano-demonstracao-2026-10-27.md). Código: `dev
 
 > **Situação:** Ensaio 1 feito em 22/10, à noite, no Windows, na `develop@75b1874`. Os passos de API (2 a 6) rodaram pelos comandos de apoio em [demo/](demo/); a interface do painel foi coberta só pelo `validate_panel.py` (4/4), não por um ensaio manual no navegador.
 > Resultado: os dois itens ⚠ foram confirmados e o `demo.ps1` foi corrigido (veja "Achados do Ensaio 1").
+>
+> **Ensaio manual do painel feito em 23/10, à tarde, no navegador embutido do Claude, na mesma `develop@75b1874`:** etapas 2 a 6 percorridas no painel, com `browser.analyst`, `browser.reviewer` e `browser.manager` (veja "Achados do ensaio manual do painel").
 
 ### Achados do Ensaio 1
 - `/api/eng/incidentes` devolve `{ "incidentes": [...] }`, não uma lista. `Get-SigmaMetricas` e `Show-Sigma403` foram corrigidos (a contagem de usuários agora mostra 4).
@@ -13,6 +15,16 @@ Base: [plano da demonstração](plano-demonstracao-2026-10-27.md). Código: `dev
 - Anonimização confirmada: `Equipamento: [SWITCH_REDE] | Erro: [NOME_REMOVIDO] [CPF_REMOVIDO] relatou falha no [SWITCH_REDE]` e diagnóstico "Diagnóstico K10 simulado".
 - No PowerShell 5.1, acentos de respostas JSON saem trocados no terminal (`DiagnÃ³stico`). É só exibição; o painel mostra certo.
 - Quatro olhos: o solicitante recebe HTTP 409 ao decidir; o revisor aprova. Auditoria: `integra: true`, 42 entradas após o ensaio.
+
+### Achados do ensaio manual do painel (23/10)
+- Funcionou no navegador, sem recarregar a página: o incidente do "Switch UTI" apareceu 0,7 s depois da queda; **Reconhecer** e **Resolver incidente** atualizaram a tela. No painel: MTTA 17,07 s e MTTR 27,68 s. Pela API (`Get-SigmaMetricas`): MTTD 0,67 s, MTTA 17,07 s, MTTR 27,68 s. `Get-SigmaBurnRate`: `at_risk`, 12 min restantes, alerta `page` (burn 20,0 na janela longa).
+- **Subir o serviço de novo abre um incidente extra de latência no mesmo alvo** (P3, `latency`, detector EWMA; apareceu logo depois do serviço voltar). A lista passa a ter dois incidentes "Switch UTI", e o mais recente (latência) fica em primeiro. **Resolva o de `availability`, o segundo da lista.** Se quiser a lista limpa, reconheça o de latência também.
+- A lista de incidentes se redesenha quando chegam eventos: se o clique falhar com "elemento removido", clique de novo olhando a linha certa.
+- **Aprovações:** "Nova solicitação" começa recolhida; clique no título para abrir o formulário. O revisor vê os dois pedidos (o pré-carregado e o novo) com **Aprovar** liberado. Ao aprovar, a tela mostra "Solicitação aprovada." e recarrega a lista.
+- **Auditoria** (`browser.manager`): "Integridade consistente · 11 registros", com `approvals.updated` do revisor, `approvals.created` do analista, `incident.resolve`, `incident.ack`, `incident.created` e `target.created` nas primeiras linhas.
+- **Diagnóstico** (`browser.manager`): o quadro "Dados enviados à IA" mostra `Equipamento: [SWITCH_REDE] | Erro: [NOME_REMOVIDO] [CPF_REMOVIDO] relatou falha no [SWITCH_REDE]. Forneça um diagnóstico de rede curto e direto.` e a resposta "Diagnóstico K10 simulado". Fecha a pendência da etapa 6 ("a tela do painel não foi conferida à mão").
+- **Recarregar a página (F5) encerra a sessão** e volta ao login. Não recarregue durante a demonstração.
+- Não conferido à mão neste ensaio: a visão do `browser.demo` (N1) no painel (só o 403 pela API) e a janela anônima com duas sessões em navegador real; o ensaio usou duas abas do navegador embutido.
 
 ## Preparação (terça às 16h, cerca de 10 min; checklist em [demo/checklist-terca.md](demo/checklist-terca.md))
 
@@ -99,13 +111,13 @@ Faça tudo na raiz do worktree da `develop` (`C:\Users\Vinicius Lima\Desktop\sig
    `Paciente Maria Silva CPF 529.982.247-25 relatou falha no sw-uti-01`
 2. Mostre o quadro **Dados enviados à IA**. Saída esperada do `anonimizar_dados`, conferida em 21/10 na `8cb1e23`:
    `[NOME_REMOVIDO] [CPF_REMOVIDO] relatou falha no [SWITCH_REDE]`
-   Confirmado no Ensaio 1 pela API (`dados_enviados_nuvem`). A tela do painel não foi conferida à mão.
+   Confirmado no Ensaio 1 pela API (`dados_enviados_nuvem`) e, em 23/10, na tela do painel.
 3. Mostre que o diagnóstico vem do provedor simulado: "Diagnóstico K10 simulado".
 4. Explique que a sanitização falha fechada: se sobrar um dado pessoal, a chamada não é feita.
 
 ### 7. Resultados (2 min)
 - CI aprovado nos PRs integrados.
-- Planejado: aceite na sexta, 23/10, e repetição no SHA congelado de segunda, 26/10. Rodada 7 pendente; não apresentar testes futuros como executados. Windows de 22/10: painel 4/4, aceite HTTP PASS, p95 queda→SSE 0,806 s em loopback; 491 aprovados/1 pulado informados pelo Vinícius (log bruto não localizado nesta conferência). Não comparar com a VM antiga.
+- Rodada 7 retomada na VM em 23/10 (`validacao-vm/rodada-2026-10-23a/RESULTADO.md`), em `75b1874`: API 20/20, painel 4/4, infraestrutura PASS e cinco cargas de 200 alvos com p95 queda→SSE de 0,395 a 0,496 s, sem erros. No teste do provedor, 1 falha em 20 execuções (15,02 s contra o limite de 15 s; #45). Repetição no SHA congelado de segunda, 26/10; não apresentar testes futuros como executados. Windows de 22/10: painel 4/4, aceite HTTP PASS, p95 queda→SSE 0,806 s em loopback; 491 aprovados/1 pulado informados pelo Vinícius (log bruto não localizado nesta conferência). Não comparar com a VM antiga.
 - Ensaio de carga, **#44 integrado em `75b1874`**: 200 alvos, intervalo de 2 s e 32 trabalhos.
   - Antes da correção: **0 de 5**. Depois: **5 de 5**, com 489/489 testes no candidato `ddd4840`. Números da VM em 21/10, a confirmar no aceite de sexta e no SHA congelado de segunda.
   - Mensagem central: **na VM e no candidato `ddd4840`, o cliente SSE recebeu os alertas em até 0,410 s (p95)**; não mede 30 renderizações do painel nem o SHA congelado.
