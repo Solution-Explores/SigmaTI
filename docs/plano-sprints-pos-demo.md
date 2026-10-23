@@ -25,7 +25,7 @@ Fontes: `docs/plano-demonstracao-2026-10-27.md`, `docs/historico/rascunhos/docum
 | P0 | #5: anonimização contra critérios completos + casos adversariais | 3 | Iohan/Vinícius | Corpus E6 |
 | P0 | Aceite da release `v1.0.0` (31/10 e 01/11) e tag na `main` | 2 | Vinícius | Estrutura integrada |
 | P0 | Reserva para o retorno do orientador sobre a demo (triar em 28/10) | 2 | Vinícius | Retorno da demo |
-| P1 | PR de documentação/README (subpastas de `docs/`, arquivos soltos) + descrição e tópicos do repositório | 2 | Vinícius | `feature/trail-fase1` (`docs/` já comitado, sem PR) |
+| P1 | PR de documentação/README (subpastas de `docs/`, `specs/` para `docs/specs/`, arquivos soltos) + descrição e tópicos do repositório | 2 | Vinícius | `feature/trail-fase1` (`docs/` já comitado, sem PR) |
 | P1 | #25: restauração em outra máquina física | 2 | Iohan | Acesso à segunda máquina |
 | P2 | #13: âncora externa da auditoria + rotação HMAC | 5 | Vinícius | Decisão do orientador |
 
@@ -42,7 +42,7 @@ Fontes: `docs/plano-demonstracao-2026-10-27.md`, `docs/historico/rascunhos/docum
 | Revisão só à noite/fim de semana (Iohan) | PR de estrutura trava 30/10 | Abrir PR em 28/10; revisão em lotes |
 | Mover pastas quebra CI/compose | `validate-compose` reprovado (já ocorreu no #47) | Rodar CI no PR antes do aceite; manter rollback |
 | Máquina física indisponível (#25) | Item não fecha | Registrar como limitação no TCC |
-| Links quebrados ao mover subpastas de `docs/` e `resultados/` | Referências mortas em `README.md`, `specs/*` e scripts | `git grep` dos caminhos antigos, `scripts/validate_*` e CI antes do merge |
+| Links quebrados ao mover subpastas de `docs/`, `specs/` (para `docs/specs/`) e `resultados/` | Referências mortas em `README.md`, `specs/*` e scripts | `git grep` dos caminhos antigos, `scripts/validate_*` e CI antes do merge |
 | `feature/trail-fase1` ficar sem PR | `docs/` só existe nessa branch | Abrir o PR de documentação em 28/10, primeiro item do dia |
 
 ---

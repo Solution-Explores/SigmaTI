@@ -229,10 +229,16 @@ Começa na quarta, 28/10, depois da apresentação, dividido em duas PRs para a 
      | `arquitetura/` | `stack-de-tecnologia.md`, `estudo-de-caso.md` |
      | `tcc/` | `diario-bordo/`, `relatorio-orientador-2026-10-21.md`, `proposta-orientador.md` |
      | `demo/` | `roteiro-demonstracao.md`, `checklist-terca.md`, `demo.ps1`, `subir_demo.py`, rascunhos das issues |
+     | `specs/` | a pasta `specs/` da raiz inteira (19 pastas, 52 arquivos), movida como está |
 
-     `design/` (protótipo da Joyce) e `historico/` (registros datados) continuam como pastas próprias. `specs/` **fica na raiz**; o `docs/README.md` apenas aponta para `../specs/`.
-   - Arquivos soltos da raiz: `revisao_pr_fix_base_issues.md` e `resultados/` (3 evidências) vão para `docs/historico/`. Cuidado com `resultados/`: `scripts/executar_experimento_e6.py:101` grava nele por padrão, `specs/009-010-instalacao-aceite/evidencias.md` e `specs/011-recuperacao-sprint/evidencias.md` linkam para os arquivos, e `engenharia/sigma_eng/api.py` usa o nome `resultados/` como diretório de saída da auditoria (isso é runtime e não muda). Ajustar o padrão do script e os dois links na mesma PR.
-   - Os links quebram ao mover subpastas: atualizar `README.md`, `docs/README.md`, `specs/*`, `scripts/install.sh` e as mensagens dos scripts, conferindo com `git grep -n "docs/"` antes do merge.
+     `design/` (protótipo da Joyce) e `historico/` (registros datados) continuam como pastas próprias. O plano de sprints vai para `planejamento/`, junto do plano da demonstração.
+   - **`specs/` → `docs/specs/`** (decidido em 23/10, seguindo o plano de 21/10). Só documentos são afetados: nenhum código, script ou CI referencia `specs/`. Em contrapartida, os 22 links relativos `../../` que saem das specs (16 arquivos; para `README.md`, `engenharia/`, `resultados/` etc.) ganham um nível, e os 10 links `../` entre specs continuam válidos. Fora de `specs/`, 13 arquivos citam o caminho: `README.md`, `DESIGN.md`, `PRODUCT.md`, `docs/README.md`, `docs/design/README.md`, `docs/design/prototipo-figcraft/MASTER.md`, `docs/guias/instalacao.md`, `docs/guias/politica-imagens-e-portas.md`, `docs/guias/organizacao-repositorio-2026-10-23.md`, `docs/historico/plano-conclusao-2026-10-20.md`, os dois planos e `engenharia/docs/05-seguranca-e-pendencias.md`.
+   - **Arquivos soltos da raiz:** `revisao_pr_fix_base_issues.md` vai para `docs/historico/` e `resultados/` (3 evidências) para `docs/historico/resultados/`. Correções que precisam entrar no mesmo PR:
+     - `scripts/executar_experimento_e6.py:101`: o padrão de saída passa a `docs/historico/resultados/experimento-e6-anonimizacao.md` (o CI já usa `--output test-results/e6.md`);
+     - links `../../resultados/...` em `specs/009-010-instalacao-aceite/evidencias.md` e `specs/011-recuperacao-sprint/evidencias.md` passam a `../../historico/resultados/...`;
+     - citações textuais de `resultados/experimento-e6-anonimizacao.md` nas specs `005-anonimizador-fail-closed/` (`spec.md`, `plan.md`, `tasks.md`, `evidencias.md`, `registro-issue.md`);
+     - **não** mexer em `engenharia/sigma_eng/api.py`, `engenharia/README.md` e `engenharia/docs/*`: ali `resultados/` é o diretório de saída da auditoria em tempo de execução (`resultados/audit.jsonl`), outro assunto.
+   - Os links quebram ao mover subpastas: atualizar `README.md`, `docs/README.md`, as specs, `scripts/install.sh` e as mensagens dos scripts, conferindo com `git grep -n "docs/"` e `git grep -n "specs/"` antes do merge.
    - README enxuto e apresentável:
      - selos de CI, Python, Node e PostgreSQL;
      - descrição curta e um print do painel, capturado no ensaio de sexta;
@@ -245,7 +251,7 @@ Começa na quarta, 28/10, depois da apresentação, dividido em duas PRs para a 
    - `deploy/` recebe o compose e o lock de imagens.
    - Só `git mv` e ajuste de caminhos: imports, uvicorn, alembic, CI e scripts. Nenhuma mudança de lógica.
    - Caminhos que mudam (levantamento de 23/10): `pytest.ini` (`testpaths`, `pythonpath`), `alembic.ini` (`script_location`), `.github/workflows/api-config.yml` (requirements, `sigma-frontend`, `scripts/`), `scripts/validate_panel.py` e `scripts/validate_infrastructure.py` (`sigma-frontend`, `docker-images.lock.json`), os `scripts/*.py` que importam `persistence`, os testes em `tests/` (imports de `main`, `routers` e `persistence`), `.gitignore`, o nome em `package.json` e o `docker-compose.yml`.
-   - Em aberto: `scripts/` vai para `backend/scripts/` ou fica na raiz; `engenharia/` (pacote `sigma_eng`) continua onde está.
+   - **`scripts/` fica na raiz** (decidido em 23/10): todos usam `ROOT = Path(__file__).resolve().parents[1]` como raiz do repositório para achar o compose, o lock de imagens e o frontend; dentro de `backend/` essa raiz mudaria. Em vez disso, os scripts que importam módulos do backend (`create_demo_users`, `executar_experimento_e6`, `manage_identity`, `retain_measurements`, `serve_browser_acceptance`, `validate_api_acceptance`, `validate_collection`, `validate_recovery`) passam a inserir `ROOT / "backend"` no `sys.path`; `recovery.py` e `validate_postgres.py` entram na conferência por usarem esses caminhos de forma indireta. `engenharia/` (pacote `sigma_eng`) continua onde está.
    - Depois disso: CI verde, regressão do Codex na VM e revisão do Iohan.
    - Integrar até sexta, 30/10, para não apertar a release de 03/11.
 3. **Página do repositório no GitHub** (fora de PR, com confirmação): descrição "About" e tópicos, por exemplo `monitoramento`, `lgpd`, `fastapi`, `react`, `postgresql`, `sse`, `slo`, `rbac` e `tcc`.

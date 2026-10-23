@@ -120,11 +120,11 @@ Layout adotado para `docs/` (origem hoje → destino):
 | `docs/arquitetura/` | já está no lugar |
 | `docs/tcc/` | `historico/diario-bordo/`, `historico/relatorio-orientador-2026-10-21.md`, `demo/proposta-orientador.md` |
 | `docs/demo/` | `roteiro-demonstracao.md` (hoje em `docs/`); o restante já está |
-| `docs/historico/` | fica, e recebe `revisao_pr_fix_base_issues.md` e `resultados/` da raiz |
+| `docs/historico/` | fica, e recebe `revisao_pr_fix_base_issues.md` e `resultados/` da raiz (este como `docs/historico/resultados/`, com o padrão do script do E6 e os links das specs ajustados) |
 | `docs/design/` | fica (protótipo da Joyce) |
-| `specs/` | **fica na raiz**; `docs/README.md` aponta para `../specs/` |
+| `docs/specs/` | `specs/` da raiz inteira (19 pastas, 52 arquivos); só documentos são afetados, nenhum código ou CI referencia `specs/` |
 
-No PR de estrutura, o código vai para `backend/`, `sigma-frontend/` vira `frontend/` e o compose e o lock de imagens vão para `deploy/`. A lista de caminhos que mudam e a pergunta em aberto sobre `scripts/` estão no plano de demonstração.
+No PR de estrutura, o código vai para `backend/`, `sigma-frontend/` vira `frontend/` e o compose e o lock de imagens vão para `deploy/`. `scripts/` e `engenharia/` ficam onde estão; os scripts passam a incluir `backend/` no `sys.path`. A lista de caminhos que mudam está no plano de demonstração.
 
 ## Qual branch baixar em outro computador
 
