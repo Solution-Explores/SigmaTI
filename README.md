@@ -14,11 +14,13 @@ as colunas do quadro e quando uma issue pode ser encerrada.
 
 [Estado operacional PostgreSQL](engenharia/docs/08-estado-operacional.md): esquema,
 recuperação de aprovações/execuções, medições, retenção e APIs. Coleta contínua
-e páginas de gestão são os próximos incrementos do plano.
+e páginas de gestão já foram integradas nos PRs #38/#39. Veja a
+[conferência atual das issues #6/#7/#8/#14](doc/conferencia-issues-6-7-8-14.md),
+com critérios atendidos e lacunas reproduzidas na auditoria.
 
-Persistência de identidades em desenvolvimento: [migrações, Argon2id e sessões
-PostgreSQL](engenharia/docs/07-persistencia-identidades.md). Esse incremento não
-conclui a persistência operacional nem o aceite da demonstração.
+Persistência de identidades integrada: [migrações, Argon2id e sessões
+PostgreSQL](engenharia/docs/07-persistencia-identidades.md). A persistência operacional
+está descrita no guia acima; integração não equivale a homologação hospitalar.
 
 A equipe de TI trabalha sem visibilidade em tempo real da rede. Descobre as falhas só quando os usuários reclamam, o que gera:
 
@@ -29,6 +31,10 @@ A equipe de TI trabalha sem visibilidade em tempo real da rede. Descobre as falh
 Em um hospital, a queda da rede afeta prontuários eletrônicos e equipamentos médicos. O SIGMA troca o suporte reativo por um monitoramento contínuo, com custo zero de licenças.
 
 ## Funcionalidades
+
+Os itens abaixo são requisitos do produto, não uma declaração de que todas as
+integrações já funcionam. Rotação de chaves, relatórios e acesso externo ao n8n
+têm limitações descritas na [conferência de escopo](doc/conferencia-issues-6-7-8-14.md).
 
 - **Alertas em tempo real:** o painel exibe qualquer anomalia em até 5 segundos após a detecção (RF01).
 - **Captura de tráfego e alertas:** integração com o firewall pfSense e com uma sonda própria de análise de pacotes (RF02).
@@ -78,10 +84,13 @@ Itens planejados nesse documento ainda não constituem funcionalidades entregues
 
 A [revisão K11/K12](specs/011-recuperacao-sprint/evidencias.md) documenta as
 correções de sessão, painel e anonimização. A API exige `SIGMA_JWT_SECRET` e
-`SIGMA_USERS_FILE`, além da configuração da IA. Crie hashes locais com
+`SIGMA_DATABASE_URL` no modo PostgreSQL ou `SIGMA_USERS_FILE` no modo legado,
+além da configuração da IA. No modo legado, crie hashes locais com
 `python scripts/create_demo_users.py`; consulte o [roteiro atualizado](doc/instalacao-desenvolvimento.md).
 
-O painel tem login e logout, mas sessões/usuários alterados continuam em memória.
+No modo legado de arquivo, sessões/usuários alterados continuam em memória.
+No modo PostgreSQL, identidades, sessões e revogações são persistidas. A auditoria
+JSONL de autenticação ainda tem [duas lacunas confirmadas](doc/conferencia-issues-6-7-8-14.md#lacunas-confirmadas-a1-e-a2).
 O E6 avalia cada identificador anotado; seus resultados valem apenas para o corpus
 sintético. As issues #5/#6 continuam abertas. A resposta `Incidente Registrado`
 é um contrato legado e não comprova gravação de incidente em PostgreSQL.

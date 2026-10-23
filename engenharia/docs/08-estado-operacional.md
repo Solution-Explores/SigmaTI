@@ -1,3 +1,5 @@
+> Atualização de 20/10/2026: [conferência das entregas integradas e pendências reais](../../doc/conferencia-issues-6-7-8-14.md). Descrições da primeira entrega abaixo preservam seu contexto histórico.
+
 > Fundação integrada no PR #36. Para coleta opt-in, migração 003_collection, detector conectado e SSE, consulte [coleta e eventos](09-coleta-eventos.md).
 
 # Persistência operacional (#7)
@@ -102,7 +104,7 @@ inválida e 503 na indisponibilidade/configuração do banco. O ator vem da sess
 A resposta da execução omite comandos, variáveis e saída bruta; expõe status
 e resultados resumidos. Com coleta opt-in habilitada, alvos ativos passam a ser sondados pelo scheduler. Essas APIs não executam comandos arbitrários. A criação e
 retomada de runbooks por interface ficam para #21/#22; os testes usam executor
-simulado. O painel de gestão está na #15 e ainda não consome essas rotas.
+simulado. O painel #15 já consome as rotas operacionais (PR #39).
 
 ## Aceite reproduzível
 
@@ -114,4 +116,4 @@ confirmando o mesmo JWT, a aprovação pendente e a execução aguardando aprova
 Nenhum comando externo ou IA real é executado. Também há testes de concorrência,
 rollback, particionamento, agregação, retenção e detectores em outro processo.
 
-Sondagem segura (#14) integrada no PR #37. A coleta/SSE (#8) está detalhada no guia 09; próximas frentes: #15 para páginas e #25 para restauração.
+Sondagem segura (#14) integrada no PR #37. A coleta/SSE (#8) está detalhada no guia 09; páginas #15 integradas no PR #39 e recuperação local #25 no PR #40; aceite em outra máquina permanece pendente.

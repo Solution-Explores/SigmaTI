@@ -74,4 +74,6 @@ registrar hosts, saídas ou credenciais. Não constitui correção de capacidade
 
 O runner usa PostgreSQL 15 fixado no Compose. `--image` permite ensaio adicional explícito com outra versão, sem mudar o padrão. `scripts/validate_collection.py` também pode rodar com SIGMA_TEST_DATABASE_URL apontando para banco descartável. Ele cria schema aleatório próprio, migra, inicia/encerra Uvicorn, executa 30 quedas TCP com SSE real, mede 200 alvos lógicos em loopback e prova reinício/replay/logout. Remove só o schema criado, sem alterar o restante do banco.
 
-Saídas em test-results/collection-e2.json e CSV; log local sem token/senha/chave. A carga usa um serviço TCP local para 200 alvos cadastrados, intervalo 2 s, 32 vagas e observação estável de 6 s após a primeira medição de todos. Não representa 200 hosts físicos nem validação hospitalar. A chegada do SSE ao cliente é medida; renderização do painel fica na #15.
+Saídas em test-results/collection-e2.json e CSV; log local sem token/senha/chave. A carga usa um serviço TCP local para 200 alvos cadastrados, intervalo 2 s, 32 vagas e observação estável de 6 s após a primeira medição de todos. Não representa 200 hosts físicos nem validação hospitalar. A chegada do SSE ao cliente é medida; o painel #15 já foi integrado no PR #39 e tem ensaio de navegador próprio. Não confundir suas medições.
+
+Conferência de aceite da #8 e limites: [matriz das issues de base](../../doc/conferencia-issues-6-7-8-14.md).
