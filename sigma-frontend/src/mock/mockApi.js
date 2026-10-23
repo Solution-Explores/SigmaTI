@@ -13,8 +13,10 @@ export function resetMock() { state = initialState(); lastEvent = 3; }
 
 function wait(ms, signal) {
   return new Promise((resolve, reject) => {
+    const cancelado = () => new DOMException('Cancelado', 'AbortError');
+    if (signal?.aborted) return reject(cancelado());
     const timer = setTimeout(resolve, ms);
-    signal?.addEventListener('abort', () => { clearTimeout(timer); reject(new DOMException('Cancelado', 'AbortError')); }, { once: true });
+    signal?.addEventListener('abort', () => { clearTimeout(timer); reject(cancelado()); }, { once: true });
   });
 }
 
