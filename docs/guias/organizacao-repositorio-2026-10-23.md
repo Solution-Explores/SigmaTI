@@ -106,6 +106,26 @@ git merge-base --is-ancestor origin/<branch> origin/develop && echo ok
 
 Branches vivas: `main`, `develop`, `feature/trail-fase1`, `feature/tarefas-joyce`, `fix/teste-sonda-instavel`, `feature/conferencia-issues-base`, `feature/25-roteiro-validacao-vm` e a `pr-44`, que fica intocada. Tag nova: `archive/dev-feef975`. Localmente, só o checkout principal e a pasta `sigmati-develop`.
 
+## Próxima etapa: pastas e arquivos soltos (depois de 27/10)
+
+O Git Flow não trata de pastas. O plano de reorganização está em `docs/plano-demonstracao-2026-10-27.md` (seção "Depois da demo") e no Sprint 1 de `docs/plano-sprints-pos-demo.md`. Decidido em 23/10: **nada é movido antes da demo de 27/10**; em 28/10 vêm primeiro o PR de documentação e depois o PR de estrutura do código.
+
+Layout adotado para `docs/` (origem hoje → destino):
+
+| Destino | Origem |
+|---|---|
+| `docs/planejamento/` | `plano-demonstracao-2026-10-27.md`, `plano-sprints-pos-demo.md`, `historico/plano-conclusao-2026-10-20.md` |
+| `docs/processo/` | `guias/gitflow.md`, `guias/fluxo-de-trabalho-tcc.md`, `guias/organizacao-repositorio-2026-10-23.md` |
+| `docs/operacao/` | `guias/instalacao.md`, `guias/backup-restauracao.md`, `guias/politica-imagens-e-portas.md`, `guias/migracao-volume-postgresql.md` |
+| `docs/arquitetura/` | já está no lugar |
+| `docs/tcc/` | `historico/diario-bordo/`, `historico/relatorio-orientador-2026-10-21.md`, `demo/proposta-orientador.md` |
+| `docs/demo/` | `roteiro-demonstracao.md` (hoje em `docs/`); o restante já está |
+| `docs/historico/` | fica, e recebe `revisao_pr_fix_base_issues.md` e `resultados/` da raiz |
+| `docs/design/` | fica (protótipo da Joyce) |
+| `specs/` | **fica na raiz**; `docs/README.md` aponta para `../specs/` |
+
+No PR de estrutura, o código vai para `backend/`, `sigma-frontend/` vira `frontend/` e o compose e o lock de imagens vão para `deploy/`. A lista de caminhos que mudam e a pergunta em aberto sobre `scripts/` estão no plano de demonstração.
+
 ## Qual branch baixar em outro computador
 
 No estágio, parta sempre da `develop`. A `main` guarda só versões entregues e não serve para desenvolver.

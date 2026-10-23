@@ -25,12 +25,14 @@ Fontes: `docs/plano-demonstracao-2026-10-27.md`, `docs/historico/rascunhos/docum
 | P0 | #5: anonimização contra critérios completos + casos adversariais | 3 | Iohan/Vinícius | Corpus E6 |
 | P0 | Aceite da release `v1.0.0` (31/10 e 01/11) e tag na `main` | 2 | Vinícius | Estrutura integrada |
 | P0 | Reserva para o retorno do orientador sobre a demo (triar em 28/10) | 2 | Vinícius | Retorno da demo |
-| P1 | PR de documentação/README + descrição e tópicos do repositório | 2 | Vinícius | `docs/` ainda sem commit |
+| P1 | PR de documentação/README (subpastas de `docs/`, arquivos soltos) + descrição e tópicos do repositório | 2 | Vinícius | `feature/trail-fase1` (`docs/` já comitado, sem PR) |
 | P1 | #25: restauração em outra máquina física | 2 | Iohan | Acesso à segunda máquina |
 | P2 | #13: âncora externa da auditoria + rotação HMAC | 5 | Vinícius | Decisão do orientador |
 
 **Carga:** P0 = 12 pts; com P1 = 16 pts (~94% dos ~17 planejados); com #13 = 21 pts (~124%). P1 e P2 são o que se corta.
 **Alerta:** a proposta ao orientador prometia #13, #5, #25 e `v1.0.0` até 03/11. Mesmo com a disponibilidade maior, #13 não cabe sem estourar. Recomendo negociar #13 e #25 para 10/11 (Sprint 2). Só puxar #13 para a S1 se P0 e P1 fecharem até 01/11.
+
+**Ordem da reorganização:** nenhuma pasta ou arquivo é movido antes de 27/10. Em 28/10 abre-se primeiro o PR de documentação (baixo risco) e depois o de estrutura do código. O layout está em `docs/plano-demonstracao-2026-10-27.md`, seção "Depois da demo".
 
 **Datas:** 28/10 início + reorg · 30/10 estrutura integrada · 31/10–01/11 aceite · 01/11 mid-check · 02/11 Finados (feriado) · 03/11 fim/demo interna · 03/11 retro.
 
@@ -40,7 +42,8 @@ Fontes: `docs/plano-demonstracao-2026-10-27.md`, `docs/historico/rascunhos/docum
 | Revisão só à noite/fim de semana (Iohan) | PR de estrutura trava 30/10 | Abrir PR em 28/10; revisão em lotes |
 | Mover pastas quebra CI/compose | `validate-compose` reprovado (já ocorreu no #47) | Rodar CI no PR antes do aceite; manter rollback |
 | Máquina física indisponível (#25) | Item não fecha | Registrar como limitação no TCC |
-| `doc/`→`docs/` sem commit | Perda/confusão de arquivos | Commitar em PR próprio logo no dia 28 |
+| Links quebrados ao mover subpastas de `docs/` e `resultados/` | Referências mortas em `README.md`, `specs/*` e scripts | `git grep` dos caminhos antigos, `scripts/validate_*` e CI antes do merge |
+| `feature/trail-fase1` ficar sem PR | `docs/` só existe nessa branch | Abrir o PR de documentação em 28/10, primeiro item do dia |
 
 ---
 

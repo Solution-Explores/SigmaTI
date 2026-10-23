@@ -214,10 +214,25 @@ Fonte: `validacao-vm/rodada-2026-10-22b/RESULTADO.md`. Os 179 hashes do `SHA256S
 
 ### Depois da demo: organização do repositório (decidido em 21/10)
 
-Começa na quarta, 28/10, depois da apresentação, dividido em duas PRs para a revisão continuar viável. Nada disso entra antes da entrega, para não colidir com o congelamento de segunda, 26/10.
+Começa na quarta, 28/10, depois da apresentação, dividido em duas PRs para a revisão continuar viável. Nada disso entra antes da entrega, para não colidir com o congelamento de segunda, 26/10: **até 27/10 nenhuma pasta ou arquivo é movido** (reconfirmado em 23/10). A ordem é a PR de documentação primeiro e a de estrutura do código depois.
+
+**Situação em 23/10:** o `doc/`→`docs/` já está comitado e publicado em `feature/trail-fase1` (commits `988402b` e `1b7a7f1`), sem PR. As subpastas abaixo ainda não existem; hoje `docs/` tem `guias/`, `arquitetura/`, `demo/`, `design/` e `historico/`.
 
 1. **PR de documentação e README**, de baixo risco:
-   - `doc/` vira `docs/`, com subpastas por assunto (planejamento, processo, operação, arquitetura, tcc, demo e specs).
+   - `docs/` adota estas subpastas por assunto:
+
+     | Subpasta | Conteúdo |
+     |---|---|
+     | `planejamento/` | `plano-demonstracao-2026-10-27.md`, `plano-sprints-pos-demo.md`, `plano-conclusao-2026-10-20.md` |
+     | `processo/` | `gitflow.md`, `fluxo-de-trabalho-tcc.md`, `organizacao-repositorio-2026-10-23.md` |
+     | `operacao/` | `instalacao.md`, `backup-restauracao.md`, `politica-imagens-e-portas.md`, `migracao-volume-postgresql.md` |
+     | `arquitetura/` | `stack-de-tecnologia.md`, `estudo-de-caso.md` |
+     | `tcc/` | `diario-bordo/`, `relatorio-orientador-2026-10-21.md`, `proposta-orientador.md` |
+     | `demo/` | `roteiro-demonstracao.md`, `checklist-terca.md`, `demo.ps1`, `subir_demo.py`, rascunhos das issues |
+
+     `design/` (protótipo da Joyce) e `historico/` (registros datados) continuam como pastas próprias. `specs/` **fica na raiz**; o `docs/README.md` apenas aponta para `../specs/`.
+   - Arquivos soltos da raiz: `revisao_pr_fix_base_issues.md` e `resultados/` (3 evidências) vão para `docs/historico/`. Cuidado com `resultados/`: `scripts/executar_experimento_e6.py:101` grava nele por padrão, `specs/009-010-instalacao-aceite/evidencias.md` e `specs/011-recuperacao-sprint/evidencias.md` linkam para os arquivos, e `engenharia/sigma_eng/api.py` usa o nome `resultados/` como diretório de saída da auditoria (isso é runtime e não muda). Ajustar o padrão do script e os dois links na mesma PR.
+   - Os links quebram ao mover subpastas: atualizar `README.md`, `docs/README.md`, `specs/*`, `scripts/install.sh` e as mensagens dos scripts, conferindo com `git grep -n "docs/"` antes do merge.
    - README enxuto e apresentável:
      - selos de CI, Python, Node e PostgreSQL;
      - descrição curta e um print do painel, capturado no ensaio de sexta;
@@ -229,6 +244,8 @@ Começa na quarta, 28/10, depois da apresentação, dividido em duas PRs para a 
    - `sigma-frontend/` vira `frontend/`;
    - `deploy/` recebe o compose e o lock de imagens.
    - Só `git mv` e ajuste de caminhos: imports, uvicorn, alembic, CI e scripts. Nenhuma mudança de lógica.
+   - Caminhos que mudam (levantamento de 23/10): `pytest.ini` (`testpaths`, `pythonpath`), `alembic.ini` (`script_location`), `.github/workflows/api-config.yml` (requirements, `sigma-frontend`, `scripts/`), `scripts/validate_panel.py` e `scripts/validate_infrastructure.py` (`sigma-frontend`, `docker-images.lock.json`), os `scripts/*.py` que importam `persistence`, os testes em `tests/` (imports de `main`, `routers` e `persistence`), `.gitignore`, o nome em `package.json` e o `docker-compose.yml`.
+   - Em aberto: `scripts/` vai para `backend/scripts/` ou fica na raiz; `engenharia/` (pacote `sigma_eng`) continua onde está.
    - Depois disso: CI verde, regressão do Codex na VM e revisão do Iohan.
    - Integrar até sexta, 30/10, para não apertar a release de 03/11.
 3. **Página do repositório no GitHub** (fora de PR, com confirmação): descrição "About" e tópicos, por exemplo `monitoramento`, `lgpd`, `fastapi`, `react`, `postgresql`, `sse`, `slo`, `rbac` e `tcc`.
