@@ -11,7 +11,7 @@ Como instalar, operar e trabalhar no projeto.
 - [Portas e imagens](guias/politica-imagens-e-portas.md): portas publicadas, imagens aprovadas e política de atualização.
 - [Migração do volume PostgreSQL](guias/migracao-volume-postgresql.md): roteiro para instalações com dados.
 - [Git Flow](guias/gitflow.md): branches, PRs, releases e hotfixes.
-- [Organização do repositório (23/10/2026)](guias/organizacao-repositorio-2026-10-23.md): diagnóstico das branches, limpeza planejada e qual branch baixar em outro computador.
+- [Organização do repositório (23/10/2026)](guias/organizacao-repositorio-2026-10-23.md): diagnóstico das branches, limpeza executada e qual branch baixar em outro computador.
 - [Fluxo de trabalho do TCC](guias/fluxo-de-trabalho-tcc.md): da issue ao fechamento, com modelos de comentário.
 
 ## Arquitetura

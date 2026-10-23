@@ -1,6 +1,6 @@
 # Organização do repositório pelo Git Flow
 
-Registro do diagnóstico e do procedimento de limpeza das branches, em 23/10/2026. **Status: documentado; a execução da limpeza aguarda aprovação.** Nenhuma branch foi apagada, nenhum PR foi integrado e a `main` não foi alterada. O modelo de referência é o [Git Flow](gitflow.md).
+Registro do diagnóstico e da limpeza das branches, em 23/10/2026. **Status: limpeza executada em 23/10/2026.** Nenhum PR foi integrado, não houve `push --force` e a `main` não foi alterada. O modelo de referência é o [Git Flow](gitflow.md).
 
 ## Objetivo e modelo
 
@@ -42,16 +42,42 @@ Achados da revisão (`/code-review`, nível high):
 - Manter somente `feature/tarefas-joyce` no design system.
 - Sem `push --force`. Nenhum commit direto em `develop` ou `main`.
 
-## Já feito em 23/10
+## Feito antes da limpeza
 
 - `feature/tarefas-joyce` publicada no GitHub, com push normal.
-- `.worktrees/` incluído no `.gitignore` (sem commit).
-- Seção de atualização em [Trail, fase 1](../historico/trail-fase1.md) (sem commit).
-- Correção do `wait()` do mock na worktree `tarefas-joyce` (sem commit).
+- `.worktrees/` incluído no `.gitignore`.
+- Seção de atualização em [Trail, fase 1](../historico/trail-fase1.md).
+- Correção do `wait()` do mock na worktree `tarefas-joyce`.
 
-## Procedimento planejado
+## Resultado da execução
 
-Execute na ordem. Antes de cada remoção, confirme que a branch está contida na `develop`:
+- Correção do mock comitada e publicada em `feature/tarefas-joyce` (`afac415`).
+- Migração `doc/`→`docs/` comitada em `feature/trail-fase1`, com o merge de `origin/develop`. Os três documentos que a `develop` criou em `doc/` (coleta em lotes, correção das issues base e revisão dos achados) foram movidos para `docs/historico/`.
+- `origin/develop` foi mesclada em `fix/teste-sonda-instavel` (#47), `feature/conferencia-issues-base` (#42) e `feature/25-roteiro-validacao-vm` (#41), sem conflito. Os 10 testes de `test_stats_probe.py` passam no #47. Os três PRs seguem abertos e mesclável.
+- `dev` arquivada na tag `archive/dev-feef975` e apagada, no GitHub e no computador.
+- Branches integradas apagadas. SHAs finais, para recuperar com `git branch <nome> <sha>`:
+
+| Branch | SHA |
+|---|---|
+| `codex/estado-operacional` | `86375d93a6c925f470b4ab563e377ca09356e09e` |
+| `codex/persistencia` | `31471daff15db88e94f9624177e1bc441be9a632` |
+| `codex/sondagem-ip-validado` | `d42edac681905096cefc6fa56a276078d0cee892` |
+| `codex/fix-k08-porta-fechada` (só local) | `7975c0010dc0187d0ce158d3fdb2f6be9e47b348` |
+| `feature/8-coleta-sse` | `047c43db3f4b6f2d91c4a3ffb5ebbf2b691c5b3b` |
+| `feature/15-painel-operacional` | `13636785aabd15e4faf994f1307477c394254f73` |
+| `feature/25-backup-restauracao` | `54646644be107724e60b11a5c6e7ca03b7cb61c4` |
+| `feature/pacote` | `7f3b5d12d46d00701c34da2a1964c73075fce3e7` |
+| `fix/base-issues` | `8661916b10f6147422a9a4a507e561947bc95f00` |
+| `fix/coleta` | `ddd48400fffab01fc49707e303eb36419e9d6f37` |
+| `candidato/rodada-5` (só local, árvore igual à da `develop`) | `0a6ce35` |
+| `feature/design-system-joyce` | `22adfdf` (contida em `feature/tarefas-joyce`) |
+
+- Os três worktrees de `.worktrees/` foram removidos. Ficam o checkout principal e `sigmati-develop`.
+- `pr-44` (documento de outro autor) foi mantida.
+
+## Procedimento seguido
+
+Executado na ordem abaixo. Antes de cada remoção, confirme que a branch está contida na `develop`:
 
 ```bash
 git fetch origin --prune
@@ -76,7 +102,7 @@ git merge-base --is-ancestor origin/<branch> origin/develop && echo ok
 7. **Design system.** Conferir que os 3 commits de `origin/feature/design-system-joyce` são ancestrais de `feature/tarefas-joyce` e então `git push origin --delete feature/design-system-joyce`.
 8. **Não mexer** em `main`, `develop`, `pr-44` (de outro autor) nem nas tags `archive/*`.
 
-## Estado esperado ao final
+## Estado final
 
 Branches vivas: `main`, `develop`, `feature/trail-fase1`, `feature/tarefas-joyce`, `fix/teste-sonda-instavel`, `feature/conferencia-issues-base`, `feature/25-roteiro-validacao-vm` e a `pr-44`, que fica intocada. Tag nova: `archive/dev-feef975`. Localmente, só o checkout principal e a pasta `sigmati-develop`.
 
@@ -123,7 +149,7 @@ Antes de sair de um computador, publique: `git push`. Branch que só existe loca
 - `*.md text eol=lf` no `.gitattributes` pode renormalizar finais de linha. Conferir `git diff --stat` antes de commitar.
 - Aproveitar a configuração do Trail da `dev` exige antes reconciliar `.trail/cache/` com `/graft/`, por PR pequeno. O commit fica preservado na tag.
 
-## Verificação depois da execução
+## Verificação
 
 ```bash
 git fetch --prune origin
