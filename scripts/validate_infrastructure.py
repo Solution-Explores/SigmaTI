@@ -92,7 +92,8 @@ def verify_registry(lock: dict) -> None:
         with urlopen("https://auth.docker.io/token?" + query, timeout=30) as response:
             token = json.load(response)["token"]
         headers = {"Authorization": "Bearer " + token, "Accept": ACCEPT}
-        for reference in (entry["tag"], entry["digest"]):
+        # A tag é mutável: a checagem usa só o digest fixado no lock.
+        for reference in (entry["digest"],):
             request = Request(f"https://registry-1.docker.io/v2/{repository}/manifests/{reference}", headers=headers)
             with urlopen(request, timeout=30) as response:
                 body = response.read()
@@ -104,7 +105,7 @@ def verify_registry(lock: dict) -> None:
                          for m in manifest.get("manifests", [])}
             require({("linux", "amd64"), ("linux", "arm64")} <= platforms,
                     f"Plataformas Linux amd64/arm64 não confirmadas em {repository}.")
-        print(f"PASS: registro oficial confirma {entry['repository']}:{entry['tag']} e digest")
+        print(f"PASS: registro oficial confirma {entry['repository']} pelo digest {entry['digest']}")
 
 
 def main() -> int:
