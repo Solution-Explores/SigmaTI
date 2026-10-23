@@ -24,9 +24,10 @@ Pasta de trabalho: `C:\Users\Vinicius Lima\Desktop\sigmati-develop`, no SHA cong
 ## 16h20: smoke
 - [ ] `Show-Sigma403` mostra 403 para o N1 e 200 para o gestor.
 - [ ] Faça login como `browser.manager` no painel. As cinco abas aparecem e o indicador "Tempo real ativo" está ligado.
-- [ ] Na aba Saúde, o alvo "Portal de testes" aparece em risco.
+- [ ] Na aba Saúde, o alvo "Portal de testes" mostra 12 min de orçamento restante (o painel não escreve "em risco").
 - [ ] Na aba Diagnóstico, envie um texto de teste. O texto anonimizado aparece.
 - [ ] Se algo falhar e não se resolver até as 17h, use a gravação de contingência.
+- [ ] Lembretes do ensaio de 23/10: não recarregue a página (F5 encerra a sessão); ao subir o serviço de novo, aparece um incidente extra de `latency`, e o que se resolve é o de `availability` (o segundo da lista); a seção "Nova solicitação" começa recolhida.
 
 ## 17h00: apresentação
 - [ ] Abra os slides (link do Artifact) em tela cheia.

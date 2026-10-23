@@ -11,8 +11,8 @@
 | #9 | `sigma_eng` empacotado (`pyproject.toml`) | Issue encerrada |
 | #14 | Sonda conecta ao IP já validado (mitiga DNS rebinding) | Issue encerrada |
 | #15 | Painel: Saúde, Incidentes, Aprovações e Auditoria | PR #39 integrado |
-| #6 | Autenticação JWT e RBAC, com auditoria compartilhada | PR #43; aprovado na VM, confirmação no aceite de 23/10 e no SHA congelado de 26/10 |
-| #8 | Sondagem contínua com alertas por SSE e carga de 200 alvos | PR #44; aprovado na VM, confirmação no aceite de 23/10 e no SHA congelado de 26/10 |
+| #6 | Autenticação JWT e RBAC, com auditoria compartilhada | PR #43 integrado; aceite de 23/10 na VM feito (abaixo), repetição no SHA congelado de 26/10; issue aberta até todos os critérios serem atendidos |
+| #8 | Sondagem contínua com alertas por SSE e carga de 200 alvos | PR #44 integrado; aceite de 23/10 na VM feito (abaixo), repetição no SHA congelado de 26/10; issue aberta até todos os critérios serem atendidos |
 
 **Evidência em VM (21/10, Ubuntu 24.04, 4 vCPU, 4 GiB, PostgreSQL 15):**
 
@@ -22,6 +22,8 @@
 | `develop` + #43 + #44 | **488/488** | **5 de 5**, mais o E2 e o validador explícito |
 
 Com as correções: tempo entre a queda e o alerta no painel (SSE) com p50 de 0,20 a 0,27 s e p95 de 0,33 a 0,41 s; atraso máximo do calendário de 0,185 s, abaixo do limite de 0,5 s; 0 erros e 0 ciclos perdidos.
+
+**Aceite de 23/10 na VM, na `develop` integrada (`75b1874`, com #43 e #44):** API 20 de 20; painel 4 de 4; pytest com 491 aprovados e 1 falha de ambiente (dependência do navegador ausente; o teste passou isolado depois, e a suíte completa não foi repetida); cinco cargas de 200 alvos com p95 entre a queda e o alerta de 0,395 a 0,496 s, 0 erros e 0 timeouts. Em 20 execuções isoladas do teste do provedor de IA houve uma falha por 25 ms acima do limite de 15 s (issue #45). Na carga equivalente no Windows, em 22/10, o p95 foi 0,806 s; hardware e método diferem, então os números não se comparam.
 
 Aceite final, no SHA congelado de 26/10: [preencher].
 

@@ -24,7 +24,9 @@ Base: [plano da demonstração](plano-demonstracao-2026-10-27.md). Código: `dev
 - **Auditoria** (`browser.manager`): "Integridade consistente · 11 registros", com `approvals.updated` do revisor, `approvals.created` do analista, `incident.resolve`, `incident.ack`, `incident.created` e `target.created` nas primeiras linhas.
 - **Diagnóstico** (`browser.manager`): o quadro "Dados enviados à IA" mostra `Equipamento: [SWITCH_REDE] | Erro: [NOME_REMOVIDO] [CPF_REMOVIDO] relatou falha no [SWITCH_REDE]. Forneça um diagnóstico de rede curto e direto.` e a resposta "Diagnóstico K10 simulado". Fecha a pendência da etapa 6 ("a tela do painel não foi conferida à mão").
 - **Recarregar a página (F5) encerra a sessão** e volta ao login. Não recarregue durante a demonstração.
-- Não conferido à mão neste ensaio: a visão do `browser.demo` (N1) no painel (só o 403 pela API) e a janela anônima com duas sessões em navegador real; o ensaio usou duas abas do navegador embutido.
+- **N1 conferido à mão (23/10):** `browser.demo` vê só Saúde e Diagnóstico, com "Tempo real ativo".
+- **Etapa 4:** o painel mostra "Disponível" e 12 min de orçamento para o "Portal de testes", sem a palavra "em risco" (ver etapa 4).
+- Não conferido à mão: a janela anônima com duas sessões em navegador real; o ensaio usou duas abas do navegador embutido.
 
 ## Preparação (terça às 16h, cerca de 10 min; checklist em [demo/checklist-terca.md](demo/checklist-terca.md))
 
@@ -93,7 +95,7 @@ Faça tudo na raiz do worktree da `develop` (`C:\Users\Vinicius Lima\Desktop\sig
 1. Na aba Saúde, mostre o alvo **Portal de testes**:
    - SLO de 95 % em 1 dia;
    - 25 h de histórico, com a última hora em falha;
-   - status em risco e cerca de 12 min de orçamento restante;
+   - estado "Disponível" (a última medição está boa), com **12 min** de orçamento restante e a data da projeção de esgotamento. A palavra "em risco" não aparece no painel; o status `at_risk` vem da API e é mostrado no `Get-SigmaBurnRate`;
    - projeção de esgotamento.
 2. No terminal C, rode `Get-SigmaBurnRate`. A resposta traz o orçamento e os alertas de burn rate calculados pela API. O painel ainda não exibe burn rate.
 
