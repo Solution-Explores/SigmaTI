@@ -409,12 +409,12 @@ def obter_auditor():
     """Obtém a AuditChain instalada; falha sem expor detalhes sensíveis."""
     try:
         from sigma_eng.audit_chain import AuditChain
-        caminho = os.getenv("SIGMA_AUDIT_PATH", "resultados/audit.jsonl")
+        caminho = os.getenv("SIGMA_AUDIT_PATH", str(Path(__file__).resolve().parent / "engenharia" / "resultados" / "audit.jsonl"))
         chave = os.getenv("SIGMA_AUDIT_KEY")
         return AuditChain(caminho, chave=chave.encode() if chave else None)
     except Exception as exc:
         logger.warning("Falha ao inicializar AuditChain: %s", type(exc).__name__)
-        return None
+        raise RuntimeError("Auditoria indisponível.") from None
 
 
 # --- Dependências FastAPI para RBAC ---

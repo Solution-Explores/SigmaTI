@@ -172,6 +172,12 @@ def run(database_url, output, *, repeats=30, targets=200):
         raise ValueError("E2 exige 30 repetições e carga exige 200 alvos")
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
+    # Uma rodada reprovada não pode deixar um aceite antigo no caminho oficial.
+    for artifact in (output, output.with_suffix('.csv'), output.with_suffix('.load.json')):
+        if artifact.exists():
+            history = output.parent / 'collection-history'
+            history.mkdir(exist_ok=True)
+            artifact.replace(history / (uuid.uuid4().hex + '-' + artifact.name))
     schema = "sigma_e2_" + uuid.uuid4().hex
     root_engine = create_engine(database_url, hide_parameters=True)
     engine = None
@@ -185,7 +191,7 @@ def run(database_url, output, *, repeats=30, targets=200):
             OPENROUTER_API_KEY="fake-only", SIGMA_LLM_MODEL="test/model",
             SIGMA_JWT_SECRET=secrets.token_hex(32), SIGMA_CORS_ORIGINS="http://localhost:5173",
             PYTHON_DOTENV_DISABLED="1", SIGMA_PROBE_NETS="127.0.0.0/8",
-            SIGMA_AUDIT_PATH=str(output.with_suffix(".audit.jsonl")))
+            SIGMA_AUDIT_PATH=str(output.parent / schema / 'audit.jsonl'))
         migration = subprocess.run([sys.executable, "-m", "alembic", "upgrade", "head"], cwd=ROOT,
             env=env, text=True, capture_output=True)
         if migration.returncode:
@@ -231,7 +237,14 @@ def run(database_url, output, *, repeats=30, targets=200):
             load_ids = [store.create_target("synthetic-load", "127.0.0.1", service.port,
                 intervalo_s=2.0, timeout_s=0.5)["id"] for _ in range(targets)]
             identifiers.extend(load_ids)
-            wait_until(lambda: all(store.measurements(identifier,1) for identifier in load_ids), timeout=20)
+            try:
+                wait_until(lambda: all(store.measurements(identifier,1) for identifier in load_ids), timeout=20)
+            except AssertionError:
+                metrics = request(base,"GET","/api/eng/coleta/status",token=token)[1]["metricas"]
+                output.with_suffix('.load.json').write_text(json.dumps({
+                    'phase': 'warmup_failed', 'targets': targets, 'metrics': metrics,
+                    'scope': 'loopback; nenhum criterio de aceite relaxado'}, indent=2), encoding='utf-8')
+                raise
             before = request(base,"GET","/api/eng/coleta/status",token=token)[1]["metricas"]
             window_start = datetime.now(timezone.utc)
             time.sleep(6)

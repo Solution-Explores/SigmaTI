@@ -39,6 +39,18 @@ a issue nem substitui a revisão e a validação operacional.
 - Na coleta persistente (#8), snapshots EWMA/MAD confirmam com a medição e são recuperados após reinício. Uso isolado sem repositório permanece em memória; parâmetros exigem calibração. Ver [coleta e eventos](09-coleta-eventos.md).
 
 
+## Revisão das issues de base — 20/10/2026
+
+Consulte [a revisão de #6/#7/#8/#14](../../doc/revisao-achados-base-2026-10-20.md).
+O pinning #14 foi integrado no PR #37; o texto “para revisão” acima é histórico.
+Na branch de correção, a auditoria JSONL coordena escritores cooperantes por
+arquivo lateral `.lock`, relê o arquivo sob esse bloqueio e recusa append em
+cadeia inválida. A API verifica integridade e contagem no mesmo snapshot atual.
+Não remover/substituir o arquivo de lock enquanto houver processos ativos.
+Lock local não constitui coordenação distribuída em filesystem de rede, nem
+substitui HMAC, âncora externa e rotação da #13. As leituras e validações são
+lineares no tamanho da trilha; planejar rotação antes de uso prolongado.
+
 ## Limites da correção #14
 
 - O primeiro IP da resposta autorizada é usado; indisponibilidade não dispara tentativa em outro endereço. Nova operação resolve e valida novamente.
