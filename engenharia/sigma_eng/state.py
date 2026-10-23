@@ -44,6 +44,11 @@ class OperationalRepository(StateRepository, MonitoringRepository, Protocol):
     pass
 
 
+class BatchMonitoringRepository(Protocol):
+    """Capacidade opcional: 1–32 alvos distintos, resultados após commit atômico."""
+    def record_measurements(self, samples: list[dict]) -> list[dict]: ...
+
+
 def snapshot(value) -> dict:
     def encode(item):
         if isinstance(item, datetime):
