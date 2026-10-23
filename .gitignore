@@ -5,6 +5,7 @@ sigma-frontend/node_modules/
 /test-results/
 spec-kit/
 *.jsonl
+*.jsonl.lock
 .local/
 sigma-frontend/dist/
 sigma-frontend/playwright-report/

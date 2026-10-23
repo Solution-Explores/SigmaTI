@@ -120,7 +120,6 @@ def create_router(
 
     @router.get("/auditoria/verificar", dependencies=[Depends(exige_papel("gestor_ti"))])
     def get_verificar() -> dict:
-        ok, indice = auditoria.verificar()
-        return {"integra": ok, "primeira_invalida": indice, "entradas": len(auditoria)}
+        return auditoria.resumo()
 
     return router

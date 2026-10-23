@@ -39,6 +39,7 @@ def main():
         env = dict(os.environ, SIGMA_TEST_DATABASE_URL=f"postgresql+psycopg://sigma_test:{password}@127.0.0.1:{port}/sigma_test")
         env.pop("SIGMA_DATABASE_URL", None)
         command = [sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider",
+                   "--basetemp=" + str(evidence / (name + "-tmp")),
                    "--junitxml=test-results/postgres-regression.xml"]
         command.extend(args.tests.split())
         result = subprocess.run(command, env=env)

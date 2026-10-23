@@ -25,6 +25,38 @@ class Store:
         self.results.append((args, kwargs))
 
 
+def test_persistence_latency_is_separate_from_probe_and_tracks_pending_writes():
+    async def scenario():
+        release = threading.Event()
+        class BlockedStore(Store):
+            def record_measurement(self, *args, **kwargs):
+                assert release.wait(3)
+                super().record_measurement(*args, **kwargs)
+        scheduler = Scheduler(BlockedStore(), probe_fn=lambda *a, **k: ProbeResult(status='up', latency_ms=1))
+        task = asyncio.create_task(scheduler._collect(target()))
+        try:
+            for _ in range(100):
+                if scheduler.status()['pending_writes']:
+                    break
+                await asyncio.sleep(0.01)
+            assert scheduler.status()['pending_writes'] == 1
+            assert scheduler.metrics.probe_finished == 1
+            assert scheduler.metrics.write_finished == 0
+            await asyncio.sleep(0.06)
+            release.set()
+            await task
+            assert scheduler.status()['pending_writes'] == 0
+            assert scheduler.metrics.write_finished == 1
+            assert scheduler.metrics.max_write_seconds >= 0.05
+            assert scheduler.metrics.write_seconds_total >= scheduler.metrics.max_write_seconds
+            assert scheduler.metrics.completed == 1
+        finally:
+            release.set()
+            await asyncio.gather(task, return_exceptions=True)
+            await scheduler.stop()
+    asyncio.run(scenario())
+
+
 def test_timeout_holds_slot_and_discards_late_success():
     async def scenario():
         release = threading.Event()

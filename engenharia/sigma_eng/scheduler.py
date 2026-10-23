@@ -21,6 +21,12 @@ class SchedulerMetrics:
     active: int = 0
     peak_active: int = 0
     max_lag_seconds: float = 0.0
+    probe_finished: int = 0
+    probe_seconds_total: float = 0.0
+    max_probe_seconds: float = 0.0
+    write_finished: int = 0
+    write_seconds_total: float = 0.0
+    max_write_seconds: float = 0.0
 
 
 class Scheduler:
@@ -56,7 +62,8 @@ class Scheduler:
         self.leader = False
 
     def status(self):
-        return dict(asdict(self.metrics), leader=self.leader, queued=0)
+        return dict(asdict(self.metrics), leader=self.leader, queued=0,
+                    pending_writes=len(self._writes))
 
     def start(self):
         if self._task is not None:
@@ -83,14 +90,22 @@ class Scheduler:
             await asyncio.to_thread(self.lease.release)
         self.leader = False
 
-    def _worker_done(self, future):
+    def _worker_done(self, future, *, started):
         self._workers.discard(future)
+        elapsed = time.monotonic() - started
+        self.metrics.probe_finished += 1
+        self.metrics.probe_seconds_total += elapsed
+        self.metrics.max_probe_seconds = max(self.metrics.max_probe_seconds, elapsed)
         if not future.cancelled():
             # Consumir exceções tardias sem log automático de texto da rede.
             future.exception()
 
-    def _write_done(self, future):
+    def _write_done(self, future, *, started):
         self._writes.discard(future)
+        elapsed = time.monotonic() - started
+        self.metrics.write_finished += 1
+        self.metrics.write_seconds_total += elapsed
+        self.metrics.max_write_seconds = max(self.metrics.max_write_seconds, elapsed)
         if not future.cancelled():
             future.exception()
 
@@ -103,9 +118,10 @@ class Scheduler:
             validated.set()
             return self.probe_fn(target["host"], target["porta"], target["kind"],
                 timeout=timeout, resolved_ip=ip, allowed_networks=self.allowed_networks)
+        probe_started = time.monotonic()
         future = loop.run_in_executor(self._executor, execute)
         self._workers.add(future)
-        future.add_done_callback(self._worker_done)
+        future.add_done_callback(partial(self._worker_done, started=probe_started))
         timed_out = False
         try:
             try:
@@ -129,11 +145,12 @@ class Scheduler:
                 return
             available = result.status != "down" and (target["kind"] == "tcp" or
                 result.http_status is not None and 200 <= result.http_status < 500)
+            write_started = time.monotonic()
             write = loop.run_in_executor(self._repository_executor, partial(
                 self.repository.record_measurement, target["id"], available,
                 result.latency_ms, ts=datetime.now(timezone.utc), detector_kind=target["detector"]))
             self._writes.add(write)
-            write.add_done_callback(self._write_done)
+            write.add_done_callback(partial(self._write_done, started=write_started))
             await asyncio.shield(write)
             self.metrics.completed += 1
         except asyncio.CancelledError:

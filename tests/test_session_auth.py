@@ -77,6 +77,24 @@ class TestHashingESenhas:
 class TestFluxoLoginESessaoJWT:
     """Valida ciclo de vida do token de sessão JWT e proteção de segredos do servidor."""
 
+    def test_verification_sees_login_and_logout_without_restart(self, auth_app, temporary_identity):
+        client, path = auth_app
+        login = client.post('/api/auth/login', json={'username': 'gestor.ti', 'password': temporary_identity})
+        assert login.status_code == 200
+        headers = {'Authorization': 'Bearer ' + login.json()['access_token']}
+        assert client.get('/api/eng/auditoria/verificar', headers=headers).json()['entradas'] == 1
+        assert client.post('/api/auth/logout', headers=headers).status_code == 200
+        assert AuditChain(path).resumo() == {'integra': True, 'primeira_invalida': None, 'entradas': 2}
+
+    def test_unavailable_audit_does_not_allow_login(self, auth_app, temporary_identity, monkeypatch):
+        from pathlib import Path
+        client, path = auth_app
+        # Diretório no lugar de arquivo: falha real de leitura, sem dados privados.
+        Path(path).mkdir()
+        response = client.post('/api/auth/login', json={'username': 'gestor.ti', 'password': temporary_identity})
+        assert response.status_code == 500
+        assert response.json() == {'detail': 'Erro interno do servidor.'}
+
     def test_login_sucesso_retorna_jwt_e_nao_expoe_chave_permanente(self, auth_app, temporary_identity):
         client, _ = auth_app
         payload = {"username": "analista.redes", "password": temporary_identity}
