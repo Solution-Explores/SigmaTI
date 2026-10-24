@@ -23,7 +23,7 @@
 
 Com as correções: tempo entre a queda e o alerta no painel (SSE) com p50 de 0,20 a 0,27 s e p95 de 0,33 a 0,41 s; atraso máximo do calendário de 0,185 s, abaixo do limite de 0,5 s; 0 erros e 0 ciclos perdidos.
 
-**Aceite de 23/10 na VM, na `develop` integrada (`75b1874`, com #43 e #44):** API 20 de 20; painel 4 de 4; pytest com 491 aprovados e 1 falha de ambiente (dependência do navegador ausente; o teste passou isolado depois, e a suíte completa não foi repetida); cinco cargas de 200 alvos com p95 entre a queda e o alerta de 0,395 a 0,496 s, 0 erros e 0 timeouts. Em 20 execuções isoladas do teste do provedor de IA houve uma falha por 25 ms acima do limite de 15 s (issue #45). Na carga equivalente no Windows, em 22/10, o p95 foi 0,806 s; hardware e método diferem, então os números não se comparam.
+**Aceite na VM, na `develop` integrada (`75b1874`, com #43 e #44), em 22/10 à noite e 23/10:** em 22/10, API 20 de 20, painel 4 de 4 e pytest com 491 aprovados e 1 falha de ambiente (dependência do navegador ausente); em 23/10, o teste que falhou passou isolado (a suíte completa não foi repetida) e cinco cargas de 200 alvos deram p95 entre a queda e o alerta de 0,395 a 0,496 s, com 0 erros e 0 timeouts. Em 20 execuções isoladas do teste do provedor de IA, feitas em 23/10, houve uma falha por 25 ms acima do limite de 15 s (issue #45). Na carga equivalente no Windows, em 22/10, o p95 foi 0,806 s; hardware e método diferem, então os números não se comparam.
 
 Aceite final, no SHA congelado de 26/10: [preencher].
 

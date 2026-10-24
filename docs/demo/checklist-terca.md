@@ -27,7 +27,7 @@ Pasta de trabalho: `C:\Users\Vinicius Lima\Desktop\sigmati-develop`, no SHA cong
 - [ ] Na aba Saúde, o alvo "Portal de testes" mostra 12 min de orçamento restante (o painel não escreve "em risco").
 - [ ] Na aba Diagnóstico, envie um texto de teste. O texto anonimizado aparece.
 - [ ] Se algo falhar e não se resolver até as 17h, use a gravação de contingência.
-- [ ] Lembretes do ensaio de 23/10: não recarregue a página (F5 encerra a sessão); ao subir o serviço de novo, aparece um incidente extra de `latency`, e o que se resolve é o de `availability` (o segundo da lista); a seção "Nova solicitação" começa recolhida.
+- [ ] Releia os cuidados do ensaio manual de 23/10 em [roteiro-demonstracao.md](../roteiro-demonstracao.md), seção "Achados do ensaio manual do painel": sem F5, incidente extra de latência e formulário "Nova solicitação" recolhido.
 
 ## 17h00: apresentação
 - [ ] Abra os slides (link do Artifact) em tela cheia.

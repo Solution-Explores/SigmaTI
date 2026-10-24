@@ -20,7 +20,7 @@ orientador e pendências herdadas.
 [Certo] Atualização de 22/10 à noite (UTC−4): `develop` remoto em `75b1874ee5f83f55ab12837249a9c701fd67cef1`, após #43 (`dbc464d`, 22h25) e #44 (`75b1874`, 22h52). Os dois estão integrados; CI dos heads aprovado. Não há Approve formal no GitHub; o LGTM do Iohan no #44 é comentário.
 
 - #6 e #8 seguem abertas; o aceite final é em 23/10 e os critérios completos continuam pendentes.
-- #47 (`3cca38d`), só teste, aberto para Iohan; CI atual tem quatro verificações aprovadas e `validate-compose` reprovado (run 39894956404), divergindo do resumo recebido.
+- #47 (`3cca38d`), só teste, aberto para Iohan; CI de 22/10 tinha quatro verificações aprovadas e `validate-compose` reprovado (run 39894956404), divergindo do resumo recebido. **Atualização de 23/10:** no head `0b372cb`, as cinco verificações estão aprovadas.
 - PRs documentais #41/#42 e reorganização ficam depois da demo, em 28/10.
 - A carga falhava na base `8cb1e23`; #44 já integrado. Resultados da VM no candidato antigo e do Windows no integrado têm origens/métodos distintos; aceite da rodada 7 ainda pendente.
 
@@ -251,7 +251,7 @@ Começa na quarta, 28/10, depois da apresentação, dividido em duas PRs para a 
    - `deploy/` recebe o compose e o lock de imagens.
    - Só `git mv` e ajuste de caminhos: imports, uvicorn, alembic, CI e scripts. Nenhuma mudança de lógica.
    - Caminhos que mudam (levantamento de 23/10): `pytest.ini` (`testpaths`, `pythonpath`), `alembic.ini` (`script_location`), `.github/workflows/api-config.yml` (requirements, `sigma-frontend`, `scripts/`), `scripts/validate_panel.py` e `scripts/validate_infrastructure.py` (`sigma-frontend`, `docker-images.lock.json`), os `scripts/*.py` que importam `persistence`, os testes em `tests/` (imports de `main`, `routers` e `persistence`), `.gitignore`, o nome em `package.json` e o `docker-compose.yml`.
-   - **Complemento do levantamento (23/10, só leitura, `git grep` no `75b1874`):** faltavam na lista acima `deploy/sigma-coleta.service` (`WorkingDirectory=/opt/sigma` e `uvicorn main:app`; passa a apontar para `backend`), `scripts/validate_compose_credentials.py`, `scripts/validate_installation.py` e `tests/test_infrastructure_policy.py` (citam `docker-compose.yml` e `docker-images.lock.json`), e `migrations/env.py` (importa `persistence`; anda junto com `backend/migrations/`). Os scripts de shell (`install.sh`, `update.sh`, `backup.sh`, `restore.sh`, `smoke.sh`) não citam `main:app`, `sigma-frontend` nem o lock de imagens. Também citam os caminhos antigos só em texto: `README.md`, `DESIGN.md`, `PRODUCT.md`, `engenharia/README.md` e `engenharia/docs/02-guia-de-implementacao.md`.
+   - **Complemento do levantamento (23/10, só leitura, `git grep` no `75b1874`):** faltavam na lista acima `deploy/sigma-coleta.service` (`WorkingDirectory=/opt/sigma` e `uvicorn main:app`; passa a apontar para `backend`), `scripts/validate_compose_credentials.py`, `scripts/validate_installation.py` e `tests/test_infrastructure_policy.py` (citam `docker-compose.yml` e `docker-images.lock.json`), e `migrations/env.py` (importa `persistence`; anda junto com `backend/migrations/`). **`scripts/install.sh` também muda:** roda `pip install -r requirements.txt` (linha 10) e `python -m alembic upgrade head` (linha 12) a partir da raiz. `migrations/` vai para `backend/`, e o plano ainda não diz onde ficam `requirements.txt` e `alembic.ini`; a PR de estrutura precisa decidir isso e ajustar o script, e `scripts/validate_installation.py` deve cobrir a instalação limpa depois da mudança. Os outros scripts de shell (`update.sh`, `backup.sh`, `restore.sh`, `smoke.sh`) não citam `main:app`, `sigma-frontend` nem o lock de imagens, nem `requirements.txt` ou `alembic`. Também citam os caminhos antigos só em texto: `README.md`, `DESIGN.md`, `PRODUCT.md`, `engenharia/README.md` e `engenharia/docs/02-guia-de-implementacao.md`.
    - **`scripts/` fica na raiz** (decidido em 23/10): todos usam `ROOT = Path(__file__).resolve().parents[1]` como raiz do repositório para achar o compose, o lock de imagens e o frontend; dentro de `backend/` essa raiz mudaria. Em vez disso, os scripts que importam módulos do backend (`create_demo_users`, `executar_experimento_e6`, `manage_identity`, `retain_measurements`, `serve_browser_acceptance`, `validate_api_acceptance`, `validate_collection`, `validate_recovery`) passam a inserir `ROOT / "backend"` no `sys.path`; `recovery.py` e `validate_postgres.py` entram na conferência por usarem esses caminhos de forma indireta. `engenharia/` (pacote `sigma_eng`) continua onde está.
    - Depois disso: CI verde, regressão do Codex na VM e revisão do Iohan.
    - Integrar até sexta, 30/10, para não apertar a release de 03/11.
@@ -306,7 +306,7 @@ Horários UTC−4. Feito por Claude, com autorização do Vinícius para usar a 
 - [x] 23/10: rodada 7 retomada na VM e concluída (ver "Sexta, 23/10"); critérios #6/#8 seguem abertos.
 - [x] 23/10: painel manual feito; CI do #47 voltou a passar (`0b372cb`).
 - [ ] 23/10 à noite: revisão do #47 pelo Iohan.
-- [ ] 23/10: anexar o resultado da rodada 7 retomada à #45 (falha 1/20 do provedor) e à #6/#8, se o Vinícius quiser.
+- [x] 23/10: resultado da rodada 7 retomada anexado à [#45](https://github.com/Solution-Explores/SigmaTI/issues/45#issuecomment-6377082969), à [#6](https://github.com/Solution-Explores/SigmaTI/issues/6#issuecomment-6377083347) e à [#8](https://github.com/Solution-Explores/SigmaTI/issues/8#issuecomment-6377083680). Os comentários de #6 e #8 foram corrigidos para separar o que foi medido em 22/10 do que foi medido em 23/10.
 - [ ] 24/10 à tarde: roteiro independente do Iohan; 25/10 correções, segunda execução se necessária, #25 opcional.
 - [ ] 26/10: ensaio 2, gravação, slides; congelar SHA às 18h e repetir bateria completa; smoke Iohan após 22h.
 - [ ] 27/10: ensaio/smoke de manhã; desligar VM e preparar ambiente às 16h; demo às 18h.
@@ -317,7 +317,7 @@ Herdado para as sprints (ver [plano-sprints-pos-demo.md](plano-sprints-pos-demo.
 - [ ] 27/10 à noite ou 28/10: registrar o retorno do orientador e converter em issues da S1.
 - [ ] 28/10: abrir a PR de documentação (`doc/` → `docs/`) e a PR de estrutura; integrar a estrutura até 30/10.
 - [ ] S2: #45 passa a cobrir também o 4º teste instável (`test_scheduler`, 28/30 na `develop`) e a margem do timer de IA (14 s contra 15 s).
-- [ ] S2: resolver o `validate-compose` reprovado do #47 antes de contá-lo como concluído.
+- [x] S2: o `validate-compose` do #47 passou em 23/10 (head `0b372cb`, cinco verificações aprovadas); o #47 só conta como concluído depois da revisão do Iohan e da integração.
 - [ ] S2 (stretch): painel exibir MTTD e burn rate, hoje só pela API.
 - [ ] Confirmar com o orientador: #13 e #25 em 10/11, data da banca e licença do repositório.
 
