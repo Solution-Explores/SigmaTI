@@ -5,7 +5,8 @@ Pasta de trabalho: `C:\Users\Vinicius Lima\Desktop\sigmati-develop`, no SHA cong
 ## Antes de terça
 - [x] Segunda, 26/10: SHA da entrega congelado, por decisão do Vinícius, antes das 18h: `7851da64348dc1437e1258282034b5dca61007fb` (`7851da6`, merge do #47 na `develop`). Qualquer commit novo na `develop` até terça exige novo congelamento e nova rodada.
 - [ ] Segunda à noite: Iohan conferiu o SHA e rodou o smoke.
-- [ ] Gravação de contingência pronta e aberta em um player.
+- [x] Gravação de contingência feita em 26/10 no SHA `7851da6`: `validacao-vm\contingencia\contingencia-7851da6.webm` (1 min 58 s, com legendas; fora do repositório). Para abrir, arraste o arquivo para o Chrome ou o Edge. Para refazer: `docs/demo/gravar_contingencia.mjs` (instruções no cabeçalho do arquivo).
+- [ ] Gravação de contingência aberta em um player na terça, às 17h.
 - [ ] Slides com os números do aceite no SHA congelado.
 
 ## 16h00: máquina

@@ -311,6 +311,9 @@ Horários UTC−4. Feito por Claude, com autorização do Vinícius para integra
   - Não comparar com a VM: hardware, SO e método diferentes.
 - **VM:** bundle `validacao-vm/rodada-2026-10-26a/candidato-7851da6.bundle` (SHA-256 `21541500f5e64257c7d9ff6022cf762d7ee161665073a21ca0edda01ded9f602`) e `PEDIDO-CODEX.md` prontos para a rodada 8, a entregar ao Codex depois do congelamento das 18h. Não medido: o resultado dessa rodada.
 - **SHA congelado:** `7851da64348dc1437e1258282034b5dca61007fb`, por decisão do Vinícius em 26/10, de manhã (o plano previa 18h). Registrado em [demo/checklist-terca.md](demo/checklist-terca.md). A bateria completa do Codex (rodada 8) fica para depois das 18h; o Iohan confere o SHA e roda o smoke depois das 22h.
+- **Ensaio 2** (26/10, 9h14–9h20, navegador embutido, `7851da6`): etapas 2 a 6 passaram sem ajuste no texto; MTTD 0,26 s, MTTA 15,06 s, MTTR 29,03 s; auditoria íntegra (13 registros); anonimização na tela. O incidente extra de latência depois do retorno do serviço apareceu de novo (segunda vez). Detalhes em [roteiro-demonstracao.md](roteiro-demonstracao.md), "Achados do Ensaio 2". Ficou sem conferir a janela anônima de um navegador real (o ensaio usou abas do embutido, uma sessão por aba).
+- **Gravação de contingência:** feita em 26/10 com o Playwright do frontend, no `7851da6` (`validacao-vm/contingencia/contingencia-7851da6.webm`, 1 min 58 s, fora do repositório). O script é `docs/demo/gravar_contingencia.mjs`. É um vídeo condensado, com legendas, e não um ensaio falado de 15 minutos. Duas tentativas anteriores foram descartadas: uma por erro do script e outra porque os dados tinham resíduo da primeira.
+- **Slides:** o slide "Resultados" e a capa (data 27/10) foram atualizados com os números do `7851da6` (Windows) e a ressalva de que os da VM são do `75b1874`; link em https://claude.ai/artifact/38N6oK7SdYLf5mxAM24ZZh.
 - **Ferramenta:** ponte MCP para o Codex em `~/.claude/mcp-servers/codex-bridge/` (fora do repositório); só leitura por padrão.
 
 ### Pendente
@@ -325,7 +328,9 @@ Horários UTC−4. Feito por Claude, com autorização do Vinícius para integra
 - [ ] 24/10 e 25/10: o relatório da execução independente do roteiro pelo Iohan não está no repositório nem nas issues. Cobrar com ele.
 - [x] 23/10: resultado da rodada 7 retomada anexado à [#45](https://github.com/Solution-Explores/SigmaTI/issues/45#issuecomment-6377082969), à [#6](https://github.com/Solution-Explores/SigmaTI/issues/6#issuecomment-6377083347) e à [#8](https://github.com/Solution-Explores/SigmaTI/issues/8#issuecomment-6377083680). Os comentários de #6 e #8 foram corrigidos para separar o que foi medido em 22/10 do que foi medido em 23/10.
 - [ ] 24/10 à tarde: roteiro independente do Iohan; 25/10 correções, segunda execução se necessária, #25 opcional.
-- [ ] 26/10: ensaio 2, gravação, slides; congelar SHA às 18h e repetir bateria completa; smoke Iohan após 22h.
+- [x] 26/10: ensaio 2, gravação de contingência e slides (ver "Segunda, 26/10"); SHA congelado em `7851da6`.
+- [ ] 26/10, depois das 18h: bateria completa do Codex na VM (`validacao-vm/rodada-2026-10-26a/PEDIDO-CODEX.md`) e atualização dos slides com o resultado, se divergir.
+- [ ] 26/10, depois das 22h: o Iohan confere o SHA `7851da6` e roda o smoke.
 - [ ] 27/10: ensaio/smoke de manhã; desligar VM e preparar ambiente às 16h; demo às 18h.
 - [ ] Trello/GitHub: publicação e conferência da atualização em `validacao-vm/rodada-2026-10-22h/RESULTADO.md`.
 

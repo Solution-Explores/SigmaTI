@@ -28,6 +28,17 @@ Base: [plano da demonstração](plano-demonstracao-2026-10-27.md). Código: `dev
 - **Etapa 4:** o painel mostra "Disponível" e 12 min de orçamento para o "Portal de testes", sem a palavra "em risco" (ver etapa 4).
 - Não conferido à mão: a janela anônima com duas sessões em navegador real; o ensaio usou duas abas do navegador embutido.
 
+### Achados do Ensaio 2 (26/10)
+Feito às 9h14–9h20 (UTC−4) no navegador embutido, na `develop@7851da6` (SHA congelado), com Docker Desktop e `sigma-db`; um painel por aba (analista, revisor e gestor ao mesmo tempo). **Etapas 2 a 6 passaram**, sem ajuste no texto.
+- Perfis: `browser.demo` vê só Saúde e Diagnóstico; `Show-Sigma403` deu 403 para o N1 e 200 para o gestor (4 usuários); o gestor vê as cinco abas, com "Tempo real ativo".
+- Coleta: o incidente de disponibilidade do "Switch UTI" apareceu na hora, sem recarregar (um marcador na aba sobreviveu). MTTA 15,06 s e MTTR 29,03 s no painel; `Get-SigmaMetricas`: **MTTD 0,26 s**.
+- SLO: "Portal de testes" com 12 min restantes; `Get-SigmaBurnRate`: `at_risk`, alerta `page`, burn 20,0.
+- Governança: o pedido do analista aparece com "Você solicitou esta ação"; o revisor aprovou com justificativa ("Solicitação aprovada."); a Auditoria mostrou "Integridade consistente · 13 registros", com `approvals.updated` e `approvals.created`.
+- IA: `Equipamento: [SWITCH_REDE] | Erro: [NOME_REMOVIDO] [CPF_REMOVIDO] relatou falha no [SWITCH_REDE]` e "Diagnóstico K10 simulado".
+- **Incidente extra de latência confirmado de novo:** 34 s depois da queda, logo depois de o serviço voltar, o agendador abriu mais um incidente (`incident.created`, 9h16:22). É a segunda vez que aparece (23/10 e 26/10); continua valendo a regra "leia o tipo na linha e resolva o de `availability`".
+- Antes mesmo da queda a lista já tinha dois incidentes da própria demo: disponibilidade do "Portal de testes" (na subida) e latência do "Coletor SSE de teste" (cerca de 1 min depois). Com o "Switch UTI", são três linhas.
+- Dois pedidos de aprovação ficam na lista (o pré-carregado e o novo). O pré-carregado expira 15 min depois da subida.
+
 ## Preparação (terça às 16h, cerca de 10 min; checklist em [demo/checklist-terca.md](demo/checklist-terca.md))
 
 Faça tudo na raiz do worktree da `develop` (`C:\Users\Vinicius Lima\Desktop\sigmati-develop`).
