@@ -8,7 +8,7 @@ Cola de apoio, preparada em 26/10. Cada resposta usa só o que o repositório ou
 Não. Foram medidos em laboratório, em loopback, com 200 alvos lógicos apontando para um serviço TCP local, sem rede hospitalar nem painel na medição de carga. Valem para dizer que o agendador e o caminho queda → SSE aguentam 200 alvos com intervalo de 2 s nesse cenário. Homologação em rede real é trabalho futuro (#11, #12).
 
 **2. Por que há números diferentes no Windows e na VM?**
-Hardware, sistema e método diferentes: Windows do desenvolvedor (p95 de 0,854 s, máximo de 1,065 s, 30 quedas) contra VM Ubuntu com 4 vCPU (p95 entre 0,395 e 0,496 s, cinco cargas, rodada 7). Por isso não se comparam; cada um está rotulado com o seu SHA. O mesmo código, antes das correções de #43 e #44, reprovava a carga de 200 alvos em 0 de 5 repetições na VM.
+Hardware, sistema e método diferentes: Windows do desenvolvedor (p95 de 0,854 s, máximo de 1,065 s, 30 quedas) contra VM Ubuntu com 4 vCPU (p95 entre 0,314 e 0,402 s nas cinco cargas da rodada 8, no mesmo SHA; entre 0,395 e 0,496 s na rodada 7, em `75b1874`). Por isso não se comparam; cada um está rotulado com o seu SHA. O mesmo código, antes das correções de #43 e #44, reprovava a carga de 200 alvos em 0 de 5 repetições na VM.
 
 **3. O que são `missed_overlap` e os timeouts nos resultados da carga?**
 São contadores do agendador de ciclos perdidos (por sobreposição, por relógio ou por falta de capacidade), acumulados desde o início da execução. Nas execuções de 22/10 no Windows ficaram em torno de 187 e 60, acumulados antes e depois da janela, **sem aumento durante a janela medida**; `missed_capacity` ficou em 0 e `errors` em 0. A causa exata dos timeouts não foi isolada (**não medido**). Se perguntarem, dizer isso.
@@ -17,7 +17,7 @@ São contadores do agendador de ciclos perdidos (por sobreposição, por relógi
 É o do ensaio: o tempo entre a hora real da queda, registrada pelo operador no comando de apoio, e a detecção. O painel **não** mostra MTTD porque o incidente não guarda a hora real da falha; o MTTD sai de `POST /api/eng/incidentes/metricas`. Os MTTA e MTTR da demo (segundos) dependem de quão rápido o operador clica; não representam uma operação real.
 
 **5. Os testes passam sempre?**
-No SHA congelado, o pytest completo deu 491 aprovados e 1 pulado, sem falhas, e o CI do GitHub passou. Mas existem **quatro testes sensíveis a tempo**, já presentes antes dos PRs (#45): provedor de IA (prazo interno de 14 s contra a meta de 15 s; 1 falha em 80 execuções isoladas na VM, 15,0248 s), sonda (corrigida no #47: 26/30 → 30/30 na VM), DNS e agendador (este com 28/30 na `develop` de 21/10). A margem do timer de IA será decidida na S2.
+Não sempre. No SHA congelado: no Windows, 491 aprovados e 1 pulado, e o CI do GitHub passou; na VM (rodada 8), a segunda execução do pytest completo deu 492/492, mas a **primeira** deu 491/492, porque o teste de carga com 200 alvos excedeu o limite de atraso do calendário (0,957 s contra 0,5 s; causa não isolada), e 1 de 10 execuções isoladas do teste do provedor ficou em 15,545 s contra 15 s. Existem **quatro testes sensíveis a tempo**, já presentes antes dos PRs (#45): provedor de IA (prazo interno de 14 s contra a meta de 15 s; 1 falha em 80 execuções isoladas na VM, 15,0248 s), sonda (corrigida no #47: 26/30 → 30/30 na VM), DNS e agendador (este com 28/30 na `develop` de 21/10). A margem do timer de IA será decidida na S2.
 
 ## Segurança, LGPD e governança
 
