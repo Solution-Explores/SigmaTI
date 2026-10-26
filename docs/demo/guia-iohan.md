@@ -33,7 +33,7 @@ Devolva ao Vinícius até o domingo de manhã: a tabela por etapa, os tropeços 
 
 ## 3. Conferir o SHA congelado e rodar o smoke (segunda, 26/10, depois das 22h)
 
-1. O Vinícius congela o SHA às 18h e o registra no [checklist de terça](checklist-terca.md) (e avisa você). Confira que `git log --oneline -1` na `develop` mostra esse SHA.
+1. O SHA já está congelado (decisão de 26/10, antes das 18h): **`7851da64348dc1437e1258282034b5dca61007fb`** (`7851da6`, merge do #47), registrado no [checklist de terça](checklist-terca.md). Confira que `git log --oneline -1` na `develop` mostra esse SHA. Se mostrar outro, avise o Vinícius antes de rodar qualquer coisa.
 2. Rode o smoke de 16h20 do checklist: `Show-Sigma403` (403 para o N1, 200 para o gestor), login do gestor com as cinco abas e "Tempo real ativo", alvo "Portal de testes" com 12 min de orçamento restante (o painel não escreve "em risco") e o diagnóstico com o texto anonimizado.
 3. Responda ao Vinícius com o SHA conferido e o resultado de cada item. Se qualquer item falhar, avise na mesma noite: terça de manhã ainda dá para usar a gravação de contingência.
 

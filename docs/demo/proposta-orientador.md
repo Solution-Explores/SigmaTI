@@ -25,13 +25,27 @@ Com as correções: tempo entre a queda e o alerta no painel (SSE) com p50 de 0,
 
 **Aceite na VM, na `develop` integrada (`75b1874`, com #43 e #44), em 22/10 à noite e 23/10:** em 22/10, API 20 de 20, painel 4 de 4 e pytest com 491 aprovados e 1 falha de ambiente (dependência do navegador ausente); em 23/10, o teste que falhou passou isolado (a suíte completa não foi repetida) e cinco cargas de 200 alvos deram p95 entre a queda e o alerta de 0,395 a 0,496 s, com 0 erros e 0 timeouts. Em 20 execuções isoladas do teste do provedor de IA, feitas em 23/10, houve uma falha por 25 ms acima do limite de 15 s (issue #45). Na carga equivalente no Windows, em 22/10, o p95 foi 0,806 s; hardware e método diferem, então os números não se comparam.
 
-Aceite final, no SHA congelado de 26/10: [preencher].
+**Aceite no SHA congelado de 26/10 (`7851da6`, com #43, #44 e #47), no Windows do desenvolvedor, com PostgreSQL em contêiner:** pytest completo com 491 aprovados e 1 pulado, sem falhas; aceite da API 20 de 20; painel 4 de 4; coleta com 30 quedas, mediana de 0,73 s, p95 de 0,85 s e máximo de 1,07 s, todas em até 5 s, com 200 alvos lógicos, intervalo de 2 s e 0 erros. O CI do GitHub passou nesse SHA. O ensaio manual do painel, no mesmo SHA, percorreu perfis, coleta ao vivo, SLO, aprovação por dois analistas, auditoria íntegra e anonimização (MTTD 0,26 s, MTTA 15,06 s, MTTR 29,03 s). A bateria completa na VM para esse SHA está em andamento: [preencher com o resultado da rodada 8 ou remover esta frase].
 
-## 2. Próxima etapa, até 03/11/2026
-- **#13:** âncora externa da trilha de auditoria, rotação da chave HMAC e verificação agendada.
+O PR #47 (estabilização do teste da sonda) foi revisado pelo Iohan e integrado em 26/10. Os demais testes sensíveis a tempo (provedor de IA, DNS e agendador) seguem na issue #45.
+
+## 2. Próximas etapas (sprints semanais, de quarta a terça)
+A banca está marcada para 18/11/2026 e pode ser antecipada. Por isso o que era "tudo até 03/11" foi dividido em três sprints, com o código congelado em 11/11.
+
+**Sprint 1, 28/10 a 03/11 (4 dias úteis, porque 02/11 é Finados):**
 - **#5:** anonimização LGPD revisada contra os critérios completos, com novos casos adversariais.
+- **#6 e #8:** aceite final com todos os critérios.
+- **Reorganização do repositório** (documentação e estrutura do código, em PRs separados).
+- **Release `v1.0.0`** na `main`, com aceite no fim de semana de 31/10 e 01/11. Reserva para o seu retorno sobre esta demonstração.
+
+**Sprint 2, 04/11 a 10/11 (mudança proposta, depende da sua concordância):**
+- **#13:** âncora externa da trilha de auditoria, rotação da chave HMAC e verificação agendada.
 - **#25:** scripts de implantação, backup e smoke E2E. Falta a restauração em outra máquina física; na mesma máquina, em VM, já foi aprovada com 17 verificações.
-- **Release `v1.0.0`** na `main`, com aceite no fim de semana de 31/10 e 01/11.
+- **#45 e #47:** testes sensíveis a tempo e CI. **#46:** custo da verificação da trilha de auditoria.
+
+**Sprint 3, 11/11 a 17/11:** código congelado em 11/11, texto do TCC, slides e ensaio. Banca em 18/11.
+
+#13 e #25 saem do prazo de 03/11 para 10/11 porque não cabem junto com a `v1.0.0` sem estourar a capacidade.
 
 ## 3. Trabalho futuro ou nova sprint
 - **Expansão:** #10, #16 a #19, #21, #22 e #30.
@@ -46,6 +60,7 @@ Aceite final, no SHA congelado de 26/10: [preencher].
 - O custo de verificação da trilha de auditoria cresce com o tamanho do arquivo: medido em VM, a verificação HMAC leva cerca de 3,0 s com 100 mil registros. A issue #46 acompanha o tema; a medição está em `validacao-vm/rodada-2026-10-22d`.
 
 ## 5. Decisões pedidas ao orientador
-1. O prazo de 03/11 para #13, #5 e #25 está aprovado?
+1. Podemos manter #5, o aceite de #6 e #8, a reorganização e a `v1.0.0` em 03/11 e mover #13 e #25 para 10/11?
 2. Os itens da seção 3 podem ficar registrados como trabalho futuro no texto do TCC?
 3. Para o resultado do #25, a restauração em VM na mesma máquina basta, ou a máquina física diferente é obrigatória?
+4. A banca de 18/11 está confirmada, e há risco de antecipação? Que licença o repositório deve ter?

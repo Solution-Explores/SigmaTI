@@ -7,7 +7,8 @@ Pasta de trabalho: `C:\Users\Vinicius Lima\Desktop\sigmati-develop`, no SHA cong
 - [ ] Segunda à noite: Iohan conferiu o SHA e rodou o smoke.
 - [x] Gravação de contingência feita em 26/10 no SHA `7851da6`: `validacao-vm\contingencia\contingencia-7851da6.webm` (1 min 58 s, com legendas; fora do repositório). Para abrir, arraste o arquivo para o Chrome ou o Edge. Para refazer: `docs/demo/gravar_contingencia.mjs` (instruções no cabeçalho do arquivo).
 - [ ] Gravação de contingência aberta em um player na terça, às 17h.
-- [ ] Slides com os números do aceite no SHA congelado.
+- [x] Slides com os números do aceite no SHA congelado (Windows `7851da6`; VM `75b1874` rotulada). Se a rodada 8 da VM chegar e divergir, atualizar o slide "Resultados".
+- [ ] Reler [perguntas-provaveis.md](perguntas-provaveis.md) e [proposta-orientador.md](proposta-orientador.md) (preencher a frase da rodada 8 ou removê-la).
 
 ## 16h00: máquina
 - [ ] Até 16h: desligue normalmente a VM `sigma-restore-25` e confirme que está desligada para liberar memória.
