@@ -338,7 +338,8 @@ Horários UTC−4. Feito por Claude, com autorização do Vinícius para integra
 - [ ] 24/10 à tarde: roteiro independente do Iohan; 25/10 correções, segunda execução se necessária, #25 opcional.
 - [x] 26/10: ensaio 2, gravação de contingência e slides (ver "Segunda, 26/10"); SHA congelado em `7851da6`.
 - [x] 26/10: bateria completa do Codex na VM (rodada 8) feita às 10h20, com duas falhas de tempo preservadas (ver "Segunda, 26/10"); slides atualizados com o resultado; VM desligada.
-- [ ] 26/10: decidir com o Vinícius se o resultado da rodada 8 basta para a demonstração (fluxos funcionais passaram; limites de desempenho com 2 falhas de tempo) e se a #45 passa a cobrir o teste de carga E2.
+- [x] 26/10: decisão do Vinícius sobre a rodada 8: **seguir com o `7851da6`**, sem repetir a suíte, declarando as duas falhas de tempo nos slides e na proposta (feito).
+- [ ] Postar na #45 o texto de `validacao-vm/rodada-2026-10-26a/comentario-issue-45.md` (inclui o teste de carga E2 como achado novo); o modo automático bloqueou a postagem por Claude, então fica com o Vinícius.
 - [ ] 26/10, depois das 22h: o Iohan confere o SHA `7851da6` e roda o smoke.
 - [ ] 27/10: ensaio/smoke de manhã; desligar VM e preparar ambiente às 16h; demo às 18h.
 - [ ] Trello/GitHub: publicação e conferência da atualização em `validacao-vm/rodada-2026-10-22h/RESULTADO.md`.
