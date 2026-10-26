@@ -298,6 +298,20 @@ Horários UTC−4. Feito por Claude, com autorização do Vinícius para usar a 
 - **Painel manual** (navegador embutido, `develop@75b1874`, banco `sigma-db` do Docker Desktop): etapas 2 a 6 passaram, com os achados em [roteiro-demonstracao.md](roteiro-demonstracao.md). Principais: incidente em 0,7 s sem recarregar, MTTA 17,07 s e MTTR 27,68 s no painel, MTTD 0,67 s pela API, auditoria íntegra e anonimização na tela. Dois cuidados novos: subir o serviço de novo abre um incidente extra de latência, e recarregar a página encerra a sessão.
 - A VM `sigma-restore-25` foi desligada depois da rodada. O Docker Desktop ficou ligado; a demo foi encerrada e o schema do ensaio foi removido (0 schemas `sigma_panel_*` restantes).
 
+### Segunda, 26/10: #47 integrado e aceite local no novo SHA
+
+Horários UTC−4. Feito por Claude, com autorização do Vinícius para integrar o #47.
+
+- **Integração:** #47 entrou na `develop` por merge commit, `7851da64348dc1437e1258282034b5dca61007fb`, depois do parecer favorável do Iohan (comentário, sem Approve formal). O CI desse SHA terminou com sucesso nos dois fluxos (`CI Infrastructure Validation` e `API and engineering regression`).
+- **Windows do Vinícius, PostgreSQL do Docker Desktop, `7851da6`** (worktree `sigmati-develop`):
+  - pytest completo: **491 aprovados e 1 pulado** em 411,98 s;
+  - aceite HTTP (`validate_api_acceptance.py`): todos PASS. A primeira execução falhou só porque sobrou `k10-acceptance.users.json` de 22/10 (o script abre o arquivo com `x`); os resíduos foram movidos para `test-results/antigos-22-10/` e a repetição passou;
+  - painel (`validate_panel.py`): 4 de 4 aprovados;
+  - coleta (`validate_collection.py`): 30 quedas, mediana 0,734 s, p95 0,854 s, máximo 1,065 s, 100 % em até 5 s; 200 alvos lógicos, intervalo de 2 s, 0 erros, `missed_capacity` 0, `missed_overlap` 199 e 63 timeouts (acumulados, como em 22/10); reinício preserva incidente único e sessão. Escopo: loopback, um serviço TCP, sem painel nem rede hospitalar.
+  - Não comparar com a VM: hardware, SO e método diferentes.
+- **VM:** bundle `validacao-vm/rodada-2026-10-26a/candidato-7851da6.bundle` (SHA-256 `21541500f5e64257c7d9ff6022cf762d7ee161665073a21ca0edda01ded9f602`) e `PEDIDO-CODEX.md` prontos para a rodada 8, a entregar ao Codex depois do congelamento das 18h. Não medido: o resultado dessa rodada.
+- **Ferramenta:** ponte MCP para o Codex em `~/.claude/mcp-servers/codex-bridge/` (fora do repositório); só leitura por padrão.
+
 ### Pendente
 - [x] Ensaio de API Windows de 22/10 confirmou os itens ⚠; painel manual feito em 23/10 (ver "Sexta, 23/10").
 - [x] CI do #43 aprovado e integração feita; Approve formal não ocorreu e não é declarado.
@@ -305,7 +319,9 @@ Horários UTC−4. Feito por Claude, com autorização do Vinícius para usar a 
 - [x] PR #47 aberto e evidência da rodada 4 publicada na #46.
 - [x] 23/10: rodada 7 retomada na VM e concluída (ver "Sexta, 23/10"); critérios #6/#8 seguem abertos.
 - [x] 23/10: painel manual feito; CI do #47 voltou a passar (`0b372cb`).
-- [ ] 23/10 à noite: revisão do #47 pelo Iohan.
+- [x] 25/10, 18h21 (commit `e82d13b` no branch `pr-47`) e 22h41 (comentário no PR): revisão do #47 pelo Iohan, parecer favorável (LGTM) como comentário; não há Approve formal no GitHub. O arquivo `revisao_pr_47_teste_sonda_instavel.md` está só no branch `pr-47` e entra na PR de documentação de 28/10. Obs.: o commit não é da revisão do #43/#44 (essas foram em 21 e 22/10).
+- [x] 26/10: #47 integrado na `develop` (merge `7851da64348dc1437e1258282034b5dca61007fb`), com a autorização do Vinícius. Candidato ao congelamento das 18h.
+- [ ] 24/10 e 25/10: o relatório da execução independente do roteiro pelo Iohan não está no repositório nem nas issues. Cobrar com ele.
 - [x] 23/10: resultado da rodada 7 retomada anexado à [#45](https://github.com/Solution-Explores/SigmaTI/issues/45#issuecomment-6377082969), à [#6](https://github.com/Solution-Explores/SigmaTI/issues/6#issuecomment-6377083347) e à [#8](https://github.com/Solution-Explores/SigmaTI/issues/8#issuecomment-6377083680). Os comentários de #6 e #8 foram corrigidos para separar o que foi medido em 22/10 do que foi medido em 23/10.
 - [ ] 24/10 à tarde: roteiro independente do Iohan; 25/10 correções, segunda execução se necessária, #25 opcional.
 - [ ] 26/10: ensaio 2, gravação, slides; congelar SHA às 18h e repetir bateria completa; smoke Iohan após 22h.

@@ -1,6 +1,6 @@
 # Roteiro da demonstração de 27/10/2026
 
-Base: [plano da demonstração](plano-demonstracao-2026-10-27.md). Código: `develop`, no SHA congelado na segunda, 26/10, às 18h (hoje `75b1874`, com #43 e #44 integrados; o SHA muda se o #47 for integrado antes do congelamento).
+Base: [plano da demonstração](plano-demonstracao-2026-10-27.md). Código: `develop`, no SHA congelado na segunda, 26/10, às 18h (hoje `7851da6`, com #43, #44 e #47 integrados; o #47 entrou em 26/10 e só alterou o teste da sonda. Os ensaios de 22 e 23/10 foram feitos em `75b1874`).
 
 > **Situação:** Ensaio 1 feito em 22/10, à noite, no Windows, na `develop@75b1874`. Os passos de API (2 a 6) rodaram pelos comandos de apoio em [demo/](demo/); a interface do painel foi coberta só pelo `validate_panel.py` (4/4), não por um ensaio manual no navegador.
 > Resultado: os dois itens ⚠ foram confirmados e o `demo.ps1` foi corrigido (veja "Achados do Ensaio 1").
