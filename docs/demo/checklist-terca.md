@@ -1,14 +1,15 @@
 # Checklist de terça, 27/10 (início às 16h, demonstração às 18h)
 
-Pasta de trabalho: `C:\Users\Vinicius Lima\Desktop\sigmati-develop`, no SHA congelado na segunda, 26/10, às 18h.
+Pasta de trabalho: `C:\Users\Vinicius Lima\Desktop\sigmati-develop`, no SHA congelado em 26/10 (`7851da6`).
 
 ## Antes de terça
 - [x] Segunda, 26/10: SHA da entrega congelado, por decisão do Vinícius, antes das 18h: `7851da64348dc1437e1258282034b5dca61007fb` (`7851da6`, merge do #47 na `develop`). Qualquer commit novo na `develop` até terça exige novo congelamento e nova rodada.
 - [ ] Segunda à noite: Iohan conferiu o SHA e rodou o smoke.
 - [x] Gravação de contingência feita em 26/10 no SHA `7851da6`: `validacao-vm\contingencia\contingencia-7851da6.webm` (1 min 58 s, com legendas; fora do repositório). Para abrir, arraste o arquivo para o Chrome ou o Edge. Para refazer: `docs/demo/gravar_contingencia.mjs` (instruções no cabeçalho do arquivo).
 - [ ] Gravação de contingência aberta em um player na terça, às 17h.
-- [x] Slides com os números do aceite no SHA congelado (Windows `7851da6`; VM `75b1874` rotulada). Se a rodada 8 da VM chegar e divergir, atualizar o slide "Resultados".
-- [ ] Reler [perguntas-provaveis.md](perguntas-provaveis.md) e [proposta-orientador.md](proposta-orientador.md) (preencher a frase da rodada 8 ou removê-la).
+- [x] Slides com os números do aceite no SHA congelado (Windows `7851da6`; VM: rodada 8 no mesmo SHA, com as duas falhas de tempo declaradas). O slide "Resultados" já traz isso.
+- [x] Proposta ao orientador e perguntas prováveis atualizadas com o resultado da rodada 8 (26/10).
+- [ ] Reler [perguntas-provaveis.md](perguntas-provaveis.md) e [proposta-orientador.md](proposta-orientador.md) na terça de manhã, sem editar o conteúdo medido.
 
 ## 16h00: máquina
 - [ ] Até 16h: desligue normalmente a VM `sigma-restore-25` e confirme que está desligada para liberar memória.

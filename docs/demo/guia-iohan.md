@@ -19,7 +19,7 @@ Conferência prévia, só de leitura, feita em 23/10 (Claude, a pedido do Viníc
 
 Objetivo: achar o que só aparece em outra máquina. Faça no seu computador, a partir da `develop` integrada, sem pedir ajuda ao Vinícius durante a execução. Anote cada tropeço.
 
-1. Clone ou atualize: `git fetch origin && git checkout develop && git pull`. Anote o SHA de `git log --oneline -1`. A rodada 7 mediu `75b1874`; se o #47 já tiver sido integrado, você verá um commit de merge posterior a ele, e isso é esperado. Se o SHA for outro, pergunte ao Vinícius antes de começar.
+1. Clone ou atualize: `git fetch origin && git checkout develop && git pull`. Anote o SHA de `git log --oneline -1`. O esperado agora é `7851da6` (merge do #47, SHA congelado em 26/10); a rodada 7 mediu `75b1874`, que é anterior. Se o SHA for outro, pergunte ao Vinícius antes de começar.
 2. Siga [docs/guias/instalacao.md](../guias/instalacao.md) até o ambiente (Python, `npm ci`, Docker, `.env`).
 3. Suba a demonstração e percorra as sete etapas de [roteiro-demonstracao.md](../roteiro-demonstracao.md), usando `docs/demo/subir_demo.py` e `docs/demo/demo.ps1`. Se o seu sistema não for Windows, anote em quais passos o PowerShell fez falta (a rodada 4 já mostrou que o roteiro assume Windows).
 4. Registre, para cada etapa, **passou**, **passou com ajuste** ou **falhou**, e o que você fez diferente do texto.

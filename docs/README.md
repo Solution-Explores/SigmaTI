@@ -16,6 +16,7 @@ Como instalar, operar e trabalhar no projeto.
 
 ## Arquitetura
 
+- [Documento de visão](visao-do-produto.md): problema, posicionamento, escopo, restrições e critérios de sucesso (rascunho).
 - [Stack de tecnologia](arquitetura/stack-de-tecnologia.md): tecnologias, privacidade, infraestrutura e fluxo de dados.
 - [Estudo de caso](arquitetura/estudo-de-caso.md): contexto, requisitos (RF e RNF) e validação.
 - [Núcleo de engenharia](../engenharia/README.md): pacote `sigma_eng`, experimentos e documentos técnicos.
@@ -39,6 +40,7 @@ Registros datados. Mostram o que aconteceu, não o estado atual.
 - [Diário de bordo](historico/diario-bordo/)
 - [Plano de conclusão de 20/10/2026](historico/plano-conclusao-2026-10-20.md)
 - [Relatório ao orientador de 21/10/2026](historico/relatorio-orientador-2026-10-21.md)
+- [Postmortem da sprint de 15 a 20/10/2026](historico/postmortem-sprint-15-20-10-2026.md): sprint não cumprida e falha de carga da coleta (rascunho).
 - [Trail, fase 1](historico/trail-fase1.md)
 - [Rascunhos de trabalho](historico/rascunhos/): prévias da documentação e do quadro de 21/10/2026.
 

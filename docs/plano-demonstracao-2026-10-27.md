@@ -17,6 +17,8 @@ orientador e pendências herdadas.
 
 ## Situação de partida
 
+> **Estado em 26/10, à noite:** `develop` congelada em `7851da64348dc1437e1258282034b5dca61007fb` (#43, #44 e #47 integrados); aceite local, Ensaio 2, contingência e rodada 8 na VM feitos, com duas falhas de tempo declaradas; VM desligada. Resta o que está em "Pendente" (seção "Segunda, 26/10"). O texto abaixo é o registro de 22/10, mantido como histórico.
+
 [Certo] Atualização de 22/10 à noite (UTC−4): `develop` remoto em `75b1874ee5f83f55ab12837249a9c701fd67cef1`, após #43 (`dbc464d`, 22h25) e #44 (`75b1874`, 22h52). Os dois estão integrados; CI dos heads aprovado. Não há Approve formal no GitHub; o LGTM do Iohan no #44 é comentário.
 
 - #6 e #8 seguem abertas; o aceite final é em 23/10 e os critérios completos continuam pendentes.
@@ -335,14 +337,14 @@ Horários UTC−4. Feito por Claude, com autorização do Vinícius para integra
 - [x] 26/10: #47 integrado na `develop` (merge `7851da64348dc1437e1258282034b5dca61007fb`), com a autorização do Vinícius. Candidato ao congelamento das 18h.
 - [ ] 24/10 e 25/10: o relatório da execução independente do roteiro pelo Iohan não está no repositório nem nas issues. Cobrar com ele.
 - [x] 23/10: resultado da rodada 7 retomada anexado à [#45](https://github.com/Solution-Explores/SigmaTI/issues/45#issuecomment-6377082969), à [#6](https://github.com/Solution-Explores/SigmaTI/issues/6#issuecomment-6377083347) e à [#8](https://github.com/Solution-Explores/SigmaTI/issues/8#issuecomment-6377083680). Os comentários de #6 e #8 foram corrigidos para separar o que foi medido em 22/10 do que foi medido em 23/10.
-- [ ] 24/10 à tarde: roteiro independente do Iohan; 25/10 correções, segunda execução se necessária, #25 opcional.
+- [ ] 24/10 à tarde: roteiro independente do Iohan; 25/10 correções, segunda execução se necessária, #25 opcional. (Sem relatório; mesma pendência do item de 24/10 e 25/10 acima. O Ensaio 2 de 26/10 cobriu o roteiro, mas não substitui uma execução em outro computador.)
 - [x] 26/10: ensaio 2, gravação de contingência e slides (ver "Segunda, 26/10"); SHA congelado em `7851da6`.
 - [x] 26/10: bateria completa do Codex na VM (rodada 8) feita às 10h20, com duas falhas de tempo preservadas (ver "Segunda, 26/10"); slides atualizados com o resultado; VM desligada.
 - [x] 26/10: decisão do Vinícius sobre a rodada 8: **seguir com o `7851da6`**, sem repetir a suíte, declarando as duas falhas de tempo nos slides e na proposta (feito).
-- [ ] Postar na #45 o texto de `validacao-vm/rodada-2026-10-26a/comentario-issue-45.md` (inclui o teste de carga E2 como achado novo); o modo automático bloqueou a postagem por Claude, então fica com o Vinícius.
+- [x] 26/10, à noite: rodada 8 registrada nas issues, a pedido do Vinícius: [#45](https://github.com/Solution-Explores/SigmaTI/issues/45#issuecomment-6419067940) (com o teste de carga E2 como achado novo), [#6](https://github.com/Solution-Explores/SigmaTI/issues/6#issuecomment-6419073014) e [#8](https://github.com/Solution-Explores/SigmaTI/issues/8#issuecomment-6419073772). Só evidência; critérios e estado das issues não mudaram.
 - [ ] 26/10, depois das 22h: o Iohan confere o SHA `7851da6` e roda o smoke.
 - [ ] 27/10: ensaio/smoke de manhã; desligar VM e preparar ambiente às 16h; demo às 18h.
-- [ ] Trello/GitHub: publicação e conferência da atualização em `validacao-vm/rodada-2026-10-22h/RESULTADO.md`.
+- [ ] Trello/GitHub: publicação e conferência da atualização em `validacao-vm/rodada-2026-10-22h/RESULTADO.md`. O Trello foi atualizado em parte pelo Codex; a ponte MCP do Trello (`~/.claude/mcp-servers/trello-bridge/`, fora do repositório) lê o quadro público, mas a escrita espera uma chave e um token válidos (o token salvo foi recusado: provavelmente era o Segredo). O Vinícius refaz a configuração; depois, ler o quadro antes de mover ou comentar cartões.
 
 Herdado para as sprints (ver [plano-sprints-pos-demo.md](plano-sprints-pos-demo.md)):
 
