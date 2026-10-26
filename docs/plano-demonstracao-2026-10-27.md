@@ -310,6 +310,7 @@ Horários UTC−4. Feito por Claude, com autorização do Vinícius para integra
   - coleta (`validate_collection.py`): 30 quedas, mediana 0,734 s, p95 0,854 s, máximo 1,065 s, 100 % em até 5 s; 200 alvos lógicos, intervalo de 2 s, 0 erros, `missed_capacity` 0, `missed_overlap` 199 e 63 timeouts (acumulados, como em 22/10); reinício preserva incidente único e sessão. Escopo: loopback, um serviço TCP, sem painel nem rede hospitalar.
   - Não comparar com a VM: hardware, SO e método diferentes.
 - **VM:** bundle `validacao-vm/rodada-2026-10-26a/candidato-7851da6.bundle` (SHA-256 `21541500f5e64257c7d9ff6022cf762d7ee161665073a21ca0edda01ded9f602`) e `PEDIDO-CODEX.md` prontos para a rodada 8, a entregar ao Codex depois do congelamento das 18h. Não medido: o resultado dessa rodada.
+- **SHA congelado:** `7851da64348dc1437e1258282034b5dca61007fb`, por decisão do Vinícius em 26/10, de manhã (o plano previa 18h). Registrado em [demo/checklist-terca.md](demo/checklist-terca.md). A bateria completa do Codex (rodada 8) fica para depois das 18h; o Iohan confere o SHA e roda o smoke depois das 22h.
 - **Ferramenta:** ponte MCP para o Codex em `~/.claude/mcp-servers/codex-bridge/` (fora do repositório); só leitura por padrão.
 
 ### Pendente

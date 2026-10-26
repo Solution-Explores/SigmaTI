@@ -3,7 +3,7 @@
 Pasta de trabalho: `C:\Users\Vinicius Lima\Desktop\sigmati-develop`, no SHA congelado na segunda, 26/10, às 18h.
 
 ## Antes de terça
-- [ ] Segunda às 18h: SHA da entrega congelado e anotado aqui: `[SHA congelado]`.
+- [x] Segunda, 26/10: SHA da entrega congelado, por decisão do Vinícius, antes das 18h: `7851da64348dc1437e1258282034b5dca61007fb` (`7851da6`, merge do #47 na `develop`). Qualquer commit novo na `develop` até terça exige novo congelamento e nova rodada.
 - [ ] Segunda à noite: Iohan conferiu o SHA e rodou o smoke.
 - [ ] Gravação de contingência pronta e aberta em um player.
 - [ ] Slides com os números do aceite no SHA congelado.
@@ -12,7 +12,7 @@ Pasta de trabalho: `C:\Users\Vinicius Lima\Desktop\sigmati-develop`, no SHA cong
 - [ ] Até 16h: desligue normalmente a VM `sigma-restore-25` e confirme que está desligada para liberar memória.
 - [ ] Feche o Codex, a VM e as abas que não vai usar. A memória do Windows já se esgotou uma vez.
 - [ ] Abra o Docker Desktop e espere o status "Engine running".
-- [ ] Confira o SHA: `git -C C:\Users\Vinicius Lima\Desktop\sigmati-develop log --oneline -1` mostra `[SHA congelado]`.
+- [ ] Confira o SHA: `git -C C:\Users\Vinicius Lima\Desktop\sigmati-develop log --oneline -1` mostra `7851da6`.
 
 ## 16h10: subir a demo (detalhes em `docs/roteiro-demonstracao.md`)
 - [ ] Suba o banco: `docker compose -f docker-compose.yml -f deploy/db-host.yml up -d db`
