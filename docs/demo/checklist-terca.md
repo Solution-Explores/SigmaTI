@@ -17,6 +17,8 @@ Pasta de trabalho: `C:\Users\Vinicius Lima\Desktop\sigmati-develop`, no SHA cong
 - [ ] Confira o SHA: `git -C C:\Users\Vinicius Lima\Desktop\sigmati-develop log --oneline -1` mostra `7851da6`.
 
 ## 16h10: subir a demo (detalhes em `docs/roteiro-demonstracao.md`)
+**Atalho testado em 26/10 no `7851da6` (todos os itens PASS):** `& 'C:\Users\Vinicius Lima\Desktop\sigma-develop\docs\demo\preparar_demo.ps1'` no PowerShell. Ele confere o SHA, liga o Docker e o banco, abre duas janelas (API e painel), imprime a senha e roda o `docs/demo/smoke.ps1` (403/200, painel no ar, burn rate, anonimização e auditoria pela API). Se der erro, use os passos manuais abaixo. O terminal C (`demo.ps1`) e o D (`http.server`) continuam manuais, e o item "5 abas e Tempo real ativo" ainda é a olho. O `smoke.ps1` também roda sozinho: `.\docs\demo\smoke.ps1 -Senha '<senha>'`.
+
 - [ ] Suba o banco: `docker compose -f docker-compose.yml -f deploy/db-host.yml up -d db`
 - [ ] **Terminal A:** defina `$env:SIGMA_TEST_DATABASE_URL`, ative a `.venv` e rode `python ..\sigma-develop\docs\demo\subir_demo.py`. Anote a senha impressa.
 - [ ] **Terminal B:** `cd sigma-frontend; $env:VITE_API_URL='http://127.0.0.1:18000'; npx vite --host 127.0.0.1 --port 5173`
