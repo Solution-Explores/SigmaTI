@@ -44,13 +44,23 @@ def _servidor(resposta: bytes | None):
     return srv, srv.getsockname()[1]
 
 
+def _fechar(srv):
+    # No Linux, close() não interrompe um accept() bloqueado em outra thread;
+    # sem shutdown(), uma conexão ainda é aceita depois do fechamento.
+    try:
+        srv.shutdown(socket.SHUT_RDWR)
+    except OSError:
+        pass
+    srv.close()
+
+
 def test_probe_tcp_up():
     srv, port = _servidor(None)
     try:
         r = probe.probe_service("127.0.0.1", port, "tcp")
         assert r.status == "up" and r.latency_ms is not None
     finally:
-        srv.close()
+        _fechar(srv)
 
 
 def test_probe_porta_fechada_down():
@@ -70,7 +80,7 @@ def test_probe_http_500_degradado():
         assert r.http_status == 503 and r.status == "degraded"
         assert any(f["code"] == "http_error" for f in r.findings)
     finally:
-        srv.close()
+        _fechar(srv)
 
 
 def test_probe_http_200_com_csp_up():
@@ -78,7 +88,7 @@ def test_probe_http_200_com_csp_up():
     try:
         assert probe.probe_service("127.0.0.1", port, "http").status == "up"
     finally:
-        srv.close()
+        _fechar(srv)
 
 
 def test_probe_validacao():
@@ -95,7 +105,7 @@ def test_probe_many_perda_e_jitter():
         assert s.samples == 10 and s.failures == 0 and s.loss_pct == 0
         assert s.latency["n"] == 10 and s.jitter_ms >= 0
     finally:
-        srv.close()
+        _fechar(srv)
     morto = probe.probe_many("127.0.0.1", port, "tcp", count=3, timeout=0.3)
     assert morto.loss_pct == 100 and morto.latency == {"n": 0}
 
