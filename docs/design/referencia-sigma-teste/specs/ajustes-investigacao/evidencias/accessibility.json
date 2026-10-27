@@ -1,0 +1,79 @@
+{
+  "results": [
+    {
+      "theme": "light",
+      "section": "overview",
+      "minimum": 5.756038845672054,
+      "failures": [],
+      "samples": 87,
+      "accessibleControlNames": true,
+      "expandedDetailsOverflow": false
+    },
+    {
+      "theme": "light",
+      "section": "incidents",
+      "minimum": 5.756038845672054,
+      "failures": [],
+      "samples": 76,
+      "accessibleControlNames": true,
+      "expandedDetailsOverflow": false
+    },
+    {
+      "theme": "light",
+      "section": "devices",
+      "minimum": 5.756038845672054,
+      "failures": [],
+      "samples": 76,
+      "accessibleControlNames": true,
+      "expandedDetailsOverflow": false
+    },
+    {
+      "theme": "light",
+      "section": "simulator",
+      "minimum": 5.756038845672054,
+      "failures": [],
+      "samples": 42,
+      "accessibleControlNames": true,
+      "expandedDetailsOverflow": false
+    },
+    {
+      "theme": "dark",
+      "section": "overview",
+      "minimum": 5.467670598746801,
+      "failures": [],
+      "samples": 91,
+      "accessibleControlNames": true,
+      "expandedDetailsOverflow": false
+    },
+    {
+      "theme": "dark",
+      "section": "incidents",
+      "minimum": 5.467670598746801,
+      "failures": [],
+      "samples": 80,
+      "accessibleControlNames": true,
+      "expandedDetailsOverflow": false
+    },
+    {
+      "theme": "dark",
+      "section": "devices",
+      "minimum": 5.467670598746801,
+      "failures": [],
+      "samples": 87,
+      "accessibleControlNames": true,
+      "expandedDetailsOverflow": false
+    },
+    {
+      "theme": "dark",
+      "section": "simulator",
+      "minimum": 5.467670598746801,
+      "failures": [],
+      "samples": 42,
+      "accessibleControlNames": true,
+      "expandedDetailsOverflow": false
+    }
+  ],
+  "keyboardDetails": true,
+  "uniqueDisclosureNames": true,
+  "note": "Computed solid-background text contrast and control-name checks; not a full WCAG certification."
+}

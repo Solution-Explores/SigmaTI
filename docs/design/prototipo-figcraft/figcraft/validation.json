@@ -1,0 +1,64 @@
+{
+  "frames": 106,
+  "nodesInspected": 6386,
+  "missingDestinations": [],
+  "textOutsideParent": [],
+  "paths": [
+    {
+      "path": [
+        "login",
+        "overview-n1",
+        "queue-n1",
+        "incident-new",
+        "incident-owned",
+        "action-form",
+        "incident-logged",
+        "escalation-form",
+        "incident-escalated"
+      ],
+      "valid": true
+    },
+    {
+      "path": [
+        "overview-analyst",
+        "incident-incoming",
+        "incident-analyst",
+        "incident-validation",
+        "resolution-form",
+        "incident-closed",
+        "reopen-form",
+        "incident-reopened"
+      ],
+      "valid": true
+    },
+    {
+      "path": [
+        "overview-manager",
+        "reports",
+        "schedules",
+        "schedule-form",
+        "schedules"
+      ],
+      "valid": true
+    },
+    {
+      "path": [
+        "sources",
+        "source-detail",
+        "revoke-key",
+        "key-revoked"
+      ],
+      "valid": true
+    },
+    {
+      "path": [
+        "mobile-summary",
+        "mobile-action-form",
+        "mobile-logged",
+        "mobile-activity"
+      ],
+      "valid": true
+    }
+  ],
+  "method": "Structural inspection of saved native interactions; not a playback test."
+}

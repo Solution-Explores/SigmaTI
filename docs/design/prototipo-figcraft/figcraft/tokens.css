@@ -1,0 +1,36 @@
+/* SIGMA · Claro */
+:root {
+  --bg: #F8FAFC;
+  --surface: #FFFFFF;
+  --text: #0F172A;
+  --muted: #526176;
+  --line: #DCE3ED;
+  --blue: #1D4ED8;
+  --onblue: #FFFFFF;
+  --tint: #EFF6FF;
+  --red: #B91C1C;
+  --redbg: #FEF2F2;
+  --amber: #92400E;
+  --amberbg: #FFFBEB;
+  --green: #166534;
+  --greenbg: #F0FDF4;
+  --disabled: #E2E8F0;
+}
+/* SIGMA · Escuro */
+[data-sigma="Escuro"] {
+  --bg: #0B1220;
+  --surface: #111C2E;
+  --text: #F1F5F9;
+  --muted: #A7B6CB;
+  --line: #304157;
+  --blue: #60A5FA;
+  --onblue: #0B1220;
+  --tint: #172D4A;
+  --red: #FCA5A5;
+  --redbg: #3B1E2A;
+  --amber: #FCD34D;
+  --amberbg: #352A17;
+  --green: #86EFAC;
+  --greenbg: #123227;
+  --disabled: #304157;
+}
