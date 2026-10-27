@@ -1,0 +1,26 @@
+# auth.py
+
+- _b64url_encode · function · L49-L50 — def _b64url_encode(data: bytes) -> str
+- _b64url_decode · function · L53-L57 — def _b64url_decode(data: str) -> bytes
+- hash_senha · function · L60-L70 — def hash_senha(senha: str, salt: str | None = None) -> str
+- verificar_senha · function · L73-L91 — def verificar_senha(senha: str, hash_armazenado: str) -> bool
+- TokenError · class · L96-L98 — class TokenError(HTTPException)
+- __init__ · method · L97-L98 — def __init__(self, detail: str = "Autenticação necessária.")
+- criar_token_sessao · function · L101-L127 — def criar_token_sessao( usuario: str, papel: str, expira_em_segundos: int = JWT_EXPIRATION_SECONDS, secret_key: str = JWT_SECRET, ) -> str
+- decodificar_token_sessao · function · L130-L166 — def decodificar_token_sessao(token: str, secret_key: str = JWT_SECRET) -> dict
+- Usuario · class · L172-L176 — class Usuario
+- UsuarioRepository · class · L179-L205 — class UsuarioRepository
+- __init__ · method · L182-L184 — def __init__(self)
+- _seed_usuarios · method · L186-L190 — def _seed_usuarios(self): # Usuários padrão para cada um dos perfis oficiais do SIGMA (README / RF07)
+- adicionar_usuario · method · L192-L202 — def adicionar_usuario(self, username: str, senha_clara: str, papel: str) -> Usuario
+- obter_por_username · method · L204-L205 — def obter_por_username(self, username: str) -> Usuario | None
+- RegistroTentativa · class · L214-L216 — class RegistroTentativa
+- LoginRateLimiter · class · L219-L247 — class LoginRateLimiter
+- __init__ · method · L220-L223 — def __init__(self, max_falhas: int = MAX_LOGIN_ATTEMPTS, tempo_bloqueio: int = LOCKOUT_DURATION_SECONDS)
+- esta_bloqueado · method · L225-L235 — def esta_bloqueado(self, chave: str) -> bool
+- registrar_falha · method · L237-L244 — def registrar_falha(self, chave: str) -> tuple[int, bool]
+- limpar · method · L246-L247 — def limpar(self, chave: str)
+- obter_auditor · function · L255-L267 — def obter_auditor()
+- obter_usuario_atual · function · L272-L292 — def obter_usuario_atual(request: Request, authorization: str | None = Header(None)) -> Usuario
+- exige_papel · function · L295-L310 — def exige_papel(papel_minimo: str) -> Callable
+- _validador_papel · function · L300-L308 — def _validador_papel(usuario: Usuario = Depends(obter_usuario_atual)) -> Usuario
