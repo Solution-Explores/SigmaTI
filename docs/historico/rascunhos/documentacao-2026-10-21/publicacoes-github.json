@@ -1,0 +1,46 @@
+{
+  "comments": [
+    {
+      "url": "https://github.com/Solution-Explores/SigmaTI/issues/6#issuecomment-6314605890",
+      "number": 6
+    },
+    {
+      "url": "https://github.com/Solution-Explores/SigmaTI/issues/8#issuecomment-6314606444",
+      "number": 8
+    },
+    {
+      "url": "https://github.com/Solution-Explores/SigmaTI/issues/25#issuecomment-6314607004",
+      "number": 25
+    },
+    {
+      "url": "https://github.com/Solution-Explores/SigmaTI/issues/5#issuecomment-6314607480",
+      "number": 5
+    },
+    {
+      "url": "https://github.com/Solution-Explores/SigmaTI/issues/13#issuecomment-6314607918",
+      "number": 13
+    },
+    {
+      "url": "https://github.com/Solution-Explores/SigmaTI/pull/43#issuecomment-6314608476",
+      "number": 43
+    },
+    {
+      "url": "https://github.com/Solution-Explores/SigmaTI/pull/44#issuecomment-6314608988",
+      "number": 44
+    }
+  ],
+  "issues": [
+    {
+      "key": "instaveis",
+      "url": "https://github.com/Solution-Explores/SigmaTI/issues/45",
+      "number": 45
+    },
+    {
+      "key": "auditoria",
+      "url": "https://github.com/Solution-Explores/SigmaTI/issues/46",
+      "number": 46
+    }
+  ],
+  "published_utc": "2026-10-21T11:17:23.5231660+00:00",
+  "transport": "gh; connector write returned 403, no comment created by connector"
+}

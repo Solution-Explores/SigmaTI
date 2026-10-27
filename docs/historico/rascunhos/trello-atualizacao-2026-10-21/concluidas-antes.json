@@ -1,0 +1,2231 @@
+[
+  {
+    "title": "ISSUE #2 — Corrigir conflitos do Docker Compose",
+    "url": "/c/wSoIrYrs/6-issue-2-corrigir-conflitos-do-docker-compose",
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Concluído",
+        "text": "Concluído"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #2 — Corrigir conflitos do Docker Compose)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #2 — Corrigir conflitos do Docker Compose)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Membros"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": "Infraestrutura"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "15 de out., 12:00\nConcluído"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para comment",
+        "text": ""
+      },
+      {
+        "label": "Adicionar reação",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar Vínculo como Anexo"
+      },
+      {
+        "label": null,
+        "text": "Excluir"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para action",
+        "text": ""
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      },
+      {
+        "label": "Automações",
+        "text": "Automações"
+      },
+      {
+        "label": "Comentários e atividade",
+        "text": "Comentários"
+      }
+    ],
+    "links": [
+      {
+        "text": "#2 — Resolver marcadores de conflito de merge no docker-compose.yml",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/2"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/004-configuracao-ambiente-api/revisao-k01.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/004-configuracao-ambiente-api/revisao-k01.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/issues/2",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/2"
+      },
+      {
+        "text": "16 de out. de 2026, 00:13",
+        "url": "#comment-6ad1a46e91ec5c82b453fe7b"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a",
+        "url": "https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156"
+      },
+      {
+        "text": "15 de out. de 2026, 14:50",
+        "url": "#action-6ad1207c27953febbd050ff2"
+      }
+    ],
+    "text": "Concluído\nISSUE #2 — Corrigir conflitos do Docker Compose\nAdicionar\nAdicionar\nChecklist\nMembros\nAnexo\nEtiquetas\nInfraestrutura\nData Entrega\n15 de out., 12:00\nConcluído\nDescrição\nEditar\nResumo atual\n\nIssue encerrada. Este cartão representa a correção inicial dos marcadores de conflito; commits e evidências originais estão no histórico. Sem PR exclusivo identificado para essa etapa.\n\nIssues do GitHub\n\n#2 — Resolver marcadores de conflito de merge no docker-compose.yml — encerrada.\n\nPRs e referências\n\nSem PR exclusivo confirmado para esta etapa. Commits, CI e evidências continuam no histórico abaixo.\n\nOrganização\n\nColuna mantida: Concluído.\n\nO número do título é o da issue do GitHub; um cartão pode representar só uma etapa dela.\n\nNúmeros K01–K15 são identificadores antigos da sprint, preservados apenas como histórico.\n\nPadronização em 20/10/2026 (UTC−4); não muda aceite, responsáveis, prazos ou conclusão de issues.\n\n## Histórico anterior — K01 — Revisar e integrar a correção do Docker Compose\n\nOBJETIVO\nRevisar e integrar a correção do Docker Compose\n\nRESPONSÁVEL E PRAZO\nJoyce (Pessoa 3) — 15/10/2026 / manhã.\nDisponibilidade: 08h–12h.\n\nDEPENDÊNCIAS\nLiberado para iniciar conforme o planejamento.\n\nCRITÉRIOS DE CONCLUSÃO\n• Entrega correspondente ao objetivo implementada e revisada.\n• Validação executada e evidências anexadas ou vinculadas.\n• Documentação pertinente atualizada.\n• Critérios específicos da issue conferidos antes do encerramento.\n\nREFERÊNCIAS\nSprint: 15–20/10/2026. Foco nas issues #2, #3 e #4; vincular a issue e o PR correspondente quando identificados.\nOrdem de prioridade: K01.\n\nCONFERÊNCIA DO REPOSITÓRIO — 15/10/2026\nBase verificada: dev@900dcc4.\nREVISÃO E TESTES. Correção do Compose implementada na dev (f917310), com serviços padrão e perfil monitoring; validações de configuração registradas. Revisão encontrou troca de volume sem roteiro de migração. Credenciais e imagens foram tratadas posteriormente por K03/K04. Falta aprovação de outro integrante e integração à main, cujo Compose ainda contém conflitos. Issue #2 aberta.\nEvidência: https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/004-configuracao-ambiente-api/revisao-k01.md\nIssue: https://github.com/Solution-Explores/SigmaTI/issues/2\nResultados de testes citados são os registrados no repositório; não foram reexecutados nesta conferência.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima 16 de out. de 2026, 00:13\n\nCONCLUSÃO DO ESCOPO VALIDADO\nRevisor responsável: Vinícius Lima. Após apresentação dos resultados, autorizou publicação e conclusão dos escopos validados nesta conversa; testes executados pelo agente, sem alegar reprodução manual pelo revisor.\nK01: Compose corrigido; roteiro seleciona dev; primeira instalação e migração lógica futura documentadas. A equipe informou ausência de máquina de implantação; nenhum dado foi migrado.\nEntrega integrada à main: https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a\nRegistro de validação: https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md\nValidação local: 180 testes aprovados, 32 verificações de credenciais, 12 cenários de infraestrutura e quatro imagens oficiais confirmados.\nCI da main: API e infraestrutura concluídos com sucesso.\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156\nNão houve PR: integração pelo Git normal, com checkout limpo. Este registro atualiza as pendências históricas de aprovação/integração. K07–K15, instalação real e migração de dados permanecem separadas.\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a A Fazer\n15 de out. de 2026, 14:50\nPower-ups\nAutomações\nComentários"
+  },
+  {
+    "title": "ISSUE #4 — Configurar chave, modelo e origens por ambiente",
+    "url": "/c/JtOo3Hii/7-issue-4-configurar-chave-modelo-e-origens-por-ambiente",
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Concluído",
+        "text": "Concluído"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #4 — Configurar chave, modelo e origens por ambiente)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #4 — Configurar chave, modelo e origens por ambiente)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "API"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "15 de out., 23:59\nConcluído"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para comment",
+        "text": ""
+      },
+      {
+        "label": "Adicionar reação",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar Vínculo como Anexo"
+      },
+      {
+        "label": null,
+        "text": "Excluir"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para action",
+        "text": ""
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      },
+      {
+        "label": "Automações",
+        "text": "Automações"
+      },
+      {
+        "label": "Comentários e atividade",
+        "text": "Comentários"
+      }
+    ],
+    "links": [
+      {
+        "text": "#4 — main.py: chave de API por variável de ambiente, CORS restrito, chamada assíncrona com timeout",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/4"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/commit/f809a406d0731080a7bdf8d7e1e1c008fe7d16b1",
+        "url": "https://github.com/Solution-Explores/SigmaTI/commit/f809a406d0731080a7bdf8d7e1e1c008fe7d16b1"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/004-configuracao-ambiente-api/evidencias.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/004-configuracao-ambiente-api/evidencias.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/issues/4",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/4"
+      },
+      {
+        "text": "16 de out. de 2026, 00:14",
+        "url": "#comment-6ad1a4c3574bc419ea057cc0"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a",
+        "url": "https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156"
+      },
+      {
+        "text": "15 de out. de 2026, 14:50",
+        "url": "#action-6ad1207df69ab64eb23fd350"
+      }
+    ],
+    "text": "Concluído\nISSUE #4 — Configurar chave, modelo e origens por ambiente\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nAPI\nData Entrega\n15 de out., 23:59\nConcluído\nDescrição\nEditar\nResumo atual\n\nIssue encerrada. Subtarefa de configuração por variáveis de ambiente; não é uma issue independente. Commits/evidências da implementação inicial no histórico.\n\nIssues do GitHub\n\n#4 — main.py: chave de API por variável de ambiente, CORS restrito, chamada assíncrona com timeout — encerrada.\n\nPRs e referências\n\nSem PR exclusivo confirmado para esta etapa. Commits, CI e evidências continuam no histórico abaixo.\n\nOrganização\n\nColuna mantida: Concluído.\n\nO número do título é o da issue do GitHub; um cartão pode representar só uma etapa dela.\n\nNúmeros K01–K15 são identificadores antigos da sprint, preservados apenas como histórico.\n\nPadronização em 20/10/2026 (UTC−4); não muda aceite, responsáveis, prazos ou conclusão de issues.\n\n## Histórico anterior — K02 — Configurar chave, modelo e origens por ambiente\n\nOBJETIVO\nConfigurar chave, modelo e origens por ambiente\n\nRESPONSÁVEL E PRAZO\nVinícius (Pessoa 1) — 15/10/2026.\n\nDEPENDÊNCIAS\nLiberado para iniciar conforme o planejamento.\n\nCRITÉRIOS DE CONCLUSÃO\n• Entrega correspondente ao objetivo implementada e revisada.\n• Validação executada e evidências anexadas ou vinculadas.\n• Documentação pertinente atualizada.\n• Critérios específicos da issue conferidos antes do encerramento.\n\nREFERÊNCIAS\nSprint: 15–20/10/2026. Foco nas issues #2, #3 e #4; vincular a issue e o PR correspondente quando identificados.\nOrdem de prioridade: K02.\n\nCONFERÊNCIA DO REPOSITÓRIO — 15/10/2026\nBase: dev@900dcc4.\nREVISÃO E TESTES. Chave, modelo e origens por ambiente implementados em f809a40; 61 testes aprovados segundo evidências versionadas. Falta revisão de outro integrante. A entrega é parcial da issue #4.\nCommit: https://github.com/Solution-Explores/SigmaTI/commit/f809a406d0731080a7bdf8d7e1e1c008fe7d16b1\nEvidência: https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/004-configuracao-ambiente-api/evidencias.md\nIssue: https://github.com/Solution-Explores/SigmaTI/issues/4\nTestes citados são registros do repositório; não reexecutados nesta conferência.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima 16 de out. de 2026, 00:14\n\nK02 concluída: configuração obrigatória de chave/modelo/origens, precedência de ambiente, inicialização segura e regressão de 61 testes de configuração aprovadas.\n\nCONCLUSÃO DO ESCOPO VALIDADO\nRevisor responsável: Vinícius Lima. Autorizou publicação e conclusão após apresentação dos resultados nesta conversa. Testes executados pelo agente; não se alega reprodução manual pelo revisor.\nEntrega integrada à main: https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a\nValidação e aceite: https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md\n180 testes locais aprovados; CI da main API e infraestrutura com sucesso:\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156\nIntegração pelo Git normal, sem PR; checkout limpo. As pendências de revisão/integração nas conferências anteriores são históricas. Issue #4 continua aberta por K07 e aceite completo. Instalação real/migração permanecem separadas, pois ainda não há máquina de implantação.\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a A Fazer\n15 de out. de 2026, 14:50\nPower-ups\nAutomações\nComentários"
+  },
+  {
+    "title": "ISSUE #3 — Remover credenciais fixas do Compose",
+    "url": "/c/AwLuYdLm/8-issue-3-remover-credenciais-fixas-do-compose",
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Concluído",
+        "text": "Concluído"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #3 — Remover credenciais fixas do Compose)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #3 — Remover credenciais fixas do Compose)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Membros"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": "Infraestrutura"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "16 de out., 12:00\nConcluído"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para comment",
+        "text": ""
+      },
+      {
+        "label": "Adicionar reação",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar Vínculo como Anexo"
+      },
+      {
+        "label": null,
+        "text": "Excluir"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para action",
+        "text": ""
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      },
+      {
+        "label": "Automações",
+        "text": "Automações"
+      },
+      {
+        "label": "Comentários e atividade",
+        "text": "Comentários"
+      }
+    ],
+    "links": [
+      {
+        "text": "#3 — Remover credenciais fixas, restringir portas e fixar versões no docker-compose",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/3"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/commit/1586221f87afb48efb5f843374ebe7a639a0929b",
+        "url": "https://github.com/Solution-Explores/SigmaTI/commit/1586221f87afb48efb5f843374ebe7a639a0929b"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/003-credenciais-compose/evidencias.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/003-credenciais-compose/evidencias.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/issues/3",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/3"
+      },
+      {
+        "text": "16 de out. de 2026, 00:15",
+        "url": "#comment-6ad1a4dfd8505c82a29c51cb"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a",
+        "url": "https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156"
+      },
+      {
+        "text": "15 de out. de 2026, 14:50",
+        "url": "#action-6ad1207db15c410e7e483828"
+      }
+    ],
+    "text": "Concluído\nISSUE #3 — Remover credenciais fixas do Compose\nAdicionar\nAdicionar\nChecklist\nMembros\nAnexo\nEtiquetas\nInfraestrutura\nData Entrega\n16 de out., 12:00\nConcluído\nDescrição\nEditar\nResumo atual\n\nIssue encerrada. Subtarefa de credenciais e .env.example; outros aspectos da mesma issue estão no cartão de portas/imagens.\n\nIssues do GitHub\n\n#3 — Remover credenciais fixas, restringir portas e fixar versões no docker-compose — encerrada.\n\nPRs e referências\n\nSem PR exclusivo confirmado para esta etapa. Commits, CI e evidências continuam no histórico abaixo.\n\nOrganização\n\nColuna mantida: Concluído.\n\nO número do título é o da issue do GitHub; um cartão pode representar só uma etapa dela.\n\nNúmeros K01–K15 são identificadores antigos da sprint, preservados apenas como histórico.\n\nPadronização em 20/10/2026 (UTC−4); não muda aceite, responsáveis, prazos ou conclusão de issues.\n\n## Histórico anterior — K03 — Remover senhas padrão e revisar .env.example\n\nOBJETIVO\nRemover senhas padrão e revisar .env.example\n\nRESPONSÁVEL E PRAZO\nJoyce (Pessoa 3) — 16/10/2026 / manhã.\nDisponibilidade: 08h–12h.\n\nDEPENDÊNCIAS\nA confirmar no planejamento detalhado antes de iniciar.\n\nCRITÉRIOS DE CONCLUSÃO\n• Entrega correspondente ao objetivo implementada e revisada.\n• Validação executada e evidências anexadas ou vinculadas.\n• Documentação pertinente atualizada.\n• Critérios específicos da issue conferidos antes do encerramento.\n\nREFERÊNCIAS\nSprint: 15–20/10/2026. Foco nas issues #2, #3 e #4; vincular a issue e o PR correspondente quando identificados.\nOrdem de prioridade: K03.\n\nCONFERÊNCIA DO REPOSITÓRIO — 15/10/2026\nBase: dev@900dcc4.\nREVISÃO E TESTES. Credenciais externas obrigatórias sem fallback; template sem senhas e login nativo do n8n documentado. 32 verificações de credenciais e regressão K02 registradas. Falta revisão por outro integrante; alteração do .env não rotaciona contas existentes.\nCommit: https://github.com/Solution-Explores/SigmaTI/commit/1586221f87afb48efb5f843374ebe7a639a0929b\nEvidência: https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/003-credenciais-compose/evidencias.md\nIssue: https://github.com/Solution-Explores/SigmaTI/issues/3\nTestes citados são registros do repositório; não reexecutados nesta conferência.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima 16 de out. de 2026, 00:15\n\nK03 concluída: seis credenciais externas obrigatórias sem fallback, template vazio, .env ignorado e login nativo do n8n documentado; 32 verificações de credenciais aprovadas. Rotação de contas já persistidas continua uma operação separada.\n\nCONCLUSÃO DO ESCOPO VALIDADO\nRevisor responsável: Vinícius Lima. Autorizou publicação e conclusão após apresentação dos resultados nesta conversa. Testes executados pelo agente; não se alega reprodução manual pelo revisor.\nEntrega integrada à main: https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a\nValidação e aceite: https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md\n180 testes locais aprovados; CI da main API e infraestrutura com sucesso:\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156\nIntegração pelo Git normal, sem PR; checkout limpo. As pendências de revisão/integração nas conferências anteriores são históricas. Issue #4 continua aberta por K07 e aceite completo. Instalação real/migração permanecem separadas, pois ainda não há máquina de implantação.\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a A Fazer\n15 de out. de 2026, 14:50\nPower-ups\nAutomações\nComentários"
+  },
+  {
+    "title": "ISSUE #3 — Restringir portas e fixar imagens",
+    "url": "/c/qbdZ7ZTy/9-issue-3-restringir-portas-e-fixar-imagens",
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Concluído",
+        "text": "Concluído"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #3 — Restringir portas e fixar imagens)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #3 — Restringir portas e fixar imagens)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Membros"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": "Infraestrutura"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "16 de out., 12:00\nConcluído"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para comment",
+        "text": ""
+      },
+      {
+        "label": "Adicionar reação",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar Vínculo como Anexo"
+      },
+      {
+        "label": null,
+        "text": "Excluir"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para action",
+        "text": ""
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      },
+      {
+        "label": "Automações",
+        "text": "Automações"
+      },
+      {
+        "label": "Comentários e atividade",
+        "text": "Comentários"
+      }
+    ],
+    "links": [
+      {
+        "text": "#3 — Remover credenciais fixas, restringir portas e fixar versões no docker-compose",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/3"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/commit/900dcc409e72fd973be12a76330233ce163f62ed",
+        "url": "https://github.com/Solution-Explores/SigmaTI/commit/900dcc409e72fd973be12a76330233ce163f62ed"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/003-portas-e-imagens/evidencias.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/003-portas-e-imagens/evidencias.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/issues/3",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/3"
+      },
+      {
+        "text": "16 de out. de 2026, 00:15",
+        "url": "#comment-6ad1a4fe359310e5e7515dfa"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a",
+        "url": "https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156"
+      },
+      {
+        "text": "15 de out. de 2026, 14:50",
+        "url": "#action-6ad1207e7d1045b4e9a4cba1"
+      }
+    ],
+    "text": "Concluído\nISSUE #3 — Restringir portas e fixar imagens\nAdicionar\nAdicionar\nChecklist\nMembros\nAnexo\nEtiquetas\nInfraestrutura\nData Entrega\n16 de out., 12:00\nConcluído\nDescrição\nEditar\nResumo atual\n\nIssue encerrada. Subtarefa de exposição de portas e versões/digests; não confundir com o número antigo K04.\n\nIssues do GitHub\n\n#3 — Remover credenciais fixas, restringir portas e fixar versões no docker-compose — encerrada.\n\nPRs e referências\n\nSem PR exclusivo confirmado para esta etapa. Commits, CI e evidências continuam no histórico abaixo.\n\nOrganização\n\nColuna mantida: Concluído.\n\nO número do título é o da issue do GitHub; um cartão pode representar só uma etapa dela.\n\nNúmeros K01–K15 são identificadores antigos da sprint, preservados apenas como histórico.\n\nPadronização em 20/10/2026 (UTC−4); não muda aceite, responsáveis, prazos ou conclusão de issues.\n\n## Histórico anterior — K04 — Restringir portas e fixar versões das imagens\n\nOBJETIVO\nRestringir portas e fixar versões das imagens\n\nRESPONSÁVEL E PRAZO\nJoyce (Pessoa 3) — 16/10/2026 / manhã.\nDisponibilidade: 08h–12h.\n\nDEPENDÊNCIAS\nA confirmar no planejamento detalhado antes de iniciar.\n\nCRITÉRIOS DE CONCLUSÃO\n• Entrega correspondente ao objetivo implementada e revisada.\n• Validação executada e evidências anexadas ou vinculadas.\n• Documentação pertinente atualizada.\n• Critérios específicos da issue conferidos antes do encerramento.\n\nREFERÊNCIAS\nSprint: 15–20/10/2026. Foco nas issues #2, #3 e #4; vincular a issue e o PR correspondente quando identificados.\nOrdem de prioridade: K04.\n\nCONFERÊNCIA DO REPOSITÓRIO — 15/10/2026\nBase: dev@900dcc4.\nREVISÃO E TESTES. Bancos sem portas publicadas; n8n/Grafana/Zabbix em loopback; imagens fixadas por release e digest; política documentada. Evidências registram 86 testes, 32 verificações K03 e validação de 4 imagens oficiais. Falta revisão de outro integrante e homologação operacional/rede. Zabbix 6.4 permanece sem suporte.\nCommit: https://github.com/Solution-Explores/SigmaTI/commit/900dcc409e72fd973be12a76330233ce163f62ed\nEvidência: https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/003-portas-e-imagens/evidencias.md\nIssue: https://github.com/Solution-Explores/SigmaTI/issues/3\nTestes citados são registros do repositório; não reexecutados nesta conferência.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima 16 de out. de 2026, 00:15\n\nK04 concluída no escopo de configuração: bancos sem publicação, n8n/Grafana/Zabbix em loopback, releases e digests fixados e política documentada. 25 testes de política, 12 cenários e quatro imagens oficiais aprovados. Homologação real de rede e revisão de suporte/advisories continuam separadas.\n\nCONCLUSÃO DO ESCOPO VALIDADO\nRevisor responsável: Vinícius Lima. Autorizou publicação e conclusão após apresentação dos resultados nesta conversa. Testes executados pelo agente; não se alega reprodução manual pelo revisor.\nEntrega integrada à main: https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a\nValidação e aceite: https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md\n180 testes locais aprovados; CI da main API e infraestrutura com sucesso:\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156\nIntegração pelo Git normal, sem PR; checkout limpo. As pendências de revisão/integração nas conferências anteriores são históricas. Issue #4 continua aberta por K07 e aceite completo. Instalação real/migração permanecem separadas, pois ainda não há máquina de implantação.\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a A Fazer\n15 de out. de 2026, 14:50\nPower-ups\nAutomações\nComentários"
+  },
+  {
+    "title": "ISSUE #4 — Implementar chamada assíncrona e timeout",
+    "url": "/c/7c6DJxjl/10-issue-4-implementar-chamada-ass%C3%ADncrona-e-timeout",
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Concluído",
+        "text": "Concluído"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #4 — Implementar chamada assíncrona e timeout)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #4 — Implementar chamada assíncrona e timeout)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "API"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "16 de out., 23:59\nConcluído"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para comment",
+        "text": ""
+      },
+      {
+        "label": "Adicionar reação",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar Vínculo como Anexo"
+      },
+      {
+        "label": null,
+        "text": "Excluir"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para action",
+        "text": ""
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      },
+      {
+        "label": "Automações",
+        "text": "Automações"
+      },
+      {
+        "label": "Comentários e atividade",
+        "text": "Comentários"
+      }
+    ],
+    "links": [
+      {
+        "text": "#4 — main.py: chave de API por variável de ambiente, CORS restrito, chamada assíncrona com timeout",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/4"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/main.py",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/main.py"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/issues/4",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/4"
+      },
+      {
+        "text": "16 de out. de 2026, 00:16",
+        "url": "#comment-6ad1a51a4d2097231aaf38fd"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a",
+        "url": "https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156"
+      },
+      {
+        "text": "15 de out. de 2026, 14:50",
+        "url": "#action-6ad1207ed38423a3ed49f652"
+      }
+    ],
+    "text": "Concluído\nISSUE #4 — Implementar chamada assíncrona e timeout\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nAPI\nData Entrega\n16 de out., 23:59\nConcluído\nDescrição\nEditar\nResumo atual\n\nIssue encerrada. Subtarefa de timeout e offload assíncrono; não é a issue #5 de anonimização.\n\nIssues do GitHub\n\n#4 — main.py: chave de API por variável de ambiente, CORS restrito, chamada assíncrona com timeout — encerrada.\n\nPRs e referências\n\nSem PR exclusivo confirmado para esta etapa. Commits, CI e evidências continuam no histórico abaixo.\n\nOrganização\n\nColuna mantida: Concluído.\n\nO número do título é o da issue do GitHub; um cartão pode representar só uma etapa dela.\n\nNúmeros K01–K15 são identificadores antigos da sprint, preservados apenas como histórico.\n\nPadronização em 20/10/2026 (UTC−4); não muda aceite, responsáveis, prazos ou conclusão de issues.\n\n## Histórico anterior — K05 — Implementar chamada assíncrona com timeout\n\nOBJETIVO\nImplementar chamada assíncrona com timeout\n\nRESPONSÁVEL E PRAZO\nVinícius (Pessoa 1) — 16/10/2026.\n\nDEPENDÊNCIAS\nA confirmar no planejamento detalhado antes de iniciar.\n\nCRITÉRIOS DE CONCLUSÃO\n• Entrega correspondente ao objetivo implementada e revisada.\n• Validação executada e evidências anexadas ou vinculadas.\n• Documentação pertinente atualizada.\n• Critérios específicos da issue conferidos antes do encerramento.\n\nREFERÊNCIAS\nSprint: 15–20/10/2026. Foco nas issues #2, #3 e #4; vincular a issue e o PR correspondente quando identificados.\nOrdem de prioridade: K05.\n\nCONFERÊNCIA DO REPOSITÓRIO — 15/10/2026\nBase: dev@900dcc4.\nA FAZER. A rota async ainda usa requests.post síncrono e sem timeout. Não foi encontrada implementação de cliente assíncrono com limite de até 15 s.\nCódigo: https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/main.py\nIssue: https://github.com/Solution-Explores/SigmaTI/issues/4\nTestes citados são registros do repositório; não reexecutados nesta conferência.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima 16 de out. de 2026, 00:16\n\nK05 concluída: cliente HTTP assíncrono compartilhado, timeout global de 14 s, falhas públicas genéricas e logs sem dados sensíveis. 33 testes de provedor aprovados, incluindo concorrência, cancelamento, fechamento e orçamento real ≤15 s. Esta atualização substitui a conferência antiga que ainda descrevia Requests; não houve teste com IA real.\n\nCONCLUSÃO DO ESCOPO VALIDADO\nRevisor responsável: Vinícius Lima. Autorizou publicação e conclusão após apresentação dos resultados nesta conversa. Testes executados pelo agente; não se alega reprodução manual pelo revisor.\nEntrega integrada à main: https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a\nValidação e aceite: https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md\n180 testes locais aprovados; CI da main API e infraestrutura com sucesso:\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156\nIntegração pelo Git normal, sem PR; checkout limpo. As pendências de revisão/integração nas conferências anteriores são históricas. Issue #4 continua aberta por K07 e aceite completo. Instalação real/migração permanecem separadas, pois ainda não há máquina de implantação.\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a A Fazer\n15 de out. de 2026, 14:50\nPower-ups\nAutomações\nComentários"
+  },
+  {
+    "title": "ISSUE #4 — Restringir CORS e padronizar erros públicos",
+    "url": "/c/C9pNKEwW/11-issue-4-restringir-cors-e-padronizar-erros-p%C3%BAblicos",
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Concluído",
+        "text": "Concluído"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #4 — Restringir CORS e padronizar erros públicos)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #4 — Restringir CORS e padronizar erros públicos)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "API"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "16 de out., 23:59\nConcluído"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para comment",
+        "text": ""
+      },
+      {
+        "label": "Adicionar reação",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar Vínculo como Anexo"
+      },
+      {
+        "label": null,
+        "text": "Excluir"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para comment",
+        "text": ""
+      },
+      {
+        "label": "Adicionar reação",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar Vínculo como Anexo"
+      },
+      {
+        "label": null,
+        "text": "Excluir"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para action",
+        "text": ""
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      },
+      {
+        "label": "Automações",
+        "text": "Automações"
+      },
+      {
+        "label": "Comentários e atividade",
+        "text": "Comentários"
+      }
+    ],
+    "links": [
+      {
+        "text": "#4 — main.py: chave de API por variável de ambiente, CORS restrito, chamada assíncrona com timeout",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/4"
+      },
+      {
+        "text": "16 de out. de 2026, 00:16",
+        "url": "#comment-6ad1a5389b3c929f9d6ad16d"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a",
+        "url": "https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156"
+      },
+      {
+        "text": "15 de out. de 2026, 16:10",
+        "url": "#comment-6ad133348ecf98ba6180ea5a"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/commit/a9c2b0f4e74fc9d596f983d14d1d9114d9d4c50d",
+        "url": "https://github.com/Solution-Explores/SigmaTI/commit/a9c2b0f4e74fc9d596f983d14d1d9114d9d4c50d"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/issues/4#issuecomment-6201277632",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/4#issuecomment-6201277632"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/tree/dev/specs/004-cors-erros-publicos",
+        "url": "https://github.com/Solution-Explores/SigmaTI/tree/dev/specs/004-cors-erros-publicos"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38799402425",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38799402425"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38799402543",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/38799402543"
+      },
+      {
+        "text": "15 de out. de 2026, 14:50",
+        "url": "#action-6ad1207f6b20adefa54f3920"
+      }
+    ],
+    "text": "Concluído\nISSUE #4 — Restringir CORS e padronizar erros públicos\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nAPI\nData Entrega\n16 de out., 23:59\nConcluído\nDescrição\nEditar\nResumo atual\n\nIssue encerrada. Subtarefa de CORS/erros; não é a issue #6 de autenticação.\n\nIssues do GitHub\n\n#4 — main.py: chave de API por variável de ambiente, CORS restrito, chamada assíncrona com timeout — encerrada.\n\nPRs e referências\n\nSem PR exclusivo confirmado para esta etapa. Commits, CI e evidências continuam no histórico abaixo.\n\nOrganização\n\nColuna mantida: Concluído.\n\nO número do título é o da issue do GitHub; um cartão pode representar só uma etapa dela.\n\nNúmeros K01–K15 são identificadores antigos da sprint, preservados apenas como histórico.\n\nPadronização em 20/10/2026 (UTC−4); não muda aceite, responsáveis, prazos ou conclusão de issues.\n\n## Histórico anterior — K06 — Restringir CORS e padronizar erros públicos\n\nOBJETIVO\nRestringir CORS e padronizar erros públicos\n\nRESPONSÁVEL E PRAZO\nVinícius (Pessoa 1) — 16/10/2026.\n\nDEPENDÊNCIAS\nA confirmar no planejamento detalhado antes de iniciar.\n\nCRITÉRIOS DE CONCLUSÃO\n• Entrega correspondente ao objetivo implementada e revisada.\n• Validação executada e evidências anexadas ou vinculadas.\n• Documentação pertinente atualizada.\n• Critérios específicos da issue conferidos antes do encerramento.\n\nREFERÊNCIAS\nSprint: 15–20/10/2026. Foco nas issues #2, #3 e #4; vincular a issue e o PR correspondente quando identificados.\nOrdem de prioridade: K06.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima 16 de out. de 2026, 00:16\n\nK06 concluída: origens exatas e recusa antes da rota/IA, preflights restritos, erros públicos genéricos e logs seguros. 61 testes K06 e regressão completa aprovados; CORS preservado nos erros e contrato K05 mantido. CORS não substitui autenticação; K07/aceite completo da issue #4 permanecem separados.\n\nCONCLUSÃO DO ESCOPO VALIDADO\nRevisor responsável: Vinícius Lima. Autorizou publicação e conclusão após apresentação dos resultados nesta conversa. Testes executados pelo agente; não se alega reprodução manual pelo revisor.\nEntrega integrada à main: https://github.com/Solution-Explores/SigmaTI/commit/ad70659519b8645d58e68a921c375004dc20600a\nValidação e aceite: https://github.com/Solution-Explores/SigmaTI/blob/ad70659519b8645d58e68a921c375004dc20600a/specs/revisao-k01-k06/validacao.md\n180 testes locais aprovados; CI da main API e infraestrutura com sucesso:\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/38849402101\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/38849402156\nIntegração pelo Git normal, sem PR; checkout limpo. As pendências de revisão/integração nas conferências anteriores são históricas. Issue #4 continua aberta por K07 e aceite completo. Instalação real/migração permanecem separadas, pois ainda não há máquina de implantação.\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima 15 de out. de 2026, 16:10\n\nK06 implementada e publicada na dev para revisão, sem marcar como concluída.\n\nResponsável: Vinícius; prazo 16/10/2026. Dependências confirmadas: K02 e K05 presentes. Origin não autorizado recusado antes da rota; preflight POST/Content-Type sem credenciais CORS; erros HTTP/validação/internos genéricos e logs seguros. Contrato da IA K05 preservado.\n\nCommit: https://github.com/Solution-Explores/SigmaTI/commit/a9c2b0f4e74fc9d596f983d14d1d9114d9d4c50d\nRegistro completo e pedido de revisão: https://github.com/Solution-Explores/SigmaTI/issues/4#issuecomment-6201277632\nDocumentação/evidências: https://github.com/Solution-Explores/SigmaTI/tree/dev/specs/004-cors-erros-publicos\n\nValidação: 61 novos testes K06; 180 testes totais aprovados em 22,31 s, sem avisos; pip check e diff aprovados. CI API e infraestrutura aprovados:\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/38799402425\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/38799402543\n\nPendente: indicar outro integrante, reproduzir testes e registrar aprovação/achados. Autorrevisão não substitui revisão independente. Issue #4 aberta; K07 e validação/revisão final do conjunto pendentes. Sem integração à main ou PR de integração nesta etapa.\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a A Fazer\n15 de out. de 2026, 14:50\nPower-ups\nAutomações\nComentários"
+  },
+  {
+    "title": "ISSUES #3/#4 — Corrigir instalação e infraestrutura",
+    "url": "/c/v84QJxtu/17-issues-3-4-corrigir-instala%C3%A7%C3%A3o-e-infraestrutura",
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Concluído",
+        "text": "Concluído"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (ISSUES #3/#4 — Corrigir instalação e infraestrutura)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (ISSUES #3/#4 — Corrigir instalação e infraestrutura)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Membros"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": "Infraestrutura"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "21 de out., 18:00\nEntregar em breve"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Connect your Github account"
+      },
+      {
+        "label": null,
+        "text": "Connect your Github account"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para action",
+        "text": ""
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      },
+      {
+        "label": "Automações",
+        "text": "Automações"
+      },
+      {
+        "label": "Comentários e atividade",
+        "text": "Comentários"
+      }
+    ],
+    "links": [
+      {
+        "text": "Remover credenciais fixas, restringir portas e fixar versões no docker-compose · Issue #3 · Solution-Explores/SigmaTI",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/3"
+      },
+      {
+        "text": "#3 — Remover credenciais fixas, restringir portas e fixar versões no docker-compose",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/3"
+      },
+      {
+        "text": "#4 — main.py: chave de API por variável de ambiente, CORS restrito, chamada assíncrona com timeout",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/4"
+      },
+      {
+        "text": "PR #32 — Correções de autenticação, painel e anonimização",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/32"
+      },
+      {
+        "text": "Integrar PR #32: aceite de autenticacao painel e privacidade · Solution-Explores/SigmaTI@086129c",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39310381540"
+      },
+      {
+        "text": "Integrar PR #32: aceite de autenticacao painel e privacidade · Solution-Explores/SigmaTI@086129c",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39310381631"
+      },
+      {
+        "text": "Corrigir aceite de autenticação, painel e anonimização (K11/K12) by Vinny1313 · Pull Request #32 · Solution-Explores/SigmaTI",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/32"
+      },
+      {
+        "text": "SigmaTI/specs/011-recuperacao-sprint/integracao-dev.md at feature/pacote · Solution-Explores/SigmaTI",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/specs/011-recuperacao-sprint/integracao-dev.md"
+      },
+      {
+        "text": "Corrigir aceite de autenticação, painel e anonimização (K11/K12) · Solution-Explores/SigmaTI@7496564",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39308752713"
+      },
+      {
+        "text": "Corrigir aceite de autenticação, painel e anonimização (K11/K12) · Solution-Explores/SigmaTI@7496564",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39308752750"
+      },
+      {
+        "text": "Corrigir aceite de autenticação, painel e anonimização (K11/K12) by Vinny1313 · Pull Request #32 · Solution-Explores/SigmaTI",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/32"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/fix/sprint-aceite-autenticacao-privacidade/specs/011-recuperacao-sprint/revisao-tecnica.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/fix/sprint-aceite-autenticacao-privacidade/specs/011-recuperacao-sprint/revisao-tecnica.md"
+      },
+      {
+        "text": "Corrigir aceite de autenticação, painel e anonimização (K11/K12) by Vinny1313 · Pull Request #32 · Solution-Explores/SigmaTI",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/32"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/fix/sprint-aceite-autenticacao-privacidade/specs/011-recuperacao-sprint/evidencias.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/fix/sprint-aceite-autenticacao-privacidade/specs/011-recuperacao-sprint/evidencias.md"
+      },
+      {
+        "text": "Corrigir aceite de autenticação, painel e anonimização (K11/K12) · Solution-Explores/SigmaTI@2134752",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39305376074"
+      },
+      {
+        "text": "Corrigir aceite de autenticação, painel e anonimização (K11/K12) · Solution-Explores/SigmaTI@2134752",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39305376159"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/dev/specs/009-010-instalacao-aceite/evidencias.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/dev/specs/009-010-instalacao-aceite/evidencias.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/dev/resultados/aceite-k09-k10-2026-10-19.json",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/dev/resultados/aceite-k09-k10-2026-10-19.json"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/004-configuracao-ambiente-api/revisao-k01.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/004-configuracao-ambiente-api/revisao-k01.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/003-portas-e-imagens/evidencias.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/003-portas-e-imagens/evidencias.md"
+      },
+      {
+        "text": "15 de out. de 2026, 14:50",
+        "url": "#action-6ad120811ff5bd1020d945b2"
+      }
+    ],
+    "text": "Concluído\nISSUES #3/#4 — Corrigir instalação e infraestrutura\nAdicionar\nAdicionar\nChecklist\nMembros\nAnexo\nEtiquetas\nInfraestrutura\nData Entrega\n21 de out., 18:00\nEntregar em breve\nDescrição\nEditar\nSituação vigente — 21/10/2026 (substitui resumos antigos abaixo)\n\n[Certo] #3 e #4 encerradas no GitHub; correções integradas. Mover para Concluído somente quanto a esse escopo já encerrado. O aceite da demo no SHA congelado continua separado.\n\nResponsável: @user_vinny (GitHub @vinny1313).\n\nRevisor independente: @iohanjheremy11 (GitHub @iohanjheremy); revisão pendente, não aprovada.\n\nPrazo: 21/10/2026 — situação conferida (UTC−4). Datas de proposta/triagem não são promessa de implementação.\n\nIssue: \nRemover credenciais fixas, restringir portas e fixar versões no docker-compose · Issue #3 · Solution-Explores/SigmaTI\n\nPR aberto exclusivo: nenhum confirmado; o link da issue serve para acompanhar a etapa.\n\nEvidências locais: rodada-2026-10-22, rodada-2026-10-22b e rodada-2026-10-22c; os arquivos não estão no repositório.\n\n## Histórico preservado (pode conter prazos e estados superados)\n\nResumo atual\n\nCorreções da instalação/aceite integradas no PR #32. Evidências e achados antigos estão preservados abaixo; não representam o estado atual sem a data do registro.\n\nIssues do GitHub\n\n#3 — Remover credenciais fixas, restringir portas e fixar versões no docker-compose — encerrada.\n\n#4 — main.py: chave de API por variável de ambiente, CORS restrito, chamada assíncrona com timeout — encerrada.\n\nPRs e referências\n\nPR #32 — Correções de autenticação, painel e anonimização — integrado à develop.\n\nOrganização\n\nColuna mantida: Revisão e testes.\n\nO número do título é o da issue do GitHub; um cartão pode representar só uma etapa dela.\n\nNúmeros K01–K15 são identificadores antigos da sprint, preservados apenas como histórico.\n\nPadronização em 20/10/2026 (UTC−4); não muda aceite, responsáveis, prazos ou conclusão de issues.\n\n## Histórico anterior — K12 — Corrigir achados de infraestrutura e instalação\n\nINTEGRAÇÃO NA DEV — 19/10/2026\n\nPR #32 integrado na dev em 086129c9b8dd119d72877f493e1828ef2a46c949. O usuário autorizou explicitamente 'Autorizar o merge na dev' ao ser perguntado sobre dispensar nesta entrega a revisão por outro integrante. Revisão e testes foram executados pelo Codex; não se atribui aprovação independente a outra pessoa. A exceção é específica do PR #32.\n\nValidação na dev: árvore idêntica ao head revisado; novo aceite HTTP passou 20 verificações (timeout 14,031 s). CI API e infraestrutura aprovados no commit integrado.\nAPI: \nIntegrar PR #32: aceite de autenticacao painel e privacidade · Solution-Explores/SigmaTI@086129c\nInfraestrutura: \nIntegrar PR #32: aceite de autenticacao painel e privacidade · Solution-Explores/SigmaTI@086129c\nPR integrado: \nCorrigir aceite de autenticação, painel e anonimização (K11/K12) by Vinny1313 · Pull Request #32 · Solution-Explores/SigmaTI\nRegistro: \nSigmaTI/specs/011-recuperacao-sprint/integracao-dev.md at feature/pacote · Solution-Explores/SigmaTI\n\nMain e encerramento final permanecem pendentes; issues #5/#6 continuam parciais. Próxima entrega implementada: issue #9, PR #33 em revisão, ainda sem integração.\n\nHISTÓRICO ANTERIOR PRESERVADO\n\nREVISÃO TÉCNICA ADICIONAL — 19/10/2026\n\nPR #32 pronto para revisão da equipe. Commit 7496564c1dd78f721d5c5c5dbfa6a0951b1c0c50 publicado; checkout limpo. Corrigidos: sobrenomes preservados pela sanitização, sessões antigas após recriar conta e limites de login ignorados no .env. Aceite Docker ampliado com escuta direta do Zabbix antes/depois da recriação.\n\nValidação: 369 testes Python sem falhas/ignorados; 20 verificações HTTP (timeout 14,032 s); 3 cenários Chromium; build/lint; E6 com 53 identificadores em 59 mensagens; 23 verificações Docker com limpeza código 0. Política: 32 verificações de credenciais, 12 cenários de infraestrutura e quatro manifests oficiais aprovados. IA simulada e dados fictícios.\n\nCI remoto do commit: API aprovado \nCorrigir aceite de autenticação, painel e anonimização (K11/K12) · Solution-Explores/SigmaTI@7496564 ; infraestrutura aprovada \nCorrigir aceite de autenticação, painel e anonimização (K11/K12) · Solution-Explores/SigmaTI@7496564 .\nPR: \nCorrigir aceite de autenticação, painel e anonimização (K11/K12) by Vinny1313 · Pull Request #32 · Solution-Explores/SigmaTI\nRelatório: \nhttps://github.com/Solution-Explores/SigmaTI/blob/fix/sprint-aceite-autenticacao-privacidade/specs/011-recuperacao-sprint/revisao-tecnica.mdConnect your Github account\n\nRevisão técnica do Codex concluída. Aprovação de OUTRO integrante permanece pendente conforme o fluxo do repositório. Não houve merge dev/main, homologação hospitalar ou fechamento de issues. #5/#6 continuam parciais.\n\nHISTÓRICO ANTERIOR PRESERVADO\n\nATUALIZAÇÃO — 19/10/2026 — CORREÇÃO PARA REVISÃO\n\nnpm ci --include=optional, build e lint aprovados. Docker Engine 29.8.2 baixou os digests fixados com TLS válido; causa da falha TLS anterior não determinada. Runner de instalação passou 21 verificações, com limpeza dos recursos exclusivos.\n\nPR em rascunho: \nCorrigir aceite de autenticação, painel e anonimização (K11/K12) by Vinny1313 · Pull Request #32 · Solution-Explores/SigmaTI\nCommit: 21347528012b1291f1caaf4289f9316eff71e053\nEvidências: \nhttps://github.com/Solution-Explores/SigmaTI/blob/fix/sprint-aceite-autenticacao-privacidade/specs/011-recuperacao-sprint/evidencias.mdConnect your Github account\n\n362 testes Python aprovados, sem ignorados. Execução e revisão técnica pelo Codex nesta conversa; não se declara revisão independente ou homologação hospitalar. CI da implementação 2134752 aprovado: API/aceite/E6/build/lint/Chromium e infraestrutura.\nAPI: \nCorrigir aceite de autenticação, painel e anonimização (K11/K12) · Solution-Explores/SigmaTI@2134752\nInfraestrutura: \nCorrigir aceite de autenticação, painel e anonimização (K11/K12) · Solution-Explores/SigmaTI@2134752 Integração à dev/main e conclusão condicionadas à revisão/aprovação. Issues #5/#6 permanecem abertas.\n\nHISTÓRICO PRESERVADO\n\nACHADOS DA INSTALAÇÃO LIMPA K09 — 19/10/2026\nBase independente dev@142efd2; evidências publicadas em 001d304. Execução/revisão pelo Codex nesta conversa.\n\nBLOQUEIOS CONFIRMADOS\n\nDocker Desktop/Engine 29.8.1 iniciou, mas o download das imagens fixadas falhou: failed to copy: local error: tls: bad record MAC. Duas tentativas falharam; TLS capturado na segunda. Causa não determinada. Projeto isolado sigmati-k09-20261019 não chegou a criar contêineres ou volumes.\n\nnpm run lint falha em sigma-frontend/src/App.jsx:38:14: err definido e não usado, regra no-unused-vars.\n\nPrimeiro npm ci omitiu @‌rolldown/binding-win32-x64-msvc@1.2.12, já presente no lockfile. Download desse pacote para cache + npm ci --include=optional recuperou build sem alterar lockfile/versões. Investigar confiabilidade do procedimento no Windows; não concluir que o lockfile está incorreto sem evidência.\n\nCRITÉRIOS A VALIDAR APÓS CORREÇÃO\nCompletar download das imagens fixadas com TLS válido, subir core e monitoring em projeto/volumes novos, conferir prontidão e autenticação PostgreSQL/n8n/Grafana/Zabbix e persistência após recriar contêineres. Preservar outros projetos e volumes. Build já passou; lint deve passar.\n\nEVIDÊNCIAS\nhttps://github.com/Solution-Explores/SigmaTI/blob/dev/specs/009-010-instalacao-aceite/evidencias.md\nhttps://github.com/Solution-Explores/SigmaTI/blob/dev/resultados/aceite-k09-k10-2026-10-19.json\nPython novo: pip check aprovado e 346 testes aprovados em 54,46 s. Serviços e persistência não homologados, pois não iniciaram.\n\nENCAMINHAMENTO\nAchados registrados; correções K12 ainda não executadas. Manter A fazer até iniciar.\n\nHISTÓRICO (preservado)\n\nOBJETIVO\nCorrigir achados de infraestrutura e instalação\n\nRESPONSÁVEL E PRAZO\nJoyce (Pessoa 3) — 19/10/2026 / manhã.\nDisponibilidade: 08h–12h.\n\nDEPENDÊNCIAS\nA confirmar no planejamento detalhado antes de iniciar.\n\nCRITÉRIOS DE CONCLUSÃO\n• Entrega correspondente ao objetivo implementada e revisada.\n• Validação executada e evidências anexadas ou vinculadas.\n• Documentação pertinente atualizada.\n• Critérios específicos da issue conferidos antes do encerramento.\n\nREFERÊNCIAS\nSprint: 15–20/10/2026. Foco nas issues #2, #3 e #4; vincular a issue e o PR correspondente quando identificados.\nOrdem de prioridade: K12.\n\nCONFERÊNCIA DO REPOSITÓRIO — 15/10/2026\nBase: dev@900dcc4.\nA FAZER. K03/K04 tratam credenciais, portas e imagens. Seguem pendentes avaliação/migração do volume legado e homologação da instalação/rede; validar escopo após K09. Planejar migração do Zabbix suportado como demanda separada.\nAchados: https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/004-configuracao-ambiente-api/revisao-k01.md\nLimites: https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/specs/003-portas-e-imagens/evidencias.md\nTestes citados são registros do repositório; não reexecutados nesta conferência.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima adicionou este cartão a A Fazer\n15 de out. de 2026, 14:50\nPower-ups\nAutomações\nComentários"
+  },
+  {
+    "title": "ISSUE #4 — Testar API com provedor de IA simulado",
+    "url": "/c/D3LstOrT/12-issue-4-testar-api-com-provedor-de-ia-simulado",
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Concluído",
+        "text": "Concluído"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (ISSUE #4 — Testar API com provedor de IA simulado)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (ISSUE #4 — Testar API com provedor de IA simulado)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Qualidade e testes"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "21 de out., 18:00\nEntregar em breve"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para action",
+        "text": ""
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      },
+      {
+        "label": "Automações",
+        "text": "Automações"
+      },
+      {
+        "label": "Comentários e atividade",
+        "text": "Comentários"
+      }
+    ],
+    "links": [
+      {
+        "text": "main.py: chave de API por variável de ambiente, CORS restrito, chamada assíncrona com timeout · Issue #4 · Solution-Explores/SigmaTI",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/4"
+      },
+      {
+        "text": "#4 — main.py: chave de API por variável de ambiente, CORS restrito, chamada assíncrona com timeout",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/4"
+      },
+      {
+        "text": "PR #32 — Correções de autenticação, painel e anonimização",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/32"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39265110405",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39265110405"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39265110475",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39265110475"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/dev/specs/007-008-ci-provedor-simulado/evidencias.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/dev/specs/007-008-ci-provedor-simulado/evidencias.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/dev/doc/fluxo-de-trabalho-tcc.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/dev/doc/fluxo-de-trabalho-tcc.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/tests/test_config.py",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/tests/test_config.py"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/issues/4",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/4"
+      },
+      {
+        "text": "15 de out. de 2026, 14:50",
+        "url": "#action-6ad1207f14a0a7e2efc8a5e5"
+      }
+    ],
+    "text": "Concluído\nISSUE #4 — Testar API com provedor de IA simulado\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nQualidade e testes\nData Entrega\n21 de out., 18:00\nEntregar em breve\nDescrição\nEditar\nSituação vigente — 21/10/2026 (substitui resumos antigos abaixo)\n\n[Certo] #4 encerrada, entrega integrada. Mover o cartão dessa etapa para Concluído; testes instáveis têm issue própria e não substituem o aceite final de 23/10.\n\nResponsável: @user_vinny (GitHub @vinny1313).\n\nRevisor independente: @iohanjheremy11 (GitHub @iohanjheremy); revisão pendente, não aprovada.\n\nPrazo: 21/10/2026 — situação conferida (UTC−4). Datas de proposta/triagem não são promessa de implementação.\n\nIssue: \nmain.py: chave de API por variável de ambiente, CORS restrito, chamada assíncrona com timeout · Issue #4 · Solution-Explores/SigmaTI\n\nPR aberto exclusivo: nenhum confirmado; o link da issue serve para acompanhar a etapa.\n\nEvidências locais: rodada-2026-10-22, rodada-2026-10-22b e rodada-2026-10-22c; os arquivos não estão no repositório.\n\n## Histórico preservado (pode conter prazos e estados superados)\n\nResumo atual\n\nEtapa histórica de testes da API (antigo K07), relacionada à issue #4. Não é a issue #7 de persistência. PR #32 registra correções e aceite posteriores; a entrega inicial consta nos commits do histórico.\n\nIssues do GitHub\n\n#4 — main.py: chave de API por variável de ambiente, CORS restrito, chamada assíncrona com timeout — encerrada.\n\nPRs e referências\n\nPR #32 — Correções de autenticação, painel e anonimização — integrado à develop.\n\nOrganização\n\nColuna mantida: Revisão e testes.\n\nO número do título é o da issue do GitHub; um cartão pode representar só uma etapa dela.\n\nNúmeros K01–K15 são identificadores antigos da sprint, preservados apenas como histórico.\n\nPadronização em 20/10/2026 (UTC−4); não muda aceite, responsáveis, prazos ou conclusão de issues.\n\n## Histórico anterior — K07 — Testar API com provedor simulado\n\nENTREGA E REVISÃO — 19/10/2026\nEscopo K07 implementado e revisado nesta conversa pelo Codex, conforme solicitação do usuário de revisar aqui sem aguardar outro integrante. Publicado na dev: implementação 6c8533e e correção de CI 7975c00.\n\nRESULTADOS CONFERIDOS\nCI Linux: 346 testes aprovados em 22,31 s, sem falhas, erros ou ignorados. Execução local: 346 aprovados; prazo real da chamada autenticada ao provedor simulado próximo de 14 s, com cancelamento e limite de 15 s comprovados.\nReaproveitada a cobertura K02/K05/K06 de falhas HTTP/transporte, JSON inválido, logs seguros, CORS, concorrência e anonimização. Adicionados sucesso e falhas após login real; token ausente, vazio, inválido e expirado nunca chamam o provedor.\n\nCI API: https://github.com/Solution-Explores/SigmaTI/actions/runs/39265110405\nCI infraestrutura: https://github.com/Solution-Explores/SigmaTI/actions/runs/39265110475\nEvidências/revisão: https://github.com/Solution-Explores/SigmaTI/blob/dev/specs/007-008-ci-provedor-simulado/evidencias.md\nFluxo: https://github.com/Solution-Explores/SigmaTI/blob/dev/doc/fluxo-de-trabalho-tcc.md\n\nREVISÃO CONCLUÍDA / PRÓXIMAS ETAPAS\nA situação Revisão e testes registra a entrega validada na dev. A revisão técnica já foi feita aqui; não há espera por outro revisor. Aceite integrado K10, achados CORS/logout/autenticação K11 e integração do conjunto na main K13 continuam separados. A issue #4 não é encerrada por esta entrega parcial.\n\nHISTÓRICO DO CARTÃO (preservado)\n\nOBJETIVO\nTestar API com provedor simulado\n\nRESPONSÁVEL E PRAZO\nVinícius (Pessoa 1) — 16/10/2026.\n\nDEPENDÊNCIAS\nA confirmar no planejamento detalhado antes de iniciar.\n\nCRITÉRIOS DE CONCLUSÃO\n• Entrega correspondente ao objetivo implementada e revisada.\n• Validação executada e evidências anexadas ou vinculadas.\n• Documentação pertinente atualizada.\n• Critérios específicos da issue conferidos antes do encerramento.\n\nREFERÊNCIAS\nSprint: 15–20/10/2026. Foco nas issues #2, #3 e #4; vincular a issue e o PR correspondente quando identificados.\nOrdem de prioridade: K07.\n\nCONFERÊNCIA DO REPOSITÓRIO — 15/10/2026\nBase: dev@900dcc4.\nA FAZER — testes parciais já existentes na K02. Há provedor simulado para sucesso, configuração e CORS. Não há comprovação completa de timeout <= 15 s e falhas com resposta pública genérica. Completar após K05/K06.\nTestes: https://github.com/Solution-Explores/SigmaTI/blob/900dcc409e72fd973be12a76330233ce163f62ed/tests/test_config.py\nIssue: https://github.com/Solution-Explores/SigmaTI/issues/4\nTestes citados são registros do repositório; não reexecutados nesta conferência.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima adicionou este cartão a A Fazer\n15 de out. de 2026, 14:50\nPower-ups\nAutomações\nComentários"
+  },
+  {
+    "title": "ISSUE #7 — Persistir estado e recuperar após reinício",
+    "url": "/c/yzjP3r8n/26-issue-7-persistir-estado-e-recuperar-ap%C3%B3s-rein%C3%ADcio",
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Concluído",
+        "text": "Concluído"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #7 — Persistir estado e recuperar após reinício)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #7 — Persistir estado e recuperar após reinício)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Etiquetas"
+      },
+      {
+        "label": null,
+        "text": "Datas"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Membros"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para action",
+        "text": ""
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      },
+      {
+        "label": "Automações",
+        "text": "Automações"
+      },
+      {
+        "label": "Comentários e atividade",
+        "text": "Comentários"
+      }
+    ],
+    "links": [
+      {
+        "text": "Persistência em PostgreSQL: alvos, medições, incidentes, aprovações e execuções de runbook · Issue #7 · Solution-Explores/SigmaTI",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/7"
+      },
+      {
+        "text": "#7 — Persistência em PostgreSQL: alvos, medições, incidentes, aprovações e execuções de runbook",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/7"
+      },
+      {
+        "text": "PR #35 — Persistir usuários e sessões revogáveis em PostgreSQL (#6/#7)",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/35"
+      },
+      {
+        "text": "PR #36 — Persistir estado operacional e recuperar aprovações/execuções (#7)",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/36"
+      },
+      {
+        "text": "PR #42 — docs: conferir aceite de #6 #7 #8 #14 e registrar lacunas",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/42"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/issues/7#issuecomment-6293321812",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/7#issuecomment-6293321812"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/pull/42",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/42"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39349464975",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39349464975"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39349465078",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39349465078"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/pull/36",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/36"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39347503569",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39347503569"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39347503596",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39347503596"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/86375d9/engenharia/docs/08-estado-operacional.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/86375d9/engenharia/docs/08-estado-operacional.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/86375d9/specs/014-estado-operacional/evidencias.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/86375d9/specs/014-estado-operacional/evidencias.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/pull/35",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/35"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39345018071",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39345018071"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39345018063",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39345018063"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/31471da/specs/013-identidades-postgres/revisao.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/31471da/specs/013-identidades-postgres/revisao.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/pull/35",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/35"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39343645224",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39343645224"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39343645227",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39343645227"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/codex/persistencia/specs/013-identidades-postgres/evidencias.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/codex/persistencia/specs/013-identidades-postgres/evidencias.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/doc/plano-conclusao-2026-10-20.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/doc/plano-conclusao-2026-10-20.md"
+      },
+      {
+        "text": "https://trello.com/c/YGVH2Pg9",
+        "url": "https://trello.com/c/YGVH2Pg9"
+      },
+      {
+        "text": "19 de out. de 2026, 16:08",
+        "url": "#action-6ad678be4daeaabedfb9076c"
+      }
+    ],
+    "text": "Concluído\nISSUE #7 — Persistir estado e recuperar após reinício\nAdicionar\nAdicionar\nEtiquetas\nDatas\nChecklist\nMembros\nDescrição\nEditar\nAceite — 20/10/2026 (Manaus)\n\n[Certo] Usuário aprovou explicitamente #7 após revisão dos critérios originais. Issue encerrada: \nPersistência em PostgreSQL: alvos, medições, incidentes, aprovações e execuções de runbook · Issue #7 · Solution-Explores/SigmaTI\n18 testes PostgreSQL operacionais aprovados localmente, incluindo reinício real da API, recuperação, retenção e agregados. CI do commit a97fe1b do PR #43 aprovado no push e PR (10 checks ao todo). Implementação de base já integrada à develop@8cb1e23. Não implica homologação hospitalar nem encerramento de #8/#25.\n\n## Resumo atual\nCritérios originais cobertos: estado persistido, API reiniciada sem perda de pendentes/waiting_approval, testes PostgreSQL e esquema documentado. Falta revisão/registro de aceite para decidir encerramento da issue.\n\nIssues do GitHub\n\n#7 — Persistência em PostgreSQL: alvos, medições, incidentes, aprovações e execuções de runbook — aberta.\n\nPRs e referências\n\nPR #35 — Persistir usuários e sessões revogáveis em PostgreSQL (#6/#7) — integrado à develop.\n\nPR #36 — Persistir estado operacional e recuperar aprovações/execuções (#7) — integrado à develop.\n\nPR #42 — docs: conferir aceite de #6 #7 #8 #14 e registrar lacunas — aberto; aguardando integração.\n\nOrganização\n\nColuna mantida: Revisão e testes.\n\nO número do título é o da issue do GitHub; um cartão pode representar só uma etapa dela.\n\nNúmeros K01–K15 são identificadores antigos da sprint, preservados apenas como histórico.\n\nPadronização em 20/10/2026 (UTC−4); não muda aceite, responsáveis, prazos ou conclusão de issues.\n\n## Histórico anterior — Issue 07 — Persistir estado operacional e recuperar após reinício\n\nCRITÉRIOS ORIGINAIS COBERTOS — CONFERÊNCIA DE 20/10/2026\n\nPersistência operacional, partição/índice, Protocol, agregados/retenção e recuperação de aprovação/waiting_approval após reinício real da API estão testados/integrados. Nenhuma implementação faltante identificada nos critérios da #7. Falta revisar/registrar aceite para decidir encerramento. Runbooks por interface (#21/#22) e outra máquina (#25) têm escopos próprios; não foram acrescentados como bloqueadores da #7.\nIssue: https://github.com/Solution-Explores/SigmaTI/issues/7#issuecomment-6293321812\n\nPR da conferência: https://github.com/Solution-Explores/SigmaTI/pull/42\nRelatório: doc/conferencia-issues-6-7-8-14.md, base develop@8cb1e23. CI integrado: 467 testes PG15 aprovados; a suíte existente não cobre os defeitos novos da auditoria. Diagnóstico sintético reproduzido, sem dados operacionais nem alteração em runtime. Issue mantida aberta; revisão técnica sem revisor humano independente atribuído.\n\n--- Histórico anterior ---\nINTEGRADO À DEVELOP — PR #36 — 19/10/2026 (UTC−4)\n\nIntegração autorizada pelo usuário nesta sessão. Merge 51c21f778912f3f85661735e1dd8e8e415d786bc. Revisão técnica Codex e CI do head aprovados; sem revisão independente atribuída. CI da base combinada c288afd também aprovado: https://github.com/Solution-Explores/SigmaTI/actions/runs/39349464975 (API/pacote/PostgreSQL) e https://github.com/Solution-Explores/SigmaTI/actions/runs/39349465078 (infraestrutura).\n\nContinuação em #8, branch feature/8-coleta-sse. Nenhuma issue encerrada automaticamente; conferir critérios completos e pendências do escopo maior do card.\n\n--- Histórico anterior ---\nESTADO OPERACIONAL IMPLEMENTADO — PR #36 EM REVISÃO — 19/10/2026\nPR: https://github.com/Solution-Explores/SigmaTI/pull/36\nHead 86375d93a6c925f470b4ab563e377ca09356e09e. Base develop@27d2b55, após merge autorizado do PR35 e CI do merge aprovado.\nEntregues migração002, repositórios Protocol/memória de estado/PostgreSQL, alvos, partições mensais/índice alvo-ts, agregados minuto/hora, retenção explícita, incidente ativo único, aprovações/execuções/SLO/detectores e eventos transacionais. APIs com RBAC e resposta segura de execução; sem coleta/comandos automáticos.\nCI FINAL: 412 testes aprovados em PostgreSQL15, zero falhas/ignorados, 63,46 s. Pacote, HTTP com IA simulada, E6, build/lint, três cenários Chromium e infraestrutura aprovados.\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/39347503569\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/39347503596\nAceite inclui encerrar e reiniciar processos reais da API, preservando JWT, aprovação e waiting_approval; aquecimento dos detectores em outro processo; concorrência, rollback, deduplicação, retenção e 56 combinações de rota/perfil.\nEsquema: https://github.com/Solution-Explores/SigmaTI/blob/86375d9/engenharia/docs/08-estado-operacional.md\nEvidências: https://github.com/Solution-Explores/SigmaTI/blob/86375d9/specs/014-estado-operacional/evidencias.md\nImplementação/revisão técnica pelo Codex; aguarda revisão/integração do PR36. Não se atribui revisão independente; issue ainda aberta. Próximos blocos #14, #8, #15 e #25. Main não alterada.\n\nHISTÓRICO\nESTADO OPERACIONAL EM DESENVOLVIMENTO — 19/10/2026\nBase develop@27d2b55 após merge autorizado do PR35; CI do merge aprovado. Branch codex/estado-operacional.\nImplementados: migração002, alvos, medições mensais, agregados minuto/hora, incidente ativo único, estados de aprovações/execuções/detectores/SLO, eventos transacionais e APIs com RBAC. Retenção explícita; nada é sondado ou executado automaticamente.\nAceites iniciais aprovados: API encerrada/reiniciada em processos reais mantém JWT, aprovação e execução waiting_approval; detectores recuperados em outro processo; concorrência, rollback e matriz de permissões das novas rotas. Regressão completa em andamento; ainda sem PR/merge ou conclusão deste incremento.\nPróximo: publicar evidências/PR após regressão e revisar CI PostgreSQL15; depois #14, #8, #15 e #25.\n\nHISTÓRICO\nREVISÃO DO PR #35 CONCLUÍDA — 19/10/2026\nPR: https://github.com/Solution-Explores/SigmaTI/pull/35\nHead 31471daff15db88e94f9624177e1bc441be9a632. Corrigidos bloqueio do loop nas rotas de usuários, auditoria prematura de sucesso, rehash concorrente, login anterior à desativação/reativação e validação de entradas administrativas.\nLocal: 109 testes aprovados. CI PostgreSQL 15: 392 testes aprovados sem falhas/ignorados, 80,48 s. Aceite HTTP, E6, build/lint, navegador, pacote e infraestrutura aprovados no novo head.\nCI: https://github.com/Solution-Explores/SigmaTI/actions/runs/39345018071\nInfra: https://github.com/Solution-Explores/SigmaTI/actions/runs/39345018063\nRelatório: https://github.com/Solution-Explores/SigmaTI/blob/31471da/specs/013-identidades-postgres/revisao.md\nImplementação/revisão técnica pelo Codex; pronto para integração após aprovação, sem merge ou revisão independente atribuída. #6/#7 permanecem abertas; persistência operacional, auditoria transacional e limitação distribuída não foram entregues neste incremento. Etapa atual do cartão preservada.\n\nHISTÓRICO\nFUNDAÇÃO PARCIAL EM REVISÃO — 19/10/2026\nPR #35: https://github.com/Solution-Explores/SigmaTI/pull/35\nCommit 4af0528cee3b6810774544b93fd10ae9adfba681; branch codex/persistencia; base develop@5d848a9.\nUsuários/sessões PostgreSQL, Alembic, Argon2id, bootstrap/importação explícitos, revogação durável e recuperação entre processos implementados.\nCI PostgreSQL 15: 387 testes aprovados em 79,31 s, sem falhas/ignorados; imagem no digest do Compose. Pacote, infraestrutura, aceite HTTP, E6, build/lint e três cenários Chromium aprovados. CI final do PR aprovado; pronto para revisão, sem integração.\nCI: https://github.com/Solution-Explores/SigmaTI/actions/runs/39343645224\nInfra: https://github.com/Solution-Explores/SigmaTI/actions/runs/39343645227\nLocal: 383 testes de regressão aprovados e 12 cenários finais em PostgreSQL 17 descartável; pip check/diff check aprovados. Download PostgreSQL 15 local falhou duas vezes por TLS, mas passou no CI. Contêineres de teste removidos.\nEvidências: https://github.com/Solution-Explores/SigmaTI/blob/codex/persistencia/specs/013-identidades-postgres/evidencias.md\nFaltam alvos, medições, incidentes, aprovações, execuções, retenção/downsampling e recuperação operacional; cartão Em andamento e issue #7 aberta. Sem merge ou aprovação independente declarados.\n\nHISTÓRICO\nPLANEJADO — implementação não iniciada nesta publicação.\n\nDepende de #9/PR #33 integrado; executar junto de #6. PostgreSQL, SQLAlchemy/Psycopg/Alembic; repositórios fora do núcleo; alvos, medições, incidentes, aprovações e execuções persistidos. Aceite: migrações em banco novo, índices/unicidade de incidente ativo, recuperação após reinício e testes com PostgreSQL real.\n\nPlano: https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/doc/plano-conclusao-2026-10-20.md\nAcompanhamento: https://trello.com/c/YGVH2Pg9\nDisponibilidade de responsável não confirmada; não atribuir conclusão sem evidência.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima adicionou este cartão a A fazer\n19 de out. de 2026, 16:08\nPower-ups\nAutomações\nComentários"
+  },
+  {
+    "title": "ISSUE #9 — Empacotar e instalar sigma_eng",
+    "url": "/c/049SEWxu/24-issue-9-empacotar-e-instalar-sigmaeng",
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Concluído",
+        "text": "Concluído"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #9 — Empacotar e instalar sigma_eng)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #9 — Empacotar e instalar sigma_eng)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Etiquetas"
+      },
+      {
+        "label": null,
+        "text": "Datas"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Membros"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para action",
+        "text": ""
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      },
+      {
+        "label": "Automações",
+        "text": "Automações"
+      },
+      {
+        "label": "Comentários e atividade",
+        "text": "Comentários"
+      }
+    ],
+    "links": [
+      {
+        "text": "#9 — Empacotar sigma_eng (pyproject.toml) e remover dependência do caminho 'engenharia.'",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/9"
+      },
+      {
+        "text": "PR #34 — Empacotar sigma_eng e remover imports pelo caminho engenharia (#9)",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/34"
+      },
+      {
+        "text": "PR #33 — Empacotar sigma_eng e remover imports pelo caminho engenharia (#9)",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/33"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/pull/34",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/34"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39323374546",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39323374546"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39323374588",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39323374588"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/pull/34",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/34"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/feature/pacote/doc/gitflow.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/feature/pacote/doc/gitflow.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/feature/pacote/doc/plano-conclusao-2026-10-20.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/feature/pacote/doc/plano-conclusao-2026-10-20.md"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/doc/plano-conclusao-2026-10-20.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/doc/plano-conclusao-2026-10-20.md"
+      },
+      {
+        "text": "https://trello.com/c/YGVH2Pg9",
+        "url": "https://trello.com/c/YGVH2Pg9"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/issues/9",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/9"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/pull/33",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/33"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39311975829",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39311975829"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39311975762",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39311975762"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/specs/012-pacote-sigma-eng/evidencias.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/specs/012-pacote-sigma-eng/evidencias.md"
+      },
+      {
+        "text": "19 de out. de 2026, 15:34",
+        "url": "#action-6ad670b0a18c5a37e51bedfb"
+      }
+    ],
+    "text": "Concluído\nISSUE #9 — Empacotar e instalar sigma_eng\nAdicionar\nAdicionar\nEtiquetas\nDatas\nChecklist\nMembros\nDescrição\nEditar\nResumo atual\n\nIssue encerrada. PR #34 integrado é a referência vigente; PR #33 foi encerrado sem merge e substituído pelo #34.\n\nIssues do GitHub\n\n#9 — Empacotar sigma_eng (pyproject.toml) e remover dependência do caminho 'engenharia.' — encerrada.\n\nPRs e referências\n\nPR #34 — Empacotar sigma_eng e remover imports pelo caminho engenharia (#9) — integrado à develop.\n\nPR #33 — Empacotar sigma_eng e remover imports pelo caminho engenharia (#9) — encerrado sem merge; substituído pelo #34.\n\nOrganização\n\nColuna mantida: Revisão e testes.\n\nO número do título é o da issue do GitHub; um cartão pode representar só uma etapa dela.\n\nNúmeros K01–K15 são identificadores antigos da sprint, preservados apenas como histórico.\n\nPadronização em 20/10/2026 (UTC−4); não muda aceite, responsáveis, prazos ou conclusão de issues.\n\n## Histórico anterior — Issue 09 — Empacotar sigma_eng e validar instalação independente\n\nPR #34 RESOLVIDO — 19/10/2026\nIntegrado à develop em 5d848a9e102ffa8a0810412ca772c37e3e3b1947.\nPR: https://github.com/Solution-Explores/SigmaTI/pull/34\nRevisão técnica: Codex, a pedido do usuário; não houve revisão independente por outro integrante.\nSeis checks do PR aprovados; 77 testes locais focados aprovados; pip check aprovado.\nCI do merge aprovado:\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/39323374546\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/39323374588\nMain não alterada. Próxima frente: #6/#7; publicação de release ainda depende de aceite próprio.\n\nHISTÓRICO\nGIT FLOW ADOTADO — 19/10/2026\nmain: versões; develop: integração; feature/: funcionalidades; fix/: correções; release/: preparação; hotfix/: urgências em produção.\nBranch atual: feature/pacote. PR vigente: https://github.com/Solution-Explores/SigmaTI/pull/34 (substitui #33, fechado automaticamente pela renomeação).\nCommit 7f3b5d1 publica CI e documentação; integração desse commit ainda depende da revisão do PR.\nGuia: https://github.com/Solution-Explores/SigmaTI/blob/feature/pacote/doc/gitflow.md\nPlano: https://github.com/Solution-Explores/SigmaTI/blob/feature/pacote/doc/plano-conclusao-2026-10-20.md\nEsta orientação substitui o antigo desenvolvimento direto na dev. Referências abaixo preservam o histórico.\n\nATUALIZAÇÃO DO PLANO — 19/10/2026\nPacote já publicado em b7958c9; documentação do plano publicada em 514838f na mesma branch/PR #33. Implementação validada anteriormente com 375 testes Python e 5 verificações de instalação. PR #33 continua aguardando revisão/integração; não equivale a entrega na dev.\nPlano: https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/doc/plano-conclusao-2026-10-20.md\nAcompanhamento: https://trello.com/c/YGVH2Pg9\n\nHISTÓRICO PRESERVADO\nIMPLEMENTAÇÃO PARA REVISÃO — 19/10/2026\n\nIssue: https://github.com/Solution-Explores/SigmaTI/issues/9\nPR: https://github.com/Solution-Explores/SigmaTI/pull/33\nCommit: b7958c9d1b3fcb06f775a95f6b52ed7901988616\nBase: dev@086129c, após integração do PR #32.\n\nEntrega: pyproject.toml, extras api/dev, núcleo sem dependências externas, import instalado sigma_eng, fábrica de roteador com política RBAC obrigatória; requirements/pytest/CI/guias atualizados. Localização anterior da auditoria preservada pelo main. Python 3.12+.\n\nCritérios: instalação editável funciona, import fora do checkout com python -I; CI instala pip install -e .[dev] dentro de engenharia. Wheel regular e extras também validados em venvs novos.\n\nValidação local: 375 testes Python; 20 verificações HTTP (timeout 14,016 s); 3 cenários Chromium; 5 verificações isoladas de pacote; E6 e pip check aprovados. IA simulada. CI do commit b7958c9 aprovado: regressão da aplicação e instalação isolada do pacote (https://github.com/Solution-Explores/SigmaTI/actions/runs/39311975829); infraestrutura (https://github.com/Solution-Explores/SigmaTI/actions/runs/39311975762). Três checks aprovados.\n\nEvidências: https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/specs/012-pacote-sigma-eng/evidencias.md\n\nImplementação e revisão técnica pelo Codex. Esta entrega aguarda revisão/aprovação e integração; a dispensa dada pelo usuário ao PR #32 não se estende automaticamente ao PR #33. Issue #9 permanece aberta.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima adicionou este cartão a Revisão e testes\n19 de out. de 2026, 15:34\nPower-ups\nAutomações\nComentários"
+  },
+  {
+    "title": "ISSUE #15 — Painel de saúde, incidentes, aprovações e auditoria",
+    "url": "/c/bXyKzOg4/29-issue-15-painel-de-sa%C3%BAde-incidentes-aprova%C3%A7%C3%B5es-e-auditoria",
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Concluído",
+        "text": "Concluído"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #15 — Painel de saúde, incidentes, aprovações e auditoria)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #15 — Painel de saúde, incidentes, aprovações e auditoria)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Etiquetas"
+      },
+      {
+        "label": null,
+        "text": "Datas"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Membros"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para action",
+        "text": ""
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      },
+      {
+        "label": "Automações",
+        "text": "Automações"
+      },
+      {
+        "label": "Comentários e atividade",
+        "text": "Comentários"
+      }
+    ],
+    "links": [
+      {
+        "text": "#15 — Frontend: páginas de Saúde dos serviços, Incidentes, Aprovações e Auditoria",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/15"
+      },
+      {
+        "text": "PR #39 — feat: painel operacional conectado à API e SSE (#15)",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/39"
+      },
+      {
+        "text": "PR #42 — docs: conferir aceite de #6 #7 #8 #14 e registrar lacunas",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/42"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/pull/39",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/39"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/issues/15#issuecomment-6291851186",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/15#issuecomment-6291851186"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39429091623",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39429091623"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39429091443",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39429091443"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/pull/39",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/39"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39426559525",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39426559525"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39426559506",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39426559506"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/pull/39",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/39"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39425590466",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39425590466"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39425590425",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39425590425"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/doc/plano-conclusao-2026-10-20.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/doc/plano-conclusao-2026-10-20.md"
+      },
+      {
+        "text": "https://trello.com/c/YGVH2Pg9",
+        "url": "https://trello.com/c/YGVH2Pg9"
+      },
+      {
+        "text": "19 de out. de 2026, 16:08",
+        "url": "#action-6ad678c36573cd97b4a718a0"
+      }
+    ],
+    "text": "Concluído\nISSUE #15 — Painel de saúde, incidentes, aprovações e auditoria\nAdicionar\nAdicionar\nEtiquetas\nDatas\nChecklist\nMembros\nDescrição\nEditar\nResumo atual\n\nPainel integrado no PR #39 e issue encerrada. Inclui também a página de auditoria. A leitura desatualizada da trilha, compartilhada com a #6, foi identificada depois e está registrada no PR #42; esse PR não é uma correção.\n\nIssues do GitHub\n\n#15 — Frontend: páginas de Saúde dos serviços, Incidentes, Aprovações e Auditoria — encerrada.\n\nPRs e referências\n\nPR #39 — feat: painel operacional conectado à API e SSE (#15) — integrado à develop.\n\nPR #42 — docs: conferir aceite de #6 #7 #8 #14 e registrar lacunas — aberto; aguardando integração.\n\nOrganização\n\nColuna mantida: Concluído.\n\nO número do título é o da issue do GitHub; um cartão pode representar só uma etapa dela.\n\nNúmeros K01–K15 são identificadores antigos da sprint, preservados apenas como histórico.\n\nPadronização em 20/10/2026 (UTC−4); não muda aceite, responsáveis, prazos ou conclusão de issues.\n\n## Histórico anterior — Issue 15 — Entregar painel operacional com dados persistidos\n\nCONCLUÍDO — #15 INTEGRADA E VALIDADA — 20/10/2026 (UTC−4)\n\nPR #39 integrado à develop: f3f6edea9e7691868f2fe659e091a9c002ee8cc7.\nhttps://github.com/Solution-Explores/SigmaTI/pull/39\nIssue #15 encerrada com ambos os critérios de aceite marcados e evidências publicadas:\nhttps://github.com/Solution-Explores/SigmaTI/issues/15#issuecomment-6291851186\n\nCI após merge aprovado: PostgreSQL15 com459 testes em168,66s, sem falhas/ignorados. 16 testes frontend,4 histórias operacionais Chromium e3 do diagnóstico; pacote independente, build/lint, aceiteHTTP, E6 e infraestrutura aprovados.\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/39429091623\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/39429091443\n\nSaúde/SLO, incidentes/métricas, aprovações justificadas entre operadores e auditoria conectados à API/SSE; RBAC backend/UI e temas claro/escuro. Revisão técnica e integração autorizadas, sem revisor humano independente atribuído. Correção de contraste validada; axe não é certificação integral. MTTD n=0 sem início real; orçamento parcial é limite máximo; JSONL sondas separado dos eventosPG; ensaios sintéticos não homologam hospital.\n\nPasta local em develop, sincronizada com origin/develop e sem alterações. Escopo #15 concluído; restauração #25 e release permanecem frentes seguintes, não executadas neste encerramento.\n\n--- Histórico anterior ---\nIMPLEMENTADO — PR #39 COM CI APROVADO / EM REVISÃO — 20/10/2026 (UTC−4)\n\nhttps://github.com/Solution-Explores/SigmaTI/pull/39\nHead final 13636785aabd15e4faf994f1307477c394254f73. PostgreSQL15:459 testes aprovados em167,96s, sem falhas/ignorados. 16 componentes e3 cenários Chromium do diagnóstico aprovados; as4 histórias operacionais Chromium (aprovação, saúde/temas/RBAC, SSE/reconexão/logout, auditoria) passam dentro do job PG. Pacote, aceite HTTP, E6, build/lint e infraestrutura aprovados. Todos8checks push/PR verdes.\nAPI/pacote/PG: https://github.com/Solution-Explores/SigmaTI/actions/runs/39426559525\nInfraestrutura: https://github.com/Solution-Explores/SigmaTI/actions/runs/39426559506\nArtifact postgres-test-results contém capturas/relatórios.\n\nPrimeiro CI detectou contraste transitório2,1:1 ao alternar tema; transição removida sem relaxar axe. Seis capturas recapturadas; achados de contraste e persistência pontuados resolved/ship na revisão técnica. Sem revisor humano independente atribuído. Não é certificação integral WCAG nem homologação hospitalar. MTTD permanece sem amostras por falta do início real da falha; orçamento parcial não inventa disponibilidade/projeção; trilhaJSONL separada de eventosPG.\n\nPR aberto para integração à develop, sem merge/fechamento automático. PR38 já integrado em98b129b. Próxima frente do plano após revisão/integração: restauração #25. Evidências locais/documentação: specs/017-painel-operacional/brief.md; README/PRODUCT/DESIGN.\n\n--- Histórico anterior ---\nIMPLEMENTADO — PR #39 EM REVISÃO / CI EM EXECUÇÃO — 20/10/2026 (UTC−4)\n\nhttps://github.com/Solution-Explores/SigmaTI/pull/39\nHead 1fe8225. Base develop após integração autorizada do PR #38 (98b129b).\n\nQuatro áreas reais: saúde/SLO, incidentes+métricas, aprovações com justificativa e quatro olhos, auditoria com trilhas separadas. SSE Bearer/Last-Event-ID, reconexão, logout e sessão em memória. Temas claro/escuro e matriz N1/analista/gestor no README. Dados ausentes/desatualizados desconhecidos; parcial é limite máximo; MTTD sem amostra real não é inventado.\n\nLocal: 16 componentes/parser/sessão; 4 testes API PostgreSQL; 4 histórias reais de navegador operacional; 3 regressões diagnóstico; build/lint/pip check aprovados. Falha sintética chega à tela em até5s no cenário avaliado, reconexão com cursor e decisão persistida por outro usuário comprovadas. Axe zero violações nas regras WCAG2 A/AA e2.1AA nos estados capturados, sem certificação integral. Chrome/PG17 locais; Chromium/PG15 no CI.\n\nRevisão técnica visual em seis capturas; único achado documental corrigido (PRODUCT/DESIGN/sidecar), disposition ship no escopo da correção. Sem revisor humano independente atribuído. Motor/detector Impeccable indisponível, fallback por código e capturas. PR aberto sem merge/fechamento. CI API/pacote/PG em execução: https://github.com/Solution-Explores/SigmaTI/actions/runs/39425590466\nInfraestrutura aprovada: https://github.com/Solution-Explores/SigmaTI/actions/runs/39425590425\nEvidências: specs/017-painel-operacional/brief.md. Próxima frente após revisão/integração: restauração #25.\n\n--- Histórico anterior ---\nEM DESENVOLVIMENTO — #15 — 20/10/2026 (UTC−4)\n\nPR #38 integrado com autorização do usuário: develop@98b129b. Branch feature/15-painel-operacional. Escopo: saúde/SLO com cobertura explícita, incidentes/métricas, aprovações com justificativa/quatro olhos e auditoria; RBAC, claro/escuro, SSE com reconexão e testes de componentes/E2E PostgreSQL+navegador. Preservar diagnóstico existente. Não declarar aceite antes de conferir os testes e a renderização.\n\n--- Histórico anterior ---\nPLANEJADO — implementação não iniciada nesta publicação.\n\nDepende de #8 e RBAC de #6. Saúde, Incidentes, Aprovações e Auditoria; N1 consulta, analista opera e gestor administra. Aceite no navegador: cadastrar alvo → detectar falha → atualizar painel → reconhecer/resolver, incluindo expiração, 403 e indisponibilidade.\n\nPlano: https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/doc/plano-conclusao-2026-10-20.md\nAcompanhamento: https://trello.com/c/YGVH2Pg9\nDisponibilidade de responsável não confirmada; não atribuir conclusão sem evidência.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima adicionou este cartão a A fazer\n19 de out. de 2026, 16:08\nPower-ups\nAutomações\nComentários"
+  },
+  {
+    "title": "ISSUE #25 — Backup e restauração local (etapa entregue)",
+    "url": "/c/I4LgoTUv/30-issue-25-backup-e-restaura%C3%A7%C3%A3o-local-etapa-entregue",
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Concluído",
+        "text": "Concluído"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #25 — Backup e restauração local (etapa entregue))",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #25 — Backup e restauração local (etapa entregue))",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Etiquetas"
+      },
+      {
+        "label": null,
+        "text": "Datas"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Membros"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para action",
+        "text": ""
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      },
+      {
+        "label": "Automações",
+        "text": "Automações"
+      },
+      {
+        "label": "Comentários e atividade",
+        "text": "Comentários"
+      }
+    ],
+    "links": [
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/issues/25",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/25"
+      },
+      {
+        "text": "RESULTADO.md",
+        "url": "http://RESULTADO.md"
+      },
+      {
+        "text": "#25 — Herdar do Sentinel: scripts de implantação, backup e smoke test E2E (RNF06)",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/25"
+      },
+      {
+        "text": "PR #40 — feat: backup autenticado, restauração e smoke RNF06 (#25)",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/40"
+      },
+      {
+        "text": "PR #41 — docs: planejamento da validacao #25 em VM VirtualBox",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/41"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/pull/40",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/40"
+      },
+      {
+        "text": "install.sh",
+        "url": "http://install.sh"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39433266986",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39433266986"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39433267189",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39433267189"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/pull/40",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/40"
+      },
+      {
+        "text": "install.sh/PG15",
+        "url": "http://install.sh/PG15"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39431722684",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39431722684"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39431723054",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39431723054"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/pull/40",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/40"
+      },
+      {
+        "text": "https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/doc/plano-conclusao-2026-10-20.md",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/doc/plano-conclusao-2026-10-20.md"
+      },
+      {
+        "text": "https://trello.com/c/YGVH2Pg9",
+        "url": "https://trello.com/c/YGVH2Pg9"
+      },
+      {
+        "text": "19 de out. de 2026, 16:08",
+        "url": "#action-6ad678c5d212d74392305034"
+      }
+    ],
+    "text": "Concluído\nISSUE #25 — Backup e restauração local (etapa entregue)\nAdicionar\nAdicionar\nEtiquetas\nDatas\nChecklist\nMembros\nDescrição\nEditar\nSituação vigente — 21/10/2026\n\n[Certo] Etapa local entregue; a issue #25 permanece ABERTA. Restauração em VM no mesmo host: 17 verificações. Outra máquina física não foi validada. O trabalho pendente tem cartão separado; não usar esta coluna como aceite integral de #25.\n\nResponsável do acompanhamento: @user_vinny / @vinny1313.\n\nRevisor independente da próxima etapa: @iohanjheremy11 / @iohanjheremy.\n\nPrazo da pendência: 03/11/2026, proposto ao orientador; a etapa histórica permanece entregue.\n\nIssue: https://github.com/Solution-Explores/SigmaTI/issues/25\n\n## Histórico preservado\n\nAtualização — 20/10/2026 (Manaus)\n\n[Certo] Restauração executada em VM Ubuntu 24.04.4 / PostgreSQL 15, no MESMO host físico do estágio. As 17 verificações passaram: comparação das 13 tabelas por fingerprints, duas entradas da auditoria, consulta do incidente pela API, preservação após recriar contêiner e novas escritas/IDs.\n\nBase: develop@8cb1e23b0e83066e52d3f81dd7ef05ce82dfc93c. Dados fictícios; IA simulada. VM: sigma-restore-25. O aceite em outro computador físico continua pendente: transportar a VM e ligá-la em casa não equivale, sozinho, a uma nova restauração validada. Issue #25 permanece aberta; este cartão continua concluído somente em seu escopo local.\n\nEvidências locais: laboratorio-vm/evidencias/aceite-vm.json e RESULTADO.md; evidencias-para-casa.zip reúne relatórios selecionados. Nenhum dump, chave ou senha foi publicado no Trello.\n\n## Registro anterior (preservado; consultar atualização acima)\n\nResumo atual\n\nSomente o escopo LOCAL deste cartão está entregue no PR #40. A issue #25 continua aberta pela restauração em outra máquina. PR #41 contém o planejamento da VM, ainda aberto; documento não comprova execução.\n\nIssues do GitHub\n\n#25 — Herdar do Sentinel: scripts de implantação, backup e smoke test E2E (RNF06) — aberta.\n\nPRs e referências\n\nPR #40 — feat: backup autenticado, restauração e smoke RNF06 (#25) — integrado à develop.\n\nPR #41 — docs: planejamento da validacao #25 em VM VirtualBox — aberto; aguardando integração.\n\nOrganização\n\nColuna mantida: Concluído.\n\nO número do título é o da issue do GitHub; um cartão pode representar só uma etapa dela.\n\nNúmeros K01–K15 são identificadores antigos da sprint, preservados apenas como histórico.\n\nPadronização em 20/10/2026 (UTC−4); não muda aceite, responsáveis, prazos ou conclusão de issues.\n\n## Histórico anterior — Issue 25 — Demonstrar backup e restauração local\n\nCONCLUÍDO — ESCOPO LOCAL INTEGRADO / #25 AINDA ABERTA — 20/10/2026 (UTC−4)\n\nPR #40 revisado tecnicamente e integrado à develop por autorização explícita do usuário.\nhttps://github.com/Solution-Explores/SigmaTI/pull/40\nMerge8cb1e23b0e83066e52d3f81dd7ef05ce82dfc93c; head5464664.\nCI após merge:todos5checks aprovados. PostgreSQL15 com467testes; recovery8testes+23checks smoke, install.sh, backup/restore, recriação e novas escritas. API/frontend/Chromium, pacote e infraestrutura aprovados.\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/39433266986\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/39433267189\n\nCartão encerra somente demonstração de backup/restauração LOCAL. Issue #25 continua aberta, primeiro critério de outra máquina desmarcado; usuário deixou esse aceite para depois. Ativação systemd e atualização em host real não atestadas. Revisão técnica sem revisor humano independente atribuído. Guias/evidências em doc/backup-restauracao.md e specs/018-backup-restauracao/. Pasta local develop sincronizada e sem alterações.\n\n--- Histórico anterior ---\nIMPLEMENTADO — PR #40 COM CI APROVADO / EM REVISÃO — 20/10/2026 (UTC−4)\n\nhttps://github.com/Solution-Explores/SigmaTI/pull/40\nHead54646644be107724e60b11a5c6e7ca03b7cb61c4. Todos10checks push/PR verdes. Recovery:8testes Linux+23checks smoke com install.sh/PG15. Regressão PostgreSQL completa:467aprovados em164,60s no push, sem falhas/ignorados; job do PR também aprovado. API/frontend/diagnóstico Chromium, pacote e infraestrutura aprovados.\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/39431722684\nhttps://github.com/Solution-Explores/SigmaTI/actions/runs/39431723054\nArtifact recovery-test-results: somente report.json.\n\nBackup/restore PostgreSQL+JSONL com HMAC e comparação das tabelas; scripts install/update/smoke e modelo systemd. LocalPG17:13tabelas/2entradas,0,6468s em uma falha ao SSE; recriação e novas escritas/IDs sem colisão. Bundle fictício test-results/recovery-final/bundle e chave fora do bundle; não publicar.\n\nEscopo local do cartão implementado, aguardando revisão/integração. Issue #25 permanece aberta: usuário reservou outra máquina para depois; somente critério smoke verde marcado. Ativação systemd e atualização em host real pendentes. Guia doc/backup-restauracao.md, roteiro specs/018-backup-restauracao/segunda-maquina.md. Revisão técnica, sem revisor humano independente atribuído. Sem merge nesta etapa.\n\n--- Histórico anterior ---\nIMPLEMENTADO — PR #40 EM REVISÃO / CI EM EXECUÇÃO — 20/10/2026 (UTC−4)\n\nhttps://github.com/Solution-Explores/SigmaTI/pull/40\nHead5464664. Backup PostgreSQL+JSONL, manifesto HMAC, comparação de todas as tabelas públicas e restauração offline em banco vazio. Scripts install/update/backup/restore/smoke e modelo systemd para API/coleta ativa. Guia doc/backup-restauracao.md.\n\nLocalPG17:23checks aprovados,13tabelas/2entradas de auditoria; uma falha ao SSE em0,6468s. Chave errada/dump alterado/archive inválido/banco ocupado recusados; recriação com volume e novas escritas/IDs comprovadas.7testes+1ignorado Windows(permissão POSIX noCI). CI Linux executa install.sh+smoke comPG15; aguardando.\n\nUsuário escolheu preparar pacote; segunda máquina depois. Bundle fictício local test-results/recovery-final/bundle; chave separada fora do bundle; não publicar. Evidências e roteiro externo specs/018-backup-restauracao/. Não fechar #25: primeiro critério depende de outra máquina; ativação systemd/update em host real também não executados. Sem criptografia embutida/globais/n8n/segredos. Revisão técnica, sem revisor humano independente atribuído.\n\n--- Histórico anterior ---\nPLANEJADO — implementação não iniciada nesta publicação.\n\nEscopo parcial, depende de #6/#7. Documentar inicialização e restaurar backup em banco descartável novo; comparar registros/auditoria e registrar evidências. Restauração em outra máquina e demais critérios completos continuam pendentes; não fechar #25 só com ensaio local.\n\nPlano: https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/doc/plano-conclusao-2026-10-20.md\nAcompanhamento: https://trello.com/c/YGVH2Pg9\nDisponibilidade de responsável não confirmada; não atribuir conclusão sem evidência.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima adicionou este cartão a A fazer\n19 de out. de 2026, 16:08\nPower-ups\nAutomações\nComentários"
+  },
+  {
+    "title": "ISSUE #14 — Sondagem segura (etapa entregue)",
+    "url": "/c/cEBw3yYz/27-issue-14-sondagem-segura-etapa-entregue",
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Concluído",
+        "text": "Concluído"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #14 — Sondagem segura (etapa entregue))",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como incompleto (ISSUE #14 — Sondagem segura (etapa entregue))",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Etiquetas"
+      },
+      {
+        "label": null,
+        "text": "Datas"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Membros"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para action",
+        "text": ""
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      },
+      {
+        "label": "Automações",
+        "text": "Automações"
+      },
+      {
+        "label": "Comentários e atividade",
+        "text": "Comentários"
+      }
+    ],
+    "links": [
+      {
+        "text": "Sonda: conectar ao IP já validado (mitigar DNS rebinding / TOCTOU) · Issue #14 · Solution-Explores/SigmaTI",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/14"
+      },
+      {
+        "text": "Sonda: conectar ao IP já validado (mitigar DNS rebinding / TOCTOU) · Issue #14 · Solution-Explores/SigmaTI",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/14"
+      },
+      {
+        "text": "#14 — Sonda: conectar ao IP já validado (mitigar DNS rebinding / TOCTOU)",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/14"
+      },
+      {
+        "text": "#13 — Auditoria: ancorar o último hash fora da máquina, rotação da chave HMAC e verificação agendada",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/13"
+      },
+      {
+        "text": "PR #37 — fix(sondas): conectar ao IP validado e preservar Host/SNI (#14)",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/37"
+      },
+      {
+        "text": "PR #36 — Persistir estado operacional e recuperar aprovações/execuções (#7)",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/36"
+      },
+      {
+        "text": "PR #42 — docs: conferir aceite de #6 #7 #8 #14 e registrar lacunas",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/42"
+      },
+      {
+        "text": "Sonda: conectar ao IP já validado (mitigar DNS rebinding / TOCTOU) · Issue #14 · Solution-Explores/SigmaTI",
+        "url": "https://github.com/Solution-Explores/SigmaTI/issues/14#issuecomment-6293323312"
+      },
+      {
+        "text": "docs: conferir aceite de #6 #7 #8 #14 e registrar lacunas by Vinny1313 · Pull Request #42 · Solution-Explores/SigmaTI",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/42"
+      },
+      {
+        "text": "Merge PR #37: fundacao operacional para coleta continua · Solution-Explores/SigmaTI@c288afd",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39349464975"
+      },
+      {
+        "text": "Merge PR #37: fundacao operacional para coleta continua · Solution-Explores/SigmaTI@c288afd",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39349465078"
+      },
+      {
+        "text": "fix(sondas): conectar ao IP validado e preservar Host/SNI (#14) by Vinny1313 · Pull Request #37 · Solution-Explores/SigmaTI",
+        "url": "https://github.com/Solution-Explores/SigmaTI/pull/37"
+      },
+      {
+        "text": "fix(sondas): conectar ao IP validado e preservar Host/SNI (#14) · Solution-Explores/SigmaTI@d42edac",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39348971206"
+      },
+      {
+        "text": "fix(sondas): conectar ao IP validado e preservar Host/SNI (#14) · Solution-Explores/SigmaTI@d42edac",
+        "url": "https://github.com/Solution-Explores/SigmaTI/actions/runs/39348970917"
+      },
+      {
+        "text": "SigmaTI/doc/plano-conclusao-2026-10-20.md at feature/pacote · Solution-Explores/SigmaTI",
+        "url": "https://github.com/Solution-Explores/SigmaTI/blob/feat/9-pacote-sigma-eng/doc/plano-conclusao-2026-10-20.md"
+      },
+      {
+        "text": "ÉPICO #31 — Plano de entrega e releaseA fazer",
+        "url": "https://trello.com/c/YGVH2Pg9"
+      },
+      {
+        "text": "19 de out. de 2026, 16:08",
+        "url": "#action-6ad678c07cb342407e2272c2"
+      }
+    ],
+    "text": "Concluído\nISSUE #14 — Sondagem segura (etapa entregue)\nAdicionar\nAdicionar\nEtiquetas\nDatas\nChecklist\nMembros\nDescrição\nEditar\nSituação vigente — 21/10/2026\n\n[Certo] #14 encerrada no GitHub. Este cartão concluído passa a representar somente a sondagem segura. #13 permanece ABERTA: âncora externa, rotação HMAC e verificação agendada pendentes, com cartão próprio. A conclusão de #14 não encerra #13.\n\nResponsável do acompanhamento: @user_vinny / @vinny1313.\n\nRevisor independente da próxima etapa: @iohanjheremy11 / @iohanjheremy.\n\nPrazo da pendência: 03/11/2026, proposto ao orientador; a etapa histórica permanece entregue.\n\nIssue: \nSonda: conectar ao IP já validado (mitigar DNS rebinding / TOCTOU) · Issue #14 · Solution-Explores/SigmaTI\n\n## Histórico preservado\n\nAceite parcial do cartão — 20/10/2026 (Manaus)\n\n[Certo] Usuário aprovou explicitamente #14 e a issue foi encerrada: \nSonda: conectar ao IP já validado (mitigar DNS rebinding / TOCTOU) · Issue #14 · Solution-Explores/SigmaTI\nPinning TCP/HTTP/HTTPS, DNS alternante, socket numérico IPv4/IPv6 e redirect em loopback verificados. O cartão também cobre #13, que permanece pendente; manter em Revisão e testes. Não declarar âncora/rotação ou homologação hospitalar aprovadas.\n\n## Resumo atual\nA parte #14 (IP fixado/Host/SNI/DNS) está coberta no PR #37. Auditoria transacional PostgreSQL veio no PR #36. Âncora/rotação da #13 e lacunas JSONL da #6 continuam pendentes; o cartão tem escopo maior que apenas a #14.\n\nIssues do GitHub\n\n#14 — Sonda: conectar ao IP já validado (mitigar DNS rebinding / TOCTOU) — aberta.\n\n#13 — Auditoria: ancorar o último hash fora da máquina, rotação da chave HMAC e verificação agendada — aberta.\n\nPRs e referências\n\nPR #37 — fix(sondas): conectar ao IP validado e preservar Host/SNI (#14) — integrado à develop.\n\nPR #36 — Persistir estado operacional e recuperar aprovações/execuções (#7) — integrado à develop.\n\nPR #42 — docs: conferir aceite de #6 #7 #8 #14 e registrar lacunas — aberto; aguardando integração.\n\nOrganização\n\nColuna mantida: Revisão e testes.\n\nO número do título é o da issue do GitHub; um cartão pode representar só uma etapa dela.\n\nNúmeros K01–K15 são identificadores antigos da sprint, preservados apenas como histórico.\n\nPadronização em 20/10/2026 (UTC−4); não muda aceite, responsáveis, prazos ou conclusão de issues.\n\n## Histórico anterior — Issue 14 — Conectar sondas ao IP validado e auditar operações\n\nISSUE #14 COBERTA; CARTÃO TEM ESCOPO ADICIONAL — CONFERÊNCIA DE 20/10/2026\n\nIP fixado, uma resolução por série, Host/SNI e testes DNS alternante TCP/HTTP/HTTPS integrados no PR #37. Ambos os critérios da issue #14 atendidos; nenhuma implementação original faltante identificada. Falta revisar/registrar aceite para decidir encerramento. O cartão também inclui auditoria: PostgreSQL transacional veio no PR #36, mas âncora/rotação #13 e lacunas JSONL A1/A2 da #6 permanecem. Não concluir o escopo ampliado por associação. Não foi alegada autenticação PKI real.\nIssue: \nSonda: conectar ao IP já validado (mitigar DNS rebinding / TOCTOU) · Issue #14 · Solution-Explores/SigmaTI\n\nPR da conferência: \ndocs: conferir aceite de #6 #7 #8 #14 e registrar lacunas by Vinny1313 · Pull Request #42 · Solution-Explores/SigmaTI\nRelatório: doc/conferencia-issues-6-7-8-14.md, base develop@8cb1e23. CI integrado: 467 testes PG15 aprovados; a suíte existente não cobre os defeitos novos da auditoria. Diagnóstico sintético reproduzido, sem dados operacionais nem alteração em runtime. Issue mantida aberta; revisão técnica sem revisor humano independente atribuído.\n\n--- Histórico anterior ---\nINTEGRADO À DEVELOP — PR #37 — 19/10/2026 (UTC−4)\n\nIntegração autorizada pelo usuário nesta sessão. Merge c288afd363f772d337139551534cba76b1175a7b. Revisão técnica Codex e CI do head aprovados; sem revisão independente atribuída. CI da base combinada c288afd também aprovado: \nMerge PR #37: fundacao operacional para coleta continua · Solution-Explores/SigmaTI@c288afd (API/pacote/PostgreSQL) e \nMerge PR #37: fundacao operacional para coleta continua · Solution-Explores/SigmaTI@c288afd (infraestrutura).\n\nContinuação em #8, branch feature/8-coleta-sse. Nenhuma issue encerrada automaticamente; conferir critérios completos e pendências do escopo maior do card.\n\n--- Histórico anterior ---\nIMPLEMENTADO — PR #37 COM CI APROVADO / EM REVISÃO — 19/10/2026 (UTC−4)\n\nfix(sondas): conectar ao IP validado e preservar Host/SNI (#14) by Vinny1313 · Pull Request #37 · Solution-Explores/SigmaTI\nHead d42edac. Uma resolução por série; todos os IPs devem ser autorizados; conexão numérica IPv4/IPv6 sem segunda resolução; Host/SNI preservados. 37 testes locais aprovados, incluindo DNS alternante, HTTPS simulado, API e HTTP real; pip check/diff check aprovados. CI completo aprovado: 409 testes em 67,42 s com PostgreSQL 15 real, sem falhas/ignorados; pacote independente, aceite HTTP, E6, build/lint, 3 cenários Chromium e infraestrutura aprovados.\nAPI/pacote/PG: \nfix(sondas): conectar ao IP validado e preservar Host/SNI (#14) · Solution-Explores/SigmaTI@d42edac\nInfraestrutura: \nfix(sondas): conectar ao IP validado e preservar Host/SNI (#14) · Solution-Explores/SigmaTI@d42edac\n\nCritérios da issue #14 implementados, sem merge/encerramento. Base independente develop@27d2b55; PR #36 permanece separado. O título deste card reúne auditoria além da issue #14: auditoria transacional operacional consta no PR #36; âncora/rotação da #13 continuam pendentes. Não considerar todo esse escopo concluído.\n\nEvidências: specs/015-sondagem-ip-validado/evidencias.md; riscos: engenharia/docs/05-seguranca-e-pendencias.md.\n\n--- Histórico anterior ---\nPLANEJADO — implementação não iniciada nesta publicação.\n\nDepende de #6/#7. Resolver DNS uma vez, validar IP e conectar ao endereço validado com Host/SNI preservados; teste contra DNS rebinding. Parte de #13: auditoria transacional concorrente sem texto sensível. A âncora externa permanece pendente.\n\nPlano: \nSigmaTI/doc/plano-conclusao-2026-10-20.md at feature/pacote · Solution-Explores/SigmaTI\nAcompanhamento: \nÉPICO #31 — Plano de entrega e release\nA fazer\n\nDisponibilidade de responsável não confirmada; não atribuir conclusão sem evidência.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima adicionou este cartão a A fazer\n19 de out. de 2026, 16:08\nPower-ups\nAutomações\nComentários"
+  }
+]
