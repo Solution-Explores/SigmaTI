@@ -1,0 +1,32 @@
+[
+  {
+    "assignees": [
+      {
+        "id": "U_kgDOCJLZzQ",
+        "login": "Vinny1313",
+        "name": "Vinicius Lima",
+        "databaseId": 143841741
+      }
+    ],
+    "body": "**Não bloqueia a demo.** Acompanhamento posterior à demonstração; não equivale a dispensar o aceite de 23/10.\n\n## Contexto e evidências\nTrês testes falharam intermitentemente nas rodadas locais `rodada-2026-10-22`, `rodada-2026-10-22b` e `rodada-2026-10-22c` (Ubuntu 24.04, 4 vCPU, 4 GiB). Os artefatos não estão no repositório. Não são regressões novas demonstradas dos PRs #43/#44: provedor e sonda falharam isolados na baseline; DNS já falhou na suíte da baseline.\n\n| Teste | Candidato isolado, rodada 2 | Baseline, rodada 3 |\n|---|---:|---:|\n| `tests/test_provider.py::test_real_budget_cancels_slow_provider_within_15_seconds` | 7/10 | 9/10 |\n| `engenharia/tests/test_stats_probe.py::test_probe_many_perda_e_jitter` | 9/10 | 5/10 |\n| `engenharia/tests/test_scheduler.py::test_dns_timeout_before_policy_does_not_create_false_incident` | 10/10 | não repetido isolado; falhou na suíte da rodada 1 |\n\nOs arquivos `main.py`, `tests/test_provider.py`, `engenharia/tests/test_stats_probe.py` e `engenharia/sigma_eng/probe.py` são idênticos entre `8cb1e23` e `ddd4840`.\n\n## Diagnóstico\n- **Sonda: causa confirmada.** `accept()` em outra thread aceitou a mesma conexão nova 1,5 ms após `close()`, comprovado pelo cruzamento de portas. Original **26/30**; com `shutdown(socket.SHUT_RDWR)` antes do fechamento, **30/30**. Correção no branch remoto [fix/teste-sonda-instavel](https://github.com/Solution-Explores/SigmaTI/tree/fix/teste-sonda-instavel), commit `3cca38d`, ainda sem PR.\n- **Provedor:** timer de 14 s atrasou até **1,263 s antes do cancelamento**. Rota/dependências ≤0,11 s, anonimização ≤1,5 ms, cancelamento/limpeza <1 ms. Debug **10/10**, instrumentado **9/10**. Zero avisos de callback lento **não prova ausência de bloqueio**. Causa específica entre selector, scheduler e hipervisor não isolada.\n- **Risco RNF04:** prazo de 14 s deixa apenas 1 s até a meta de 15 s. Decidir, com justificativa e medição, se reduz o prazo interno para 13 s ou registra a margem como limite. Não aumentar a asserção para obter aprovação.\n- **DNS:** falha na suíte, **10/10** isolado; causalidade ainda inconclusiva. Avaliar sincronização por evento em vez do `sleep(0.25)` fixo, sem presumir que carga é a causa.\n\n## Próximo passo\nResponsável: @Vinny1313. Revisor independente: @iohanjheremy. Triagem e decisão técnica propostas para **27/10/2026**, após a demo; a data é de triagem, não promessa de correção de todos os casos.\n\n## Critérios de aceite\n- [ ] 30/30 execuções isoladas na VM para cada teste, sem afrouxar limites.\n- [ ] Provedor respeita o orçamento total de 15 s medido de ponta a ponta.\n- [ ] Nenhum limite de asserção alterado sem justificativa registrada.\n- [ ] PR da correção da sonda revisado; registros separam fixture, aplicação e ambiente.\n\nRefs #4, #6, #8 e #11; não encerra nem substitui os critérios dessas issues.\r\n",
+    "number": 45,
+    "state": "OPEN",
+    "title": "Testes instáveis: provedor de IA, sonda e DNS — não bloqueia a demo",
+    "url": "https://github.com/Solution-Explores/SigmaTI/issues/45"
+  },
+  {
+    "assignees": [
+      {
+        "id": "U_kgDOCJLZzQ",
+        "login": "Vinny1313",
+        "name": "Vinicius Lima",
+        "databaseId": 143841741
+      }
+    ],
+    "body": "**Não bloqueia a demo.** Registrar agora; investigar e medir após a demonstração. Este item não substitui a revisão do PR #43.\n\n## Contexto\nO PR #43 coordena `AuditChain` entre instâncias e processos com um lock lateral. No [audit_chain.py do SHA 8662ea9](https://github.com/Solution-Explores/SigmaTI/blob/8662ea9f5bba32546d65cc440ca1718d1be7c550/engenharia/sigma_eng/audit_chain.py), `_coordenar()` relê o JSONL a cada `registrar()`, `verificar()`, `resumo()`, `entradas` e `len()`; `registrar()` verifica a cadeia completa antes de anexar. `auth.obter_auditor()` cria uma instância por login/logout, cujo construtor também lê o arquivo.\n\n## Problema\nO custo por gravação é O(n) em leitura e HMAC, sob lock exclusivo. [Provável] Com uma trilha longa, aumenta a latência e a espera de escritores concorrentes. O lock tem timeout de 10 s; **não foi medido em qual tamanho/carga isso vira gargalo**. Os **7/7** testes focados da `rodada-2026-10-22b` comprovam correção concorrente, não capacidade com meses de histórico.\n\n## Propostas a discutir\n1. Cache do último `seq/hash` e tamanho do arquivo; leitura incremental do trecho anexado.\n2. Avaliar verificação integral em `verificar()/resumo()` e otimização de `registrar()`. A otimização deve preservar a recusa de novas gravações após adulteração; validar apenas a última entrada, isoladamente, pode perder essa garantia.\n3. Reaproveitar uma instância por caminho, preservando coordenação entre processos.\n4. Medir antes/depois com 10k, 100k e 1M de entradas.\n\n## Próximo passo\nResponsável: @Vinny1313. Revisor independente: @iohanjheremy. Triagem e definição do benchmark propostas para **27/10/2026**, após a demo; não é prazo de implementação.\n\n## Critérios de aceite\n- [ ] Definir limite acordado para o custo adicional de login com 100k entradas; 50 ms é uma proposta, não resultado medido.\n- [ ] Benchmark reproduzível antes/depois, com latência e contenção.\n- [ ] `engenharia/tests/test_audit_shared.py` continua passando, inclusive processos concorrentes.\n- [ ] Adulteração histórica continua detectável e continua bloqueando novas gravações.\n\nRefs #6, #13 e PR #43.\r\n",
+    "number": 46,
+    "state": "OPEN",
+    "title": "Auditoria: custo de gravação e verificação cresce com a trilha — não bloqueia a demo",
+    "url": "https://github.com/Solution-Explores/SigmaTI/issues/46"
+  }
+]

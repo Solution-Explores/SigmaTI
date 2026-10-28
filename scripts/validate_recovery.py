@@ -13,6 +13,7 @@ import time
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "backend"))
 from scripts.recovery import backup, restore, verify, fingerprint, sql, canonical, digest
 from scripts.validate_postgres import IMAGE
 from scripts.validate_collection import TCPService, SSEClient, api_server, request, wait_until

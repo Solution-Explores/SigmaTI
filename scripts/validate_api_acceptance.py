@@ -29,6 +29,7 @@ def serve(checkout: Path, port: int, events: Path) -> None:
     import asyncio
 
     sys.path.insert(0, str(checkout))
+    sys.path.insert(0, str(checkout / "backend"))
     import httpx2 as httpx
     import uvicorn
     import main
@@ -81,6 +82,7 @@ def request(base: str, method: str, path: str, payload=None, headers=None):
 def validate(args) -> int:
     checkout = args.checkout.resolve()
     sys.path.insert(0, str(checkout))
+    sys.path.insert(0, str(checkout / "backend"))
     output = args.output.resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
     interpreter = checkout / ".venv" / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
@@ -195,7 +197,7 @@ def validate(args) -> int:
 
             for missing in ("OPENROUTER_API_KEY", "SIGMA_LLM_MODEL", "SIGMA_CORS_ORIGINS", "SIGMA_JWT_SECRET", "SIGMA_USERS_FILE"):
                 invalid_env = {key: value for key, value in env.items() if key != missing}
-                imported = subprocess.run([str(interpreter), "-c", "import main"], cwd=checkout,
+                imported = subprocess.run([str(interpreter), "-c", "import sys; sys.path.insert(0, 'backend'); import main"], cwd=checkout,
                                           env=invalid_env, capture_output=True, text=True, timeout=15)
                 check(f"startup_requires_{missing.lower()}", imported.returncode != 0 and missing in imported.stderr
                       and FAKE_KEY not in imported.stderr, {"exit_code": imported.returncode})

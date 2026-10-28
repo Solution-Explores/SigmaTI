@@ -8,6 +8,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "backend"))
 from sanitizer import sanitizar_texto
 
 
@@ -97,8 +98,8 @@ def gerar_relatorio_markdown(m, destino):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--corpus", type=Path, default=ROOT / "tests/data/corpus_sintetico_pii.json")
-    parser.add_argument("--output", type=Path, default=ROOT / "resultados/experimento-e6-anonimizacao.md")
+    parser.add_argument("--corpus", type=Path, default=ROOT / "backend/tests/data/corpus_sintetico_pii.json")
+    parser.add_argument("--output", type=Path, default=ROOT / "engenharia/resultados/experimento-e6-anonimizacao.md")
     args = parser.parse_args()
     m = executar_experimento(carregar_corpus(args.corpus))
     gerar_relatorio_markdown(m, args.output)
