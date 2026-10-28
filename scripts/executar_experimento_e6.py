@@ -98,7 +98,7 @@ def gerar_relatorio_markdown(m, destino):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--corpus", type=Path, default=ROOT / "tests/data/corpus_sintetico_pii.json")
+    parser.add_argument("--corpus", type=Path, default=ROOT / "backend/tests/data/corpus_sintetico_pii.json")
     parser.add_argument("--output", type=Path, default=ROOT / "engenharia/resultados/experimento-e6-anonimizacao.md")
     args = parser.parse_args()
     m = executar_experimento(carregar_corpus(args.corpus))
