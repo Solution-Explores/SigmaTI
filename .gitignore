@@ -27,9 +27,4 @@ skills-lock.json
 /.codex/
 /graft/
 /.ignore
-/vm/
-/validacao-vm/
-/origem/
-/sincronizacao/
-/SHA256SUMS.txt
-/LEIA-ME.md
+/_pacote-local/

@@ -66,7 +66,7 @@ registrar hosts, saídas ou credenciais. Não constitui correção de capacidade
 
 > Revisão de 20/10/2026: houve reprovação posterior da carga em VM no mesmo
 > host (`missed` de 150 para 200 na janela). CI anterior aprovado não constitui
-> correção dessa reprodução. Veja [achados e critérios de retomada](../../doc/revisao-achados-base-2026-10-20.md).
+> correção dessa reprodução. Veja [achados e critérios de retomada](../../docs/historico/revisao-achados-base-2026-10-20.md).
 
 ```powershell
 .venv/Scripts/python.exe scripts/validate_postgres.py --tests tests/test_collection_e2.py

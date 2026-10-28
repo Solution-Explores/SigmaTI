@@ -1,6 +1,6 @@
 # Painel SIGMA
 
-Frontend em React e Vite. O guia completo de ambiente está em [Instalação para desenvolvimento](../docs/guias/instalacao.md).
+Frontend em React e Vite. O guia completo de ambiente está em [Instalação para desenvolvimento](../docs/operacao/instalacao.md).
 
 ## Rodar
 

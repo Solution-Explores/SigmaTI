@@ -150,7 +150,7 @@ O projeto é bem-sucedido se a banca puder comprovar o que segue. A lista comple
 
 ## 10. Estado atual (24/10/2026)
 
-O SIGMA está em **MVP**. Esta seção resume o estado e envelhece rápido, então confira o [README](../README.md) e o [plano de demonstração](plano-demonstracao-2026-10-27.md) antes de citá-la.
+O SIGMA está em **MVP**. Esta seção resume o estado e envelhece rápido, então confira o [README](../README.md) e o [plano de demonstração](planejamento/plano-demonstracao-2026-10-27.md) antes de citá-la.
 
 - Existem a API com JWT e RBAC, a generalização com falha segura, o painel operacional, o estado operacional no PostgreSQL, o SSE, o backup com restauração local e o núcleo `sigma_eng`.
 - O aceite das issues #5, #6 e #8 e a restauração em outra máquina (#25) continuam pendentes.
@@ -185,4 +185,4 @@ O SIGMA está em **MVP**. Esta seção resume o estado e envelhece rápido, ent�
 - [README](../README.md): funcionalidades, arquitetura e estado do desenvolvimento.
 - [PRODUCT.md](../PRODUCT.md): painel operacional e verdade dos dados.
 - [Visão de engenharia](../engenharia/docs/00-visao-de-engenharia.md): problema de pesquisa, hipóteses e contribuições.
-- [Plano de demonstração](plano-demonstracao-2026-10-27.md) e [plano de sprints pós-demo](plano-sprints-pos-demo.md): prazos e escopo até a banca.
+- [Plano de demonstração](planejamento/plano-demonstracao-2026-10-27.md) e [plano de sprints pós-demo](planejamento/plano-sprints-pos-demo.md): prazos e escopo até a banca.
