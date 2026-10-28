@@ -134,7 +134,7 @@ O Compose sobe o banco e o n8n. Ele n√£o sobe a API nem o frontend. Os bancos n√
 Em um terminal, inicie a API:
 
 ```bash
-python -m uvicorn main:app --host 127.0.0.1 --port 8000
+python -m uvicorn --app-dir backend main:app --host 127.0.0.1 --port 8000
 ```
 
 Em outro, o frontend:

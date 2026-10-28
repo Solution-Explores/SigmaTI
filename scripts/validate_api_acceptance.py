@@ -29,6 +29,7 @@ def serve(checkout: Path, port: int, events: Path) -> None:
     import asyncio
 
     sys.path.insert(0, str(checkout))
+    sys.path.insert(0, str(checkout / "backend"))
     import httpx2 as httpx
     import uvicorn
     import main
@@ -81,6 +82,7 @@ def request(base: str, method: str, path: str, payload=None, headers=None):
 def validate(args) -> int:
     checkout = args.checkout.resolve()
     sys.path.insert(0, str(checkout))
+    sys.path.insert(0, str(checkout / "backend"))
     output = args.output.resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
     interpreter = checkout / ".venv" / ("Scripts/python.exe" if os.name == "nt" else "bin/python")

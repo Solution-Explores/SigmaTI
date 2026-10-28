@@ -69,7 +69,7 @@ registrar hosts, saídas ou credenciais. Não constitui correção de capacidade
 > correção dessa reprodução. Veja [achados e critérios de retomada](../../docs/historico/revisao-achados-base-2026-10-20.md).
 
 ```powershell
-.venv/Scripts/python.exe scripts/validate_postgres.py --tests tests/test_collection_e2.py
+.venv/Scripts/python.exe scripts/validate_postgres.py --tests backend/tests/test_collection_e2.py
 ```
 
 O runner usa PostgreSQL 15 fixado no Compose. `--image` permite ensaio adicional explícito com outra versão, sem mudar o padrão. `scripts/validate_collection.py` também pode rodar com SIGMA_TEST_DATABASE_URL apontando para banco descartável. Ele cria schema aleatório próprio, migra, inicia/encerra Uvicorn, executa 30 quedas TCP com SSE real, mede 200 alvos lógicos em loopback e prova reinício/replay/logout. Remove só o schema criado, sem alterar o restante do banco.

@@ -257,7 +257,7 @@ def test_real_http_api_restart_preserves_session_and_pending_work(store, monkeyp
             port = sock.getsockname()[1]
         base = f"http://127.0.0.1:{port}"
         with log_path.open("a", encoding="utf-8") as log:
-            process = subprocess.Popen([sys.executable, "-m", "uvicorn", "main:app", "--host", "127.0.0.1",
+            process = subprocess.Popen([sys.executable, "-m", "uvicorn", "--app-dir", "backend", "main:app", "--host", "127.0.0.1",
                 "--port", str(port)], env=env, stdout=log, stderr=log)
             try:
                 for _ in range(100):

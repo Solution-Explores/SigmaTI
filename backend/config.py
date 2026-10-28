@@ -58,7 +58,7 @@ def _is_origin(value: str) -> bool:
 
 def load_settings(env_file: Path | None = None) -> Settings:
     """Lê o .env da raiz sem substituir variáveis do processo."""
-    path = env_file if env_file is not None else Path(__file__).resolve().with_name(".env")
+    path = env_file if env_file is not None else Path(__file__).resolve().parent.parent / ".env"
     load_dotenv(dotenv_path=path, override=False, interpolate=False, encoding="utf-8-sig")
 
     key = _required("OPENROUTER_API_KEY")

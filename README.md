@@ -192,7 +192,7 @@ O backend lê só o `.env` da raiz, de qualquer pasta de execução. Variáveis 
 A API não inicia se alguma configuração faltar, estiver vazia ou tiver origens inválidas. A chave aceita só caracteres ASCII visíveis, sem espaços. Nas origens, não use caminhos, barra final, credenciais, curingas nem itens vazios, e escreva domínios internacionalizados em punycode.
 
 ```bash
-python -m uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+python -m uvicorn --app-dir backend main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
 Em outro terminal, rode `npm ci` e `npm run dev` em `sigma-frontend`. Se o Vite usar outra porta, ajuste a origem no ambiente e reinicie a API. Homologação e produção usam o mesmo código. Configure chave, modelo e origens HTTPS do ambiente antes de iniciar. A chave nunca vai ao frontend, e não há seleção automática de `.env.production` ou similares.
@@ -276,7 +276,7 @@ Testes:
 ```bash
 npm test                      # componentes
 npm run test:e2e              # diagnóstico, no navegador
-python scripts/validate_postgres.py --tests "tests/test_panel_api.py tests/test_panel_e2e.py"
+python scripts/validate_postgres.py --tests "backend/tests/test_panel_api.py backend/tests/test_panel_e2e.py"
 ```
 
 O último comando faz o ensaio completo com um banco descartável. Ele prepara um schema isolado e publica capturas em `test-results/`. Instale o Chromium com `npx playwright install chromium`. No Windows, `SIGMA_BROWSER_CHANNEL=chrome` usa o Chrome já instalado.
@@ -324,16 +324,12 @@ A validação completa está na seção 6 do [estudo de caso](docs/arquitetura/e
 ## Estrutura do projeto
 
 ```
-main.py, auth.py, config.py   API FastAPI, autenticação e configuração
-routers/                      rotas da API
-persistence/                  acesso ao PostgreSQL
-migrations/                   migrações Alembic
+backend/                      API FastAPI: main.py, routers/, persistence/, migrations/ e tests/
 sigma-frontend/               painel em React
 engenharia/                   núcleo sigma_eng, testes e experimentos
 scripts/                      validação, backup e utilitários
 deploy/                       unidade systemd e overlays do Compose
 docs/                         documentação, specs e evidências
-tests/                        testes da API
 docker-compose.yml            orquestração dos contêineres
 .env.example                  modelo de variáveis de ambiente
 ```

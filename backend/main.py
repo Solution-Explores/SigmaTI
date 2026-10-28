@@ -92,7 +92,7 @@ from sigma_eng.audit_chain import AuditChain
 # Preservar o caminho da trilha de engenharia existente no checkout.
 _audit_key = os.getenv("SIGMA_AUDIT_KEY")
 engineering_audit = AuditChain(
-    os.getenv("SIGMA_AUDIT_PATH", str(Path(__file__).resolve().parent / "engenharia" / "resultados" / "audit.jsonl")),
+    os.getenv("SIGMA_AUDIT_PATH", str(Path(__file__).resolve().parent.parent / "engenharia" / "resultados" / "audit.jsonl")),
     chave=_audit_key.encode() if _audit_key else None,
 )
 app.include_router(create_router(exige_papel, auditoria=engineering_audit))

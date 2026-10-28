@@ -12,7 +12,7 @@ from fastapi.testclient import TestClient
 import config
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 VALUES = {
     "OPENROUTER_API_KEY": "fake-key-only-for-tests",
     "SIGMA_LLM_MODEL": "test-provider/test-model",
@@ -104,7 +104,7 @@ def test_default_dotenv_path_is_project_root_not_cwd(environment, monkeypatch, t
     (other / ".env").write_text("SIGMA_LLM_MODEL=wrong/model\n", encoding="utf-8")
     for name in VALUES:
         monkeypatch.delenv(name)
-    monkeypatch.setattr(config, "__file__", str(project / "config.py"))
+    monkeypatch.setattr(config, "__file__", str(project / "backend" / "config.py"))
     monkeypatch.chdir(other)
     assert config.load_settings().llm_model == VALUES["SIGMA_LLM_MODEL"]
 
@@ -162,7 +162,7 @@ def test_actual_app_import_requires_configuration(name, bad_value):
         else:
             env[name] = bad_value
     result = subprocess.run(
-        [sys.executable, "-c", "import main\nprint('app-ready')"],
+        [sys.executable, "-c", "import sys; sys.path.insert(0, 'backend'); import main\nprint('app-ready')"],
         cwd=ROOT, env=env, capture_output=True, text=True, timeout=15,
     )
     output = result.stdout + result.stderr
