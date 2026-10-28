@@ -44,4 +44,4 @@ O menu mostra a quantidade de ativos explicitamente. A primeira entrada em Incid
 
 Busca, filtros e registros expandidos pertencem ao estado de App, em memória. Identificadores controlam a expansão compartilhada entre desktop e celular. Recarregar volta ao padrão; voltar/avançar preserva o último estado da seção na sessão, sem histórico de cada mudança de filtro. Nome acessível de cada expansão identifica o incidente ou equipamento.
 
-Evidências atuais e revisão heurística: `specs/ajustes-investigacao/validacao.md`. O registro do redesenho inicial permanece como histórico.
+Evidências atuais e revisão heurística: `docs/specs/ajustes-investigacao/validacao.md`. O registro do redesenho inicial permanece como histórico.

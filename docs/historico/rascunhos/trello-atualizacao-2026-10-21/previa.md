@@ -24,7 +24,7 @@ Responsável pelas tarefas de apresentação: **Joyce**. Vinny coordena priorida
 - Uma tarefa por branch/PR pequeno, em ordem de dependências. **P**: até meio dia; **M**: até 1 dia. Não há tarefa G. Se o escopo ultrapassar1 dia, divida antes de iniciar, sem juntar tarefas para compensar espera de revisão.
 - Não há data final confirmada. O campo **Prazo** fica vazio em cada fase; a sequência de duas semanas abaixo não é compromisso de calendário nem presume disponibilidade integral.
 - Antes de iniciar uma tarefa, Vinny confirma se o material/mock já entrou em `develop`. Se ainda não entrou, usar a base de trabalho indicada por ele e não apontar um PR de código sem mock para uma base que não o contém. Não copiar arquivos de integração para resolver a diferença.
-- Criar a branch da tarefa a partir da base autorizada; registrar escopo, dependências, capturas e verificação no PR conforme [fluxo do TCC](../../../guias/fluxo-de-trabalho-tcc.md). Não incorporar a reorganização futura `backend/frontend` sem atualizar este plano.
+- Criar a branch da tarefa a partir da base autorizada; registrar escopo, dependências, capturas e verificação no PR conforme [fluxo do TCC](../../../processo/fluxo-de-trabalho-tcc.md). Não incorporar a reorganização futura `backend/frontend` sem atualizar este plano.
 - Nesta entrega do plano: somente este arquivo e o link no README; commit local em `feature/tarefas-joyce`. **Sem issues, PR ou push sem aprovação do Vinny.** Os rascunhos do apêndice não são issues criadas.
 - Arquivos `src/...` abaixo são relativos a `sigma-frontend/`. `design-system/...`, `DESIGN.md` e `doc/...` são relativos à raiz.
 
