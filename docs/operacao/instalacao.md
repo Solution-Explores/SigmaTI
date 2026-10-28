@@ -140,7 +140,7 @@ python -m uvicorn --app-dir backend main:app --host 127.0.0.1 --port 8000
 Em outro, o frontend:
 
 ```bash
-cd sigma-frontend
+cd frontend
 npm ci
 npm run dev
 ```
@@ -154,7 +154,7 @@ Sem IA real, com credenciais geradas pelo próprio script:
 ```bash
 python scripts/validate_api_acceptance.py --output test-results/aceite-novo.json --port 18001
 python scripts/executar_experimento_e6.py --output test-results/e6.md
-cd sigma-frontend
+cd frontend
 npm ci --include=optional
 npm run build
 npm run lint

@@ -22,7 +22,7 @@ Pasta de trabalho: `C:\Users\Vinicius Lima\Desktop\sigmati-develop`, no SHA cong
 
 - [ ] Suba o banco: `docker compose -f docker-compose.yml -f deploy/db-host.yml up -d db`
 - [ ] **Terminal A:** defina `$env:SIGMA_TEST_DATABASE_URL`, ative a `.venv` e rode `python ..\sigma-develop\docs\demo\subir_demo.py`. Anote a senha impressa.
-- [ ] **Terminal B:** `cd sigma-frontend; $env:VITE_API_URL='http://127.0.0.1:18000'; npx vite --host 127.0.0.1 --port 5173`
+- [ ] **Terminal B:** `cd frontend; $env:VITE_API_URL='http://127.0.0.1:18000'; npx vite --host 127.0.0.1 --port 5173`
 - [ ] **Terminal C:** `. ..\sigma-develop\docs\demo\demo.ps1` e `$env:SIGMA_DEMO_SENHA='<senha>'`
 - [ ] **Terminal D:** deixe digitado, sem executar: `python -m http.server 9099 --bind 127.0.0.1`
 

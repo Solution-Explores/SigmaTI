@@ -35,15 +35,15 @@ jobs:
         with:
           node-version: '24'
           cache: npm
-          cache-dependency-path: sigma-frontend/package-lock.json
+          cache-dependency-path: frontend/package-lock.json
       - run: npm ci --include=optional
-        working-directory: sigma-frontend
+        working-directory: frontend
       - run: npm run build && npm run lint && npm test
-        working-directory: sigma-frontend
+        working-directory: frontend
       - run: npx playwright install --with-deps chromium
-        working-directory: sigma-frontend
+        working-directory: frontend
       - run: npm run test:e2e
-        working-directory: sigma-frontend
+        working-directory: frontend
       - name: Publish test evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -88,11 +88,11 @@ jobs:
         with:
           node-version: '24'
           cache: npm
-          cache-dependency-path: sigma-frontend/package-lock.json
+          cache-dependency-path: frontend/package-lock.json
       - run: npm ci --include=optional
-        working-directory: sigma-frontend
+        working-directory: frontend
       - run: npx playwright install --with-deps chromium
-        working-directory: sigma-frontend
+        working-directory: frontend
       - name: Real PostgreSQL migration and identity recovery regression
         run: .venv/bin/python scripts/validate_postgres.py
       - uses: actions/upload-artifact@v4

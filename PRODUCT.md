@@ -47,4 +47,4 @@ A revisão visual recebeu seis capturas `.impeccable/review/panel-*.png` e apont
 
 A execução local usou Chrome e PostgreSQL 17 descartável. A CI, com Chromium e PostgreSQL 15, teve 458 testes aprovados e 1 falha de contraste antes da correção. O sucesso da reexecução depois da correção não está afirmado. Dados e alvos sintéticos não homologam uma rede hospitalar real. O motor Impeccable 0.1.15 e o detector não estavam disponíveis, então a evidência vem de leitura direta, capturas e revisão técnica.
 
-Fontes: [README](README.md), [brief](docs/specs/017-painel-operacional/brief.md) e `sigma-frontend/src/{App.jsx,Operations.jsx,OperationalPages.jsx,App.css,index.css}`.
+Fontes: [README](README.md), [brief](docs/specs/017-painel-operacional/brief.md) e `frontend/src/{App.jsx,Operations.jsx,OperationalPages.jsx,App.css,index.css}`.

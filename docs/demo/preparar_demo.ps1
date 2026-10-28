@@ -64,7 +64,7 @@ $senha = ((Select-String -Path $log -Pattern 'Senha comum: (.+)$').Matches[0].Gr
 Esperar { PortaAberta 18000 } 60 'API nao abriu a porta 18000'
 
 Passo 'Painel (janela nova)'
-$cmdVite = "Set-Location '$Repo\sigma-frontend'; `$env:VITE_API_URL='http://127.0.0.1:18000'; npx vite --host 127.0.0.1 --port 5173"
+$cmdVite = "Set-Location '$Repo\frontend'; `$env:VITE_API_URL='http://127.0.0.1:18000'; npx vite --host 127.0.0.1 --port 5173"
 Start-Process powershell -ArgumentList '-NoExit', '-Command', $cmdVite | Out-Null
 Esperar { PortaAberta 5173 } 120 'painel nao abriu a porta 5173'
 

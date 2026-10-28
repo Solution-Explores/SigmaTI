@@ -195,7 +195,7 @@ A API não inicia se alguma configuração faltar, estiver vazia ou tiver origen
 python -m uvicorn --app-dir backend main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-Em outro terminal, rode `npm ci` e `npm run dev` em `sigma-frontend`. Se o Vite usar outra porta, ajuste a origem no ambiente e reinicie a API. Homologação e produção usam o mesmo código. Configure chave, modelo e origens HTTPS do ambiente antes de iniciar. A chave nunca vai ao frontend, e não há seleção automática de `.env.production` ou similares.
+Em outro terminal, rode `npm ci` e `npm run dev` em `frontend`. Se o Vite usar outra porta, ajuste a origem no ambiente e reinicie a API. Homologação e produção usam o mesmo código. Configure chave, modelo e origens HTTPS do ambiente antes de iniciar. A chave nunca vai ao frontend, e não há seleção automática de `.env.production` ou similares.
 
 O Compose não inicia a API nem injeta variáveis no processo Python do host. Validar o Compose não valida a configuração da API.
 
@@ -259,7 +259,7 @@ python -m pytest -q -p no:cacheprovider
 
 ## Painel operacional
 
-O frontend fica em `sigma-frontend/` e usa a API de `VITE_API_URL` (padrão `http://localhost:8000`). Rode `npm ci` e `npm run dev` nessa pasta. A API precisa de `SIGMA_DATABASE_URL`, das migrações aplicadas e de usuários cadastrados, conforme os guias de [identidades](engenharia/docs/07-persistencia-identidades.md) e de [coleta](engenharia/docs/09-coleta-eventos.md). Sem persistência operacional, as áreas mostram indisponibilidade (503), sem dados fictícios no lugar.
+O frontend fica em `frontend/` e usa a API de `VITE_API_URL` (padrão `http://localhost:8000`). Rode `npm ci` e `npm run dev` nessa pasta. A API precisa de `SIGMA_DATABASE_URL`, das migrações aplicadas e de usuários cadastrados, conforme os guias de [identidades](engenharia/docs/07-persistencia-identidades.md) e de [coleta](engenharia/docs/09-coleta-eventos.md). Sem persistência operacional, as áreas mostram indisponibilidade (503), sem dados fictícios no lugar.
 
 | Perfil | Áreas do painel |
 |---|---|
@@ -325,7 +325,7 @@ A validação completa está na seção 6 do [estudo de caso](docs/arquitetura/e
 
 ```
 backend/                      API FastAPI: main.py, routers/, persistence/, migrations/ e tests/
-sigma-frontend/               painel em React
+frontend/               painel em React
 engenharia/                   núcleo sigma_eng, testes e experimentos
 scripts/                      validação, backup e utilitários
 deploy/                       unidade systemd e overlays do Compose

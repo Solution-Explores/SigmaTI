@@ -68,7 +68,7 @@ Faça tudo na raiz do worktree da `develop` (`C:\Users\Vinicius Lima\Desktop\sig
    O script imprime a senha comum dos quatro usuários e deixa a API em `http://127.0.0.1:18000`. Ctrl+C encerra a API e apaga o schema da demo.
 3. **Terminal B: painel.**
    ```powershell
-   cd sigma-frontend; $env:VITE_API_URL = 'http://127.0.0.1:18000'
+   cd frontend; $env:VITE_API_URL = 'http://127.0.0.1:18000'
    npx vite --host 127.0.0.1 --port 5173
    ```
 4. **Terminal C: comandos de apoio.**
