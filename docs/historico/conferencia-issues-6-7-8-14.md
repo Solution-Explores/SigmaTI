@@ -2,7 +2,7 @@
 
 20/10/2026 (UTC−4). Base examinada: **develop@8cb1e23b0e83066e52d3f81dd7ef05ce82dfc93c**. Escopo: ler pedido completo, comparar código/testes/evidências e registrar pendências. Não alterar implementação nem encerrar issues nesta conferência. PR41 do planejamento de VM ainda não está integrado e não foi tratado como evidência de produto.
 
-> **Nota de 28/10/2026 (atualizaÃ§Ã£o da branch).** Este registro vale para a base `8cb1e23`. Na `develop` atual (`b0bf3ac`), o script `docs/specs/019-conferencia-issues-base/reproduzir-auditoria.py` jÃ¡ nÃ£o reproduz a lacuna A1: a primeira asserÃ§Ã£o falha porque `disk_integrity` volta `True` e `cached_entries` volta 3. Os demais achados nÃ£o foram reavaliados.
+> **Nota de 28/10/2026 (atualização da branch).** Este registro vale para a base `8cb1e23`. Na `develop` atual (`b0bf3ac`), o script `docs/specs/019-conferencia-issues-base/reproduzir-auditoria.py` já não reproduz a lacuna A1: a primeira asserção falha porque `disk_integrity` volta `True` e `cached_entries` volta 3. Os demais achados não foram reavaliados.
 
 ## Resultado
 
