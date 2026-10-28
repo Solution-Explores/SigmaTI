@@ -293,6 +293,8 @@ O procedimento está em [Backup, restauração e atualização](docs/operacao/ba
 
 O ensaio em outra máquina e a ativação do modelo systemd continuam pendentes. A validação local não equivale ao aceite integral da issue #25.
 
+Planejamento do aceite em outro local: [VM VirtualBox e roteiro da #25](docs/historico/planejamento-validacao-25-virtualbox.md).
+
 ## Segurança e privacidade
 
 - Chaves e senhas ficam em variáveis de ambiente, nunca no código.
