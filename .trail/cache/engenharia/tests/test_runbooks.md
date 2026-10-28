@@ -1,0 +1,16 @@
+# engenharia/tests/test_runbooks.py
+
+- fake · function · L22-L26 — def fake(chamadas)
+- ex · function · L23-L25 — def ex(argv, timeout)
+- test_parse · function · L29-L32 — def test_parse()
+- test_ids_duplicados · function · L35-L37 — def test_ids_duplicados()
+- test_dry_run_e_padrao_e_nao_executa · function · L40-L44 — def test_dry_run_e_padrao_e_nao_executa()
+- test_aprovacao_por_passo_real · function · L47-L58 — def test_aprovacao_por_passo_real()
+- test_aprovacao_de_outro_passo_e_recusada · function · L61-L68 — def test_aprovacao_de_outro_passo_e_recusada()
+- test_allowlist · function · L71-L74 — def test_allowlist()
+- test_injecao_em_variavel_bloqueada · function · L78-L80 — def test_injecao_em_variavel_bloqueada(valor)
+- test_variavel_nao_resolvida · function · L83-L85 — def test_variavel_nao_resolvida()
+- test_valida_tudo_antes_de_executar · function · L88-L94 — def test_valida_tudo_antes_de_executar()
+- test_falha_interrompe · function · L97-L103 — def test_falha_interrompe()
+- ruim · function · L98-L99 — def ruim(argv, t)
+- test_executor_real_sem_shell · function · L109-L120 — def test_executor_real_sem_shell()
