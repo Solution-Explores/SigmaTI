@@ -6,8 +6,8 @@ from pathlib import Path
 import sys
 from tempfile import TemporaryDirectory
 
-ROOT=Path(__file__).resolve().parents[2]
-sys.path.insert(0,str(ROOT))
+ROOT=Path(__file__).resolve().parents[3]
+sys.path.insert(0,str(ROOT)); sys.path.insert(0,str(ROOT/"backend"))
 from auth import UsuarioRepository,obter_auditor
 from sigma_eng.audit_chain import AuditChain
 from fastapi.testclient import TestClient

@@ -2,6 +2,8 @@
 
 20/10/2026 (UTC−4). Base examinada: **develop@8cb1e23b0e83066e52d3f81dd7ef05ce82dfc93c**. Escopo: ler pedido completo, comparar código/testes/evidências e registrar pendências. Não alterar implementação nem encerrar issues nesta conferência. PR41 do planejamento de VM ainda não está integrado e não foi tratado como evidência de produto.
 
+> **Nota de 28/10/2026 (atualizaÃ§Ã£o da branch).** Este registro vale para a base `8cb1e23`. Na `develop` atual (`b0bf3ac`), o script `docs/specs/019-conferencia-issues-base/reproduzir-auditoria.py` jÃ¡ nÃ£o reproduz a lacuna A1: a primeira asserÃ§Ã£o falha porque `disk_integrity` volta `True` e `cached_entries` volta 3. Os demais achados nÃ£o foram reavaliados.
+
 ## Resultado
 
 | Issue | Conclusão no escopo original | O que realmente falta |
@@ -53,7 +55,7 @@ Correção a fazer em outra entrega:
 Reprodução versionada, somente dados fictícios:
 
 ```powershell
-.venv/Scripts/python.exe specs/019-conferencia-issues-base/reproduzir-auditoria.py
+.venv/Scripts/python.exe docs/specs/019-conferencia-issues-base/reproduzir-auditoria.py
 ```
 
 Saída0com `gaps_reproduced_not_fixed` significa que as lacunas foram reproduzidas, **não** que a correção passou. O script não altera código nem arquivos operacionais; usa TemporaryDirectory e não publica tokens/senhas/chaves. Nesta conferência ambos os cenários reproduziram os resultados descritos.
