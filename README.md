@@ -70,6 +70,7 @@ Toda a documentação está indexada em [docs/README.md](docs/README.md).
 - O [estado operacional no PostgreSQL](engenharia/docs/08-estado-operacional.md) cobre esquema, recuperação de aprovações e execuções, medições, retenção e APIs. A coleta contínua e as páginas de gestão são os próximos incrementos. Veja também a [coleta de eventos e o SSE](engenharia/docs/09-coleta-eventos.md).
 - O experimento E6 avalia cada identificador anotado, e seus resultados valem só para o corpus sintético.
 - As issues #5 e #6 continuam abertas.
+- A [conferência das issues #6, #7, #8 e #14](docs/historico/conferencia-issues-6-7-8-14.md) lista os critérios atendidos e as lacunas reproduzidas na auditoria; a auditoria JSONL de autenticação tem [duas lacunas confirmadas](docs/historico/conferencia-issues-6-7-8-14.md#lacunas-confirmadas-a1-e-a2).
 - A resposta `Incidente Registrado` é um contrato legado e não comprova a gravação de um incidente no PostgreSQL.
 - As correções de sessão, painel e anonimização estão nas [evidências da recuperação da sprint](docs/specs/011-recuperacao-sprint/evidencias.md), integradas à `develop` pelo [PR #32](https://github.com/Solution-Explores/SigmaTI/pull/32).
 

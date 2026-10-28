@@ -1,3 +1,5 @@
+> Atualização de 20/10/2026: [conferência das entregas integradas e pendências reais](../../docs/historico/conferencia-issues-6-7-8-14.md). Descrições da primeira entrega abaixo preservam seu contexto histórico.
+
 # Identidades e sessões persistentes — primeira entrega de #6/#7
 
 O adaptador fica em `backend/persistence/`, fora de `sigma_eng`. PostgreSQL é selecionado

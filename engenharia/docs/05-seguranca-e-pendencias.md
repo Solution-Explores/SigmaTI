@@ -25,7 +25,7 @@ a issue nem substitui a revisão e a validação operacional.
 | Risco | Mitigação |
 |---|---|
 | Sonda usada como proxy para varrer a rede (SSRF) | `resolve_target` exige que **todos** os IPs resolvidos estejam nas redes autorizadas; padrão = RFC 1918 + loopback. Política aplicada também nas funções de sondagem; entrada inválida, falha DNS, resposta vazia/mista ou IP fora da política são recusados antes da conexão. |
-| Troca de DNS entre a checagem e a conexão (TOCTOU/rebinding) | **Implementado para revisão — #14:** uma resolução por série, IP numérico fixado e socket direto, incluindo HTTPS, com Host/SNI original (IDNA para domínio internacional). Sem nova resolução/fallback durante a série; redirects não são seguidos. Regressões com resolvedor alternante e conexão HTTP real em `engenharia/tests/test_probe_pinning.py`. |
+| Troca de DNS entre a checagem e a conexão (TOCTOU/rebinding) | **Integrado no PR #37 — #14:** uma resolução por série, IP numérico fixado e socket direto, incluindo HTTPS, com Host/SNI original (IDNA para domínio internacional). Sem nova resolução/fallback durante a série; redirects não são seguidos. Regressões com resolvedor alternante e conexão HTTP real em `engenharia/tests/test_probe_pinning.py`. |
 | Execução de comandos via runbook | Sem shell, allowlist, validação de variáveis, dry-run padrão, aprovação por passo |
 | Trilha de auditoria alterada por quem tem acesso ao arquivo | HMAC com `SIGMA_AUDIT_KEY` fora do disco da trilha; cópia periódica do último hash para outro host |
 | Rotas `/api/eng/*` sem autenticação | **Implementação parcial #6 / revisão de 19/10:** Rotas `/api/eng/*` protegidas via dependência FastAPI `exige_papel("analista_redes")` para operações de engenharia e `exige_papel("gestor_ti")` para auditoria. |
@@ -58,3 +58,8 @@ lineares no tamanho da trilha; planejar rotação antes de uso prolongado.
 - A sonda HTTPS continua sendo inspeção de certificado: não valida cadeia de confiança, não autentica o serviço e não envia credenciais. Preservar SNI não constitui validação PKI. Essa política não foi ampliada neste bloco.
 - DNS e cada operação de socket não têm prazo global compartilhado; limites de coleta/scheduler permanecem na #8. Redes permitidas devem refletir a política do ambiente, incluindo o risco de acesso a serviços internos.
 - A auditoria JSONL existente continua sem âncora externa/rotação (#13). A correção de destino não resolve essas pendências.
+
+
+## Conferência das issues de base — 20/10/2026
+
+[Análise de #6/#7/#8/#14](../../docs/historico/conferencia-issues-6-7-8-14.md): critérios originais de #7/#8/#14 cobertos no laboratório documentado. Na #6, PostgreSQL usa Argon2id (PBKDF2 é legado), mas a auditoria JSONL tem duas lacunas reproduzidas: instâncias independentes podem gerar cadeia inválida e o endpoint de verificação pode retornar snapshot anterior ao login gravado. Essas correções ainda não foram implementadas. São problemas de consistência distintos da âncora/rotação pendente na #13. A proteção de rotas da API não implementa rotação de chaves nem autorização do serviço n8n externo.
