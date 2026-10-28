@@ -2,7 +2,7 @@
 
 Índice dos documentos do projeto. Para uma visão geral e a instalação, comece pelo [README](../README.md).
 
-## Operação (`operacao/`)
+## Operação ([`operacao/`](operacao/README.md))
 
 Como instalar e operar o sistema.
 
@@ -10,8 +10,10 @@ Como instalar e operar o sistema.
 - [Backup, restauração e atualização](operacao/backup-restauracao.md): backup offline, restore em banco novo e smoke test.
 - [Portas e imagens](operacao/politica-imagens-e-portas.md): portas publicadas, imagens aprovadas e política de atualização.
 - [Migração do volume PostgreSQL](operacao/migracao-volume-postgresql.md): roteiro para instalações com dados.
+- [Configuração e execução](operacao/configuracao-e-execucao.md): credenciais, portas e versões, variáveis da API, origens, erros públicos e chamada à IA.
+- [Painel operacional](operacao/painel-operacional.md): como executar e testar o frontend.
 
-## Processo (`processo/`)
+## Processo ([`processo/`](processo/README.md))
 
 Como a equipe trabalha.
 
@@ -19,26 +21,26 @@ Como a equipe trabalha.
 - [Organização do repositório (23/10/2026)](processo/organizacao-repositorio-2026-10-23.md): diagnóstico das branches, limpeza executada e qual branch baixar em outro computador.
 - [Fluxo de trabalho do TCC](processo/fluxo-de-trabalho-tcc.md): da issue ao fechamento, com modelos de comentário.
 
-## Arquitetura (`arquitetura/`)
+## Arquitetura ([`arquitetura/`](arquitetura/README.md))
 
 - [Documento de visão](visao-do-produto.md): problema, posicionamento, escopo, restrições e critérios de sucesso (rascunho).
 - [Stack de tecnologia](arquitetura/stack-de-tecnologia.md): tecnologias, privacidade, infraestrutura e fluxo de dados.
 - [Estudo de caso](arquitetura/estudo-de-caso.md): contexto, requisitos (RF e RNF) e validação.
 - [Núcleo de engenharia](../engenharia/README.md): pacote `sigma_eng`, experimentos e documentos técnicos.
 
-## Planejamento (`planejamento/`)
+## Planejamento ([`planejamento/`](planejamento/README.md))
 
 - [Plano de demonstração](planejamento/plano-demonstracao-2026-10-27.md)
 - [Plano de sprints pós-demo](planejamento/plano-sprints-pos-demo.md)
 - [Pauta de 28/10: pós-congelamento](planejamento/pauta-pos-congelamento-2026-10-28.md)
 - [Plano de conclusão de 20/10/2026](planejamento/plano-conclusao-2026-10-20.md)
 
-## Demonstração (`demo/`)
+## Demonstração ([`demo/`](demo/README.md))
 
 - [Roteiro](demo/roteiro-demonstracao.md)
 - [Material de apoio](demo/): checklist, scripts, perguntas prováveis e guia do Iohan.
 
-## TCC (`tcc/`)
+## TCC ([`tcc/`](tcc/README.md))
 
 Material de acompanhamento com o orientador.
 
@@ -46,17 +48,17 @@ Material de acompanhamento com o orientador.
 - [Relatório ao orientador de 21/10/2026](tcc/relatorio-orientador-2026-10-21.md)
 - [Proposta ao orientador](tcc/proposta-orientador.md)
 
-## Design (`design/`)
+## Design ([`design/`](design/README.md))
 
 - [Direção de design](design/README.md): protótipo, capturas do painel e validações.
 - [DESIGN.md](../DESIGN.md): tokens e componentes extraídos do código.
 - [PRODUCT.md](../PRODUCT.md): contexto do produto e verdade dos dados.
 
-## Especificações (`specs/`)
+## Especificações ([`specs/`](specs/README.md))
 
 - [`specs/`](specs/): especificações, evidências e revisões por tarefa.
 
-## Histórico (`historico/`)
+## Histórico ([`historico/`](historico/README.md))
 
 Registros datados. Mostram o que aconteceu, não o estado atual.
 
