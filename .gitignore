@@ -15,3 +15,21 @@ engenharia/dist/
 
 .impeccable/review/
 .worktrees/
+
+# Cache e ferramentas locais
+.pytest_cache/
+.claude/
+skills-lock.json
+*.log
+
+# Pastas e arquivos locais (antes só em .git/info/exclude)
+/.agents/
+/.codex/
+/graft/
+/.ignore
+/vm/
+/validacao-vm/
+/origem/
+/sincronizacao/
+/SHA256SUMS.txt
+/LEIA-ME.md
