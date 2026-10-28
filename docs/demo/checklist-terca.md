@@ -4,7 +4,7 @@ Pasta de trabalho: `C:\Users\Vinicius Lima\Desktop\sigmati-develop`, no SHA cong
 
 ## Antes de terça
 - [x] Segunda, 26/10: SHA da entrega congelado, por decisão do Vinícius, antes das 18h: `7851da64348dc1437e1258282034b5dca61007fb` (`7851da6`, merge do #47 na `develop`). Qualquer commit novo na `develop` até terça exige novo congelamento e nova rodada.
-- [ ] Segunda à noite: Iohan conferiu o SHA e rodou o smoke.
+- [ ] Segunda à noite: Iohan conferiu o SHA e rodou o smoke. Sem registro dele. Em 27/10, à noite, o SHA `7851da6` foi conferido por leitura no `sigmati-develop` e o smoke rodou no Ensaio 3 (5 de 5 PASS), feito por Claude no computador do Vinícius, não pelo Iohan. O ensaio do Iohan é de 25/10, em `75b1874`: [relatório](../historico/ensaio-independente-2026-10-25.md).
 - [x] Gravação de contingência feita em 26/10 no SHA `7851da6`: `validacao-vm\contingencia\contingencia-7851da6.webm` (1 min 58 s, com legendas; fora do repositório). Para abrir, arraste o arquivo para o Chrome ou o Edge. Para refazer: `docs/demo/gravar_contingencia.mjs` (instruções no cabeçalho do arquivo).
 - [ ] Gravação de contingência aberta em um player na terça, às 17h.
 - [x] Slides com os números do aceite no SHA congelado (Windows `7851da6`; VM: rodada 8 no mesmo SHA, com as duas falhas de tempo declaradas). O slide "Resultados" já traz isso.

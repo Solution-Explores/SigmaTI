@@ -326,6 +326,18 @@ Horários UTC−4. Feito por Claude, com autorização do Vinícius para integra
   - **VM desligada** por Claude às 10h25, depois do término da rodada.
 - **Ferramenta:** ponte MCP para o Codex em `~/.claude/mcp-servers/codex-bridge/` (fora do repositório); só leitura por padrão.
 
+### Terça, 27/10, à noite: relatório do Iohan e fechamento dos documentos
+
+Horário UTC−4. Feito por Claude, a pedido do Vinícius, por volta das 20h, depois do horário marcado para a apresentação. Nada foi enviado ao GitHub.
+
+- **Branch do Iohan conferida** (`feature/documentacao-demo`, seis commits entre 25/10 e 27/10, base `75b1874`): 336 dos 390 arquivos são idênticos aos de `feature/trail-fase1`; cinco documentos da demo estão em versão anterior à de 26/10 (o merge dá cinco conflitos add/add); 48 arquivos são cache de `.trail/`; o único conteúdo novo é o relatório do ensaio. [Certo] A branch não será mergeada.
+- **Relatório incorporado:** [historico/ensaio-independente-2026-10-25.md](historico/ensaio-independente-2026-10-25.md). Execução de 25/10 em `75b1874`: sete etapas passaram, três com ajuste. Não foi no SHA congelado.
+- **Tropeços do relatório:** o 3, o 4 e o 5 foram corrigidos em `docs/demo/demo.ps1` (início da queda em arquivo, corpo em UTF-8, `Stop-SigmaAlvoDemo`); o 2 está em `docs/guias/instalacao.md`; o 1 se resolve quando `docs/demo/` chegar à `develop` com a PR de documentação. [Certo] Testado no PowerShell 5.1 contra uma API simulada (Python 3.12): o acento chega em UTF-8, a queda é lida por outro processo e a porta 9099 é liberada. [Não medido] Contra a API real e contra o HTTP 400 original do FastAPI.
+- **SHA:** `7851da6` conferido por leitura no `sigmati-develop`.
+- **Ensaio 3** (20h33 às 20h39, a pedido do Vinícius, no `7851da6`): demo subida pelo `preparar_demo.ps1` com o Docker Desktop, que estava desligado. Smoke 5 de 5 PASS; etapas 2 a 6 percorridas no painel (navegador embutido) e pela API, todas aprovadas; MTTD 0,42 s, MTTA 14,56 s, MTTR 28,63 s; auditoria íntegra. O incidente extra de latência não apareceu desta vez. [Certo] Detalhes em [roteiro-demonstracao.md](roteiro-demonstracao.md), "Achados do Ensaio 3". [Não medido] Janela anônima de um navegador real e gravação de contingência.
+- **Pauta do pós-congelamento:** [pauta-pos-congelamento-2026-10-28.md](pauta-pos-congelamento-2026-10-28.md).
+- **[Não medido]** Como foi a demonstração e qual foi o retorno do orientador: não há registro no repositório.
+
 ### Pendente
 - [x] Ensaio de API Windows de 22/10 confirmou os itens ⚠; painel manual feito em 23/10 (ver "Sexta, 23/10").
 - [x] CI do #43 aprovado e integração feita; Approve formal não ocorreu e não é declarado.
@@ -335,20 +347,20 @@ Horários UTC−4. Feito por Claude, com autorização do Vinícius para integra
 - [x] 23/10: painel manual feito; CI do #47 voltou a passar (`0b372cb`).
 - [x] 25/10, 18h21 (commit `e82d13b` no branch `pr-47`) e 22h41 (comentário no PR): revisão do #47 pelo Iohan, parecer favorável (LGTM) como comentário; não há Approve formal no GitHub. O arquivo `revisao_pr_47_teste_sonda_instavel.md` está só no branch `pr-47` e entra na PR de documentação de 28/10. Obs.: o commit não é da revisão do #43/#44 (essas foram em 21 e 22/10).
 - [x] 26/10: #47 integrado na `develop` (merge `7851da64348dc1437e1258282034b5dca61007fb`), com a autorização do Vinícius. Candidato ao congelamento das 18h.
-- [ ] 24/10 e 25/10: o relatório da execução independente do roteiro pelo Iohan não está no repositório nem nas issues. Cobrar com ele.
+- [x] 24/10 e 25/10: relatório da execução independente do roteiro pelo Iohan, entregue em 27/10 e incorporado em [historico/ensaio-independente-2026-10-25.md](historico/ensaio-independente-2026-10-25.md). Rodou em `75b1874`, não no SHA congelado: sete etapas passaram (três com ajuste) e há cinco tropeços (ver "Terça, 27/10, à noite").
 - [x] 23/10: resultado da rodada 7 retomada anexado à [#45](https://github.com/Solution-Explores/SigmaTI/issues/45#issuecomment-6377082969), à [#6](https://github.com/Solution-Explores/SigmaTI/issues/6#issuecomment-6377083347) e à [#8](https://github.com/Solution-Explores/SigmaTI/issues/8#issuecomment-6377083680). Os comentários de #6 e #8 foram corrigidos para separar o que foi medido em 22/10 do que foi medido em 23/10.
-- [ ] 24/10 à tarde: roteiro independente do Iohan; 25/10 correções, segunda execução se necessária, #25 opcional. (Sem relatório; mesma pendência do item de 24/10 e 25/10 acima. O Ensaio 2 de 26/10 cobriu o roteiro, mas não substitui uma execução em outro computador.)
+- [x] 24/10 à tarde: roteiro independente do Iohan (feito em 25/10, relatório no item acima). Segunda execução e #25 opcional: não houve. As correções dos tropeços entraram em 27/10.
 - [x] 26/10: ensaio 2, gravação de contingência e slides (ver "Segunda, 26/10"); SHA congelado em `7851da6`.
 - [x] 26/10: bateria completa do Codex na VM (rodada 8) feita às 10h20, com duas falhas de tempo preservadas (ver "Segunda, 26/10"); slides atualizados com o resultado; VM desligada.
 - [x] 26/10: decisão do Vinícius sobre a rodada 8: **seguir com o `7851da6`**, sem repetir a suíte, declarando as duas falhas de tempo nos slides e na proposta (feito).
 - [x] 26/10, à noite: rodada 8 registrada nas issues, a pedido do Vinícius: [#45](https://github.com/Solution-Explores/SigmaTI/issues/45#issuecomment-6419067940) (com o teste de carga E2 como achado novo), [#6](https://github.com/Solution-Explores/SigmaTI/issues/6#issuecomment-6419073014) e [#8](https://github.com/Solution-Explores/SigmaTI/issues/8#issuecomment-6419073772). Só evidência; critérios e estado das issues não mudaram.
-- [ ] 26/10, depois das 22h: o Iohan confere o SHA `7851da6` e roda o smoke.
+- [ ] 26/10, depois das 22h: o Iohan confere o SHA `7851da6` e roda o smoke. **Sem registro dele.** Em 27/10, à noite, Claude conferiu o SHA por leitura (`git log` no `sigmati-develop` mostra `7851da6`, igual a `origin/develop`) e rodou o `preparar_demo.ps1` completo no mesmo computador do Vinícius (Ensaio 3, smoke 5 de 5 PASS). Isso não substitui o smoke do Iohan em outra máquina, que continua sem registro.
 - [ ] 27/10: ensaio/smoke de manhã; desligar VM e preparar ambiente às 16h; demo às 18h.
 - [ ] Trello/GitHub: publicação e conferência da atualização em `validacao-vm/rodada-2026-10-22h/RESULTADO.md`. O Trello foi atualizado em parte pelo Codex; a ponte MCP do Trello (`~/.claude/mcp-servers/trello-bridge/`, fora do repositório) lê o quadro público, mas a escrita espera uma chave e um token válidos (o token salvo foi recusado: provavelmente era o Segredo). O Vinícius refaz a configuração; depois, ler o quadro antes de mover ou comentar cartões.
 
 Herdado para as sprints (ver [plano-sprints-pos-demo.md](plano-sprints-pos-demo.md)):
 
-- [ ] 27/10 à noite ou 28/10: registrar o retorno do orientador e converter em issues da S1.
+- [ ] 27/10 à noite ou 28/10: registrar o retorno do orientador e converter em issues da S1. Pauta de 28/10 em [pauta-pos-congelamento-2026-10-28.md](pauta-pos-congelamento-2026-10-28.md).
 - [ ] 28/10: abrir a PR de documentação (`doc/` → `docs/`) e a PR de estrutura; integrar a estrutura até 30/10.
 - [ ] S2: #45 passa a cobrir também o 4º teste instável (`test_scheduler`, 28/30 na `develop`) e a margem do timer de IA (14 s contra 15 s).
 - [x] S2: o `validate-compose` do #47 passou em 23/10 (head `0b372cb`, cinco verificações aprovadas); o #47 só conta como concluído depois da revisão do Iohan e da integração.

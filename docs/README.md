@@ -26,6 +26,7 @@ Como instalar, operar e trabalhar no projeto.
 - [Plano de demonstração](plano-demonstracao-2026-10-27.md)
 - [Roteiro](roteiro-demonstracao.md)
 - [Material de apoio](demo/)
+- [Pauta de 28/10: pós-congelamento](pauta-pos-congelamento-2026-10-28.md)
 
 ## Design
 
@@ -41,6 +42,7 @@ Registros datados. Mostram o que aconteceu, não o estado atual.
 - [Plano de conclusão de 20/10/2026](historico/plano-conclusao-2026-10-20.md)
 - [Relatório ao orientador de 21/10/2026](historico/relatorio-orientador-2026-10-21.md)
 - [Postmortem da sprint de 15 a 20/10/2026](historico/postmortem-sprint-15-20-10-2026.md): sprint não cumprida e falha de carga da coleta (rascunho).
+- [Ensaio independente de 25/10/2026](historico/ensaio-independente-2026-10-25.md): roteiro executado pelo Iohan na `develop` `75b1874`, com cinco tropeços.
 - [Trail, fase 1](historico/trail-fase1.md)
 - [Rascunhos de trabalho](historico/rascunhos/): prévias da documentação e do quadro de 21/10/2026.
 

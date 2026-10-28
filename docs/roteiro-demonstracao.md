@@ -39,6 +39,18 @@ Feito às 9h14–9h20 (UTC−4) no navegador embutido, na `develop@7851da6` (SHA
 - Antes mesmo da queda a lista já tinha dois incidentes da própria demo: disponibilidade do "Portal de testes" (na subida) e latência do "Coletor SSE de teste" (cerca de 1 min depois). Com o "Switch UTI", são três linhas.
 - Dois pedidos de aprovação ficam na lista (o pré-carregado e o novo). O pré-carregado expira 15 min depois da subida.
 
+### Achados do Ensaio 3 (27/10, à noite)
+Feito das 20h33 às 20h39 (UTC−4) por Claude, a pedido do Vinícius, na `develop@7851da6` (SHA congelado). O Docker Desktop estava desligado e foi ligado pelo `docs/demo/preparar_demo.ps1`, que subiu o banco `sigma-db`, a API e o painel. O painel foi percorrido no navegador embutido, uma aba por perfil (N1 antes; depois analista, revisor e gestor ao mesmo tempo). **Etapas 2 a 6 passaram**, sem ajuste no texto. É um ensaio no SHA congelado, depois do horário marcado para a apresentação; não é o registro da apresentação.
+- **Smoke** (`smoke.ps1`): 5 de 5 PASS. N1 recebeu 403 e o gestor viu 4 usuários; painel HTTP 200 com login do gestor; `at_risk`, 12,0 min e alerta `page`; nome e CPF anonimizados; auditoria `integra=True`.
+- Perfis: `browser.demo` viu só Saúde e Diagnóstico; `Show-Sigma403` deu 403 para o N1 e 200 para o gestor (4 usuários); o gestor viu as cinco abas, com "Tempo real ativo".
+- Coleta: o "Switch UTI" apareceu como Disponível sem recarregar. Depois da queda (`Stop-SigmaAlvoDemo` e `Set-SigmaQueda`, 20h36:04), o incidente de disponibilidade apareceu na hora. No painel: MTTA 14,56 s e MTTR 28,63 s. `Get-SigmaMetricas`, rodado em outro processo do PowerShell: **MTTD 0,42 s**, MTTA 14,56 s e MTTR 28,63 s.
+- SLO: "Portal de testes" Disponível, com 12 min restantes e meta de 95 % em 1 dia, sem a palavra "em risco". `Get-SigmaBurnRate`: `at_risk`, alerta `page`, burn 20,0 na janela longa.
+- Governança: "Nova solicitação" começou recolhida. O pedido do analista mostrou "Você solicitou esta ação. Outro integrante precisa decidir."; o revisor aprovou com justificativa ("Solicitação aprovada."). A Auditoria mostrou "Integridade consistente · 18 registros", e `Test-SigmaAuditoria` deu `integra: true` com 19 entradas (a diferença de 1 não foi investigada).
+- IA: `Equipamento: [SWITCH_REDE] | Erro: [NOME_REMOVIDO] [CPF_REMOVIDO] relatou falha no [SWITCH_REDE]` e "Diagnóstico K10 simulado".
+- **O incidente extra de latência não apareceu desta vez.** Da volta do serviço (cerca de 20h36) até o fim do ensaio, a lista ficou com três incidentes: o do Switch UTI, resolvido, e os dois da própria demo, abertos. Ele tinha aparecido em 23/10 e 26/10 e não em 22/10; a regra "leia o tipo na linha e resolva o de `availability`" continua valendo.
+- As correções do `demo.ps1` de 27/10 foram usadas na prática: `Stop-SigmaAlvoDemo` (duas vezes) e `Get-SigmaMetricas` em outra janela do PowerShell, lendo a queda de `%TEMP%\sigma_queda.txt`. A correção do UTF-8 não foi exercitada pela API: o pedido com acento foi digitado no navegador.
+- Não conferido: a janela anônima de um navegador real (as sessões foram abas do navegador embutido, como no Ensaio 2), a gravação de contingência e as etapas 1 e 7 (fala e slides).
+
 ## Preparação (terça às 16h, cerca de 10 min; checklist em [demo/checklist-terca.md](demo/checklist-terca.md))
 
 Faça tudo na raiz do worktree da `develop` (`C:\Users\Vinicius Lima\Desktop\sigmati-develop`).
@@ -96,11 +108,11 @@ Faça tudo na raiz do worktree da `develop` (`C:\Users\Vinicius Lima\Desktop\sig
 2. Faça login como `browser.analyst`. No terminal C, rode `New-SigmaAlvoDemo`, que cadastra o alvo "Switch UTI".
 3. Na aba Saúde, espere o alvo ficar **Disponível**.
 4. Abra a aba Incidentes. Mostre o indicador "Tempo real ativo".
-5. **Ctrl+C no terminal D** e, logo em seguida, `Set-SigmaQueda` no terminal C.
+5. **Ctrl+C no terminal D** e, logo em seguida, `Set-SigmaQueda` no terminal C. Se a porta 9099 ficar presa depois do Ctrl+C (acontece no Windows), `Stop-SigmaAlvoDemo` encerra o processo.
 6. O incidente aparece **sem recarregar a página**, em até cerca de 5 s.
 7. Clique em **Reconhecer**, depois em **Resolver incidente**.
 8. Mostre os cards de MTTA e MTTR: média, mediana, p95 e n.
-9. **MTTD:** o painel mostra "Sem início real de falha registrado", porque o incidente não guarda a hora real da queda. Rode `Get-SigmaMetricas`, que calcula MTTD, MTTA e MTTR com a hora registrada no passo 5. Antes de **Resolver incidente**, suba o serviço de novo no terminal D (veja "Achados do Ensaio 1").
+9. **MTTD:** o painel mostra "Sem início real de falha registrado", porque o incidente não guarda a hora real da queda. Rode `Get-SigmaMetricas`, que calcula MTTD, MTTA e MTTR com a hora registrada no passo 5 (ela fica em `%TEMP%\sigma_queda.txt`, então o comando também funciona em outra janela do PowerShell). Antes de **Resolver incidente**, suba o serviço de novo no terminal D (veja "Achados do Ensaio 1").
 
 ### 4. SLO (2 min)
 1. Na aba Saúde, mostre o alvo **Portal de testes**:
