@@ -10,7 +10,7 @@ Group=sigma
 WorkingDirectory=/opt/sigma
 EnvironmentFile=/etc/sigma/sigma.env
 Environment=PYTHON_DOTENV_DISABLED=1
-ExecStart=/opt/sigma/.venv/bin/python -m uvicorn main:app --host 127.0.0.1 --port 8000 --workers 1
+ExecStart=/opt/sigma/.venv/bin/python -m uvicorn --app-dir /opt/sigma/backend main:app --host 127.0.0.1 --port 8000 --workers 1
 Restart=on-failure
 RestartSec=5
 TimeoutStopSec=30

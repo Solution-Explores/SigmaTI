@@ -5,7 +5,7 @@
 > - **SHA:** o ensaio rodou na `develop` de 22/10 (`75b1874`), não no SHA congelado `7851da6`. Vale como execução do roteiro em outro computador. Não substitui a conferência do `7851da6` pedida no [guia do Iohan](../demo/guia-iohan.md), ponto 3, que não tem registro.
 > - **Estado dos tropeços em 27/10:**
 >   - 1 (`docs/demo/` ausente na `develop`): continua. Os scripts estão em `feature/trail-fase1` e entram na `develop` com a PR de documentação de 28/10.
->   - 2 (`.env` com campos vazios): documentado em [instalacao.md](../guias/instalacao.md), seção do `.env`.
+>   - 2 (`.env` com campos vazios): documentado em [instalacao.md](../operacao/instalacao.md), seção do `.env`.
 >   - 3 (`$script:SigmaQueda`), 4 (acentos no PowerShell 5.1) e 5 (processo órfão na porta 9099): corrigidos em [demo.ps1](../demo/demo.ps1) (`Set-SigmaQueda` grava em arquivo, `Invoke-Sigma` envia UTF-8 e existe `Stop-SigmaAlvoDemo`).
 
 ---

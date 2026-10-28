@@ -1,6 +1,6 @@
 # Postmortem sem culpa: sprint de 15 a 20/10/2026 e falha de carga da coleta
 
-> **Rascunho de 25/10/2026.** Escrito a partir dos registros do repositório: [plano de conclusão](plano-conclusao-2026-10-20.md), [revisão dos achados](revisao-achados-base-2026-10-20.md), [diário de 21/10](diario-bordo/21-10-2026.md), [plano da demonstração](../plano-demonstracao-2026-10-27.md), [coleta em lotes](coleta-lotes.md) e as rodadas em [`validacao-vm/`](../../validacao-vm/). Itens marcados **[a confirmar]** não têm fonte no repositório e precisam da memória de quem participou. Horários em UTC−4 (Manaus).
+> **Rascunho de 25/10/2026.** Escrito a partir dos registros do repositório: [plano de conclusão](../planejamento/plano-conclusao-2026-10-20.md), [revisão dos achados](revisao-achados-base-2026-10-20.md), [diário de 21/10](../tcc/diario-bordo/21-10-2026.md), [plano da demonstração](../planejamento/plano-demonstracao-2026-10-27.md), [coleta em lotes](coleta-lotes.md) e as rodadas em [`validacao-vm/`](../../_pacote-local/validacao-vm/). Itens marcados **[a confirmar]** não têm fonte no repositório e precisam da memória de quem participou. Horários em UTC−4 (Manaus).
 
 ## Como ler
 
@@ -35,11 +35,11 @@ Cada entrada tem uma fonte no repositório. O que não pôde ser confirmado est�
 | 19/10 16:07 | Plano de conclusão publicado: sete blocos em ordem, uma fila de expansão com cinco itens e cortes de escopo às 10h e às 14h de 20/10 | Plano de conclusão |
 | 19/10 20:05 a 20/10 09:46 | Integração dos PRs #35, #36, #37, #38 (coleta contínua e SSE, 20/10 08:11), #39 (painel) e #40 (backup) | `git log` |
 | 20/10, antes das 14:35 (hora exata **[a confirmar]**) | Primeira rodada isolada em VM sobre `develop@8cb1e23`: 466 testes aprovados e 1 falha. O E2 reprova com `missed` de 150 para 200, erros 0, timeouts 0, atraso máximo de cerca de 97 ms. O limite de 14:35 vem da data de gravação dos relatórios no host, que é a cópia, não a execução | `validacao-vm/rodada-isolada` |
-| 20/10 | Revisão técnica: a #8 deixa de ser candidata ao aceite. Experimentos sem mudar o produto: com 4 trabalhadores de persistência, 3 reprovações; com 1, 1 aprovação e 2 reprovações. Houve um stall RCU na VM. Testes parados a pedido | Revisão dos achados, [LEIA-ME](../../LEIA-ME.md) |
+| 20/10 | Revisão técnica: a #8 deixa de ser candidata ao aceite. Experimentos sem mudar o produto: com 4 trabalhadores de persistência, 3 reprovações; com 1, 1 aprovação e 2 reprovações. Houve um stall RCU na VM. Testes parados a pedido | Revisão dos achados, [LEIA-ME](../../_pacote-local/LEIA-ME.md) |
 | 20/10 18:00 | **Prazo da entrega** | Plano de conclusão |
 | 20/10 19:01 | Commit `a97fe1b` (PR #43): auditoria coordenada e métricas para separar tempo de sonda e de gravação. Não corrige capacidade | `git log`, [09-coleta-eventos](../../engenharia/docs/09-coleta-eventos.md) |
 | 20/10 19:49 | Commit `4350632` (PR #44): persistência em lotes e espera por vagas no calendário | `git log` |
-| 21/10 00:30 a 03:30 | Retomada. Chave SSH da VM ausente do pacote, acesso recuperado pelo GRUB. O host esgotou a memória virtual (VM, Docker, navegador e um `git hash-object` lendo arquivos `.vdi`) | [Diário de 21/10](diario-bordo/21-10-2026.md) |
+| 21/10 00:30 a 03:30 | Retomada. Chave SSH da VM ausente do pacote, acesso recuperado pelo GRUB. O host esgotou a memória virtual (VM, Docker, navegador e um `git hash-object` lendo arquivos `.vdi`) | [Diário de 21/10](../tcc/diario-bordo/21-10-2026.md) |
 | 21/10 ~02:41 | Rodada 1: `develop` 464/467 com carga **0 de 5**; merge local de `develop` + #43 + #44 com 488/488 e carga **5 de 5** | `rodada-2026-10-22` |
 | 21/10 ~03:14 | Rodada 2, candidato `ddd4840`: 489/489 e carga 5 de 5. O agente de testes concluiu "não apto" por três testes instáveis; a equipe reclassificou como pré-existentes | `rodada-2026-10-22b` |
 | 21/10 ~03:56 | Rodada 3: as instabilidades já existiam na `develop`. Causa da sonda confirmada (30/30 com a correção) | `rodada-2026-10-22c` |
@@ -102,7 +102,7 @@ Todas alteram o processo, o ambiente ou a automação, não o comportamento de p
 | # | Ação | Resolve | Prioridade sugerida | Prazo sugerido |
 |---|---|---|---|---|
 | A1 | **Checklist de preparação da VM antes de cada rodada**: o commit existe no repositório da VM, o bundle usa uma referência nomeada, `npm ci` e o `playwright install` foram feitos, o SSH responde, há memória livre no host e o roteiro tem versão para o sistema da VM | Fator 5, 7 | Alta | 28/10 |
-| A2 | **Regra de aceite para issues de capacidade**: só se recomenda o aceite depois de reproduzir o cenário na VM de referência (4 vCPU, 4 GiB) com no mínimo 3 repetições. Registrar no [fluxo de trabalho do TCC](../guias/fluxo-de-trabalho-tcc.md) | Seção 4, item 2 | Alta | 03/11 |
+| A2 | **Regra de aceite para issues de capacidade**: só se recomenda o aceite depois de reproduzir o cenário na VM de referência (4 vCPU, 4 GiB) com no mínimo 3 repetições. Registrar no [fluxo de trabalho do TCC](../processo/fluxo-de-trabalho-tcc.md) | Seção 4, item 2 | Alta | 03/11 |
 | A3 | **Medir antes de ajustar**: quando um cenário de carga reprovar, gravar as métricas de sonda e de gravação (já expostas no status da coleta) antes de mudar qualquer parâmetro | Seção 4, itens 3 e 4 | Média | Já parcialmente feito no #43 |
 | A4 | **Tratar os testes instáveis como bloqueio de confiança**: concluir a #45, incluindo o 4º teste (`test_scheduler`, 28/30) e a decisão sobre a margem entre o prazo interno de 14 s e a meta de 15 s | Fator 4 | Alta | 10/11 (Sprint 2) |
 | A5 | **Gatilho de corte para o caminho crítico**: no próximo plano, definir antes qual bloco crítico sai (ou qual meta é reduzida) se ele não estiver aceito num horário combinado, com dono e decisão registrados | Seção 5, "Por que o cronograma não absorveu" | Média | Antes da Sprint 2 |
@@ -121,12 +121,12 @@ Todas alteram o processo, o ambiente ou a automação, não o comportamento de p
 
 ## 9. Referências
 
-- [Plano de conclusão, 20/10](plano-conclusao-2026-10-20.md)
+- [Plano de conclusão, 20/10](../planejamento/plano-conclusao-2026-10-20.md)
 - [Revisão dos achados das issues #6, #7, #8 e #14](revisao-achados-base-2026-10-20.md)
 - [Coleta com persistência em lotes (#8)](coleta-lotes.md)
-- [Diário de bordo, 21/10](diario-bordo/21-10-2026.md)
-- [Relatório ao orientador, 21/10](relatorio-orientador-2026-10-21.md)
-- [Plano da demonstração](../plano-demonstracao-2026-10-27.md) e [plano de sprints pós-demo](../plano-sprints-pos-demo.md)
+- [Diário de bordo, 21/10](../tcc/diario-bordo/21-10-2026.md)
+- [Relatório ao orientador, 21/10](../tcc/relatorio-orientador-2026-10-21.md)
+- [Plano da demonstração](../planejamento/plano-demonstracao-2026-10-27.md) e [plano de sprints pós-demo](../planejamento/plano-sprints-pos-demo.md)
 - [Coleta contínua e SSE](../../engenharia/docs/09-coleta-eventos.md)
-- Rodadas de VM: [isolada](../../validacao-vm/rodada-isolada/RESULTADO.md), [1](../../validacao-vm/rodada-2026-10-22/RESULTADO.md), [2](../../validacao-vm/rodada-2026-10-22b/RESULTADO.md), [3](../../validacao-vm/rodada-2026-10-22c/RESULTADO.md), [4](../../validacao-vm/rodada-2026-10-22d/RESULTADO.md), [5](../../validacao-vm/rodada-2026-10-22e/RESULTADO.md), [6](../../validacao-vm/rodada-2026-10-22f/RESULTADO.md), [7](../../validacao-vm/rodada-2026-10-22g/RESULTADO.md) e [7 retomada](../../validacao-vm/rodada-2026-10-23a/RESULTADO.md)
+- Rodadas de VM: [isolada](../../_pacote-local/validacao-vm/rodada-isolada/RESULTADO.md), [1](../../_pacote-local/validacao-vm/rodada-2026-10-22/RESULTADO.md), [2](../../_pacote-local/validacao-vm/rodada-2026-10-22b/RESULTADO.md), [3](../../_pacote-local/validacao-vm/rodada-2026-10-22c/RESULTADO.md), [4](../../_pacote-local/validacao-vm/rodada-2026-10-22d/RESULTADO.md), [5](../../_pacote-local/validacao-vm/rodada-2026-10-22e/RESULTADO.md), [6](../../_pacote-local/validacao-vm/rodada-2026-10-22f/RESULTADO.md), [7](../../_pacote-local/validacao-vm/rodada-2026-10-22g/RESULTADO.md) e [7 retomada](../../_pacote-local/validacao-vm/rodada-2026-10-23a/RESULTADO.md)
 - PRs [#43](https://github.com/Solution-Explores/SigmaTI/pull/43), [#44](https://github.com/Solution-Explores/SigmaTI/pull/44) e [#47](https://github.com/Solution-Explores/SigmaTI/pull/47); issues [#6](https://github.com/Solution-Explores/SigmaTI/issues/6), [#8](https://github.com/Solution-Explores/SigmaTI/issues/8), [#45](https://github.com/Solution-Explores/SigmaTI/issues/45) e [#46](https://github.com/Solution-Explores/SigmaTI/issues/46)

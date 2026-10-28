@@ -1,6 +1,6 @@
 # Guia do Iohan até a demonstração de 27/10
 
-Três tarefas, nesta ordem. A regra do plano vale: quem revisa não é quem fez, por isso a revisão do #47 e a execução independente são suas. Base: [plano da demonstração](../plano-demonstracao-2026-10-27.md) e [roteiro](../roteiro-demonstracao.md).
+Três tarefas, nesta ordem. A regra do plano vale: quem revisa não é quem fez, por isso a revisão do #47 e a execução independente são suas. Base: [plano da demonstração](../planejamento/plano-demonstracao-2026-10-27.md) e [roteiro](roteiro-demonstracao.md).
 
 ## 1. Revisar o PR #47 (sexta, 23/10, à noite)
 
@@ -12,7 +12,7 @@ Conferência prévia, só de leitura, feita em 23/10 (Claude, a pedido do Viníc
 - A explicação do comentário confere com o que a VM mostrou: no Linux, `close()` não interrompe um `accept()` bloqueado em outra thread, e, sem o `shutdown()`, uma conexão ainda era aceita depois do fechamento (é o que o comentário do código afirma). O `except OSError` cobre o Windows, onde `shutdown` num socket que só escuta levanta erro.
 - Nenhuma asserção foi afrouxada.
 - CI do head: as cinco verificações aprovadas (`test-config`, `validate-compose`, `test-package`, `test-postgres`, `test-recovery`), inclusive `validate-compose`, que estava reprovado em 22/10.
-- **Ressalva para a sua decisão:** a evidência de que a correção resolve é a da rodada 3 na VM (22/10, base `8cb1e23`): **26/30 sem a correção e 30/30 com ela**. Na rodada 7 de 23/10, o teste passou 10/10 **dos dois lados** (com e sem a correção), então essa rodada não distingue os dois; com uma taxa de acerto perto de 87 %, 10/10 sem a correção acontece em cerca de uma de cada quatro séries. Isso não contradiz a rodada 3; só quer dizer que a prova de efeito vem dela. O relatório da rodada 3 (`validacao-vm/rodada-2026-10-22c/RESULTADO.md`) fica na máquina do Vinícius e **não está no repositório**; peça o arquivo a ele se quiser conferir.
+- **Ressalva para a sua decisão:** a evidência de que a correção resolve é a da rodada 3 na VM (22/10, base `8cb1e23`): **26/30 sem a correção e 30/30 com ela**. Na rodada 7 de 23/10, o teste passou 10/10 **dos dois lados** (com e sem a correção), então essa rodada não distingue os dois; com uma taxa de acerto perto de 87 %, 10/10 sem a correção acontece em cerca de uma de cada quatro séries. Isso não contradiz a rodada 3; só quer dizer que a prova de efeito vem dela. O relatório da rodada 3 (`_pacote-local/validacao-vm/rodada-2026-10-22c/RESULTADO.md`) fica na máquina do Vinícius e **não está no repositório**; peça o arquivo a ele se quiser conferir.
 - O #47 não mexe nos outros testes instáveis (provedor de IA, DNS, `scheduler`); eles seguem na [#45](https://github.com/Solution-Explores/SigmaTI/issues/45).
 
 ## 2. Executar o roteiro sozinho (sábado, 24/10, à tarde)
@@ -20,11 +20,11 @@ Conferência prévia, só de leitura, feita em 23/10 (Claude, a pedido do Viníc
 Objetivo: achar o que só aparece em outra máquina. Faça no seu computador, a partir da `develop` integrada, sem pedir ajuda ao Vinícius durante a execução. Anote cada tropeço.
 
 1. Clone ou atualize: `git fetch origin && git checkout develop && git pull`. Anote o SHA de `git log --oneline -1`. O esperado agora é `7851da6` (merge do #47, SHA congelado em 26/10); a rodada 7 mediu `75b1874`, que é anterior. Se o SHA for outro, pergunte ao Vinícius antes de começar.
-2. Siga [docs/guias/instalacao.md](../guias/instalacao.md) até o ambiente (Python, `npm ci`, Docker, `.env`).
-3. Suba a demonstração e percorra as sete etapas de [roteiro-demonstracao.md](../roteiro-demonstracao.md), usando `docs/demo/subir_demo.py` e `docs/demo/demo.ps1`. Se o seu sistema não for Windows, anote em quais passos o PowerShell fez falta (a rodada 4 já mostrou que o roteiro assume Windows).
+2. Siga [docs/operacao/instalacao.md](../operacao/instalacao.md) até o ambiente (Python, `npm ci`, Docker, `.env`).
+3. Suba a demonstração e percorra as sete etapas de [roteiro-demonstracao.md](roteiro-demonstracao.md), usando `docs/demo/subir_demo.py` e `docs/demo/demo.ps1`. Se o seu sistema não for Windows, anote em quais passos o PowerShell fez falta (a rodada 4 já mostrou que o roteiro assume Windows).
 4. Registre, para cada etapa, **passou**, **passou com ajuste** ou **falhou**, e o que você fez diferente do texto.
 
-Procure de propósito os pontos já vistos no ensaio manual de 23/10, descritos em [roteiro-demonstracao.md](../roteiro-demonstracao.md), seção "Achados do ensaio manual do painel": incidente extra de latência, formulário "Nova solicitação" recolhido, F5 derrubando a sessão e o "Portal de testes" sem a palavra "em risco". Além disso:
+Procure de propósito os pontos já vistos no ensaio manual de 23/10, descritos em [roteiro-demonstracao.md](roteiro-demonstracao.md), seção "Achados do ensaio manual do painel": incidente extra de latência, formulário "Nova solicitação" recolhido, F5 derrubando a sessão e o "Portal de testes" sem a palavra "em risco". Além disso:
 
 - Tente a janela anônima com duas sessões ao mesmo tempo. O ensaio de 23/10 usou duas abas do navegador embutido, e isso ainda não foi conferido.
 - O pedido de aprovação pré-carregado expira em 15 minutos.

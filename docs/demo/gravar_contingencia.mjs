@@ -2,7 +2,7 @@
 // Requer a API da demo (subir_demo.py) e o painel (vite) no ar, e o Playwright do frontend.
 //
 //   $env:SIGMA_DEMO_SENHA = '<senha impressa por subir_demo.py>'
-//   $env:SIGMA_FRONTEND   = 'C:\...\sigmati-develop\sigma-frontend'
+//   $env:SIGMA_FRONTEND   = 'C:\...\sigmati-develop\frontend'
 //   $env:SIGMA_PYTHON     = 'C:\...\sigmati-develop\.venv\Scripts\python.exe'
 //   node docs/demo/gravar_contingencia.mjs <arquivo-de-saida.webm>
 //

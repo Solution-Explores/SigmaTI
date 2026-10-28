@@ -23,6 +23,7 @@ from sqlalchemy.engine import make_url
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "backend"))
 from persistence.database import open_database
 from persistence.identity import PostgresIdentityStore
 from persistence.operational import PostgresOperationalStore
@@ -133,7 +134,7 @@ def api_server(env, log_path):
         port = temporary.getsockname()[1]
     base = f"http://127.0.0.1:{port}"
     with log_path.open("a", encoding="utf-8") as log:
-        process = subprocess.Popen([sys.executable, "-m", "uvicorn", "main:app", "--host", "127.0.0.1",
+        process = subprocess.Popen([sys.executable, "-m", "uvicorn", "--app-dir", "backend", "main:app", "--host", "127.0.0.1",
             "--port", str(port), "--timeout-graceful-shutdown", "2"], cwd=ROOT, env=env, stdout=log, stderr=log)
         try:
             for _ in range(100):

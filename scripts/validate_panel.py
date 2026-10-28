@@ -25,7 +25,7 @@ def run(database_url):
         migration=subprocess.run([sys.executable,"-m","alembic","upgrade","head"],cwd=ROOT,env=env,capture_output=True)
         if migration.returncode: raise RuntimeError("Migração do schema de navegador falhou.")
         npm="npm.cmd" if os.name=="nt" else "npm"
-        result=subprocess.run([npm,"run","test:e2e:operational"],cwd=ROOT/"sigma-frontend",env=env,timeout=240)
+        result=subprocess.run([npm,"run","test:e2e:operational"],cwd=ROOT/"frontend",env=env,timeout=240)
         report={"exit_code":result.returncode,"database":"schema isolado PostgreSQL",
                 "provider":"simulado","browser":os.getenv("SIGMA_BROWSER_CHANNEL","chromium"),"scope":"navegador, API real, SSE e decisões persistentes"}
         output=ROOT/"test-results/panel-run.json"

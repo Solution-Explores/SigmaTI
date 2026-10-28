@@ -41,7 +41,7 @@ python -m pip install -e ./engenharia
 python -c "import sigma_eng; print(sigma_eng.__version__)"
 ```
 
-Dentro de `engenharia/`, `python -m pip install -e ".[dev]"` instala os extras de teste (FastAPI e cliente HTTP). O CI usa esse comando. O guia geral está em [Instalação para desenvolvimento](../docs/guias/instalacao.md).
+Dentro de `engenharia/`, `python -m pip install -e ".[dev]"` instala os extras de teste (FastAPI e cliente HTTP). O CI usa esse comando. O guia geral está em [Instalação para desenvolvimento](../docs/operacao/instalacao.md).
 
 ## Integrar à API
 

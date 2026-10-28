@@ -21,7 +21,7 @@ A API também aplica a autorização. O SSE autenticado usa Bearer, cursor `Last
 
 ## Direção visual
 
-O painel estende a identidade existente: azul sobre fundo escuro, fonte de sistema e painéis planos com borda e raio de 12 px. A issue pede alternância entre tema claro e escuro. Não houve redesign nem composição visual aprovada, e não foram definidos metáfora criativa, adjetivos de marca nem referências subjetivas. O [DESIGN.md](DESIGN.md) extrai o código, e o [brief](specs/017-painel-operacional/brief.md) guarda o contrato da superfície.
+O painel estende a identidade existente: azul sobre fundo escuro, fonte de sistema e painéis planos com borda e raio de 12 px. A issue pede alternância entre tema claro e escuro. Não houve redesign nem composição visual aprovada, e não foram definidos metáfora criativa, adjetivos de marca nem referências subjetivas. O [DESIGN.md](DESIGN.md) extrai o código, e o [brief](docs/specs/017-painel-operacional/brief.md) guarda o contrato da superfície.
 
 ## Verdade dos dados
 
@@ -33,7 +33,7 @@ O painel estende a identidade existente: azul sobre fundo escuro, fonte de siste
 
 ## Evidência e limites
 
-O [brief](specs/017-painel-operacional/brief.md) registra:
+O [brief](docs/specs/017-painel-operacional/brief.md) registra:
 
 - 16 testes de componentes, parser e sessão;
 - 4 testes PostgreSQL da API, incluindo orçamento exatamente esgotado;
@@ -47,4 +47,4 @@ A revisão visual recebeu seis capturas `.impeccable/review/panel-*.png` e apont
 
 A execução local usou Chrome e PostgreSQL 17 descartável. A CI, com Chromium e PostgreSQL 15, teve 458 testes aprovados e 1 falha de contraste antes da correção. O sucesso da reexecução depois da correção não está afirmado. Dados e alvos sintéticos não homologam uma rede hospitalar real. O motor Impeccable 0.1.15 e o detector não estavam disponíveis, então a evidência vem de leitura direta, capturas e revisão técnica.
 
-Fontes: [README](README.md), [brief](specs/017-painel-operacional/brief.md) e `sigma-frontend/src/{App.jsx,Operations.jsx,OperationalPages.jsx,App.css,index.css}`.
+Fontes: [README](README.md), [brief](docs/specs/017-painel-operacional/brief.md) e `frontend/src/{App.jsx,Operations.jsx,OperationalPages.jsx,App.css,index.css}`.

@@ -58,24 +58,24 @@ A implantação é híbrida. O Docker Compose orquestra `db` (PostgreSQL) e `n8n
 
 ## Para quem trabalha no TCC
 
-O desenvolvimento segue o [Git Flow](docs/guias/gitflow.md): branches `feature/*` e `fix/*` entram na `develop` por PR, com testes, evidências e revisão, e uma `release/*` prepara a `main`. Comece pelo [fluxo de trabalho do TCC](docs/guias/fluxo-de-trabalho-tcc.md), que explica as etapas, as colunas do quadro e quando uma issue pode ser encerrada.
+O desenvolvimento segue o [Git Flow](docs/processo/gitflow.md): branches `feature/*` e `fix/*` entram na `develop` por PR, com testes, evidências e revisão, e uma `release/*` prepara a `main`. Comece pelo [fluxo de trabalho do TCC](docs/processo/fluxo-de-trabalho-tcc.md), que explica as etapas, as colunas do quadro e quando uma issue pode ser encerrada.
 
 Toda a documentação está indexada em [docs/README.md](docs/README.md).
 
 ## Estado do desenvolvimento
 
-- A demonstração controlada segue o [plano de demonstração](docs/plano-demonstracao-2026-10-27.md). O [plano de conclusão de 20/10](docs/historico/plano-conclusao-2026-10-20.md) registra a ordem de implementação, os cortes de escopo e as dependências externas. Itens planejados não são funcionalidades entregues.
-- A API exige `SIGMA_JWT_SECRET` e a configuração da IA. Para usuários, use `SIGMA_DATABASE_URL` (PostgreSQL, recomendado) ou `SIGMA_USERS_FILE` (arquivo, só laboratório). Veja a [instalação](docs/guias/instalacao.md).
+- A demonstração controlada segue o [plano de demonstração](docs/planejamento/plano-demonstracao-2026-10-27.md). O [plano de conclusão de 20/10](docs/planejamento/plano-conclusao-2026-10-20.md) registra a ordem de implementação, os cortes de escopo e as dependências externas. Itens planejados não são funcionalidades entregues.
+- A API exige `SIGMA_JWT_SECRET` e a configuração da IA. Para usuários, use `SIGMA_DATABASE_URL` (PostgreSQL, recomendado) ou `SIGMA_USERS_FILE` (arquivo, só laboratório). Veja a [instalação](docs/operacao/instalacao.md).
 - Com `SIGMA_USERS_FILE`, sessões e usuários alterados ficam em memória. Com PostgreSQL, eles persistem ([identidades e sessões](engenharia/docs/07-persistencia-identidades.md)).
 - O [estado operacional no PostgreSQL](engenharia/docs/08-estado-operacional.md) cobre esquema, recuperação de aprovações e execuções, medições, retenção e APIs. A coleta contínua e as páginas de gestão são os próximos incrementos. Veja também a [coleta de eventos e o SSE](engenharia/docs/09-coleta-eventos.md).
 - O experimento E6 avalia cada identificador anotado, e seus resultados valem só para o corpus sintético.
 - As issues #5 e #6 continuam abertas.
 - A resposta `Incidente Registrado` é um contrato legado e não comprova a gravação de um incidente no PostgreSQL.
-- As correções de sessão, painel e anonimização estão nas [evidências da recuperação da sprint](specs/011-recuperacao-sprint/evidencias.md), integradas à `develop` pelo [PR #32](https://github.com/Solution-Explores/SigmaTI/pull/32).
+- As correções de sessão, painel e anonimização estão nas [evidências da recuperação da sprint](docs/specs/011-recuperacao-sprint/evidencias.md), integradas à `develop` pelo [PR #32](https://github.com/Solution-Explores/SigmaTI/pull/32).
 
 ## Como instalar
 
-O passo a passo, com comandos de Windows e Linux, está em [Instalação para desenvolvimento](docs/guias/instalacao.md). Este README resume os pontos principais.
+O passo a passo, com comandos de Windows e Linux, está em [Instalação para desenvolvimento](docs/operacao/instalacao.md). Este README resume os pontos principais.
 
 Pré-requisitos: Docker, Docker Compose e um servidor ou VM Linux com acesso à interface de rede monitorada. O núcleo `sigma_eng` é instalado por pip, sem `PYTHONPATH`:
 
@@ -119,7 +119,7 @@ A sonda, o pfSense e a implantação operacional continuam pendentes. Não trate
 
 ### Atualização de uma instalação com dados
 
-Não aplique a instalação nova sobre uma base existente. Se existir um volume legado `sigma_data`, migre os dados logicamente para `sigma-db-data` e preserve a origem para recuperação. O [roteiro de migração](docs/guias/migracao-volume-postgresql.md) cobre pré-requisitos, backup, restauração, conferência e reversão. A migração só pode ser feita depois de identificar e homologar a instalação real, e ainda não foi executada. Renomear um volume não basta.
+Não aplique a instalação nova sobre uma base existente. Se existir um volume legado `sigma_data`, migre os dados logicamente para `sigma-db-data` e preserve a origem para recuperação. O [roteiro de migração](docs/operacao/migracao-volume-postgresql.md) cobre pré-requisitos, backup, restauração, conferência e reversão. A migração só pode ser feita depois de identificar e homologar a instalação real, e ainda não foi executada. Renomear um volume não basta.
 
 ### Credenciais da infraestrutura
 
@@ -157,7 +157,7 @@ Os bancos não publicam portas no host. n8n (`5678`), Grafana (`3000`) e Zabbix 
 
 As imagens usam releases explícitas e digests SHA-256 em [`docker-images.lock.json`](docker-images.lock.json): PostgreSQL 15.19 (Alpine 3.24), n8n 1.80.0, Zabbix 6.4.21 e Grafana 10.4.0. Não há atualização automática. Fixar o digest garante a referência escolhida, não a ausência de vulnerabilidades. **O Zabbix 6.4 está sem suporte**, e a migração para uma linha suportada exige tarefa própria.
 
-Leia [Portas e imagens](docs/guias/politica-imagens-e-portas.md) antes de mudar binds ou imagens. Para conferir a configuração de teste e os manifests oficiais, sem iniciar contêineres:
+Leia [Portas e imagens](docs/operacao/politica-imagens-e-portas.md) antes de mudar binds ou imagens. Para conferir a configuração de teste e os manifests oficiais, sem iniciar contêineres:
 
 ```bash
 python scripts/validate_infrastructure.py --verify-registry
@@ -192,10 +192,10 @@ O backend lê só o `.env` da raiz, de qualquer pasta de execução. Variáveis 
 A API não inicia se alguma configuração faltar, estiver vazia ou tiver origens inválidas. A chave aceita só caracteres ASCII visíveis, sem espaços. Nas origens, não use caminhos, barra final, credenciais, curingas nem itens vazios, e escreva domínios internacionalizados em punycode.
 
 ```bash
-python -m uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+python -m uvicorn --app-dir backend main:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-Em outro terminal, rode `npm ci` e `npm run dev` em `sigma-frontend`. Se o Vite usar outra porta, ajuste a origem no ambiente e reinicie a API. Homologação e produção usam o mesmo código. Configure chave, modelo e origens HTTPS do ambiente antes de iniciar. A chave nunca vai ao frontend, e não há seleção automática de `.env.production` ou similares.
+Em outro terminal, rode `npm ci` e `npm run dev` em `frontend`. Se o Vite usar outra porta, ajuste a origem no ambiente e reinicie a API. Homologação e produção usam o mesmo código. Configure chave, modelo e origens HTTPS do ambiente antes de iniciar. A chave nunca vai ao frontend, e não há seleção automática de `.env.production` ou similares.
 
 O Compose não inicia a API nem injeta variáveis no processo Python do host. Validar o Compose não valida a configuração da API.
 
@@ -220,7 +220,7 @@ Os erros HTTP usam JSON `{"detail": "mensagem pública"}`, sem refletir a entrad
 
 O log registra categoria, classe da falha, status e duração, quando disponíveis. Não inclui entradas, query, cabeçalhos nem traceback. O OpenAPI documenta o formato `PublicError`. As respostas 200 de sucesso e de IA indisponível seguem o contrato descrito na próxima seção.
 
-Veja a [especificação](specs/004-cors-erros-publicos/spec.md), as [evidências](specs/004-cors-erros-publicos/evidencias.md) e as [tarefas de revisão](specs/004-cors-erros-publicos/tasks.md).
+Veja a [especificação](docs/specs/004-cors-erros-publicos/spec.md), as [evidências](docs/specs/004-cors-erros-publicos/evidencias.md) e as [tarefas de revisão](docs/specs/004-cors-erros-publicos/tasks.md).
 
 ### Chamada à IA e indisponibilidade
 
@@ -230,7 +230,7 @@ A API usa um cliente HTTPX assíncrono, compartilhado durante a vida da aplicaç
 
 O log técnico registra categoria, classe da exceção, status HTTP (quando conhecido) e duração. Não registra chave, prompt, corpo bruto da IA nem texto da exceção. Os 14 segundos deixam margem para responder dentro da meta de 15 segundos nos testes controlados. Eles não garantem a latência da rede, a carga do servidor nem a resposta de um modelo real em produção.
 
-Veja a [especificação](specs/004-chamada-assincrona-timeout/spec.md), as [evidências](specs/004-chamada-assincrona-timeout/evidencias.md) e as [pendências](specs/004-chamada-assincrona-timeout/tasks.md). A cobertura complementar e a correção da coleta estão nas [evidências K07 e K08](specs/007-008-ci-provedor-simulado/evidencias.md). O aceite integral da issue #4 continua separado, e as entregas atuais são parciais.
+Veja a [especificação](docs/specs/004-chamada-assincrona-timeout/spec.md), as [evidências](docs/specs/004-chamada-assincrona-timeout/evidencias.md) e as [pendências](docs/specs/004-chamada-assincrona-timeout/tasks.md). A cobertura complementar e a correção da coleta estão nas [evidências K07 e K08](docs/specs/007-008-ci-provedor-simulado/evidencias.md). O aceite integral da issue #4 continua separado, e as entregas atuais são parciais.
 
 Para rodar os testes sem chave real nem chamadas externas:
 
@@ -259,7 +259,7 @@ python -m pytest -q -p no:cacheprovider
 
 ## Painel operacional
 
-O frontend fica em `sigma-frontend/` e usa a API de `VITE_API_URL` (padrão `http://localhost:8000`). Rode `npm ci` e `npm run dev` nessa pasta. A API precisa de `SIGMA_DATABASE_URL`, das migrações aplicadas e de usuários cadastrados, conforme os guias de [identidades](engenharia/docs/07-persistencia-identidades.md) e de [coleta](engenharia/docs/09-coleta-eventos.md). Sem persistência operacional, as áreas mostram indisponibilidade (503), sem dados fictícios no lugar.
+O frontend fica em `frontend/` e usa a API de `VITE_API_URL` (padrão `http://localhost:8000`). Rode `npm ci` e `npm run dev` nessa pasta. A API precisa de `SIGMA_DATABASE_URL`, das migrações aplicadas e de usuários cadastrados, conforme os guias de [identidades](engenharia/docs/07-persistencia-identidades.md) e de [coleta](engenharia/docs/09-coleta-eventos.md). Sem persistência operacional, as áreas mostram indisponibilidade (503), sem dados fictícios no lugar.
 
 | Perfil | Áreas do painel |
 |---|---|
@@ -276,16 +276,16 @@ Testes:
 ```bash
 npm test                      # componentes
 npm run test:e2e              # diagnóstico, no navegador
-python scripts/validate_postgres.py --tests "tests/test_panel_api.py tests/test_panel_e2e.py"
+python scripts/validate_postgres.py --tests "backend/tests/test_panel_api.py backend/tests/test_panel_e2e.py"
 ```
 
 O último comando faz o ensaio completo com um banco descartável. Ele prepara um schema isolado e publica capturas em `test-results/`. Instale o Chromium com `npx playwright install chromium`. No Windows, `SIGMA_BROWSER_CHANNEL=chrome` usa o Chrome já instalado.
 
-Validação e limites: [evidências do painel](specs/017-painel-operacional/brief.md).
+Validação e limites: [evidências do painel](docs/specs/017-painel-operacional/brief.md).
 
 ## Backup, restauração e smoke
 
-O procedimento está em [Backup, restauração e atualização](docs/guias/backup-restauracao.md). Em resumo:
+O procedimento está em [Backup, restauração e atualização](docs/operacao/backup-restauracao.md). Em resumo:
 
 - `scripts/backup.sh` e `scripts/restore.sh` envolvem o CLI Python `scripts/recovery.py`. Exigem escritores parados, chave fora do pacote e destino novo.
 - `scripts/smoke.sh` exercita, em contêineres descartáveis, uma falha real, o SSE, o backup autenticado, a restauração e a recriação.
@@ -311,7 +311,7 @@ O ensaio em outra máquina e a ativação do modelo systemd continuam pendentes.
 | RNF07 | Requisição sem chave, inválida ou revogada é recusada (401 ou 403) |
 | RNF08 | Zero vazamentos de dados sensíveis para a IA |
 
-A validação completa está na seção 6 do [estudo de caso](docs/arquitetura/estudo-de-caso.md). O registro de testes e achados corrigidos está em [revisão K01 a K06](specs/revisao-k01-k06/validacao.md).
+A validação completa está na seção 6 do [estudo de caso](docs/arquitetura/estudo-de-caso.md). O registro de testes e achados corrigidos está em [revisão K01 a K06](docs/specs/revisao-k01-k06/validacao.md).
 
 ## Limitações conhecidas
 
@@ -324,17 +324,12 @@ A validação completa está na seção 6 do [estudo de caso](docs/arquitetura/e
 ## Estrutura do projeto
 
 ```
-main.py, auth.py, config.py   API FastAPI, autenticação e configuração
-routers/                      rotas da API
-persistence/                  acesso ao PostgreSQL
-migrations/                   migrações Alembic
-sigma-frontend/               painel em React
+backend/                      API FastAPI: main.py, routers/, persistence/, migrations/ e tests/
+frontend/               painel em React
 engenharia/                   núcleo sigma_eng, testes e experimentos
 scripts/                      validação, backup e utilitários
 deploy/                       unidade systemd e overlays do Compose
-specs/                        especificações, evidências e revisões
-docs/                         documentação do projeto
-tests/                        testes da API
+docs/                         documentação, specs e evidências
 docker-compose.yml            orquestração dos contêineres
 .env.example                  modelo de variáveis de ambiente
 ```

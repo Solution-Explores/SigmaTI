@@ -1,6 +1,6 @@
 # Perguntas prováveis do orientador (demonstração de 27/10)
 
-Cola de apoio, preparada em 26/10. Cada resposta usa só o que o repositório ou os registros provam, com a fonte. Onde algo **não foi medido**, a resposta diz isso. Números do SHA congelado `7851da6` (Windows) e da VM (`75b1874`, rodada 7) estão em [plano-demonstracao-2026-10-27.md](../plano-demonstracao-2026-10-27.md).
+Cola de apoio, preparada em 26/10. Cada resposta usa só o que o repositório ou os registros provam, com a fonte. Onde algo **não foi medido**, a resposta diz isso. Números do SHA congelado `7851da6` (Windows) e da VM (`75b1874`, rodada 7) estão em [plano-demonstracao-2026-10-27.md](../planejamento/plano-demonstracao-2026-10-27.md).
 
 ## Resultados e métodos
 
@@ -22,7 +22,7 @@ Não sempre. No SHA congelado: no Windows, 491 aprovados e 1 pulado, e o CI do G
 ## Segurança, LGPD e governança
 
 **6. A anonimização é confiável?**
-Só dá para afirmar o que o corpus E6 mediu: 59 amostras sintéticas e 53 identificadores, com 100% de recall de transformação, 0 falsos positivos por mensagem negativa e 0 vazados (CPF, CNS, e-mail, hostname, IPv4, IPv6, MAC, nome, prontuário). **Não** demonstra anonimização universal nem conformidade jurídica; nomes sem contexto e hostnames fora dos padrões podem escapar. #5 amplia isso com casos adversariais (S1). Fonte: `resultados/experimento-e6-anonimizacao.md`.
+Só dá para afirmar o que o corpus E6 mediu: 59 amostras sintéticas e 53 identificadores, com 100% de recall de transformação, 0 falsos positivos por mensagem negativa e 0 vazados (CPF, CNS, e-mail, hostname, IPv4, IPv6, MAC, nome, prontuário). **Não** demonstra anonimização universal nem conformidade jurídica; nomes sem contexto e hostnames fora dos padrões podem escapar. #5 amplia isso com casos adversariais (S1). Fonte: `engenharia/resultados/experimento-e6-anonimizacao.md`.
 
 **7. O que acontece se a anonimização falhar?**
 Falha fechada: a chamada ao provedor não é feita e a API devolve erro (no aceite, `fail_closed` → HTTP 500 com 0 novas chamadas ao provedor). IPv4 é generalizado para /24 e IPv6 para /64.
@@ -51,7 +51,7 @@ MTTD e burn rate (só pela API; entram como stretch na S2) e o rótulo "em risco
 A restauração e o smoke passam em VM na mesma máquina (17 verificações); falta uma máquina física diferente, que depende de acesso a ela. Pergunta ao orientador: a VM basta como evidência?
 
 **15. Como vocês garantem que outra pessoa consegue rodar?**
-O Iohan revisou os PRs #43, #44 e #47 (quem revisa não é quem fez); a instalação limpa está em `docs/guias/instalacao.md`; o CI roda cinco verificações (configuração, pacote, PostgreSQL, recuperação e compose); imagens e portas estão fixadas por digest e restritas ao loopback. O relatório da execução independente do Iohan de 24/10 **ainda não está registrado** (cobrar antes de afirmar).
+O Iohan revisou os PRs #43, #44 e #47 (quem revisa não é quem fez); a instalação limpa está em `docs/operacao/instalacao.md`; o CI roda cinco verificações (configuração, pacote, PostgreSQL, recuperação e compose); imagens e portas estão fixadas por digest e restritas ao loopback. O relatório da execução independente do Iohan de 24/10 **ainda não está registrado** (cobrar antes de afirmar).
 
 ## O que não afirmar
 - "Homologado", "pronto para produção" ou "conforme a LGPD".

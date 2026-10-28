@@ -3,7 +3,7 @@
 **Título:** Testes instáveis: timeout do provedor de IA, sonda após fechamento e timeout de DNS
 
 ## Contexto
-Nas rodadas de VM de 21/10 (`validacao-vm/rodada-2026-10-22` e `-22b`; Ubuntu 24.04, 4 vCPU, 4 GiB), três testes falharam de forma intermitente. Os PRs #43 e #44 não alteraram esses testes nem o código que eles testam: `git diff 8cb1e23..ddd4840` está vazio em `main.py`, `tests/test_provider.py`, `engenharia/tests/test_stats_probe.py` e `engenharia/sigma_eng/probe.py`.
+Nas rodadas de VM de 21/10 (`_pacote-local/validacao-vm/rodada-2026-10-22` e `-22b`; Ubuntu 24.04, 4 vCPU, 4 GiB), três testes falharam de forma intermitente. Os PRs #43 e #44 não alteraram esses testes nem o código que eles testam: `git diff 8cb1e23..ddd4840` está vazio em `main.py`, `tests/test_provider.py`, `engenharia/tests/test_stats_probe.py` e `engenharia/sigma_eng/probe.py`.
 
 | Teste | Isolado (rodada 2) | Observação |
 |---|---|---|
@@ -11,7 +11,7 @@ Nas rodadas de VM de 21/10 (`validacao-vm/rodada-2026-10-22` e `-22b`; Ubuntu 24
 | `engenharia/tests/test_stats_probe.py::test_probe_many_perda_e_jitter` | 9/10 | Perda de 66,67% em vez de 100% |
 | `engenharia/tests/test_scheduler.py::test_dns_timeout_before_policy_does_not_create_false_incident` | 10/10 | Falha só na suíte completa, com a VM ocupada |
 
-## Causas (rodada 3, `validacao-vm/rodada-2026-10-22c`, 471 hashes conferidos)
+## Causas (rodada 3, `_pacote-local/validacao-vm/rodada-2026-10-22c`, 471 hashes conferidos)
 A instabilidade **já existia antes dos PRs**. Na linha de base `8cb1e23`, o provedor passou 9/10 e a sonda 5/10. Os quatro arquivos envolvidos são idênticos, byte a byte, entre `8cb1e23` e `ddd4840`.
 
 - **Sonda: causa confirmada.** O `accept()` bloqueado em outra thread aceitou uma conexão nova da sonda 1,5 ms depois do `close()`. As portas foram cruzadas, cliente 43416 = `peer_port`. Resultados:
