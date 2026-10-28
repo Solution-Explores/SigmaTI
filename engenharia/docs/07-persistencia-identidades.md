@@ -1,8 +1,8 @@
-> Atualização de 20/10/2026: [conferência das entregas integradas e pendências reais](../../doc/conferencia-issues-6-7-8-14.md). Descrições da primeira entrega abaixo preservam seu contexto histórico.
+> Atualização de 20/10/2026: [conferência das entregas integradas e pendências reais](../../docs/historico/conferencia-issues-6-7-8-14.md). Descrições da primeira entrega abaixo preservam seu contexto histórico.
 
 # Identidades e sessões persistentes — primeira entrega de #6/#7
 
-O adaptador fica em `persistence/`, fora de `sigma_eng`. PostgreSQL é selecionado
+O adaptador fica em `backend/persistence/`, fora de `sigma_eng`. PostgreSQL é selecionado
 por `SIGMA_DATABASE_URL`. Quando informado, erros de banco/migração impedem o início
 ou retornam 503 genérico; não há fallback para memória. O modo anterior com
 `SIGMA_USERS_FILE` permanece apenas para laboratório e testes legados.

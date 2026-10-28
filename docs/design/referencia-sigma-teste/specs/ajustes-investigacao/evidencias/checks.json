@@ -1,0 +1,30 @@
+{
+  "checks": [
+    "Initial indicators are derived from the demo fixture; no automatic API calls",
+    "32 responsive layouts and mobile menu without horizontal overflow",
+    "Incident search, accent-insensitive search, combined filters and empty state",
+    "Device search by IP and sector, status filter and related incidents",
+    "Hash navigation, focus, history back/forward and refresh",
+    "Incident IDs, default active scope, all/resolved scopes and clear filters",
+    "Investigation and device filters/disclosures survive navigation and breakpoint changes",
+    "Overview presets replace stale queries and match every announced subset",
+    "Priority title is above fold at desktop/mobile acceptance sizes in both themes",
+    "Required fields, whitespace validation and no automatic request",
+    "Pending state blocks duplicate submissions; request contract unchanged",
+    "Form and response survive section changes; demo indicators remain unchanged",
+    "Controlled API response: unavailable",
+    "Controlled API response: 422",
+    "Controlled API response: 500",
+    "Controlled API response: connection",
+    "Controlled API response: invalid-json",
+    "Controlled API response: invalid-schema",
+    "20-second timeout with no automatic retry",
+    "Theme preference survives reload; keyboard skip link and visible focus",
+    "Visible interactive targets have height >=44px",
+    "Storage unavailable: system theme and theme switching still work",
+    "Reduced motion disables spinner animation",
+    "No browser JavaScript errors"
+  ],
+  "apiCalls": 9,
+  "browserErrors": []
+}

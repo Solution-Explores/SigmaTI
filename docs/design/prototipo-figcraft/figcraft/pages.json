@@ -1,0 +1,79 @@
+[
+  {
+    "children": 1,
+    "current": false,
+    "divider": false,
+    "id": 1,
+    "name": "00 · Biblioteca"
+  },
+  {
+    "children": 1,
+    "current": true,
+    "divider": false,
+    "id": 38,
+    "name": "01 · Comece aqui"
+  },
+  {
+    "children": 4,
+    "current": false,
+    "divider": false,
+    "id": 68,
+    "name": "02 · Acesso"
+  },
+  {
+    "children": 8,
+    "current": false,
+    "divider": false,
+    "id": 161,
+    "name": "03 · Operação"
+  },
+  {
+    "children": 16,
+    "current": false,
+    "divider": false,
+    "id": 968,
+    "name": "04 · Atendimento"
+  },
+  {
+    "children": 14,
+    "current": false,
+    "divider": false,
+    "id": 2377,
+    "name": "05 · Ações e evidências"
+  },
+  {
+    "children": 8,
+    "current": false,
+    "divider": false,
+    "id": 3176,
+    "name": "06 · Equipamentos"
+  },
+  {
+    "children": 17,
+    "current": false,
+    "divider": false,
+    "id": 3756,
+    "name": "07 · Gestão e administração"
+  },
+  {
+    "children": 12,
+    "current": false,
+    "divider": false,
+    "id": 4894,
+    "name": "08 · Confirmações e conta"
+  },
+  {
+    "children": 11,
+    "current": false,
+    "divider": false,
+    "id": 5276,
+    "name": "09 · Estados e exceções"
+  },
+  {
+    "children": 14,
+    "current": false,
+    "divider": false,
+    "id": 5928,
+    "name": "10 · Responsivo e tema escuro"
+  }
+]

@@ -66,14 +66,14 @@ registrar hosts, saídas ou credenciais. Não constitui correção de capacidade
 
 > Revisão de 20/10/2026: houve reprovação posterior da carga em VM no mesmo
 > host (`missed` de 150 para 200 na janela). CI anterior aprovado não constitui
-> correção dessa reprodução. Veja [achados e critérios de retomada](../../doc/revisao-achados-base-2026-10-20.md).
+> correção dessa reprodução. Veja [achados e critérios de retomada](../../docs/historico/revisao-achados-base-2026-10-20.md).
 
 ```powershell
-.venv/Scripts/python.exe scripts/validate_postgres.py --tests tests/test_collection_e2.py
+.venv/Scripts/python.exe scripts/validate_postgres.py --tests backend/tests/test_collection_e2.py
 ```
 
 O runner usa PostgreSQL 15 fixado no Compose. `--image` permite ensaio adicional explícito com outra versão, sem mudar o padrão. `scripts/validate_collection.py` também pode rodar com SIGMA_TEST_DATABASE_URL apontando para banco descartável. Ele cria schema aleatório próprio, migra, inicia/encerra Uvicorn, executa 30 quedas TCP com SSE real, mede 200 alvos lógicos em loopback e prova reinício/replay/logout. Remove só o schema criado, sem alterar o restante do banco.
 
 Saídas em test-results/collection-e2.json e CSV; log local sem token/senha/chave. A carga usa um serviço TCP local para 200 alvos cadastrados, intervalo 2 s, 32 vagas e observação estável de 6 s após a primeira medição de todos. Não representa 200 hosts físicos nem validação hospitalar. A chegada do SSE ao cliente é medida; o painel #15 já foi integrado no PR #39 e tem ensaio de navegador próprio. Não confundir suas medições.
 
-Conferência de aceite da #8 e limites: [matriz das issues de base](../../doc/conferencia-issues-6-7-8-14.md).
+Conferência de aceite da #8 e limites: [matriz das issues de base](../../docs/historico/conferencia-issues-6-7-8-14.md).

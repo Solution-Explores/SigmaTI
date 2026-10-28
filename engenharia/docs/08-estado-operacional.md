@@ -1,11 +1,11 @@
-> Atualização de 20/10/2026: [conferência das entregas integradas e pendências reais](../../doc/conferencia-issues-6-7-8-14.md). Descrições da primeira entrega abaixo preservam seu contexto histórico.
+> Atualização de 20/10/2026: [conferência das entregas integradas e pendências reais](../../docs/historico/conferencia-issues-6-7-8-14.md). Descrições da primeira entrega abaixo preservam seu contexto histórico.
 
 > Fundação integrada no PR #36. Para coleta opt-in, migração 003_collection, detector conectado e SSE, consulte [coleta e eventos](09-coleta-eventos.md).
 
 # Persistência operacional (#7)
 
 Conferência dos critérios originais e limites da evidência em
-[revisão das issues de base](../../doc/revisao-achados-base-2026-10-20.md).
+[revisão das issues de base](../../docs/historico/revisao-achados-base-2026-10-20.md).
 
 Incremento posterior ao PR #35. O núcleo `sigma_eng` não importa SQLAlchemy,
 Psycopg ou FastAPI para gerenciar estado. `StateRepository` e

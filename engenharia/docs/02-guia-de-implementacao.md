@@ -70,7 +70,7 @@ Hoje a sonda só roda sob demanda. Para vigilância contínua:
 
 ## Fase 5 · Frontend (≈ 2 dias)
 
-Páginas sugeridas no `sigma-frontend` (React), inspiradas em painéis de SRE (saúde de serviços, incidentes, aprovações, auditoria):
+Páginas sugeridas no `frontend` (React), inspiradas em painéis de SRE (saúde de serviços, incidentes, aprovações, auditoria):
 
 | Página | Endpoint | Conteúdo |
 |---|---|---|

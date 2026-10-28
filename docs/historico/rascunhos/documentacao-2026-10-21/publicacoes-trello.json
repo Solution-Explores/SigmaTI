@@ -1,0 +1,346 @@
+[
+  {
+    "action": "update",
+    "url": "https://trello.com/c/RH2Ftdst",
+    "ok": true
+  },
+  {
+    "url": "https://trello.com/c/fDovwdzt",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad678c7186124820cbbc0de",
+      "name": "ÉPICO #31 — Expansão: runbooks, IA e relatórios",
+      "due": {
+        "date": "2026-11-03T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/fxR7XxOZ",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad678c9be3f060839d4fa0e",
+      "name": "ÉPICO #31 — Experimentos e validações externas",
+      "due": {
+        "date": "2026-11-03T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/YGVH2Pg9",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad67898a7102014b5a2bddb",
+      "name": "ÉPICO #31 — Plano de entrega e release",
+      "due": {
+        "date": "2026-11-03T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/nFmreK27",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ac628c3d13e2aa027b139ac",
+      "name": "Atualizar o miro",
+      "due": {
+        "date": "2026-10-23T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/zOyTl0LP",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad12083ba9f19a0e215249d",
+      "name": "ÉPICO #31 — Consolidar aceite e preparar release",
+      "due": {
+        "date": "2026-11-03T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/taEBIf5c",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad577db73a69b2fc0135535",
+      "name": "ISSUE #6 — Autenticação, sessões e auditoria de login",
+      "due": {
+        "date": "2026-10-22T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/WzIvGyKq",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad5742ac919388881586af9",
+      "name": "ISSUE #5 — Anonimização e bloqueio de dados sensíveis",
+      "due": {
+        "date": "2026-11-03T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/WzIvGyKq",
+    "action": "move",
+    "from": "Revisão e testes",
+    "to": "A fazer",
+    "ok": true
+  },
+  {
+    "url": "https://trello.com/c/9tWbeAYN",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad12081a272c2278c521431",
+      "name": "ISSUES #4/#5/#6 — Corrigir achados da API e autenticação",
+      "due": {
+        "date": "2026-10-23T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/v84QJxtu",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad120811ff5bd1020d945aa",
+      "name": "ISSUES #3/#4 — Corrigir instalação e infraestrutura",
+      "due": {
+        "date": "2026-10-21T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/v84QJxtu",
+    "action": "move",
+    "from": "Revisão e testes",
+    "to": "Concluído",
+    "ok": true
+  },
+  {
+    "url": "https://trello.com/c/NRkslN8y",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad120828a331eeceae81535",
+      "name": "ÉPICO #31 — Revisar PRs e validar integrações",
+      "due": {
+        "date": "2026-10-23T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/HMFmBFhp",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad120823ffd1ba6d656f692",
+      "name": "ÉPICO #31 — Finalizar README e roteiro da demonstração",
+      "due": {
+        "date": "2026-10-23T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/HMFmBFhp",
+    "action": "move",
+    "from": "Revisão e testes",
+    "to": "A fazer",
+    "ok": true
+  },
+  {
+    "url": "https://trello.com/c/D3LstOrT",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad1207f14a0a7e2efc8a59b",
+      "name": "ISSUE #4 — Testar API com provedor de IA simulado",
+      "due": {
+        "date": "2026-10-21T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/D3LstOrT",
+    "action": "move",
+    "from": "Revisão e testes",
+    "to": "Concluído",
+    "ok": true
+  },
+  {
+    "url": "https://trello.com/c/KfknLcok",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad120806b23225607225232",
+      "name": "ÉPICO #31 — Validar instalação limpa da demonstração",
+      "due": {
+        "date": "2026-10-23T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/KfknLcok",
+    "action": "move",
+    "from": "Revisão e testes",
+    "to": "A fazer",
+    "ok": true
+  },
+  {
+    "url": "https://trello.com/c/sTTArNVt",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad1207fb74fb1f5caf60456",
+      "name": "ÉPICO #31 — Manter CI e roteiro de instalação",
+      "due": {
+        "date": "2026-10-23T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/sTTArNVt",
+    "action": "move",
+    "from": "Revisão e testes",
+    "to": "A fazer",
+    "ok": true
+  },
+  {
+    "url": "https://trello.com/c/z1CLDzjj",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad1208091665f8813f90848",
+      "name": "ISSUES #4/#5/#6 — Executar aceite integrado da API",
+      "due": {
+        "date": "2026-10-23T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/z1CLDzjj",
+    "action": "move",
+    "from": "Revisão e testes",
+    "to": "A fazer",
+    "ok": true
+  },
+  {
+    "url": "https://trello.com/c/NbEHZVro",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad678c1da67c8cf4c0e8151",
+      "name": "ISSUE #8 — Monitoramento contínuo e eventos SSE",
+      "due": {
+        "date": "2026-10-23T22:00:00.000Z",
+        "complete": false
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/I4LgoTUv",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad678c5d212d74392305029",
+      "name": "ISSUE #25 — Backup e restauração local (etapa entregue)",
+      "due": {
+        "date": null,
+        "complete": true
+      }
+    }
+  },
+  {
+    "url": "https://trello.com/c/cEBw3yYz",
+    "action": "update",
+    "ok": true,
+    "response": {
+      "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad678c07cb342407e2272b7",
+      "name": "ISSUE #14 — Sondagem segura (etapa entregue)",
+      "due": {
+        "date": null,
+        "complete": true
+      }
+    }
+  },
+  {
+    "action": "create",
+    "key": "pr13",
+    "issue": 13,
+    "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad89fcae921c72fb8e8087a",
+    "url": "https://trello.com/c/e7us28WV",
+    "name": "ISSUE #13 — Âncora externa, rotação HMAC e verificação agendada",
+    "list": "A fazer",
+    "due": {
+      "date": "2026-11-03T22:00:00.000Z",
+      "complete": false
+    },
+    "ok": true
+  },
+  {
+    "action": "create",
+    "key": "pr25",
+    "issue": 25,
+    "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad89fcc7e92230a9cccc2d7",
+    "url": "https://trello.com/c/9zGDTCQp",
+    "name": "ISSUE #25 — Validar restauração em outra máquina física",
+    "list": "A fazer",
+    "due": {
+      "date": "2026-11-03T22:00:00.000Z",
+      "complete": false
+    },
+    "ok": true
+  },
+  {
+    "action": "create",
+    "key": "instaveis",
+    "issue": 45,
+    "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad89fce6422d0afcecfd0ea",
+    "url": "https://trello.com/c/tr4WuXPv",
+    "name": "ISSUE #45 — Testes instáveis (não bloqueia a demo)",
+    "list": "A fazer",
+    "due": {
+      "date": "2026-10-27T22:00:00.000Z",
+      "complete": false
+    },
+    "ok": true
+  },
+  {
+    "action": "create",
+    "key": "auditoria",
+    "issue": 46,
+    "id": "ari:cloud:trello::card/workspace/67bdab70650bc109f01597cb/6ad89fd0be3a1d1db5e9936f",
+    "url": "https://trello.com/c/qAz30ebN",
+    "name": "ISSUE #46 — Custo da auditoria (não bloqueia a demo)",
+    "list": "Backlog",
+    "due": {
+      "date": "2026-10-27T22:00:00.000Z",
+      "complete": false
+    },
+    "ok": true
+  }
+]
