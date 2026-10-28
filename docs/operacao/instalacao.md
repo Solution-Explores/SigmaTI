@@ -73,8 +73,8 @@ cp .env.example .env          # PowerShell: Copy-Item .env.example .env
 
 Preencha o `.env` e nunca o versione.
 
-1. **Credenciais do Compose.** São seis variáveis, com valores novos e distintos. Veja [Credenciais da infraestrutura](../../README.md#credenciais-da-infraestrutura). Preencha as seis mesmo que só vá subir o banco: o Compose valida o arquivo inteiro antes de iniciar qualquer serviço, e `docker compose up -d db` falha com `required variable ZABBIX_DB_USER is missing a value` se as de Zabbix ou Grafana estiverem vazias (achado do ensaio independente de 25/10).
-2. **API.** Preencha `OPENROUTER_API_KEY`, `SIGMA_LLM_MODEL`, `SIGMA_CORS_ORIGINS` e `SIGMA_JWT_SECRET`. Veja [Variáveis da API](../../README.md#executar-a-api-no-desenvolvimento).
+1. **Credenciais do Compose.** São seis variáveis, com valores novos e distintos. Veja [Credenciais da infraestrutura](configuracao-e-execucao.md#credenciais-da-infraestrutura). Preencha as seis mesmo que só vá subir o banco: o Compose valida o arquivo inteiro antes de iniciar qualquer serviço, e `docker compose up -d db` falha com `required variable ZABBIX_DB_USER is missing a value` se as de Zabbix ou Grafana estiverem vazias (achado do ensaio independente de 25/10).
+2. **API.** Preencha `OPENROUTER_API_KEY`, `SIGMA_LLM_MODEL`, `SIGMA_CORS_ORIGINS` e `SIGMA_JWT_SECRET`. Veja [Variáveis da API](configuracao-e-execucao.md#executar-a-api-no-desenvolvimento).
 3. **Usuários.** Escolha um dos dois modos.
 
 ### Usuários no PostgreSQL (recomendado)
