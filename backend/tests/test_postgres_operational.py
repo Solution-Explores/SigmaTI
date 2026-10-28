@@ -179,7 +179,7 @@ def test_detector_warmup_survives_new_process(store, kind):
     identifier = str(uuid.uuid4())
     store.create("detectors", identifier, detector_snapshot(detector))
     expected = detector.update(1000)
-    code = ("import os,sys,json; from persistence.database import open_database; "
+    code = ("import os,sys,json; sys.path.insert(0, 'backend'); from persistence.database import open_database; "
             "from persistence.operational import PostgresOperationalStore; "
             "from sigma_eng.state import restore_detector; "
             "engine=open_database(os.environ['SIGMA_TEST_DATABASE_URL']); "

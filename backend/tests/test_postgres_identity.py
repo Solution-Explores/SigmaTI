@@ -26,7 +26,7 @@ def test_session_survives_new_process_and_revocation(pg):
     auth.configure_auth(auth.JWT_SECRET)
     token = auth.criar_token_sessao(username, "analista_redes")
     env = dict(os.environ, SIGMA_JWT_SECRET=auth.JWT_SECRET)
-    code = "import os,sys,auth; auth.configure_auth(os.environ['SIGMA_JWT_SECRET']); auth.decodificar_token_sessao(sys.stdin.read()); print('valid')"
+    code = "import os,sys; sys.path.insert(0, 'backend'); import auth; auth.configure_auth(os.environ['SIGMA_JWT_SECRET']); auth.decodificar_token_sessao(sys.stdin.read()); print('valid')"
     result = subprocess.run([sys.executable, "-c", code], input=token, text=True,
                             capture_output=True, env=env, timeout=20)
     assert result.returncode == 0 and result.stdout.strip() == "valid"
