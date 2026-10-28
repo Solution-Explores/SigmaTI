@@ -14,7 +14,7 @@ IMAGE = "postgres:15.19-alpine3.24@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--image", default=IMAGE, help="Imagem explícita para ensaio adicional; CI usa o digest PostgreSQL 15.")
-    parser.add_argument("--tests", default="tests engenharia/tests")
+    parser.add_argument("--tests", default="backend/tests engenharia/tests")
     args = parser.parse_args()
     image = args.image
     name = "sigma-identity-test-" + secrets.token_hex(6)

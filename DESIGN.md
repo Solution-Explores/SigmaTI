@@ -86,7 +86,7 @@ Registro factual da identidade existente: azul sobre fundo escuro, fonte de sist
 - Tema escuro inicial e alternância para claro.
 - Tabelas, formulários e estados em português.
 
-Fonte normativa: `sigma-frontend/src/App.css` e `index.css`. O contrato da superfície está em `specs/017-painel-operacional/brief.md`.
+Fonte normativa: `frontend/src/App.css` e `index.css`. O contrato da superfície está em `docs/specs/017-painel-operacional/brief.md`.
 
 ## Colors
 

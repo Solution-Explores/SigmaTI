@@ -1,0 +1,23 @@
+{
+  "failures": [],
+  "mentor_message_lines": 8,
+  "active_cards": 19,
+  "comment_bodies_match_preview": true,
+  "comments_verified": 7,
+  "mentor_report_words": 457,
+  "open_prs_preserved": 4,
+  "active_cards_with_owner_reviewer_due_link": 19,
+  "checked_utc": "2026-10-21T11:22:20.2281592+00:00",
+  "issue_bodies_match_preview": true,
+  "issues_verified": 2,
+  "issues_unresolved": [
+    5,
+    6,
+    8,
+    13,
+    25,
+    45,
+    46
+  ],
+  "native_membership_note": "Roles recorded in descriptions; previous native memberships preserved."
+}

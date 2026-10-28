@@ -1,0 +1,194 @@
+[
+  {
+    "width": 375,
+    "theme": "light",
+    "section": "overview",
+    "overflow": false
+  },
+  {
+    "width": 375,
+    "theme": "light",
+    "section": "incidents",
+    "overflow": false
+  },
+  {
+    "width": 375,
+    "theme": "light",
+    "section": "devices",
+    "overflow": false
+  },
+  {
+    "width": 375,
+    "theme": "light",
+    "section": "simulator",
+    "overflow": false
+  },
+  {
+    "width": 375,
+    "theme": "dark",
+    "section": "overview",
+    "overflow": false
+  },
+  {
+    "width": 375,
+    "theme": "dark",
+    "section": "incidents",
+    "overflow": false
+  },
+  {
+    "width": 375,
+    "theme": "dark",
+    "section": "devices",
+    "overflow": false
+  },
+  {
+    "width": 375,
+    "theme": "dark",
+    "section": "simulator",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "theme": "light",
+    "section": "overview",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "theme": "light",
+    "section": "incidents",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "theme": "light",
+    "section": "devices",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "theme": "light",
+    "section": "simulator",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "theme": "dark",
+    "section": "overview",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "theme": "dark",
+    "section": "incidents",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "theme": "dark",
+    "section": "devices",
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "theme": "dark",
+    "section": "simulator",
+    "overflow": false
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "section": "overview",
+    "overflow": false
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "section": "incidents",
+    "overflow": false
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "section": "devices",
+    "overflow": false
+  },
+  {
+    "width": 1024,
+    "theme": "light",
+    "section": "simulator",
+    "overflow": false
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "section": "overview",
+    "overflow": false
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "section": "incidents",
+    "overflow": false
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "section": "devices",
+    "overflow": false
+  },
+  {
+    "width": 1024,
+    "theme": "dark",
+    "section": "simulator",
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "section": "overview",
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "section": "incidents",
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "section": "devices",
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "theme": "light",
+    "section": "simulator",
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "section": "overview",
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "section": "incidents",
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "section": "devices",
+    "overflow": false
+  },
+  {
+    "width": 1440,
+    "theme": "dark",
+    "section": "simulator",
+    "overflow": false
+  }
+]

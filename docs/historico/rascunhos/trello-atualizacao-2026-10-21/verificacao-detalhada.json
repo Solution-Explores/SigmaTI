@@ -1,0 +1,1987 @@
+[
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em A fazer",
+        "text": "A fazer"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (DEMO — Congelar e registrar SHA após aceite)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (DEMO — Congelar e registrar SHA após aceite)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Demonstração 24/10"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "23 de out., 18:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para comment",
+        "text": ""
+      },
+      {
+        "label": "Adicionar reação",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Editar"
+      }
+    ],
+    "comments": [
+      "#comment-6ad8cc1cf78abc1a87606cbd"
+    ],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/31"
+    ],
+    "text": "A fazer\nDEMO — Congelar e registrar SHA após aceite\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nDemonstração 24/10\nData Entrega\n23 de out., 18:00\nDescrição\nEditar\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima há 10 minutos\n\nRegistro de planejamento — 21/10/2026: Como apresentador, quero um SHA congelado e reproduzível para demonstrar exatamente a versão aceita. Responsável Vinny; revisor Iohan. Marco fixo: sexta 23/10 às 18h UTC−4. Depende dos merges #43/#44, CI e aceite integrado. Registrar SHA, resultados e contingência; não introduzir novas mudanças após o freeze. Pendente; candidato validado em VM não comprova congelamento. https://github.com/Solution-Explores/SigmaTI/issues/31\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a A fazer\nhá 10 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "DEMO — Congelar e registrar SHA após aceite",
+    "url": "/c/8rPHLLDJ/79-demo-congelar-e-registrar-sha-ap%C3%B3s-aceite"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em A fazer",
+        "text": "A fazer"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (DEMO — Executar roteiro independente no SHA congelado)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (DEMO — Executar roteiro independente no SHA congelado)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Demonstração 24/10"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "23 de out., 22:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para comment",
+        "text": ""
+      },
+      {
+        "label": "Adicionar reação",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Editar"
+      }
+    ],
+    "comments": [
+      "#comment-6ad8cc32f86b43afcd2de874"
+    ],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31"
+    ],
+    "text": "A fazer\nDEMO — Executar roteiro independente no SHA congelado\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nDemonstração 24/10\nData Entrega\n23 de out., 22:00\nDescrição\nAlterações não salvas\nEditar\nHistória, situação e próximos passos — 21/10/2026\n\nComo revisor, quero executar sozinho o roteiro no próprio computador para detectar dependências ocultas. Executor Iohan; apoio e revisão dos achados Vinny. Início previsto após 22h de 23/10; a data nativa marca início da janela, não término às 22h. Depende do SHA congelado às 18h. Registrar SHA, instalação, percurso e falhas. Relacionado ao cartão de instalação https://trello.com/c/KfknLcok . Execução ainda não confirmada.\n\nhttps://github.com/Solution-Explores/SigmaTI/issues/31\nhttps://github.com/Solution-Explores/SigmaTI/issues/31\n\nSituação: planejada; conclusão depende de evidência. Datas interpretadas em UTC−4.\n\nAo iniciar: comentar atividade atual, branch/PR, bloqueio e próximo passo. Ao concluir: anexar evidência e revisão independente.\n\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima há 9 minutos\n\nRegistro de planejamento — 21/10/2026: Como revisor, quero executar sozinho o roteiro no próprio computador para detectar dependências ocultas. Executor Iohan; apoio e revisão dos achados Vinny. Início previsto após 22h de 23/10; a data nativa marca início da janela, não término às 22h. Depende do SHA congelado às 18h. Registrar SHA, instalação, percurso e falhas. Relacionado ao cartão de instalação https://trello.com/c/KfknLcok . Execução ainda não confirmada. https://github.com/Solution-Explores/SigmaTI/issues/31\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a A fazer\nhá 10 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "DEMO — Executar roteiro independente no SHA congelado",
+    "url": "/c/wsAdCuzy/80-demo-executar-roteiro-independente-no-sha-congelado"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em A fazer",
+        "text": "A fazer"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (DEMO — Smoke de sábado às 7h30)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (DEMO — Smoke de sábado às 7h30)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Demonstração 24/10"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "24 de out., 07:30"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para comment",
+        "text": ""
+      },
+      {
+        "label": "Adicionar reação",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Editar"
+      }
+    ],
+    "comments": [
+      "#comment-6ad8cc4278a172b8f981083a"
+    ],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31"
+    ],
+    "text": "A fazer\nDEMO — Smoke de sábado às 7h30\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nDemonstração 24/10\nData Entrega\n24 de out., 07:30\nDescrição\nEditar\nHistória, situação e próximos passos — 21/10/2026\n\nComo apresentador, quero subir o ambiente e percorrer o smoke antes da reunião para detectar indisponibilidade. Executor Vinny; revisão prévia Iohan no ensaio da sexta. Marco fixo 24/10 às 7h30 UTC−4. Usar SHA congelado, dados fictícios e IA simulada. Conferir login, painel, coleta/SSE, incidente, aprovação, cadeia e diagnóstico. Se falhar, usar contingência e declarar limite; smoke ainda pendente.\n\nhttps://github.com/Solution-Explores/SigmaTI/issues/31\nhttps://github.com/Solution-Explores/SigmaTI/issues/31\n\nSituação: planejada; conclusão depende de evidência. Datas interpretadas em UTC−4.\n\nAo iniciar: comentar atividade atual, branch/PR, bloqueio e próximo passo. Ao concluir: anexar evidência e revisão independente.\n\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima há 9 minutos\n\nRegistro de planejamento — 21/10/2026: Como apresentador, quero subir o ambiente e percorrer o smoke antes da reunião para detectar indisponibilidade. Executor Vinny; revisão prévia Iohan no ensaio da sexta. Marco fixo 24/10 às 7h30 UTC−4. Usar SHA congelado, dados fictícios e IA simulada. Conferir login, painel, coleta/SSE, incidente, aprovação, cadeia e diagnóstico. Se falhar, usar contingência e declarar limite; smoke ainda pendente. https://github.com/Solution-Explores/SigmaTI/issues/31\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a A fazer\nhá 11 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "DEMO — Smoke de sábado às 7h30",
+    "url": "/c/CrvfTOsN/81-demo-smoke-de-s%C3%A1bado-%C3%A0s-7h30"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em A fazer",
+        "text": "A fazer"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (DEMO — Apresentar SigmaTI ao orientador às 9h)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (DEMO — Apresentar SigmaTI ao orientador às 9h)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Demonstração 24/10"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "24 de out., 09:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para comment",
+        "text": ""
+      },
+      {
+        "label": "Adicionar reação",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Editar"
+      }
+    ],
+    "comments": [
+      "#comment-6ad8ce5f555bde113f6d13e9"
+    ],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31"
+    ],
+    "text": "A fazer\nDEMO — Apresentar SigmaTI ao orientador às 9h\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nDemonstração 24/10\nData Entrega\n24 de out., 09:00\nDescrição\nEditar\nHistória, situação e próximos passos — 21/10/2026\n\nComo equipe, quero demonstrar evidências e limites para obter decisões do orientador. Responsável pela apresentação Vinny; revisão do roteiro Iohan. Marco fixo sábado 24/10 às 9h UTC−4, cerca de 15 min. Sete passos: arquitetura; perfis/403; coleta e incidente/SSE; SLO; aprovação/auditoria; IA simulada e generalização; resultados. Declarar loopback, dados fictícios, VM no mesmo host e margem curta do timer da IA. Pedir decisão sobre 03/11, trabalho futuro, máquina física #25 e licença. Não declarar homologação hospitalar.\n\nhttps://github.com/Solution-Explores/SigmaTI/issues/31\nhttps://github.com/Solution-Explores/SigmaTI/issues/31\n\nSituação: planejada; conclusão depende de evidência. Datas interpretadas em UTC−4.\n\nAo iniciar: comentar atividade atual, branch/PR, bloqueio e próximo passo. Ao concluir: anexar evidência e revisão independente.\n\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima há pouco\n\nRegistro de planejamento — 21/10/2026: Como equipe, quero demonstrar evidências e limites para obter decisões do orientador. Responsável pela apresentação Vinny; revisão do roteiro Iohan. Marco fixo sábado 24/10 às 9h UTC−4, cerca de 15 min. Sete passos: arquitetura; perfis/403; coleta e incidente/SSE; SLO; aprovação/auditoria; IA simulada e generalização; resultados. Declarar loopback, dados fictícios, VM no mesmo host e margem curta do timer da IA. Pedir decisão sobre 03/11, trabalho futuro, máquina física #25 e licença. Não declarar homologação hospitalar. https://github.com/Solution-Explores/SigmaTI/issues/31\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a A fazer\nhá 11 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "DEMO — Apresentar SigmaTI ao orientador às 9h",
+    "url": "/c/pTOLHID5/82-demo-apresentar-sigmati-ao-orientador-%C3%A0s-9h"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em A fazer",
+        "text": "A fazer"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (PÓS-DEMO — Organizar documentação e README em PR próprio)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (PÓS-DEMO — Organizar documentação e README em PR próprio)",
+        "text": ""
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Pós-demo"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "27 de out., 18:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para action",
+        "text": ""
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      }
+    ],
+    "comments": [],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31"
+    ],
+    "text": "A fazer\nPÓS-DEMO — Organizar documentação e README em PR próprio\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nPós-demo\nData Entrega\n27 de out., 18:00\nDescrição\nEditar\nHistória, situação e próximos passos — 21/10/2026\n\nComo visitante e mantenedor, quero README enxuto e documentação organizada para reproduzir o projeto. Responsável proposto Vinny; revisor Iohan. Começar depois da apresentação de 24/10. Data proposta 27/10 às 18h para revisão de planejamento/PR, não promessa anterior de conclusão. PR de documentação separado: organizar docs por assunto, selos, captura do ensaio, fluxo, início rápido, números atuais 489/489 e carga 5/5 com limites. Revisar #41/#42 após demo. Não afirmar integração nem encerrar critérios técnicos por documentação.\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nSituação: planejada; concluir somente com evidência. UTC−4.\n\nAo iniciar: comentar atividade atual, branch/PR, bloqueio e próximo passo. Ao concluir: evidência e revisão independente.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima adicionou este cartão a A fazer\nhá 11 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "PÓS-DEMO — Organizar documentação e README em PR próprio",
+    "url": "/c/ijKGqD5U/83-p%C3%B3s-demo-organizar-documenta%C3%A7%C3%A3o-e-readme-em-pr-pr%C3%B3prio"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em A fazer",
+        "text": "A fazer"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (PÓS-DEMO — Reorganizar diretórios em PR separado)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (PÓS-DEMO — Reorganizar diretórios em PR separado)",
+        "text": ""
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Pós-demo"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "27 de out., 18:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para action",
+        "text": ""
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      },
+      {
+        "label": "Automações",
+        "text": "Automações"
+      }
+    ],
+    "comments": [],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31"
+    ],
+    "text": "A fazer\nPÓS-DEMO — Reorganizar diretórios em PR separado\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nPós-demo\nData Entrega\n27 de out., 18:00\nDescrição\nEditar\nHistória, situação e próximos passos — 21/10/2026\n\nComo mantenedor, quero estrutura de diretórios clara sem alterar lógica para facilitar evolução. Responsável proposto Vinny; revisor Iohan. Iniciar após apresentação de 24/10 e PR documental. Meta do cronograma: integrar até terça 27/10 às 18h, condicionada a revisão e CI. Planejar backend/, frontend/ e deploy/, ajustar imports, scripts, CI e caminhos. Exige CI verde, regressão na VM e revisão independente. Nenhum movimento de código foi feito por este cadastro.\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nSituação: planejada; concluir somente com evidência. UTC−4.\n\nAo iniciar: comentar atividade atual, branch/PR, bloqueio e próximo passo. Ao concluir: evidência e revisão independente.\n\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima adicionou este cartão a A fazer\nhá 11 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "PÓS-DEMO — Reorganizar diretórios em PR separado",
+    "url": "/c/uAgIxVlR/84-p%C3%B3s-demo-reorganizar-diret%C3%B3rios-em-pr-separado"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Backlog",
+        "text": "Backlog"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-01 — Planejar assunção concorrente [libera DS-35])",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-01 — Planejar assunção concorrente [libera DS-35])",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Data proposta"
+      },
+      {
+        "label": null,
+        "text": "Bloqueado · Integração"
+      },
+      {
+        "label": null,
+        "text": "Pós-demo"
+      },
+      {
+        "label": null,
+        "text": "API"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "26 de out., 18:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Salvar"
+      },
+      {
+        "label": "Power-ups",
+        "text": "Power-ups"
+      }
+    ],
+    "comments": [],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31"
+    ],
+    "text": "Backlog\nAPI-01 — Planejar assunção concorrente [libera DS-35]\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nData proposta\nBloqueado · Integração\nPós-demo\nAPI\nData Entrega\n26 de out., 18:00\nDescrição\nEditar\nHistória, situação e próximos passos — 21/10/2026\n\nComo operador, quero responsabilidade persistida e concorrência controlada para assumir um incidente sem sobrescrever outro operador. Executor proposto Vinny; revisor Iohan. Revisão de escopo em 26/10 às 18h; sem prazo de implementação pactuado. RASCUNHO: API nova/mudança de modelo; reconhecer não significa assumir. Pactuar versão, autoria da sessão, operação atômica, 409 e RBAC; dois operadores no aceite. Gate para DS-35: contrato aprovado, API, adaptador/mock, fixtures e teste real. Plano completo no DS-01. Não há endpoint aprovado por este cartão.\n\nhttps://github.com/Solution-Explores/SigmaTI/issues/31\nhttps://github.com/Solution-Explores/SigmaTI/issues/31\n\nPlano completo anexado em https://trello.com/c/Wrc04SSu  . Rascunho: nenhum contrato aprovado. Não iniciar DS antes do gate.\n\nAo iniciar: comentar atividade atual, branch/PR, bloqueio e próximo passo. Ao concluir: evidência e revisão independente.\n\nComentários e atividade\nMostrar Detalhes\nSalvar\nPower-ups\nAutomações\nComentários",
+    "title": "API-01 — Planejar assunção concorrente [libera DS-35]",
+    "url": "/c/ncMdST2J/85-api-01-planejar-assun%C3%A7%C3%A3o-concorrente-libera-ds-35"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Backlog",
+        "text": "Backlog"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-02 — Planejar escalonamento auditado [libera DS-36])",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-02 — Planejar escalonamento auditado [libera DS-36])",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Data proposta"
+      },
+      {
+        "label": null,
+        "text": "Bloqueado · Integração"
+      },
+      {
+        "label": null,
+        "text": "Pós-demo"
+      },
+      {
+        "label": null,
+        "text": "API"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "26 de out., 18:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": "Estilos de texto normal",
+        "text": ""
+      },
+      {
+        "label": "Negrito Ctrl+B",
+        "text": ""
+      }
+    ],
+    "comments": [],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31"
+    ],
+    "text": "Backlog\nAPI-02 — Planejar escalonamento auditado [libera DS-36]\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nData proposta\nBloqueado · Integração\nPós-demo\nAPI\nData Entrega\n26 de out., 18:00\nDescrição\nEditar\nHistória, situação e próximos passos — 21/10/2026\n\nComo operador, quero encaminhar incidente com destino e motivo confirmados pelo servidor para rastrear atendimento. Executor proposto Vinny; revisor Iohan. Revisão em 26/10 às 18h, sem prazo de implementação. RASCUNHO de API nova: decidir perfis, responsável, versão/409, persistência e auditoria. Não mudar estado só no cliente. Gate DS-36 exige contrato aprovado, mock/adaptador e teste real. Detalhe e reabertura são escopos separados. Plano no DS-01.\n\nhttps://github.com/Solution-Explores/SigmaTI/issues/31\nhttps://github.com/Solution-Explores/SigmaTI/issues/31\n\nPlano completo anexado em https://trello.com/c/Wrc04SSu  . Rascunho: nenhum contrato aprovado. Não iniciar DS antes do gate.\n\nAo iniciar: comentar atividade atual, branch/PR, bloqueio e próximo passo. Ao concluir: evidência e revisão independente.\n\nComentários e atividade\nMostrar Detalhes\n\nRegistro de planejamento — 21/10/2026: Como operador, quero encaminhar incidente com destino e motivo confirmados pelo servidor para rastrear atendimento. Executor proposto Vinny; revisor Iohan. Revisão em 26/10 às 18h, sem prazo de implementação. RASCUNHO de API nova: decidir perfis, responsável, versão/409, persistência e auditoria. Não mudar estado só no cliente. Gate DS-36 exige contrato aprovado, mock/adaptador e teste real. Detalhe e reabertura são escopos separados. Plano no DS-01. ​https://github.com/Solution-Explores/SigmaTI/issues/31\n\n\nSalvar\nVinícius Gomes de Lima adicionou este cartão a Backlog\nhá 11 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "API-02 — Planejar escalonamento auditado [libera DS-36]",
+    "url": "/c/4SQR2pIs/86-api-02-planejar-escalonamento-auditado-libera-ds-36"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em A fazer",
+        "text": "A fazer"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (PÓS-DEMO — Organizar documentação e README em PR próprio)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (PÓS-DEMO — Organizar documentação e README em PR próprio)",
+        "text": ""
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Pós-demo"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "27 de out., 18:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para comment",
+        "text": ""
+      },
+      {
+        "label": "Adicionar reação",
+        "text": ""
+      }
+    ],
+    "comments": [
+      "#comment-6ad8cea60ad0cdd9eba116f2"
+    ],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31"
+    ],
+    "text": "A fazer\nPÓS-DEMO — Organizar documentação e README em PR próprio\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nPós-demo\nData Entrega\n27 de out., 18:00\nDescrição\nEditar\nHistória, situação e próximos passos — 21/10/2026\n\nComo visitante e mantenedor, quero README enxuto e documentação organizada para reproduzir o projeto. Responsável proposto Vinny; revisor Iohan. Começar depois da apresentação de 24/10. Data proposta 27/10 às 18h para revisão de planejamento/PR, não promessa anterior de conclusão. PR de documentação separado: organizar docs por assunto, selos, captura do ensaio, fluxo, início rápido, números atuais 489/489 e carga 5/5 com limites. Revisar #41/#42 após demo. Não afirmar integração nem encerrar critérios técnicos por documentação.\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nSituação: planejada; concluir somente com evidência. UTC−4.\n\nAo iniciar: comentar atividade atual, branch/PR, bloqueio e próximo passo. Ao concluir: evidência e revisão independente.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima há 1 minuto\n\nRegistro de planejamento — 21/10/2026: Como visitante e mantenedor, quero README enxuto e documentação organizada para reproduzir o projeto. Responsável proposto Vinny; revisor Iohan. Começar depois da apresentação de 24/10. Data proposta 27/10 às 18h para revisão de planejamento/PR, não promessa anterior de conclusão. PR de documentação separado: organizar docs por assunto, selos, captura do ensaio, fluxo, início rápido, números atuais 489/489 e carga 5/5 com limites. Revisar #41/#42 após demo. Não afirmar integração nem encerrar critérios técnicos por documentação. https://github.com/Solution-Explores/SigmaTI/issues/31\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a A fazer\nhá 12 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "PÓS-DEMO — Organizar documentação e README em PR próprio",
+    "url": "/c/ijKGqD5U/83-p%C3%B3s-demo-organizar-documenta%C3%A7%C3%A3o-e-readme-em-pr-pr%C3%B3prio"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em A fazer",
+        "text": "A fazer"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (PÓS-DEMO — Reorganizar diretórios em PR separado)",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (PÓS-DEMO — Reorganizar diretórios em PR separado)",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Pós-demo"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "27 de out., 18:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Copiar link para comment",
+        "text": ""
+      },
+      {
+        "label": "Adicionar reação",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Editar"
+      }
+    ],
+    "comments": [
+      "#comment-6ad8ceb8079d384a15ec5750"
+    ],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31"
+    ],
+    "text": "A fazer\nPÓS-DEMO — Reorganizar diretórios em PR separado\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nPós-demo\nData Entrega\n27 de out., 18:00\nDescrição\nEditar\nHistória, situação e próximos passos — 21/10/2026\n\nComo mantenedor, quero estrutura de diretórios clara sem alterar lógica para facilitar evolução. Responsável proposto Vinny; revisor Iohan. Iniciar após apresentação de 24/10 e PR documental. Meta do cronograma: integrar até terça 27/10 às 18h, condicionada a revisão e CI. Planejar backend/, frontend/ e deploy/, ajustar imports, scripts, CI e caminhos. Exige CI verde, regressão na VM e revisão independente. Nenhum movimento de código foi feito por este cadastro.\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nSituação: planejada; concluir somente com evidência. UTC−4.\n\nAo iniciar: comentar atividade atual, branch/PR, bloqueio e próximo passo. Ao concluir: evidência e revisão independente.\n\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima há pouco\n\nRegistro de planejamento — 21/10/2026: Como mantenedor, quero estrutura de diretórios clara sem alterar lógica para facilitar evolução. Responsável proposto Vinny; revisor Iohan. Iniciar após apresentação de 24/10 e PR documental. Meta do cronograma: integrar até terça 27/10 às 18h, condicionada a revisão e CI. Planejar backend/, frontend/ e deploy/, ajustar imports, scripts, CI e caminhos. Exige CI verde, regressão na VM e revisão independente. Nenhum movimento de código foi feito por este cadastro. \nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a A fazer\nhá 12 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "PÓS-DEMO — Reorganizar diretórios em PR separado",
+    "url": "/c/uAgIxVlR/84-p%C3%B3s-demo-reorganizar-diret%C3%B3rios-em-pr-separado"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Backlog",
+        "text": "Backlog"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-01 — Planejar assunção concorrente [libera DS-35])",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-01 — Planejar assunção concorrente [libera DS-35])",
+        "text": ""
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Data proposta"
+      },
+      {
+        "label": null,
+        "text": "Bloqueado · Integração"
+      },
+      {
+        "label": null,
+        "text": "Pós-demo"
+      },
+      {
+        "label": null,
+        "text": "API"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "26 de out., 18:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      }
+    ],
+    "comments": [
+      "#comment-6ad8cf144816a4d57208ca95"
+    ],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31"
+    ],
+    "text": "Backlog\nAPI-01 — Planejar assunção concorrente [libera DS-35]\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nData proposta\nBloqueado · Integração\nPós-demo\nAPI\nData Entrega\n26 de out., 18:00\nDescrição\nEditar\nHistória, situação e próximos passos — 21/10/2026\n\nComo operador, quero responsabilidade persistida e concorrência controlada para assumir um incidente sem sobrescrever outro operador. Executor proposto Vinny; revisor Iohan. Revisão de escopo em 26/10 às 18h; sem prazo de implementação pactuado. RASCUNHO: API nova/mudança de modelo; reconhecer não significa assumir. Pactuar versão, autoria da sessão, operação atômica, 409 e RBAC; dois operadores no aceite. Gate para DS-35: contrato aprovado, API, adaptador/mock, fixtures e teste real. Plano completo no DS-01. Não há endpoint aprovado por este cartão.\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nPlano completo anexado em \nDS-01 · Joyce — Percorra o mock e registre a matriz de perfis\nA fazer\n  . Rascunho: nenhum contrato aprovado. Não iniciar DS antes do gate.\n\nAo iniciar: comentar atividade atual, branch/PR, bloqueio e próximo passo. Ao concluir: evidência e revisão independente.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nComentário adicionado com sucesso\nEscrever um comentário...\nVinícius Gomes de Lima há pouco\n\nRegistro de planejamento — 21/10/2026: Como operador, quero responsabilidade persistida e concorrência controlada para assumir um incidente sem sobrescrever outro operador. Executor proposto Vinny; revisor Iohan. Revisão de escopo em 26/10 às 18h; sem prazo de implementação pactuado. RASCUNHO: API nova/mudança de modelo; reconhecer não significa assumir. Pactuar versão, autoria da sessão, operação atômica, 409 e RBAC; dois operadores no aceite. Gate para DS-35: contrato aprovado, API, adaptador/mock, fixtures e teste real. Plano completo no DS-01. Não há endpoint aprovado por este cartão. https://github.com/Solution-Explores/SigmaTI/issues/31\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a Backlog\nhá 12 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "API-01 — Planejar assunção concorrente [libera DS-35]",
+    "url": "/c/ncMdST2J/85-api-01-planejar-assun%C3%A7%C3%A3o-concorrente-libera-ds-35"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Backlog",
+        "text": "Backlog"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-02 — Planejar escalonamento auditado [libera DS-36])",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-02 — Planejar escalonamento auditado [libera DS-36])",
+        "text": ""
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Data proposta"
+      },
+      {
+        "label": null,
+        "text": "Bloqueado · Integração"
+      },
+      {
+        "label": null,
+        "text": "Pós-demo"
+      },
+      {
+        "label": null,
+        "text": "API"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "26 de out., 18:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      }
+    ],
+    "comments": [
+      "#comment-6ad8cf2c5b32592a37d41861"
+    ],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31"
+    ],
+    "text": "Backlog\nAPI-02 — Planejar escalonamento auditado [libera DS-36]\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nData proposta\nBloqueado · Integração\nPós-demo\nAPI\nData Entrega\n26 de out., 18:00\nDescrição\nEditar\nHistória, situação e próximos passos — 21/10/2026\n\nComo operador, quero encaminhar incidente com destino e motivo confirmados pelo servidor para rastrear atendimento. Executor proposto Vinny; revisor Iohan. Revisão em 26/10 às 18h, sem prazo de implementação. RASCUNHO de API nova: decidir perfis, responsável, versão/409, persistência e auditoria. Não mudar estado só no cliente. Gate DS-36 exige contrato aprovado, mock/adaptador e teste real. Detalhe e reabertura são escopos separados. Plano no DS-01.\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nPlano completo anexado em \nDS-01 · Joyce — Percorra o mock e registre a matriz de perfis\nA fazer\n  . Rascunho: nenhum contrato aprovado. Não iniciar DS antes do gate.\n\nAo iniciar: comentar atividade atual, branch/PR, bloqueio e próximo passo. Ao concluir: evidência e revisão independente.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nComentário adicionado com sucesso\nEscrever um comentário...\nVinícius Gomes de Lima há pouco\n\nRegistro de planejamento — 21/10/2026: Como operador, quero encaminhar incidente com destino e motivo confirmados pelo servidor para rastrear atendimento. Executor proposto Vinny; revisor Iohan. Revisão em 26/10 às 18h, sem prazo de implementação. RASCUNHO de API nova: decidir perfis, responsável, versão/409, persistência e auditoria. Não mudar estado só no cliente. Gate DS-36 exige contrato aprovado, mock/adaptador e teste real. Detalhe e reabertura são escopos separados. Plano no DS-01. https://github.com/Solution-Explores/SigmaTI/issues/31\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a Backlog\nhá 12 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "API-02 — Planejar escalonamento auditado [libera DS-36]",
+    "url": "/c/4SQR2pIs/86-api-02-planejar-escalonamento-auditado-libera-ds-36"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Backlog",
+        "text": "Backlog"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-04 — Planejar relatórios reais [libera DS-38])",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-04 — Planejar relatórios reais [libera DS-38])",
+        "text": ""
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Data proposta"
+      },
+      {
+        "label": null,
+        "text": "Bloqueado · Integração"
+      },
+      {
+        "label": null,
+        "text": "Pós-demo"
+      },
+      {
+        "label": null,
+        "text": "API"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "26 de out., 18:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      }
+    ],
+    "comments": [
+      "#comment-6ad8cf37e5c4de80bf049266"
+    ],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/16",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/16"
+    ],
+    "text": "Backlog\nAPI-04 — Planejar relatórios reais [libera DS-38]\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nData proposta\nBloqueado · Integração\nPós-demo\nAPI\nData Entrega\n26 de out., 18:00\nDescrição\nEditar\nHistória, situação e próximos passos — 21/10/2026\n\nComo gestor, quero catálogo e download autorizados para obter relatório real. Executor proposto Vinny; revisor Iohan. Revisão em 26/10 às 18h; não é entrega. RASCUNHO: catálogo atual vazio não comprova geração/exportação. Pactuar período, job, falhas, arquivo protegido e RBAC. Gate DS-38: contrato, cliente/mock, fixtures e aceite real. Agendamento/envio exigem fatias próprias; #16 é referência de evolução. Plano no DS-01.\n\nhttps://github.com/Solution-Explores/SigmaTI/issues/16\n\nhttps://github.com/Solution-Explores/SigmaTI/issues/31\n\nPlano completo anexado em \nhttps://trello.com/c/Wrc04SSu  . Rascunho: nenhum contrato aprovado. Não iniciar DS antes do gate.\n\nAo iniciar: comentar atividade atual, branch/PR, bloqueio e próximo passo. Ao concluir: evidência e revisão independente.\n\nComentários e atividade\nMostrar Detalhes\nComentário adicionado com sucesso\nEscrever um comentário...\nVinícius Gomes de Lima há pouco\n\nRegistro de planejamento — 21/10/2026: Como gestor, quero catálogo e download autorizados para obter relatório real. Executor proposto Vinny; revisor Iohan. Revisão em 26/10 às 18h; não é entrega. RASCUNHO: catálogo atual vazio não comprova geração/exportação. Pactuar período, job, falhas, arquivo protegido e RBAC. Gate DS-38: contrato, cliente/mock, fixtures e aceite real. Agendamento/envio exigem fatias próprias; #16 é referência de evolução. Plano no DS-01. https://github.com/Solution-Explores/SigmaTI/issues/16\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a Backlog\nhá 13 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "API-04 — Planejar relatórios reais [libera DS-38]",
+    "url": "/c/TzZ1BZZn/88-api-04-planejar-relat%C3%B3rios-reais-libera-ds-38"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Backlog",
+        "text": "Backlog"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-05 — Planejar credenciais seguras [libera DS-39])",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-05 — Planejar credenciais seguras [libera DS-39])",
+        "text": ""
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Data proposta"
+      },
+      {
+        "label": null,
+        "text": "Bloqueado · Integração"
+      },
+      {
+        "label": null,
+        "text": "Pós-demo"
+      },
+      {
+        "label": null,
+        "text": "API"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "26 de out., 18:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      }
+    ],
+    "comments": [
+      "#comment-6ad8cf40b16af899e31a28c0"
+    ],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/23",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/23"
+    ],
+    "text": "Backlog\nAPI-05 — Planejar credenciais seguras [libera DS-39]\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nData proposta\nBloqueado · Integração\nPós-demo\nAPI\nData Entrega\n26 de out., 18:00\nDescrição\nEditar\nHistória, situação e próximos passos — 21/10/2026\n\nComo gestor, quero metadados e ciclo de credenciais reais para administrar acesso sem expor segredos. Executor proposto Vinny; revisor Iohan. Revisão em 26/10 às 18h; sem prazo de implementação. RASCUNHO de API nova: resposta textual de sucesso não comprova rotação. Pactuar armazenamento seguro, revogação efetiva, entrega única e auditoria sem chave. Gate DS-39 limita-se à lista de metadados após contrato, mock e teste real; formulários futuros separados. Referência #23; plano no DS-01.\n\nHerdar do Sentinel: cofre de credenciais e chaves de origem com criptografia em repouso (RNF07) · Issue #23 · Solution-Explores/SigmaTI\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nPlano completo anexado em \nDS-01 · Joyce — Percorra o mock e registre a matriz de perfis\nA fazer\n  . Rascunho: nenhum contrato aprovado. Não iniciar DS antes do gate.\n\nAo iniciar: comentar atividade atual, branch/PR, bloqueio e próximo passo. Ao concluir: evidência e revisão independente.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nComentário adicionado com sucesso\nEscrever um comentário...\nVinícius Gomes de Lima há pouco\n\nRegistro de planejamento — 21/10/2026: Como gestor, quero metadados e ciclo de credenciais reais para administrar acesso sem expor segredos. Executor proposto Vinny; revisor Iohan. Revisão em 26/10 às 18h; sem prazo de implementação. RASCUNHO de API nova: resposta textual de sucesso não comprova rotação. Pactuar armazenamento seguro, revogação efetiva, entrega única e auditoria sem chave. Gate DS-39 limita-se à lista de metadados após contrato, mock e teste real; formulários futuros separados. Referência #23; plano no DS-01. https://github.com/Solution-Explores/SigmaTI/issues/23\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a Backlog\nhá 13 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "API-05 — Planejar credenciais seguras [libera DS-39]",
+    "url": "/c/utUUoA5P/89-api-05-planejar-credenciais-seguras-libera-ds-39"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Backlog",
+        "text": "Backlog"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-06 — Integrar alvos existentes ao cliente/mock [libera DS-40])",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-06 — Integrar alvos existentes ao cliente/mock [libera DS-40])",
+        "text": ""
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Data proposta"
+      },
+      {
+        "label": null,
+        "text": "Bloqueado · Integração"
+      },
+      {
+        "label": null,
+        "text": "Pós-demo"
+      },
+      {
+        "label": null,
+        "text": "API"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "26 de out., 18:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      }
+    ],
+    "comments": [
+      "#comment-6ad8cf4ad698a06f183d9eb3"
+    ],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31"
+    ],
+    "text": "Backlog\nAPI-06 — Integrar alvos existentes ao cliente/mock [libera DS-40]\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nData proposta\nBloqueado · Integração\nPós-demo\nAPI\nData Entrega\n26 de out., 18:00\nDescrição\nEditar\nHistória, situação e próximos passos — 21/10/2026\n\nComo operador, quero consultar alvos pelo contrato existente para não duplicar APIs. Executor proposto Vinny; revisor Iohan. Revisão em 26/10 às 18h; implementação ainda não combinada. Integração simples: listar alvos N1+, criar/ativar Analista+. Cliente/mock devem cobrir limites, 403 de escrita N1, vazio/lento/erro. PATCH atual não edita host/nome e detalhe individual não existe nessa base. Gate DS-40: adaptador pronto e teste de contrato real. Plano no DS-01.\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nPlano completo anexado em \nDS-01 · Joyce — Percorra o mock e registre a matriz de perfis\nA fazer\n  . Rascunho: nenhum contrato aprovado. Não iniciar DS antes do gate.\n\nAo iniciar: comentar atividade atual, branch/PR, bloqueio e próximo passo. Ao concluir: evidência e revisão independente.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nComentário adicionado com sucesso\nEscrever um comentário...\nVinícius Gomes de Lima há pouco\n\nRegistro de planejamento — 21/10/2026: Como operador, quero consultar alvos pelo contrato existente para não duplicar APIs. Executor proposto Vinny; revisor Iohan. Revisão em 26/10 às 18h; implementação ainda não combinada. Integração simples: listar alvos N1+, criar/ativar Analista+. Cliente/mock devem cobrir limites, 403 de escrita N1, vazio/lento/erro. PATCH atual não edita host/nome e detalhe individual não existe nessa base. Gate DS-40: adaptador pronto e teste de contrato real. Plano no DS-01. https://github.com/Solution-Explores/SigmaTI/issues/31\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a Backlog\nhá 13 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "API-06 — Integrar alvos existentes ao cliente/mock [libera DS-40]",
+    "url": "/c/S42NwUye/90-api-06-integrar-alvos-existentes-ao-cliente-mock-libera-ds-40"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Backlog",
+        "text": "Backlog"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-07 — Integrar coleta/status [libera DS-41])",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-07 — Integrar coleta/status [libera DS-41])",
+        "text": ""
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Data proposta"
+      },
+      {
+        "label": null,
+        "text": "Bloqueado · Integração"
+      },
+      {
+        "label": null,
+        "text": "Pós-demo"
+      },
+      {
+        "label": null,
+        "text": "API"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "26 de out., 18:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      }
+    ],
+    "comments": [
+      "#comment-6ad8cf5260749c0b452d32a3"
+    ],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/8",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/8"
+    ],
+    "text": "Backlog\nAPI-07 — Integrar coleta/status [libera DS-41]\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nData proposta\nBloqueado · Integração\nPós-demo\nAPI\nData Entrega\n26 de out., 18:00\nDescrição\nEditar\nHistória e planejamento — 21/10/2026\n\nComo analista/gestor, quero estado global do coletor para distinguir coleta desabilitada de conexão SSE. Executor proposto Vinny; revisor Iohan. Revisão em 26/10 às 18h; não é entrega. Integração da rota existente coleta/status: habilitada=false e metricas vazias não são rede indisponível ou zero. Cobrir normal/desabilitado/erro e RBAC. Gate DS-41: cliente/mock, fixtures e teste real; saúde por origem é extensão separada. #8 já validada em VM não significa esta tela implementada. Plano no DS-01.\n\nSondagem contínua com scheduler e alertas em tempo real via SSE (RF01) · Issue #8 · Solution-Explores/SigmaTI\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\nPlano completo: \nDS-01 · Joyce — Percorra o mock e registre a matriz de perfis\nA fazer\n\nAo iniciar, comentar atividade, branch/PR, bloqueio e próximo passo. Nenhum contrato aprovado nem implementação declarada concluída por este cadastro.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nComentário adicionado com sucesso\nEscrever um comentário...\nVinícius Gomes de Lima há pouco\n\nRegistro de planejamento — 21/10/2026: Como analista/gestor, quero estado global do coletor para distinguir coleta desabilitada de conexão SSE. Executor proposto Vinny; revisor Iohan. Revisão em 26/10 às 18h; não é entrega. Integração da rota existente coleta/status: habilitada=false e metricas vazias não são rede indisponível ou zero. Cobrir normal/desabilitado/erro e RBAC. Gate DS-41: cliente/mock, fixtures e teste real; saúde por origem é extensão separada. #8 já validada em VM não significa esta tela implementada. Plano no DS-01. https://github.com/Solution-Explores/SigmaTI/issues/8\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a Backlog\nhá 13 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "API-07 — Integrar coleta/status [libera DS-41]",
+    "url": "/c/MzYyNPxu/91-api-07-integrar-coleta-status-libera-ds-41"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Backlog",
+        "text": "Backlog"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-08 — Integrar usuários e separar administração [libera DS-42])",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-08 — Integrar usuários e separar administração [libera DS-42])",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Data proposta"
+      },
+      {
+        "label": null,
+        "text": "Bloqueado · Integração"
+      },
+      {
+        "label": null,
+        "text": "Pós-demo"
+      },
+      {
+        "label": null,
+        "text": "API"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "26 de out., 18:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      },
+      {
+        "label": null,
+        "text": ""
+      }
+    ],
+    "comments": [
+      "#comment-6ad8cdac0b29059cf576df45"
+    ],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/6",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/6"
+    ],
+    "text": "Backlog\nAPI-08 — Integrar usuários e separar administração [libera DS-42]\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nData proposta\nBloqueado · Integração\nPós-demo\nAPI\nData Entrega\n26 de out., 18:00\nDescrição\nEditar\nHistória e planejamento — 21/10/2026\n\nComo gestor, quero consultar usuários pelo contrato disponível para administrar sem ações fictícias. Executor proposto Vinny; revisor Iohan. Revisão em 26/10 às 18h; sem prazo de implementação. GET atual lista usernames; não inferir papel/estado. Listar/criar são integração existente; detalhe completo, desativar e reset exigem contratos próprios e revogação de sessões. Gate DS-42: cliente/mock, RBAC/403, fixtures e teste real; sem senha em captura/storage. #6 é referência de autenticação, não aceite de administração futura. Plano no DS-01.\n\nhttps://github.com/Solution-Explores/SigmaTI/issues/6\nhttps://github.com/Solution-Explores/SigmaTI/issues/31\nPlano completo: https://trello.com/c/Wrc04SSu\n\nAo iniciar, comentar atividade, branch/PR, bloqueio e próximo passo. Nenhum contrato aprovado nem implementação declarada concluída por este cadastro.\n\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima há 6 minutos\n\nRegistro de planejamento — 21/10/2026: Como gestor, quero consultar usuários pelo contrato disponível para administrar sem ações fictícias. Executor proposto Vinny; revisor Iohan. Revisão em 26/10 às 18h; sem prazo de implementação. GET atual lista usernames; não inferir papel/estado. Listar/criar são integração existente; detalhe completo, desativar e reset exigem contratos próprios e revogação de sessões. Gate DS-42: cliente/mock, RBAC/403, fixtures e teste real; sem senha em captura/storage. #6 é referência de autenticação, não aceite de administração futura. Plano no DS-01. https://github.com/Solution-Explores/SigmaTI/issues/6\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a Backlog\nhá 13 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "API-08 — Integrar usuários e separar administração [libera DS-42]",
+    "url": "/c/Qmyo6884/92-api-08-integrar-usu%C3%A1rios-e-separar-administra%C3%A7%C3%A3o-libera-ds-42"
+  },
+  {
+    "buttons": [
+      {
+        "label": "Lista de alterações deste cartão, atualmente em Backlog",
+        "text": "Backlog"
+      },
+      {
+        "label": "Capa",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Ações",
+        "text": ""
+      },
+      {
+        "label": "Fechar caixa de diálogo",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-03 — Planejar IA contextual [libera DS-37])",
+        "text": ""
+      },
+      {
+        "label": "Marcar este cartão como concluído (API-03 — Planejar IA contextual [libera DS-37])",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Adicionar"
+      },
+      {
+        "label": "Adicionar ao cartão",
+        "text": "Adicionar"
+      },
+      {
+        "label": null,
+        "text": "Checklist"
+      },
+      {
+        "label": null,
+        "text": "Anexo"
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": ""
+      },
+      {
+        "label": "Adicionar membros ao cartão",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "Data proposta"
+      },
+      {
+        "label": null,
+        "text": "Bloqueado · Integração"
+      },
+      {
+        "label": null,
+        "text": "Pós-demo"
+      },
+      {
+        "label": null,
+        "text": "API"
+      },
+      {
+        "label": "Adicionar uma etiqueta",
+        "text": ""
+      },
+      {
+        "label": null,
+        "text": "26 de out., 18:00"
+      },
+      {
+        "label": "Editar descrição",
+        "text": "Editar"
+      },
+      {
+        "label": null,
+        "text": "Mostrar mais"
+      },
+      {
+        "label": null,
+        "text": "Mostrar Detalhes"
+      },
+      {
+        "label": null,
+        "text": "Escrever um comentário..."
+      }
+    ],
+    "comments": [
+      "#comment-6ad8ced9c81a02472be1c838"
+    ],
+    "issues": [
+      "https://github.com/Solution-Explores/SigmaTI/issues/18",
+      "https://github.com/Solution-Explores/SigmaTI/issues/31",
+      "https://github.com/Solution-Explores/SigmaTI/issues/18"
+    ],
+    "text": "Backlog\nAPI-03 — Planejar IA contextual [libera DS-37]\nAdicionar\nAdicionar\nChecklist\nAnexo\nMembros\nEtiquetas\nData proposta\nBloqueado · Integração\nPós-demo\nAPI\nData Entrega\n26 de out., 18:00\nDescrição\nEditar\nHistória, situação e próximos passos — 21/10/2026\n\nComo analista, quero diagnóstico contextual ao incidente com estados explícitos para consultar histórico sem inferir sucesso do texto. Executor proposto Vinny; revisor Iohan. Revisão de escopo em 26/10 às 18h; implementação sem prazo pactuado. RASCUNHO: alertas atual é avulso, não chat. Negociar acesso, persistência, conteúdo generalizado, cancelamento, orçamento, auditoria e IA simulada. Gate DS-37: contrato, adaptador/mock e teste real. #18 é referência de evolução, não prova deste contrato. Plano no DS-01.\n\nhttps://github.com/Solution-Explores/SigmaTI/issues/18\n\nÉpico: evoluir o SIGMA para um sistema de engenharia da computação · Issue #31 · Solution-Explores/SigmaTI\n\nPlano completo anexado em \nDS-01 · Joyce — Percorra o mock e registre a matriz de perfis\nA fazer\n  . Rascunho: nenhum contrato aprovado. Não iniciar DS antes do gate.\n\nAo iniciar: comentar atividade atual, branch/PR, bloqueio e próximo passo. Ao concluir: evidência e revisão independente.\n\nMostrar mais\nComentários e atividade\nMostrar Detalhes\nEscrever um comentário...\nVinícius Gomes de Lima há 2 minutos\n\nRegistro de planejamento — 21/10/2026: Como analista, quero diagnóstico contextual ao incidente com estados explícitos para consultar histórico sem inferir sucesso do texto. Executor proposto Vinny; revisor Iohan. Revisão de escopo em 26/10 às 18h; implementação sem prazo pactuado. RASCUNHO: alertas atual é avulso, não chat. Negociar acesso, persistência, conteúdo generalizado, cancelamento, orçamento, auditoria e IA simulada. Gate DS-37: contrato, adaptador/mock e teste real. #18 é referência de evolução, não prova deste contrato. Plano no DS-01. https://github.com/Solution-Explores/SigmaTI/issues/18\n\n•\nEditar\n•\nAdicionar Vínculo como Anexo\n•\nExcluir\nVinícius Gomes de Lima adicionou este cartão a Backlog\nhá 14 minutos\nPower-ups\nAutomações\nComentários",
+    "title": "API-03 — Planejar IA contextual [libera DS-37]",
+    "url": "/c/nRdm4DCn/87-api-03-planejar-ia-contextual-libera-ds-37"
+  }
+]

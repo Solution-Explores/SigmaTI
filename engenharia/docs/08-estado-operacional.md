@@ -3,7 +3,7 @@
 # Persistência operacional (#7)
 
 Conferência dos critérios originais e limites da evidência em
-[revisão das issues de base](../../doc/revisao-achados-base-2026-10-20.md).
+[revisão das issues de base](../../docs/historico/revisao-achados-base-2026-10-20.md).
 
 Incremento posterior ao PR #35. O núcleo `sigma_eng` não importa SQLAlchemy,
 Psycopg ou FastAPI para gerenciar estado. `StateRepository` e
