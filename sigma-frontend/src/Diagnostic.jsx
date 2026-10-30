@@ -47,9 +47,9 @@ export default function Diagnostic({ session, onExpire }) {
             <section className="card" aria-labelledby="result-title" aria-live="polite" aria-busy={loading}>
               <h2 id="result-title">Resultado</h2>
               {resultado ? <>
-                <h3>Dados enviados à IA</h3>
+                <h4>Dados enviados à IA</h4>
                 <pre>{resultado.dados_enviados_nuvem}</pre>
-                <h3>Diagnóstico da IA</h3>
+                <h4>Diagnóstico da IA</h4>
                 <p className="diagnosis">{resultado.diagnostico_ia}</p>
               </> : <p>O diagnóstico aparecerá aqui após o envio.</p>}
             </section>
