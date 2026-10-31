@@ -87,3 +87,23 @@ Esta pasta recebeu duas propostas para a identidade do painel. Nenhuma foi aprov
 
 - [decisoes.md](decisoes.md): três opções lado a lado, papéis de cor, tabelas de contraste e quadro "Registro da decisão" para preencher na reunião.
 - [prancha-identidade-v4.html](prancha-identidade-v4.html): prancha da identidade v4 (abrir no navegador).
+
+## Logotipos SVG da identidade v4 (DS-04), proposta
+
+Arquivos gerados a partir da prancha `prancha-identidade-v4.html`. Ainda são proposta: a identidade será decidida na reunião de equipe (ver `decisoes.md`) e nada foi aplicado ao painel.
+
+| Arquivo | Uso |
+| --- | --- |
+| `logo-claro.svg` | Logotipo horizontal para fundo claro |
+| `logo-escuro.svg` | Logotipo horizontal para fundo escuro |
+| `logo-vertical-claro.svg` | Logotipo vertical para fundo claro |
+| `logo-vertical-escuro.svg` | Logotipo vertical para fundo escuro |
+| `simbolo.svg` | Símbolo para fundo claro |
+| `simbolo-escuro.svg` | Símbolo para fundo escuro |
+| `icone-app.svg` | Ícone de aplicativo e favicon (único com fundo, um quadrado arredondado índigo) |
+| `logo-preto.svg` | Uma cor, preto (formulários e impressão simples) |
+| `logo-branco.svg` | Uma cor, branco |
+
+Características: vetor com `viewBox`, sem script, link externo ou imagem embutida, e sem fundo opaco (exceto o ícone). O nome está em curvas, então não depende de fonte instalada. Cada arquivo traz um bloco de metadados C2PA (credenciais de conteúdo, cerca de 7,7 KB) que não altera o desenho e pode ser removido se a equipe preferir.
+
+Ainda não verificado: contraste de cada logotipo nos dois temas e tamanhos mínimos de uso (a prancha sugere 110 px de largura para o logotipo horizontal e 24 px para o símbolo, sem teste em tamanho real).
