@@ -80,3 +80,10 @@ use a versão escura da cor para texto e botões.
   e de arquivo local (o projeto não carrega fontes de servidores externos).
 - **Escolha da variante** (azul ou verde) e do conjunto de cores, conforme a seção acima.
 - Depois de decidido, atualizar `DESIGN.md` na raiz do projeto, que é a referência citada no TCC.
+
+## Proposta de marca e paleta (DS-03), aguardando decisão
+
+Esta pasta recebeu duas propostas para a identidade do painel. Nenhuma foi aprovada nem aplicada ao painel. A decisão é da reunião de equipe.
+
+- [decisoes.md](decisoes.md): três opções lado a lado, papéis de cor, tabelas de contraste e quadro "Registro da decisão" para preencher na reunião.
+- [prancha-identidade-v4.html](prancha-identidade-v4.html): prancha da identidade v4 (abrir no navegador).
