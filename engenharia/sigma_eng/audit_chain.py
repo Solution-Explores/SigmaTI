@@ -7,6 +7,12 @@ sem a chave não consegue recalcular a cadeia; sem chave é SHA-256 simples,
 que detecta corrupção e edição acidental, mas não um adversário que refaça
 todos os hashes.
 
+Rotação de chave: com ``chaves`` (id -> chave) e ``chave_ativa``, cada entrada nova
+carrega ``kid`` (dentro do corpo assinado) e a verificação usa a chave daquele id.
+Entradas anteriores sem ``kid`` usam ``chave_legada`` (por padrão, ``chave``).
+Âncora externa: ``ancora()`` resume o último hash para guardar fora da máquina
+(ver ``audit_anchor``); a cadeia sozinha não detecta apagar o arquivo inteiro.
+
 Formato JSONL, uma entrada por linha, anexado com fsync.
 """
 
@@ -22,10 +28,36 @@ import time
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, Mapping
 
 GENESIS = "0" * 64
 LOCK_TIMEOUT_SECONDS = 10
+
+
+def chaves_do_ambiente(env: Mapping[str, str]) -> tuple[dict[str, bytes], str | None, bytes | None]:
+    """(chaves por id, id ativo, chave legada) a partir do ambiente.
+
+    Sem ``SIGMA_AUDIT_KEY_ID`` vale o formato anterior: uma chave, sem ``kid``.
+    ``SIGMA_AUDIT_RETIRED_KEYS`` = "id:chave,id2:chave2"; ``SIGMA_AUDIT_LEGACY_KEY``
+    verifica entradas gravadas antes da rotação (sem ``kid``).
+    """
+    chave = env.get("SIGMA_AUDIT_KEY") or None
+    kid = (env.get("SIGMA_AUDIT_KEY_ID") or "").strip()
+    if not kid:
+        return {}, None, chave.encode() if chave else None
+    if not chave:
+        raise ValueError("SIGMA_AUDIT_KEY_ID exige SIGMA_AUDIT_KEY.")
+    chaves = {kid: chave.encode()}
+    for par in (env.get("SIGMA_AUDIT_RETIRED_KEYS") or "").split(","):
+        if not par.strip():
+            continue
+        antigo, sep, valor = par.strip().partition(":")
+        antigo = antigo.strip()
+        if not sep or not antigo or not valor or antigo in chaves:
+            raise ValueError("SIGMA_AUDIT_RETIRED_KEYS inválida.")
+        chaves[antigo] = valor.encode()
+    legada = env.get("SIGMA_AUDIT_LEGACY_KEY") or None
+    return chaves, kid, legada.encode() if legada else None
 
 
 def _canonico(obj: Any) -> bytes:
@@ -34,9 +66,17 @@ def _canonico(obj: Any) -> bytes:
 
 class AuditChain:
     def __init__(self, caminho: str | os.PathLike | None = None, chave: bytes | None = None,
-                 relogio: Callable[[], datetime] = lambda: datetime.now(timezone.utc)) -> None:
+                 relogio: Callable[[], datetime] = lambda: datetime.now(timezone.utc), *,
+                 chaves: dict[str, bytes] | None = None, chave_ativa: str | None = None,
+                 chave_legada: bytes | None = None) -> None:
         self.caminho = Path(caminho) if caminho else None
-        self.chave = chave
+        self._chaves = dict(chaves or {})
+        self._ativa = chave_ativa
+        if self._ativa is not None and self._ativa not in self._chaves:
+            raise ValueError("chave_ativa precisa estar em chaves.")
+        # Entradas sem kid (formato anterior) usam a chave legada.
+        self._legada = chave_legada if chave_legada is not None else chave
+        self.chave = self._chaves[self._ativa] if self._ativa else chave
         self.relogio = relogio
         self._lock = threading.Lock()
         self._entradas: list[dict] = []
@@ -106,41 +146,85 @@ class AuditChain:
     def __bool__(self) -> bool:
         return True
 
-    def _hash(self, corpo: dict) -> str:
+    @classmethod
+    def do_ambiente(cls, caminho: str | os.PathLike, env: Mapping[str, str] | None = None) -> "AuditChain":
+        chaves, ativa, legada = chaves_do_ambiente(os.environ if env is None else env)
+        if ativa is None:
+            return cls(caminho, chave=legada)
+        return cls(caminho, chaves=chaves, chave_ativa=ativa, chave_legada=legada)
+
+    @staticmethod
+    def _assinar(chave: bytes | None, corpo: dict) -> str:
         dados = _canonico(corpo)
-        if self.chave:
-            return hmac.new(self.chave, dados, hashlib.sha256).hexdigest()
+        if chave:
+            return hmac.new(chave, dados, hashlib.sha256).hexdigest()
         return hashlib.sha256(dados).hexdigest()
+
+    def _hash(self, corpo: dict) -> str | None:
+        """Hash esperado com a chave do ``kid`` da entrada; None se a chave não está disponível."""
+        kid = corpo.get("kid")
+        if kid is None:
+            return self._assinar(self._legada, corpo)
+        if isinstance(kid, str) and kid in self._chaves:
+            return self._assinar(self._chaves[kid], corpo)
+        return None
 
     def registrar(self, ator: str, acao: str, recurso: str | None = None, detalhes: dict | None = None) -> dict:
         """Anexa um evento e devolve a entrada (com ``hash``)."""
         with self._coordenar():
-            if not self._verificar()[0]:
-                raise ValueError("Trilha de auditoria inválida; gravação recusada.")
-            anterior = self._entradas[-1]["hash"] if self._entradas else GENESIS
-            corpo = {
-                "seq": len(self._entradas),
-                "ts": self.relogio().isoformat(),
-                "ator": ator,
-                "acao": acao,
-                "recurso": recurso,
-                "detalhes": detalhes or {},
-                "anterior": anterior,
-            }
-            entrada = {**corpo, "hash": self._hash(corpo)}
-            if self.caminho:
-                self.caminho.parent.mkdir(parents=True, exist_ok=True)
-                with self.caminho.open("a+b") as fh:
-                    fh.seek(0, os.SEEK_END)
-                    if fh.tell():
-                        fh.seek(-1, os.SEEK_END)
-                        if fh.read(1) != b"\n":
-                            fh.write(b"\n")
-                    fh.write((json.dumps(entrada, ensure_ascii=False) + "\n").encode("utf-8"))
-                    fh.flush()
-                    os.fsync(fh.fileno())
-            self._entradas.append(entrada)
+            return self._registrar(ator, acao, recurso, detalhes)
+
+    def _registrar(self, ator: str, acao: str, recurso: str | None, detalhes: dict | None) -> dict:
+        """Anexa a entrada; o chamador já detém o lock de ``_coordenar``."""
+        if not self._verificar()[0]:
+            raise ValueError("Trilha de auditoria inválida; gravação recusada.")
+        anterior = self._entradas[-1]["hash"] if self._entradas else GENESIS
+        corpo = {
+            "seq": len(self._entradas),
+            "ts": self.relogio().isoformat(),
+            "ator": ator,
+            "acao": acao,
+            "recurso": recurso,
+            "detalhes": detalhes or {},
+            "anterior": anterior,
+        }
+        if self._ativa is not None:
+            corpo["kid"] = self._ativa
+        entrada = {**corpo, "hash": self._assinar(self.chave, corpo)}
+        if self.caminho:
+            self.caminho.parent.mkdir(parents=True, exist_ok=True)
+            with self.caminho.open("a+b") as fh:
+                fh.seek(0, os.SEEK_END)
+                if fh.tell():
+                    fh.seek(-1, os.SEEK_END)
+                    if fh.read(1) != b"\n":
+                        fh.write(b"\n")
+                fh.write((json.dumps(entrada, ensure_ascii=False) + "\n").encode("utf-8"))
+                fh.flush()
+                os.fsync(fh.fileno())
+        self._entradas.append(entrada)
+        return entrada
+
+    def rotacionar(self, novo_kid: str, nova_chave: bytes, ator: str) -> dict:
+        """Troca a chave ativa. O evento de rotação é assinado pela chave anterior."""
+        if not isinstance(novo_kid, str) or not novo_kid.strip() or not nova_chave:
+            raise ValueError("Informe id e chave novos.")
+        with self._coordenar():
+            if novo_kid in self._chaves:
+                raise ValueError("Id de chave já usado.")
+            entrada = self._registrar(ator, "audit.key_rotated", "audit_key",
+                                      {"de": self._ativa, "para": novo_kid})
+            self._chaves[novo_kid] = nova_chave
+            self._ativa = novo_kid
+            self.chave = nova_chave
             return entrada
+
+    def ancora(self) -> dict:
+        """Resumo do estado atual para guardar fora da máquina (sem dados pessoais)."""
+        with self._coordenar():
+            ultima = self._entradas[-1] if self._entradas else {}
+            return {"entradas": len(self._entradas), "ultimo_hash": ultima.get("hash", GENESIS),
+                    "ts": self.relogio().isoformat(), "kid": ultima.get("kid")}
 
     def verificar(self) -> tuple[bool, int | None]:
         """(íntegra?, índice da primeira entrada inválida)."""
@@ -160,7 +244,9 @@ class AuditChain:
             if e.get("seq") != i or e.get("anterior") != anterior:
                 return False, i
             actual = e.get("hash")
-            if not isinstance(actual, str) or not actual.isascii() or not hmac.compare_digest(self._hash(corpo), actual):
+            esperado = self._hash(corpo)
+            if esperado is None or not isinstance(actual, str) or not actual.isascii() \
+                    or not hmac.compare_digest(esperado, actual):
                 return False, i
             anterior = e["hash"]
         return True, None
