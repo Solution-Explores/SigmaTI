@@ -23,13 +23,13 @@ git switch -c feature/nome
 git push -u origin feature/nome
 ```
 
-Abra o PR para `develop`. Exija revisão e CI aprovado antes de integrar. Não desenvolva direto nas branches permanentes.
+Abra o PR para `develop`. O autor integra quando o CI estiver verde; não há revisão obrigatória (veja o [fluxo de trabalho](fluxo-de-trabalho-tcc.md)). Não desenvolva direto nas branches permanentes.
 
 ## Release e hotfix
 
-**Release.** Quando houver uma versão concreta, crie `release/X.Y.Z` a partir da `develop` aprovada. Congele funcionalidades e registre o aceite. Depois da revisão, integre à `main`, crie a tag `vX.Y.Z` no commit entregue e leve as correções de volta à `develop` por PR.
+**Release.** Quando houver uma versão concreta, crie `release/X.Y.Z` a partir da `develop` aprovada. Congele funcionalidades e registre o aceite. Com o CI verde e a bateria de aceite registrada, qualquer dev integra à `main`, cria a tag `vX.Y.Z` no commit entregue e leve as correções de volta à `develop` por PR.
 
-**Hotfix.** Para urgências, crie `hotfix/nome` a partir da `main`. Depois de revisar e testar, integre à `main`, publique uma versão de correção e leve a alteração à `develop`. Se houver uma release em preparação, leve também a ela. Nenhuma correção pode ficar só na produção.
+**Hotfix.** Para urgências, crie `hotfix/nome` a partir da `main`. Depois de testar, integre à `main` com o CI verde, publique uma versão de correção e leve a alteração à `develop`. Se houver uma release em preparação, leve também a ela. Nenhuma correção pode ficar só na produção.
 
 As branches `release/*` e `hotfix/*` são temporárias e só existem enquanto há trabalho para elas. Adotar o fluxo não publica versão nem aprova merge. As proteções de branch precisam ser conferidas nas configurações do GitHub, porque esta documentação não as impõe.
 

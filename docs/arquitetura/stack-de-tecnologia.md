@@ -125,7 +125,7 @@ O fluxo programado:
 - O PostgreSQL não publica porta fora da rede interna do Docker.
 - n8n (5678), Grafana (3000) e Zabbix (10051) escutam em loopback. O acesso remoto exige um IP de gerência ou VPN e o firewall da instalação.
 - As imagens têm release e digest fixos em `docker-images.lock.json`. Veja [Portas e imagens](../operacao/politica-imagens-e-portas.md).
-- As credenciais do PostgreSQL, do Zabbix e do Grafana vêm do ambiente ou do `.env`, sem senha padrão no Compose. Preencha todas antes de validar o Compose, inclusive as do perfil `monitoring`. Veja [Credenciais da infraestrutura](../../README.md#credenciais-da-infraestrutura).
+- As credenciais do PostgreSQL, do Zabbix e do Grafana vêm do ambiente ou do `.env`, sem senha padrão no Compose. Preencha todas antes de validar o Compose, inclusive as do perfil `monitoring`. Veja [Credenciais da infraestrutura](../operacao/configuracao-e-execucao.md#credenciais-da-infraestrutura).
 - O n8n usa o cadastro nativo de owner na primeira abertura. As variáveis antigas de Basic Auth não fazem parte da configuração.
 - Variáveis de inicialização não rotacionam credenciais já gravadas.
 
