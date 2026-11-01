@@ -1,0 +1,133 @@
+# Roteiro: restauração da #25 em máquina física separada (terça, 03/11/2026)
+
+Executa o primeiro critério da #25: restaurar o backup em outra máquina reproduz os incidentes e uma auditoria íntegra. Siga o guia [backup-restauracao.md](../operacao/backup-restauracao.md); este roteiro só ordena os passos e diz o que anotar. Resultado no registro [segunda-maquina.md](../specs/018-backup-restauracao/segunda-maquina.md).
+
+**Dados fictícios apenas.** Não leve dados reais do hospital nem da empresa. Não publique no GitHub o pacote, a chave, a trilha bruta, tokens nem configurações reais.
+
+## 0. Antes de ir para a máquina de destino (no seu computador)
+
+1. Confirme o SHA que vai ser testado: o `develop` depois da integração dos PRs aprovados (anote o SHA completo).
+2. Gere um pacote **novo** nesse SHA, em vez de reaproveitar `test-results/recovery-final`, que veio de um SHA antigo e pode ter outro `alembic_version`:
+
+   ```bash
+   git switch --detach <SHA>
+   .venv/Scripts/python.exe scripts/validate_recovery.py --output test-results/recovery-2026-11-03
+   ```
+
+   Precisa de Docker ligado. Saem `bundle/` (dump, trilha e manifesto), `audit-key.txt` (a chave, **fora** do bundle) e `report.json`. Anote do `report.json` a imagem do PostgreSQL com o digest e a versão principal.
+3. Leve **o `bundle/`** em um pendrive ou arquivo compactado e a **chave por outro canal** (por exemplo, digitada à mão ou enviada por mensagem). Nunca no mesmo pacote.
+4. Guarde também o SHA e o digest da imagem do PostgreSQL.
+
+## 1. Na máquina de destino: verificar se serve
+
+| Item | Conferir | Se faltar |
+|---|---|---|
+| Autorização | O uso do computador do estágio para isso está permitido? | Pare; use outra máquina |
+| Docker | `docker version` e `docker run --rm hello-world` funcionam | Sem Docker não dá; ver "Se não der" |
+| Python 3.12+ | `python --version` | Instalar só se permitido |
+| Git | `git --version` | Idem |
+| Disco/rede | 2 GB livres; acesso ao PyPI e Docker Hub | Pedir à TI ou usar o plano B |
+
+Anote, sem identificar a empresa: sistema operacional, memória, versão do Docker e do Python. Descreva a máquina como "notebook Windows 11, 16 GB" ou similar.
+
+## 2. Preparar o destino
+
+```powershell
+git clone https://github.com/Solution-Explores/SigmaTI.git
+cd SigmaTI
+git checkout <SHA>
+git rev-parse HEAD            # deve ser igual ao SHA anotado
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+```
+
+Suba um PostgreSQL **vazio**, da **mesma versão principal e imagem** do `report.json`. Nome e credenciais podem ser diferentes da origem; não aplique migrações antes do restore:
+
+```powershell
+$senha = [guid]::NewGuid().ToString('N')       # não imprimir nem anotar
+docker run -d --name sigma-db-recuperado -e POSTGRES_USER=sigma_dest -e POSTGRES_DB=sigma_dest `
+  -e POSTGRES_PASSWORD=$senha -p 127.0.0.1:55432:5432 <IMAGEM_COM_DIGEST_DO_REPORT>
+docker exec sigma-db-recuperado pg_isready -U sigma_dest -d sigma_dest
+```
+
+Copie o `bundle/` para uma pasta do destino (por exemplo, `C:\sigma-restore\bundle`). Em Windows não há `chmod`; mantenha a pasta fora de diretórios sincronizados na nuvem.
+
+## 3. Verificar o pacote e restaurar
+
+```powershell
+$env:SIGMA_AUDIT_KEY = '<a chave recebida pelo canal separado>'     # ao menos 32 bytes
+.venv\Scripts\python.exe scripts\recovery.py verify --bundle C:\sigma-restore\bundle
+.venv\Scripts\python.exe scripts\recovery.py restore --container sigma-db-recuperado `
+  --bundle C:\sigma-restore\bundle --audit C:\sigma-restore\audit-restaurado.jsonl --quiesced
+echo $LASTEXITCODE
+```
+
+(`restore.sh` só chama esse mesmo `recovery.py`; no Windows rode direto o Python.) **Anote:** o código de saída (esperado 0) e o JSON final (`status`, `tables`, `audit_entries`). `verify` e `restore` recusam chave errada, pacote alterado e banco ocupado: se recusar, **não force**, anote a mensagem e pare.
+
+## 4. Conferir que reproduziu incidentes e auditoria
+
+O `restore` já compara todas as tabelas, contagens e fingerprints com o manifesto e só então grava a trilha. Confirme isso e faça as conferências pela API:
+
+1. **Auditoria íntegra pela chave** (sem depender da API):
+
+   ```powershell
+   $env:PYTHONPATH = "engenharia"
+   .venv\Scripts\python.exe -c "import os; from sigma_eng.audit_chain import AuditChain; c=AuditChain(r'C:\sigma-restore\audit-restaurado.jsonl', chave=os.environ['SIGMA_AUDIT_KEY'].encode()); print(c.resumo())"
+   ```
+
+   Esperado: `integra: True`, `primeira_invalida: None` e `entradas` igual ao `audit_entries` do restore.
+
+2. **Subir a API no banco restaurado** (coleta desligada). Configure por variável de ambiente, **sem gravar em arquivo versionado**:
+
+   ```powershell
+   $env:SIGMA_DATABASE_URL = "postgresql+psycopg://sigma_dest:$senha@127.0.0.1:55432/sigma_dest"
+   $env:SIGMA_COLLECTION_ENABLED = "0"
+   $env:SIGMA_AUDIT_PATH = "C:\sigma-restore\audit-restaurado.jsonl"
+   $env:SIGMA_JWT_SECRET = -join ((1..64) | ForEach-Object { '{0:x}' -f (Get-Random -Max 16) })
+   $env:OPENROUTER_API_KEY = "fake-restauracao-apenas"
+   $env:SIGMA_LLM_MODEL = "test/model"
+   $env:SIGMA_CORS_ORIGINS = "http://localhost:5173"
+   $env:PYTHON_DOTENV_DISABLED = "1"
+   .venv\Scripts\python.exe -m uvicorn --app-dir backend main:app --host 127.0.0.1 --port 8000
+   ```
+
+3. **Entrar na API.** A senha do usuário de teste do pacote não é guardada pelo script de validação (ele a descarta). Crie um usuário novo no banco restaurado, em outro terminal com as mesmas variáveis:
+
+   ```powershell
+   $env:PYTHONPATH = "backend"
+   .venv\Scripts\python.exe -m scripts.manage_identity create restauracao.gestor gestor_ti
+   ```
+
+   Depois faça login (`POST /api/auth/login`) e use o token nas chamadas abaixo.
+4. **Incidente original:** `GET /api/eng/incidentes`. Esperado: o incidente do pacote (alvo `smoke.synthetic`, criado pela falha TCP injetada na origem) aparece na lista. Anote só a contagem e que o ID do incidente da origem consta.
+5. **Auditoria pela API:** `GET /api/eng/auditoria/verificar`. Esperado: `integra: true`.
+6. **Nova escrita sem colisão de IDs:** `POST /api/eng/aprovacoes` com `{"acao":"restauracao.pos"}` e depois confira que o novo evento tem ID maior que o último da origem (o smoke usa `max(id)` de `eventos_operacionais`).
+7. **Recriar o contêiner com o mesmo volume:** para essa prova o contêiner precisa ter sido criado com volume nomeado. Se você usou o `docker run` acima (sem volume), troque no passo 2 por `-v sigma-dest-data:/var/lib/postgresql/data`. Então: pare a API, `docker rm -f sigma-db-recuperado`, recrie com o **mesmo** comando e volume e confirme que as contagens das tabelas e os incidentes continuam iguais.
+
+## 5. O que anotar em `segunda-maquina.md`
+
+Preencha cada linha **sem segredos nem dados brutos**:
+
+- Data, operador e identificação fictícia das máquinas de origem e destino (por exemplo, "origem: PC pessoal Windows 11; destino: notebook corporativo Windows 11, 16 GB").
+- SHA completo do código, versão principal e imagem do PostgreSQL (com digest).
+- Manifesto verificado com a chave recebida por canal separado: resultado do `verify`.
+- Comando de restauração, código de saída e o resumo (`tables`, `audit_entries`).
+- Inventário de tabelas conferido pelo restore.
+- Incidente original visto pela API e `integra: true`.
+- Recriação do contêiner com o mesmo volume sem perda.
+- Nova escrita e IDs sem colisão.
+- Evidência e resultado final: **aprovado** só se todos os itens passaram na máquina de destino.
+
+## 6. Limpeza ao terminar
+
+Pare a API, `docker rm -f` o contêiner, `docker volume rm` o volume, apague `C:\sigma-restore`, o `.venv` e o clone, e limpe as variáveis de ambiente da sessão. Não deixe chave, pacote nem trilha na máquina do estágio.
+
+## 7. Se não der
+
+- **Sem Docker ou sem permissão:** não dá para fazer aqui; use outra máquina física ou declare a limitação no TCC e mantenha a #25 na Sprint 2.
+- **Plano B declarado:** a restauração em VM limpa, descrita em [planejamento-validacao-25-virtualbox.md](../historico/planejamento-validacao-25-virtualbox.md), só vale se a limitação (VM, não hardware distinto) for registrada.
+- **Falha no restore:** não force nem use `--clean`. Anote a mensagem, descarte só o contêiner de destino e investigue com o guia.
+
+## Comentário para a issue #25 (depois de preencher o registro)
+
+> Restauração em máquina física separada em DD/11/2026. SHA `<SHA>`, PostgreSQL `<versão>`, origem e destino descritos de forma fictícia em `docs/specs/018-backup-restauracao/segunda-maquina.md`. `recovery.py verify` ok com a chave por canal separado; `restore` saiu com 0 (`tables=<n>`, `audit_entries=<n>`); trilha íntegra (`integra: true`); incidente original listado pela API; contêiner recriado com o mesmo volume sem perda; nova escrita sem colisão de IDs. Sem dump, trilha bruta, chaves nem configurações reais anexados. Critério 1 atendido, ou: o que falhou e por quê.
