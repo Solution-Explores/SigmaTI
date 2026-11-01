@@ -135,6 +135,8 @@ python -m pytest -q -p no:cacheprovider
 - As correções de sessão, painel e anonimização estão nas [evidências da recuperação da sprint](docs/specs/011-recuperacao-sprint/evidencias.md), integradas à `develop` pelo [PR #32](https://github.com/Solution-Explores/SigmaTI/pull/32).
 - O ensaio do backup em outra máquina e a ativação do modelo systemd continuam pendentes. A validação local não equivale ao aceite integral da issue #25.
 
+Planejamento do aceite em outro local: [VM VirtualBox e roteiro da #25](docs/historico/planejamento-validacao-25-virtualbox.md).
+
 ## Segurança e privacidade
 
 - Chaves e senhas ficam em variáveis de ambiente, nunca no código.
