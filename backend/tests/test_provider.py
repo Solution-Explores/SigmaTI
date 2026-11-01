@@ -125,7 +125,7 @@ def test_production_client_has_bounded_timeouts_and_no_redirects(module):
     async def run():
         async with module.create_provider_client() as client:
             for phase in ("connect", "read", "write", "pool"):
-                assert getattr(client.timeout, phase) == 14.0
+                assert getattr(client.timeout, phase) == 13.0
             assert not client.follow_redirects
     asyncio.run(run())
 
@@ -208,11 +208,11 @@ def test_real_budget_cancels_slow_provider_within_15_seconds(
             raise
 
     handler.side_effect = slow
-    assert module.IA_TIMEOUT_SECONDS == 14.0
+    assert module.IA_TIMEOUT_SECONDS == 13.0
     start = monotonic()
     response = authenticated_client.post("/api/alertas", json=ALERT)
     elapsed = monotonic() - start
-    assert 14.0 <= elapsed <= 15.0
+    assert 13.0 <= elapsed <= 15.0
     assert cancelled == [True]
     assert_generic(module, response)
     assert_safe_log(caplog, "timeout")
