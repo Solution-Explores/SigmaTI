@@ -30,6 +30,29 @@ Executa o primeiro critério da #25: restaurar o backup em outra máquina reprod
 
 Anote, sem identificar a empresa: sistema operacional, memória, versão do Docker e do Python. Descreva a máquina como "notebook Windows 11, 16 GB" ou similar.
 
+**Prepare o ambiente completo antes de restaurar, em vez de ir instalando aos poucos.** Na rodada de testes da #45 em VM, a primeira tentativa perdeu 6 minutos porque faltavam o `docker compose` e o Chromium do Playwright, e só se descobriu no fim. O mesmo vale aqui: instale tudo o que o guia exige (Git, Python 3.12+, Docker com o plugin Compose, as dependências do `requirements-dev.txt`) e **confira com o script abaixo antes de tocar no pacote**. Ele só usa a biblioteca padrão, não imprime chave nem senha e sai com código diferente de zero se faltar algo.
+
+A verificação roda em duas etapas:
+
+1. **Logo depois do clone e do `checkout` do SHA** (passo 2 abaixo), ainda sem o pacote. Deve acusar só o que falta de verdade; corrija e repita até passar:
+
+   ```powershell
+   python scripts\verificar_ambiente_restauracao.py --sha <SHA> --imagem <IMAGEM_COM_DIGEST_DO_REPORT>
+   ```
+
+2. **De novo, imediatamente antes do restore** (passo 3), agora com o pacote copiado e a chave definida na sessão:
+
+   ```powershell
+   python scripts\verificar_ambiente_restauracao.py --sha <SHA> --imagem <IMAGEM_COM_DIGEST_DO_REPORT> `
+     --bundle C:\sigma-restore\bundle
+   ```
+
+   Só siga para o restore com "Ambiente completo". Ele confere o SHA do clone, o Docker em execução e o plugin Compose, a imagem do PostgreSQL com o digest, a porta livre, 2 GiB de disco, acesso ao PyPI e ao Docker Hub, o venv com as dependências, os três arquivos do pacote, a chave fora do pacote e `SIGMA_AUDIT_KEY` com pelo menos 32 bytes.
+
+Se faltar acesso ao PyPI ou ao Docker Hub (proxy corporativo), o script diz qual. Nesse caso peça liberação à TI ou use o plano B da seção 7, em vez de contornar a política da empresa.
+
+Anote no registro as versões de Python, Docker e Compose que a verificação encontrou.
+
 ## 2. Preparar o destino
 
 ```powershell
