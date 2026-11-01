@@ -181,6 +181,10 @@ Trello, Miro e Drive estão mapeados em [docs/planejamento/mapa-de-espacos.md](d
 
 O desenvolvimento segue o [Git Flow](docs/processo/gitflow.md): branches `feature/*` e `fix/*` entram na `develop` por PR, com testes, evidências e revisão, e uma `release/*` prepara a `main`. Comece pelo [fluxo de trabalho do TCC](docs/processo/fluxo-de-trabalho-tcc.md), que explica as etapas, as colunas do quadro e quando uma issue pode ser encerrada. Toda a documentação está indexada em [docs/README.md](docs/README.md).
 
+## Licença
+
+O código é publicado sob a [PolyForm Noncommercial License 1.0.0](LICENSE): pode ser lido, estudado e usado para fins não comerciais, inclusive pesquisa e ensino. O **uso comercial exige autorização dos autores**. Esta licença preserva o uso comercial futuro do SIGMA e não é uma licença de código aberto no sentido da OSI.
+
 ## Autores
 
 Discentes:
