@@ -6,6 +6,7 @@ Registros datados. Mostram o que aconteceu, não o estado atual.
 
 ## Documentos
 
+- [Avaliação cega do Experimento E6 — #5](resultados/experimento-e6-conjunto-cego.md)
 - [Coleta com persistência em lotes — #8](coleta-lotes.md)
 - [Correção das issues de base](correcao-issues-base.md)
 - [Relatório do Ensaio Independente da Demonstração (Ponto 2 do Guia)](ensaio-independente-2026-10-25.md)
@@ -17,3 +18,4 @@ Registros datados. Mostram o que aconteceu, não o estado atual.
 ## Pastas
 
 - [`rascunhos/`](rascunhos/)
+- [`resultados/`](resultados/)
