@@ -15,8 +15,17 @@ Executa o primeiro critério da #25: restaurar o backup em outra máquina reprod
    ```
 
    Precisa de Docker ligado. Saem `bundle/` (dump, trilha e manifesto), `audit-key.txt` (a chave, **fora** do bundle) e `report.json`. Anote do `report.json` a imagem do PostgreSQL com o digest e a versão principal.
-3. Leve **o `bundle/`** em um pendrive ou arquivo compactado e a **chave por outro canal** (por exemplo, digitada à mão ou enviada por mensagem). Nunca no mesmo pacote.
-4. Guarde também o SHA e o digest da imagem do PostgreSQL.
+3. **Se o SHA ainda não está no GitHub** (candidato montado localmente, por exemplo `develop` mais PRs ainda não integrados), a máquina de destino não consegue baixá-lo. Gere um arquivo de git com o histórico e confira-o:
+
+   ```bash
+   git bundle create candidato-<SHA7>.bundle --all
+   git bundle verify candidato-<SHA7>.bundle
+   sha256sum candidato-<SHA7>.bundle        # anote o hash para conferir no destino
+   ```
+
+   Se o SHA já está na `develop` do GitHub, pule este passo e clone do GitHub (seção 2).
+4. Leve em um pendrive: **o `bundle/`** do pacote de restauração, o `candidato-<SHA7>.bundle` (se gerado) e uma cópia de `scripts/verificar_ambiente_restauracao.py`, para conferir a máquina **antes** de clonar. Leve a **chave por outro canal** (por exemplo, digitada à mão ou enviada por mensagem). Nunca no mesmo pacote.
+5. Guarde também o SHA e o digest da imagem do PostgreSQL.
 
 ## 1. Na máquina de destino: verificar se serve
 
@@ -32,8 +41,15 @@ Anote, sem identificar a empresa: sistema operacional, memória, versão do Dock
 
 **Prepare o ambiente completo antes de restaurar, em vez de ir instalando aos poucos.** Na rodada de testes da #45 em VM, a primeira tentativa perdeu 6 minutos porque faltavam o `docker compose` e o Chromium do Playwright, e só se descobriu no fim. O mesmo vale aqui: instale tudo o que o guia exige (Git, Python 3.12+, Docker com o plugin Compose, as dependências do `requirements-dev.txt`) e **confira com o script abaixo antes de tocar no pacote**. Ele só usa a biblioteca padrão, não imprime chave nem senha e sai com código diferente de zero se faltar algo.
 
-A verificação roda em duas etapas:
+A verificação roda em três momentos:
 
+0. **Antes de clonar**, com a cópia do script que veio no pendrive. Sem argumentos, ela só responde se a máquina serve: Python 3.12+, Git, Docker instalado e **em execução com contêineres Linux**, Compose, porta livre, 2 GiB de disco e rede para PyPI e Docker Hub. É aqui que se descobre, sem perder tempo, se falta Docker ou Python:
+
+   ```powershell
+   python verificar_ambiente_restauracao.py
+   ```
+
+   Se acusar `FALTA` em Docker, Python ou Git, pare e vá à seção 7.
 1. **Logo depois do clone e do `checkout` do SHA** (passo 2 abaixo), ainda sem o pacote. Deve acusar só o que falta de verdade; corrija e repita até passar:
 
    ```powershell
@@ -56,7 +72,11 @@ Anote no registro as versões de Python, Docker e Compose que a verificação en
 ## 2. Preparar o destino
 
 ```powershell
+# SHA já na develop do GitHub:
 git clone https://github.com/Solution-Explores/SigmaTI.git
+# SHA candidato, só no arquivo de git do pendrive (confira antes o hash: Get-FileHash candidato-<SHA7>.bundle):
+git clone candidato-<SHA7>.bundle SigmaTI
+
 cd SigmaTI
 git checkout <SHA>
 git rev-parse HEAD            # deve ser igual ao SHA anotado
