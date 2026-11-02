@@ -77,8 +77,13 @@ def main():
         registrar("Imagem do PostgreSQL local, com o digest exigido", code == 0 and digest in digests,
                   f"docker pull {args.imagem}")
     with socket.socket() as probe:
-        livre = probe.connect_ex(("127.0.0.1", args.porta)) != 0
-    registrar(f"Porta {args.porta} livre em 127.0.0.1", livre, "escolher outra com --porta")
+        ocupada = probe.connect_ex(("127.0.0.1", args.porta)) == 0
+    if args.bundle:
+        # Momento C: o PostgreSQL de destino já está no ar nesta porta.
+        registrar(f"PostgreSQL de destino responde em 127.0.0.1:{args.porta}", ocupada,
+                  "subir o contêiner de destino (seção 2) ou conferir --porta")
+    else:
+        registrar(f"Porta {args.porta} livre em 127.0.0.1", not ocupada, "escolher outra com --porta")
 
     registrar("Espaço livre: pelo menos 2 GiB", shutil.disk_usage(Path.cwd()).free >= 2 * 1024 ** 3, "liberar disco")
     registrar("Rede: PyPI acessível (pip)", alcanca("pypi.org"), "proxy corporativo? pedir à TI ou usar plano B")
