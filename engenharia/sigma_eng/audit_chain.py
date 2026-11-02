@@ -13,6 +13,13 @@ Entradas anteriores sem ``kid`` usam ``chave_legada`` (por padrão, ``chave``).
 Âncora externa: ``ancora()`` resume o último hash para guardar fora da máquina
 (ver ``audit_anchor``); a cadeia sozinha não detecta apagar o arquivo inteiro.
 
+Custo (#46): ``verificar()`` e ``resumo()`` percorrem a trilha inteira, de propósito. Já
+``registrar()``, ``ancora()`` e ``len()`` guardam em memória, por arquivo e por processo, o
+estado verificado (contagem, último hash e o SHA-256 dos bytes verificados) e, a cada chamada,
+só leem e conferem o que foi acrescentado. Qualquer mudança no trecho já verificado (editar,
+reordenar, trocar o arquivo) invalida esse estado e força a verificação completa, que então
+recusa a gravação. Detalhes e limite do cache em ``_Estado.confiavel``.
+
 Formato JSONL, uma entrada por linha, anexado com fsync.
 """
 
@@ -32,6 +39,19 @@ from typing import Any, Callable, Mapping
 
 GENESIS = "0" * 64
 LOCK_TIMEOUT_SECONDS = 10
+# Quanto tempo o estado verificado vale sem reconferir os bytes (0 = sempre reconferir).
+REVALIDAR_CONTEUDO_SEGUNDOS = 30
+# Escrita recente demais para confiar no timestamp do arquivo (mesma ideia do "racy git"): o
+# relógio do sistema de arquivos pode ser grosso (ms a dezenas de ms) e uma edição do mesmo
+# tamanho logo após a nossa escrita manteria o timestamp.
+JANELA_TIMESTAMP_NS = 100_000_000
+_BLOCO = 1 << 20
+
+_ESTADOS: dict[tuple, "_Estado"] = {}
+
+
+def _agora_ns() -> int:
+    return time.time_ns()
 
 
 def chaves_do_ambiente(env: Mapping[str, str]) -> tuple[dict[str, bytes], str | None, bytes | None]:
@@ -64,6 +84,43 @@ def _canonico(obj: Any) -> bytes:
     return json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
 
 
+class _Estado:
+    """O que já foi verificado de um arquivo: tamanho, contagem, último hash e SHA-256 dos bytes."""
+
+    __slots__ = ("tamanho", "mtime_ns", "ino", "dev", "contagem", "ultimo_hash", "ultimo_kid", "digest",
+                 "conferido_em")
+
+    def __init__(self, st: os.stat_result | None, tamanho: int, contagem: int, ultimo_hash: str,
+                 ultimo_kid: str | None, digest) -> None:
+        self.tamanho = tamanho
+        self.mtime_ns = st.st_mtime_ns if st else 0
+        self.ino = st.st_ino if st else 0
+        self.dev = st.st_dev if st else 0
+        self.contagem = contagem
+        self.ultimo_hash = ultimo_hash
+        self.ultimo_kid = ultimo_kid
+        self.digest = digest
+        self.conferido_em = time.monotonic()
+
+    @classmethod
+    def vazio(cls) -> "_Estado":
+        return cls(None, 0, 0, GENESIS, None, hashlib.sha256())
+
+    def confiavel(self, st: os.stat_result) -> bool:
+        """Dá para usar o estado sem reler o arquivo?
+
+        Só se o arquivo não mudou (tamanho e timestamp), o estado foi conferido há pouco e a
+        última escrita não é recente demais para o timestamp valer. Fora disso os bytes já
+        verificados são reconferidos pelo SHA-256 (cerca de 100 ms para 30 MB).
+        Limite: quem edita o arquivo, mantém o tamanho e restaura o timestamp só é pego na
+        próxima reconferência (no máximo ``REVALIDAR_CONTEUDO_SEGUNDOS``) ou em ``verificar()``,
+        que o job diário e a API executam por inteiro.
+        """
+        return (st.st_size == self.tamanho and st.st_mtime_ns == self.mtime_ns
+                and time.monotonic() - self.conferido_em < REVALIDAR_CONTEUDO_SEGUNDOS
+                and _agora_ns() - self.mtime_ns > JANELA_TIMESTAMP_NS)
+
+
 class AuditChain:
     def __init__(self, caminho: str | os.PathLike | None = None, chave: bytes | None = None,
                  relogio: Callable[[], datetime] = lambda: datetime.now(timezone.utc), *,
@@ -79,7 +136,7 @@ class AuditChain:
         self.chave = self._chaves[self._ativa] if self._ativa else chave
         self.relogio = relogio
         self._lock = threading.Lock()
-        self._entradas: list[dict] = []
+        self._entradas: list[dict] = []  # só sem arquivo (trilha em memória)
         if self.caminho:
             with self._coordenar():
                 pass
@@ -115,21 +172,6 @@ class AuditChain:
                             raise TimeoutError("Auditoria ocupada.") from None
                         time.sleep(0.01)
                 try:
-                    if self.caminho.exists():
-                        # Binário + decodificação por linha: byte UTF-8 inválido
-                        # vira entrada inválida e a verificação o reporta, em vez
-                        # de lançar UnicodeDecodeError e derrubar o endpoint.
-                        with self.caminho.open("rb") as stream:
-                            self._entradas = []
-                            for line in stream:
-                                if line.strip():
-                                    try:
-                                        row = json.loads(line.decode("utf-8"))
-                                    except ValueError:
-                                        row = {}
-                                    self._entradas.append(row if isinstance(row, dict) else {})
-                    else:
-                        self._entradas = []
                     yield
                 finally:
                     # Falha no unlock não deve mascarar a exceção original;
@@ -169,6 +211,125 @@ class AuditChain:
             return self._assinar(self._chaves[kid], corpo)
         return None
 
+    def _conferir(self, entrada: dict, indice: int, anterior: str) -> bool:
+        """A entrada ``indice`` encadeia com ``anterior`` e tem o hash certo?"""
+        if entrada.get("seq") != indice or entrada.get("anterior") != anterior:
+            return False
+        corpo = {k: v for k, v in entrada.items() if k != "hash"}
+        atual = entrada.get("hash")
+        esperado = self._hash(corpo)
+        return not (esperado is None or not isinstance(atual, str) or not atual.isascii()
+                    or not hmac.compare_digest(esperado, atual))
+
+    @staticmethod
+    def _linha(linha: bytes) -> dict:
+        # Binário + decodificação por linha: byte UTF-8 inválido vira entrada inválida e a
+        # verificação o reporta, em vez de lançar UnicodeDecodeError e derrubar o endpoint.
+        try:
+            entrada = json.loads(linha.decode("utf-8"))
+        except ValueError:
+            entrada = {}
+        return entrada if isinstance(entrada, dict) else {}
+
+    def _ler_tudo(self) -> list[dict]:
+        """Todas as entradas (inclusive as inválidas, como ``{}``). O chamador detém o lock."""
+        if self.caminho is None:
+            return self._entradas
+        if not self.caminho.exists():
+            return []
+        with self.caminho.open("rb") as fluxo:
+            return [self._linha(linha) for linha in fluxo if linha.strip()]
+
+    # --- Estado verificado em memória (#46) ---
+
+    def _chave_cache(self) -> tuple:
+        """Arquivo e chaves: outra chave ou outro arquivo nunca aproveita o estado alheio."""
+        chaves = tuple(sorted((kid, hashlib.sha256(valor).hexdigest()) for kid, valor in self._chaves.items()))
+        legada = hashlib.sha256(self._legada).hexdigest() if self._legada else None
+        return str(self.caminho.resolve()), chaves, legada
+
+    def _verificar_arquivo(self) -> tuple[bool, int | None, int, "_Estado | None"]:
+        """Verificação completa em uma passagem: (íntegra, primeira inválida, total, estado se íntegra)."""
+        digest = hashlib.sha256()
+        anterior, kid, indice, invalida, lidos = GENESIS, None, 0, None, 0
+        if not self.caminho.exists():
+            return True, None, 0, _Estado.vazio()
+        with self.caminho.open("rb") as fluxo:
+            for linha in fluxo:
+                digest.update(linha)
+                lidos += len(linha)
+                if not linha.strip():
+                    continue
+                entrada = self._linha(linha)
+                if invalida is None:
+                    if self._conferir(entrada, indice, anterior):
+                        anterior, kid = entrada["hash"], entrada.get("kid")
+                    else:
+                        invalida = indice
+                indice += 1
+            st = os.fstat(fluxo.fileno())
+        if invalida is not None:
+            return False, invalida, indice, None
+        return True, None, indice, _Estado(st, lidos, indice, anterior, kid, digest)
+
+    def _avancar(self, estado: _Estado) -> _Estado | None:
+        """Reconfere os bytes já verificados e verifica só o que foi acrescentado.
+
+        None se o trecho antigo mudou, encolheu, ou o acréscimo é inválido: o chamador então
+        faz a verificação completa, que dá o veredito e o índice.
+        """
+        continuacao = estado.digest.copy()
+        with self.caminho.open("rb") as fluxo:
+            conferido, restante = hashlib.sha256(), estado.tamanho
+            while restante:
+                bloco = fluxo.read(min(restante, _BLOCO))
+                if not bloco:
+                    return None
+                conferido.update(bloco)
+                restante -= len(bloco)
+            if not hmac.compare_digest(conferido.digest(), continuacao.digest()):
+                return None
+            contagem, anterior, kid, lidos = estado.contagem, estado.ultimo_hash, estado.ultimo_kid, estado.tamanho
+            for linha in fluxo:
+                continuacao.update(linha)
+                lidos += len(linha)
+                if not linha.strip():
+                    continue
+                entrada = self._linha(linha)
+                if not self._conferir(entrada, contagem, anterior):
+                    return None
+                anterior, kid = entrada["hash"], entrada.get("kid")
+                contagem += 1
+            st = os.fstat(fluxo.fileno())
+        return _Estado(st, lidos, contagem, anterior, kid, continuacao)
+
+    def _estado_verificado(self) -> _Estado:
+        """Estado íntegro do arquivo com custo proporcional ao que mudou. ValueError se a trilha é inválida.
+
+        O chamador detém o lock. Só vale para trilha em arquivo.
+        """
+        if not self.caminho.exists():
+            return _Estado.vazio()
+        chave = self._chave_cache()
+        st = self.caminho.stat()
+        estado = _ESTADOS.get(chave)
+        if estado is not None and estado.ino == st.st_ino and estado.dev == st.st_dev \
+                and st.st_size >= estado.tamanho:
+            if estado.confiavel(st):
+                return estado
+            avancado = self._avancar(estado)
+            if avancado is not None:
+                _ESTADOS[chave] = avancado
+                return avancado
+        integra, _, _, novo = self._verificar_arquivo()
+        if not integra:
+            _ESTADOS.pop(chave, None)
+            raise ValueError("Trilha de auditoria inválida; gravação recusada.")
+        _ESTADOS[chave] = novo
+        return novo
+
+    # --- API ---
+
     def registrar(self, ator: str, acao: str, recurso: str | None = None, detalhes: dict | None = None) -> dict:
         """Anexa um evento e devolve a entrada (com ``hash``)."""
         with self._coordenar():
@@ -176,11 +337,17 @@ class AuditChain:
 
     def _registrar(self, ator: str, acao: str, recurso: str | None, detalhes: dict | None) -> dict:
         """Anexa a entrada; o chamador já detém o lock de ``_coordenar``."""
-        if not self._verificar()[0]:
-            raise ValueError("Trilha de auditoria inválida; gravação recusada.")
-        anterior = self._entradas[-1]["hash"] if self._entradas else GENESIS
+        if self.caminho is None:
+            if not self._verificar_lista(self._entradas)[0]:
+                raise ValueError("Trilha de auditoria inválida; gravação recusada.")
+            seq = len(self._entradas)
+            anterior = self._entradas[-1]["hash"] if self._entradas else GENESIS
+            estado = None
+        else:
+            estado = self._estado_verificado()
+            seq, anterior = estado.contagem, estado.ultimo_hash
         corpo = {
-            "seq": len(self._entradas),
+            "seq": seq,
             "ts": self.relogio().isoformat(),
             "ator": ator,
             "acao": acao,
@@ -195,14 +362,28 @@ class AuditChain:
             self.caminho.parent.mkdir(parents=True, exist_ok=True)
             with self.caminho.open("a+b") as fh:
                 fh.seek(0, os.SEEK_END)
-                if fh.tell():
+                tamanho = fh.tell()
+                carga = b""
+                if tamanho:
                     fh.seek(-1, os.SEEK_END)
                     if fh.read(1) != b"\n":
-                        fh.write(b"\n")
-                fh.write((json.dumps(entrada, ensure_ascii=False) + "\n").encode("utf-8"))
+                        carga = b"\n"
+                carga += (json.dumps(entrada, ensure_ascii=False) + "\n").encode("utf-8")
+                fh.write(carga)
                 fh.flush()
                 os.fsync(fh.fileno())
-        self._entradas.append(entrada)
+                st = os.fstat(fh.fileno())
+            chave = self._chave_cache()
+            if tamanho == estado.tamanho:
+                continuacao = estado.digest.copy()
+                continuacao.update(carga)
+                _ESTADOS[chave] = _Estado(st, tamanho + len(carga), seq + 1, entrada["hash"],
+                                          entrada.get("kid"), continuacao)
+            else:
+                # Alguém escreveu fora do lock entre a verificação e a gravação: não aproveitar nada.
+                _ESTADOS.pop(chave, None)
+        else:
+            self._entradas.append(entrada)
         return entrada
 
     def rotacionar(self, novo_kid: str, nova_chave: bytes, ator: str) -> dict:
@@ -219,43 +400,68 @@ class AuditChain:
             self.chave = nova_chave
             return entrada
 
+    def _contagem_e_ultima(self) -> tuple[int, str, str | None]:
+        """(entradas, último hash, ``kid`` da última) para âncora e ``len``.
+
+        Trilha inválida não impede a leitura: sem estado verificado, lê tudo como antes.
+        """
+        if self.caminho is not None:
+            try:
+                estado = self._estado_verificado()
+                return estado.contagem, estado.ultimo_hash, estado.ultimo_kid
+            except ValueError:
+                pass
+        entradas = self._ler_tudo()
+        ultima = entradas[-1] if entradas else {}
+        return len(entradas), ultima.get("hash", GENESIS), ultima.get("kid")
+
     def ancora(self) -> dict:
         """Resumo do estado atual para guardar fora da máquina (sem dados pessoais)."""
         with self._coordenar():
-            ultima = self._entradas[-1] if self._entradas else {}
-            return {"entradas": len(self._entradas), "ultimo_hash": ultima.get("hash", GENESIS),
-                    "ts": self.relogio().isoformat(), "kid": ultima.get("kid")}
+            total, ultimo_hash, kid = self._contagem_e_ultima()
+            return {"entradas": total, "ultimo_hash": ultimo_hash,
+                    "ts": self.relogio().isoformat(), "kid": kid}
 
     def verificar(self) -> tuple[bool, int | None]:
-        """(íntegra?, índice da primeira entrada inválida)."""
+        """(íntegra?, índice da primeira entrada inválida). Sempre percorre a trilha inteira."""
         with self._coordenar():
             return self._verificar()
 
     def resumo(self) -> dict:
         """Contagem e integridade pertencem à mesma leitura protegida."""
         with self._coordenar():
-            ok, indice = self._verificar()
-            return {"integra": ok, "primeira_invalida": indice, "entradas": len(self._entradas)}
+            ok, indice, total = self._verificar_completo()
+            return {"integra": ok, "primeira_invalida": indice, "entradas": total}
 
     def _verificar(self) -> tuple[bool, int | None]:
+        ok, indice, _ = self._verificar_completo()
+        return ok, indice
+
+    def _verificar_completo(self) -> tuple[bool, int | None, int]:
+        if self.caminho is None:
+            ok, indice = self._verificar_lista(self._entradas)
+            return ok, indice, len(self._entradas)
+        ok, indice, total, estado = self._verificar_arquivo()
+        chave = self._chave_cache()
+        if ok:
+            _ESTADOS[chave] = estado
+        else:
+            _ESTADOS.pop(chave, None)
+        return ok, indice, total
+
+    def _verificar_lista(self, entradas: list[dict]) -> tuple[bool, int | None]:
         anterior = GENESIS
-        for i, e in enumerate(self._entradas):
-            corpo = {k: v for k, v in e.items() if k != "hash"}
-            if e.get("seq") != i or e.get("anterior") != anterior:
+        for i, entrada in enumerate(entradas):
+            if not self._conferir(entrada, i, anterior):
                 return False, i
-            actual = e.get("hash")
-            esperado = self._hash(corpo)
-            if esperado is None or not isinstance(actual, str) or not actual.isascii() \
-                    or not hmac.compare_digest(esperado, actual):
-                return False, i
-            anterior = e["hash"]
+            anterior = entrada["hash"]
         return True, None
 
     @property
     def entradas(self) -> list[dict]:
         with self._coordenar():
-            return json.loads(json.dumps(self._entradas))
+            return json.loads(json.dumps(self._ler_tudo()))
 
     def __len__(self) -> int:
         with self._coordenar():
-            return len(self._entradas)
+            return self._contagem_e_ultima()[0]
