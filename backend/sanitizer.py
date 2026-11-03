@@ -15,7 +15,10 @@ import ipaddress
 import logging
 import os
 import re
+import unicodedata
 from dataclasses import dataclass, field
+
+from nomes_br import PRIMEIROS_NOMES
 
 logger = logging.getLogger("sigma.sanitizer")
 audit_logger = logging.getLogger("sigma.audit")
@@ -57,22 +60,52 @@ RE_CNS = re.compile(
     r"\b[12789]\d{2}[\s.-]?\d{4}[\s.-]?\d{4}[\s.-]?\d{4}\b"
 )
 RE_PRONTUARIO = re.compile(r"(?i:\bprontu[aá]rio[:\s#]+|\bpront[:\s#]+)([A-Za-z0-9_-]{3,20})\b")
+RE_CPF_ESPACADO = re.compile(r"(?<![\d.])\d{3}[ \t]\d{3}[ \t]\d{3}[ \t]\d{2}(?![\d-])")
+RE_RG = re.compile(r"\b\d{1,2}\.\d{3}\.\d{3}-[\dXx]\b|(?i:\brg\b[:\s#]*)\d[\d.\-Xx]{5,12}\b")
+RE_TELEFONE = re.compile(
+    r"(?<![\d.])(?:\+?55[ \t]?)?\(\d{2}\)[ \t]?9?\d{4}[-\s]?\d{4}(?!\d)|"
+    r"(?<![\d.])(?:\+?55[ \t]?)?\d{2}[ \t]9?\d{4}-\d{4}(?!\d)|"
+    r"(?i:\b(?:telefone|tel|fone|celular|cel|whatsapp)\b[.:\s]*)(?:\+?55[ \t]?)?\d{10,11}(?!\d)"
+)
+RE_DATA_NASCIMENTO = re.compile(
+    r"(?i:\b(?:data\s+de\s+nascimento|nascimento|nasc\.?|dn|nascid[oa]\s+em)\b[:\s]*)"
+    r"\d{1,2}[/.-]\d{1,2}[/.-]\d{2,4}\b"
+)
+RE_ENDERECO = re.compile(
+    r"(?i:\b(?:endere[cç]o[:\s]+)?(?:rua|avenida|av\.|travessa|alameda|estrada|rodovia|pra[cç]a|beco)\s+)"
+    r"[^,.;\n]{2,60}(?:,\s*(?:n[º°o.]*\s*)?\d+[A-Za-z]?)?"
+    r"(?:,\s*[A-ZÀ-Ý][\wÀ-ÿ]+(?:\s+[A-ZÀ-Ý][\wÀ-ÿ]+)*)?"
+)
+RE_REGISTRO_ATENDIMENTO = re.compile(
+    r"(?i:\b(?:registro(?:\s+de\s+atendimento)?|atendimento|protocolo|guia|aih|boletim)\b[:\s#]*)"
+    r"(?=[A-Za-z0-9-]*\d)[A-Za-z0-9][A-Za-z0-9-]{3,}\b"
+)
+RE_LOGIN = re.compile(
+    r"(?i:\b(?:login|username|user|usu[aá]rio|usuario|conta)\b[:=\s]*)"
+    r"(?=[\w.@-]*[._\d-])[A-Za-z0-9][\w.-]*\b|"
+    r"(?i:\b(?:login|username)\b[:=\s]+)[A-Za-z0-9][\w.-]*\b"
+)
 
 # Nomes precedidos por termos médicos, cargos ou papéis no hospital
 _NAME_WORD = (
     r"(?!(?i:dr|dra|e|o|a|no|na|em|com|sem|ap[oó]s|para|por|relatou|reporta|reportou|"
-    r"identificaram|solicitou|portador|falha|est[aá]|offline)\b)[A-Za-zÀ-ÿ]{2,}"
+    r"identificaram|solicitou|portador|falha|est[aá]|offline|ligou|bloqueado|bloqueada)\b)[A-Za-zÀ-ÿ]{2,}"
 )
 RE_NOMES_CONTEXTUAIS = re.compile(
-    r"(?i:\b(?:(?:dr\.|dra\.|enf\.)\s*|(?:doutor|doutora|enfermeir[oa]|m[eé]dic[oa]|"
-    r"t[eé]cnic[oa]|paciente|usu[aá]rio)\b\s+))"
+    r"(?i:\b(?:(?:dr|dra|enf|sr|sra|srta)\b\.?[ \t]*|(?:doutor|doutora|enfermeir[oa]|m[eé]dic[oa]|"
+    r"t[eé]cnic[oa]|paciente|usu[aá]rio|senhor[a]?|acompanhante|respons[aá]vel)\b[ \t]*:?[ \t]*))"
     + _NAME_WORD + r"(?:\s+(?:(?:de|da|do|dos|das)\s+)?" + _NAME_WORD + r")*"
+)
+_CAP = r"[A-ZÀ-Ý][a-zà-ÿ]{1,}"
+RE_NOME_SEM_CONTEXTO = re.compile(
+    r"\b(" + _CAP + r")((?:\s+(?:(?:de|da|do|dos|das|e)\s+)?" + _CAP + r")+)\b"
 )
 
 # Hostnames comuns em logs hospitalares
 RE_HOSTNAME_LOG = re.compile(
     r"\b([a-zA-Z0-9_-]+\.(?:fcecon|hospital|rede|local|lan|internal)(?:\.[a-zA-Z0-9_-]+)*)\b|"
-    r"\b((?:sw(?:itch)?|rt|router|srv|server|fw|firewall|tomo(?:grafo)?|ressonancia|bomba|ct|mon(?:itor)?|ws|term(?:inal)?|ap|wifi)-[a-zA-Z0-9_.-]+)\b",
+    r"\b((?:sw(?:itch)?|rt|router|srv|server|fw|firewall|tomo(?:grafo)?|ressonancia|bomba|ct|mon(?:itor)?|ws|term(?:inal)?|ap|wifi)-[a-zA-Z0-9_.-]+)\b|"
+    r"\b((?:pacs|ris|lis|his|dicom|nas|ups|vm)[-_]?\d+[a-zA-Z0-9_.-]*)\b",
     re.IGNORECASE,
 )
 
@@ -106,7 +139,7 @@ def categorizar_equipamento(nome: str) -> str:
         return "[FIREWALL_REDE]"
 
     # Servidores e Bancos de Dados
-    if re.search(r"\b(srv|server|servidor|bd|db|database|postgre|zabbix|ad|ldap)\b|^(srv|server|bd|db)[-_]", limpo):
+    if re.search(r"\b(srv|server|servidor|bd|db|database|postgre|zabbix|ad|ldap|pacs|ris|lis|his|dicom|nas)\b|^(srv|server|bd|db|pacs|ris|lis|his)[-_]?d*", limpo):
         return "[SERVIDOR_HOSPITALAR]"
 
     # Equipamentos Médicos de Imagem
@@ -177,15 +210,29 @@ def nomes_configurados() -> set[str]:
     return NOMES_CONFIGURADOS | {n.strip().lower() for n in os.getenv("SIGMA_PII_NAMES", "").split(",") if n.strip()}
 
 
+def _sem_acento(texto: str) -> str:
+    return "".join(c for c in unicodedata.normalize("NFD", texto) if unicodedata.category(c) != "Mn").lower()
+
+
+def _tem_nome_sem_contexto(texto: str) -> bool:
+    """Primeiro nome frequente (IBGE) seguido de sobrenome capitalizado."""
+    return any(_sem_acento(m.group(1)) in PRIMEIROS_NOMES for m in RE_NOME_SEM_CONTEXTO.finditer(texto))
+
+
 def detectar_residuos(texto: str) -> list[str]:
     """Verifica a saída sem incluir valores sensíveis no diagnóstico."""
     residuos = []
     for categoria, pattern in (("mac", RE_MAC), ("email", RE_EMAIL), ("cpf", RE_CPF_FORMATADO),
                                ("cpf_contextual", RE_CPF_CONTEXTUAL), ("cns", RE_CNS),
                                ("prontuario", RE_PRONTUARIO), ("hostname", RE_HOSTNAME_LOG),
-                               ("nome", RE_NOMES_CONTEXTUAIS)):
+                               ("nome", RE_NOMES_CONTEXTUAIS), ("cpf_espacado", RE_CPF_ESPACADO),
+                               ("rg", RE_RG), ("telefone", RE_TELEFONE),
+                               ("data_nascimento", RE_DATA_NASCIMENTO), ("endereco", RE_ENDERECO),
+                               ("registro_atendimento", RE_REGISTRO_ATENDIMENTO), ("login", RE_LOGIN)):
         if pattern.search(texto):
             residuos.append(categoria + "_residual")
+    if _tem_nome_sem_contexto(texto):
+        residuos.append("nome_sem_contexto_residual")
     if any(_validar_digitos_cpf(m.group()) for m in RE_CPF_LIVRE.finditer(texto)):
         residuos.append("cpf_residual")
     for categoria, pattern, cls, prefix in (("ipv4", RE_IPV4, ipaddress.IPv4Interface, 24),
@@ -234,6 +281,16 @@ def sanitizar_texto(texto: str) -> ResultadoSanitizacao:
                 return "[USUARIO_MEDICO]"
             return "[NOME_REMOVIDO]"
 
+        def _sub_fixo(regex: re.Pattern, marcador: str, rotulo: str) -> None:
+            nonlocal saida
+            if regex.search(saida):
+                saida = regex.sub(marcador, saida)
+                removidos.append(rotulo)
+
+        # Login antes do nome: "usuario joao.silva" não pode virar "[NOME_REMOVIDO].silva".
+        _sub_fixo(RE_LOGIN, "[LOGIN_REMOVIDO]", "login")
+        _sub_fixo(RE_ENDERECO, "[ENDERECO_REMOVIDO]", "endereco")
+
         saida = RE_NOMES_CONTEXTUAIS.sub(_sub_nome_contextual, saida)
 
         # Nomes literais configurados que não têm contexto reconhecido.
@@ -247,6 +304,12 @@ def sanitizar_texto(texto: str) -> ResultadoSanitizacao:
         if RE_EMAIL.search(saida):
             saida = RE_EMAIL.sub("[EMAIL_REMOVIDO]", saida)
             removidos.append("email")
+
+        _sub_fixo(RE_DATA_NASCIMENTO, "[DATA_NASCIMENTO_REMOVIDA]", "data_nascimento")
+        _sub_fixo(RE_TELEFONE, "[TELEFONE_REMOVIDO]", "telefone")
+        _sub_fixo(RE_RG, "[RG_REMOVIDO]", "rg")
+        _sub_fixo(RE_CPF_ESPACADO, "[CPF_REMOVIDO]", "cpf_espacado")
+        _sub_fixo(RE_REGISTRO_ATENDIMENTO, "[REGISTRO_REMOVIDO]", "registro_atendimento")
 
         # 4. CPF (Formatado e Contextual com validação de dígitos)
         if RE_CPF_FORMATADO.search(saida):
