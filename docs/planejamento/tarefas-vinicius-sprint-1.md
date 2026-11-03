@@ -1,24 +1,67 @@
 # Atividades do Vinícius: Sprint 1 e Sprint 2 (até 10/11/2026)
 
-Segue as sprints e as orientações do orientador (milestones e comentários das issues). A Sprint 1 fecha a `v1.0.0` em 03/11, e 02/11 é feriado. A Sprint 2 fecha em 10/11, com o congelamento de código anunciado nesse dia. Cada um integra o próprio PR com o CI verde, como em [fluxo-de-trabalho-tcc.md](../processo/fluxo-de-trabalho-tcc.md). O plano completo está em [plano-pos-demo-issues-abertas.md](plano-pos-demo-issues-abertas.md), e as atividades do Iohan em [tarefas-iohan-sprint-1.md](tarefas-iohan-sprint-1.md).
+Segue as sprints e as orientações do orientador (milestones e comentários das issues). A Sprint 1 fecha a `v1.0.0` em 03/11, e 02/11 é feriado. A Sprint 2 fecha em 10/11, com o congelamento de código anunciado nesse dia. Cada um integra o próprio PR com o CI verde, como em [fluxo-de-trabalho-tcc.md](../processo/fluxo-de-trabalho-tcc.md). Vale o plano do orientador (milestones das Sprints 1, 2 e 3; o planejamento pós-demo está descontinuado desde 02/11). As atividades do Iohan estão em [tarefas-iohan-sprint-1.md](tarefas-iohan-sprint-1.md).
 
 **Divisão de responsabilidades:** Vinícius e Iohan desenvolvem; a Joyce cuida só do front. Máquina física, VM e testes relacionados a elas são do Vinícius.
 
 ## Resumo
 
-| Quando | Atividade | Pts |
-|---|---|---|
-| Sprint 1 | Triagem com o orientador | 1 |
-| Sprint 1 | #5: regras de anonimização | 4 |
-| Sprint 1 | #25: restauração em máquina física e testes de VM | 2 |
-| Sprint 1 | #13: âncora externa e rotação HMAC (candidata a 10/11) | 5 |
-| Sprint 1 | Release e tag `v1.0.0` | 2 |
-| Sprint 2 | #45: testes instáveis (triagem até 04/11) | 4 |
-| Sprint 2 | #8: três rodadas de carga na VM | 2 |
-| Sprint 2 | Validar o front da Joyce (PRs #52 a #55) | 2 |
-| Sprint 2 | #46: custo da auditoria | 3 |
-| Sprint 2 | Validação final na VM (MTTD e burn rate) | 2 |
-| Sprint 2 | Painel exibe MTTD e burn rate (P2) | 3 |
+| Quando | Atividade | Pts | Situação em 02/11 (noite) |
+|---|---|---|---|
+| Sprint 1 | Triagem com o orientador | 1 | Enviada em 01/11, sem resposta |
+| Sprint 1 | #5: regras de anonimização | 4 | Em andamento |
+| Sprint 1 | #25: restauração em máquina física e testes de VM | 2 | Em andamento |
+| Sprint 1 | #13: âncora externa e rotação HMAC (candidata a 10/11) | 5 | Pronta no PR #60, falta integrar |
+| Sprint 1 | Release e tag `v1.0.0` | 2 | Falta fazer |
+| Sprint 2 | #45: testes instáveis (triagem até 04/11) | 4 | Triagem e medição feitas, PR #61 sem revisão |
+| Sprint 2 | #8: três rodadas de carga na VM | 2 | Medida em 01/11, falta marcar a caixa |
+| Sprint 2 | Validar o front da Joyce (PRs #52 a #55) | 2 | Falta fazer |
+| Sprint 2 | #46: custo da auditoria | 3 | Pronta no PR #65, falta integrar |
+| Sprint 2 | Validação final na VM (MTTD e burn rate) | 2 | Falta fazer |
+| Sprint 2 | Painel exibe MTTD e burn rate (P2) | 3 | Falta fazer |
+
+## Situação em 02/11/2026 (noite)
+
+Nenhuma issue está fechada: todo o trabalho pronto está em PR aberto, sem integração. Por isso o painel das sprints mostra 0%. "Pronta" abaixo significa código e testes feitos com CI verde, aguardando revisão e merge.
+
+### Concluído (pronto, aguardando integração)
+
+- **#13** (5 pts): PR #60 com âncora externa, rotação com `kid` e verificação agendada. Conferência de critérios comentada na issue. Falta revisar, integrar e fechar.
+- **#46** (3 pts): PR #65, empilhado sobre o #60, com CI 5/5 verde. Login com 100 mil entradas de 4.291 ms para 13 ms (meta: 50 ms). Evidência para o TCC em `docs/tcc/evidencias/`. Falta o Iohan revisar (já marcado) e a integração depois do #60.
+- **#5, parte das regras**: PR #59 com as regras para os 14 casos do orientador, CI verde.
+- **#45, parte do código**: PR #61 com o timer de IA de 13 s e a espera por evento no teste de DNS, CI verde.
+- **#25, preparação**: roteiro e script de ambiente (PR #62), pacote e `candidato-72948b9.bundle` gerados, ensaio completo em casa sem falhas, pendrive montado em `E:\LEVAR-PENDRIVE\`.
+- **Conferência de critérios** comentada nas issues #8, #13, #25, #45 e #46, com duas caixas marcadas na #8.
+- **Triagem de 01/11:** auditoria do épico #31 registrada, #48 fechado, #41 e #42 atualizados, e comentário de triagem ao orientador publicado no #31 (2 pontos para confirmar, 5 avisos, incluindo o diagnóstico da #56).
+- **#8, medição:** rodada 9 na VM (candidato `da7ff94`) com três cargas de 200 alvos seguidas aprovadas, em duas passagens (p95 queda→SSE de 0,32 a 0,38 s; atraso máximo do calendário de 0,015 a 0,042 s).
+- **#45, triagem e medição:** timer de IA de 14 s para 13 s com justificativa registrada, e rodada 9 com 30 execuções isoladas por teste (sonda, DNS e agendador em 30/30; provedor de IA em 13,07 a 13,11 s).
+- **Comparativo** professor × plano × repositório salvo em `docs/planejamento/`.
+
+### Em andamento
+
+- **Triagem com o orientador:** enviada em 01/11 no épico #31. Falta a resposta dele em dois pontos: concordar em mover a #25 para a Sprint 2 (o milestone da #25 ainda mostra Sprint 1) e dizer se há regra da faculdade sobre propriedade intelectual para a licença. Ficou sem comentário dele nas #13, #25 e #56. Falta também o pedido explícito de confirmar a banca de 18/11. Os PRs #41 e #42 foram atualizados, mas seguem abertos.
+- **#5:** o PR #64 do Iohan (14 casos de regressão e conjunto cego) está com CI vermelho em `test-config` e `test-postgres`, por um teste só: `test_safe_block_is_not_counted_as_transformation`. Causa: o critério de aprovação do E6 passou de recall de transformação (95,12%) para recall de proteção (100%). Já comentei o PR com as duas saídas. **Falta decidir o critério** com o Iohan e o orientador. Depois: corrigir o teste ou o critério, deixar o #64 verde, integrar #59 e #64, e registrar o recall com intervalo de confiança e a limitação na #5. Pendem 3 caixas: testes por tipo de identificador, falha injetada e relatório de recall em `resultados/`.
+- **#25:** falta o critério principal, restaurar em outra máquina. Fica para **terça, 03/11, no estágio**. Se o Iohan integrar os PRs antes, regenerar o pacote no SHA oficial. Depois: preencher `segunda-maquina.md`, comentar o resultado na issue e só então marcar a caixa.
+- **#45:** a triagem de 01/11 e a rodada 9 estão registradas na issue. Faltam: revisão do Iohan e integração do PR #61; marcar as caixas depois do merge; e **decidir** se o E2 é aceito com a ressalva das paradas da VM (29/30 em três passagens) ou se é refeito na máquina física. O 4º teste da lista original (`test_scheduler`, 28/30) deve corresponder à linha "Encerramento do agendador" da rodada 9, que fechou 30/30 em duas passagens. Confirmar que é o mesmo teste antes de dar por coberto.
+- **#8:** as três cargas seguidas já foram medidas e aprovadas (rodada 9). Falta marcar a caixa "≥ 200 alvos", o que só vale depois da integração do #61 e do fechamento da #45, e declarar a limitação do E2 na issue.
+
+### Falta fazer
+
+- **Release e tag `v1.0.0`:** só depois de #5 e #56 integradas. Hoje a #5 depende dos PRs #59 e #64, e a #56 está aberta.
+- **Validar o front da Joyce** (PRs #52 a #55): não iniciado. Todos abertos.
+- **Validação final na VM** (MTTD e burn rate): não iniciada.
+- **Painel com MTTD e burn rate** (P2): não iniciado e é o primeiro a cortar.
+
+### Pendências de terça, 03/11
+
+1. Restauração da #25 na máquina do estágio (pendrive pronto; a chave vai por outro canal).
+2. Enviar a cobrança ao Iohan (revisões dos PRs, conjunto cego da #5) e decidir o critério de recall.
+3. Cobrar a resposta do orientador à triagem de 01/11 (mover a #25, licença, banca, diagnóstico da #56).
+4. Revisar e integrar o #60, o que deixa a #13 pronta para fechar.
+5. Dar dono à #57 (P0, Sprint 2, sem dono, comentário nem PR).
+6. Planejar o balanço de dados do TCC depois do teste de terça.
+
+**Risco:** a Sprint 1 fecha em 03/11 com 1 dia útil. Se a #13 e a #25 escorregarem, pedir o aval do orientador para movê-las a 10/11, como já previsto abaixo. Nunca se corta a #5 nem a release.
 
 Sprint 1: 14 pts contra ≈ 17 de capacidade, com 01/11 já em curso. Se não couber, a #13 vai para 10/11 com o aval do orientador, depois a #25. Nunca se corta a #5 nem a release.
 
@@ -26,9 +69,11 @@ Sprint 1: 14 pts contra ≈ 17 de capacidade, com 01/11 já em curso. Se não co
 
 ## Sprint 1 (prazo 03/11)
 
-### 1. Triagem com o orientador (hoje, 1 pt)
+### 1. Triagem com o orientador (1 pt)
 
-Mande ao orientador:
+**Situação em 02/11:** enviada em 01/11 no épico #31 (2 pontos para confirmar e 5 avisos), junto com a auditoria do épico e a triagem dos PRs (#48 fechado, #41 e #42 atualizados). Sem resposta dele. Falta pedir de forma explícita a confirmação da banca e o aval para mover a #13.
+
+Conteúdo enviado ao orientador:
 
 - Pedido para mover a **#13** para 10/11 (a carga da Sprint 1 passa do planejado). O milestone mantém 03/11 até ele decidir.
 - Decisão sobre a **#25**: VM ou máquina física. Você pediu em 24/10 e não há registro de resposta.
