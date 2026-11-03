@@ -20,7 +20,7 @@ configure_auth(settings.jwt_secret)
 from routers.auth import router as auth_router
 
 logger = logging.getLogger(__name__)
-IA_TIMEOUT_SECONDS = 14.0
+IA_TIMEOUT_SECONDS = 13.0
 IA_UNAVAILABLE = "Diagnóstico de IA indisponível no momento. Tente novamente mais tarde."
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
