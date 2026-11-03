@@ -171,7 +171,7 @@ def validate(args) -> int:
                     "Diagnóstico de IA indisponível no momento. Tente novamente mais tarde."
                 ) and PRIVATE_DETAIL not in body and FAKE_KEY not in body
                 if marker == "K10_TIMEOUT":
-                    passed = passed and 14 <= elapsed <= 15 and '"provider_cancelled"' in events.read_text()
+                    passed = passed and 13 <= elapsed <= 15 and '"provider_cancelled"' in events.read_text()
                 check(marker.lower(), passed, {"http": status, "seconds": round(elapsed, 3)})
 
             for name, payload, origin, expected in (

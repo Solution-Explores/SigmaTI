@@ -264,7 +264,11 @@ def test_dns_timeout_before_policy_does_not_create_false_incident(monkeypatch):
         scheduler = Scheduler(store, concurrency=1, refresh=0.05, seed=1)
         scheduler.start()
         try:
-            await asyncio.sleep(0.25)
+            # Espera o evento (timeout contabilizado), não um tempo fixo: sob carga o
+            # agendamento do ambiente pode passar de 0,25 s sem indicar defeito.
+            deadline = time.monotonic() + 5
+            while scheduler.metrics.timeouts < 1 and time.monotonic() < deadline:
+                await asyncio.sleep(0.01)
             assert scheduler.metrics.timeouts == 1
             assert not store.results
         finally:

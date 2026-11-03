@@ -151,11 +151,11 @@ Veja a [especificação](../specs/004-cors-erros-publicos/spec.md), as [evidênc
 
 ## Chamada à IA e indisponibilidade
 
-A API usa um cliente HTTPX assíncrono, compartilhado durante a vida da aplicação e fechado no desligamento. O prazo global de espera pelo provedor é de **14 segundos**, com timeouts HTTP de 14 segundos por etapa, sem retentativas nem redirects. O prazo global também interrompe respostas que chegam devagar, em blocos pequenos, o que um timeout só de leitura não faria.
+A API usa um cliente HTTPX assíncrono, compartilhado durante a vida da aplicação e fechado no desligamento. O prazo global de espera pelo provedor é de **13 segundos**, com timeouts HTTP de 13 segundos por etapa, sem retentativas nem redirects. O prazo global também interrompe respostas que chegam devagar, em blocos pequenos, o que um timeout só de leitura não faria.
 
 `POST /api/alertas` mantém o HTTP 200 e os campos `status`, `dados_enviados_nuvem` e `diagnostico_ia`. Se a IA estourar o prazo, recusar a requisição, falhar na comunicação ou devolver uma resposta inválida, o diagnóstico será: **"Diagnóstico de IA indisponível no momento. Tente novamente mais tarde."** O HTTP 200 mantém a compatibilidade com o painel. Ele não indica sucesso do provedor nem prova a gravação do incidente em banco.
 
-O log técnico registra categoria, classe da exceção, status HTTP (quando conhecido) e duração. Não registra chave, prompt, corpo bruto da IA nem texto da exceção. Os 14 segundos deixam margem para responder dentro da meta de 15 segundos nos testes controlados. Eles não garantem a latência da rede, a carga do servidor nem a resposta de um modelo real em produção.
+O log técnico registra categoria, classe da exceção, status HTTP (quando conhecido) e duração. Não registra chave, prompt, corpo bruto da IA nem texto da exceção. Os 13 segundos deixam 2 s de margem para o atraso do timer observado nas VMs (até 1,478 s), dentro da meta de 15 segundos nos testes controlados. Eles não garantem a latência da rede, a carga do servidor nem a resposta de um modelo real em produção.
 
 Veja a [especificação](../specs/004-chamada-assincrona-timeout/spec.md), as [evidências](../specs/004-chamada-assincrona-timeout/evidencias.md) e as [pendências](../specs/004-chamada-assincrona-timeout/tasks.md). A cobertura complementar e a correção da coleta estão nas [evidências K07 e K08](../specs/007-008-ci-provedor-simulado/evidencias.md). O aceite integral da issue #4 continua separado, e as entregas atuais são parciais.
 
