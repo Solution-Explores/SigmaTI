@@ -2,69 +2,69 @@
 
 Segue as sprints e as orientações do orientador (milestones e comentários das issues). A Sprint 1 fecha a `v1.0.0` em 03/11, e 02/11 é feriado. A Sprint 2 fecha em 10/11, com o congelamento de código anunciado nesse dia. Cada um integra o próprio PR com o CI verde, como em [fluxo-de-trabalho-tcc.md](../processo/fluxo-de-trabalho-tcc.md). Vale o plano do orientador (milestones das Sprints 1, 2 e 3; o planejamento pós-demo está descontinuado desde 02/11). As atividades do Iohan estão em [tarefas-iohan-sprint-1.md](tarefas-iohan-sprint-1.md).
 
-**Divisão de responsabilidades:** Vinícius e Iohan desenvolvem; a Joyce cuida só do front. Máquina física, VM e testes relacionados a elas são do Vinícius.
+**Divisão de responsabilidades:** Vinícius e Iohan desenvolvem. A frente de design system da Joyce foi **descontinuada em 03/11**, e os PRs #53, #54 e #55 foram fechados sem integrar. Máquina física, VM e testes relacionados a elas são do Vinícius.
 
-## Resumo
+## Afazeres (situação em 03/11/2026, fim do dia)
 
-| Quando | Atividade | Pts | Situação em 02/11 (noite) |
+Esta é a lista de trabalho. A ordem dentro de cada bloco é a sugerida. O detalhe de cada issue está nas seções das sprints, mais abaixo.
+
+### A. Depende só de você
+
+| # | Afazer | Onde | Tamanho |
 |---|---|---|---|
-| Sprint 1 | Triagem com o orientador | 1 | Enviada em 01/11, sem resposta |
-| Sprint 1 | #5: regras de anonimização | 4 | Em andamento |
-| Sprint 1 | #25: restauração em máquina física e testes de VM | 2 | Em andamento |
-| Sprint 1 | #13: âncora externa e rotação HMAC (candidata a 10/11) | 5 | Pronta no PR #60, falta integrar |
-| Sprint 1 | Release e tag `v1.0.0` | 2 | Falta fazer |
-| Sprint 2 | #45: testes instáveis (triagem até 04/11) | 4 | Triagem e medição feitas, PR #61 sem revisão |
-| Sprint 2 | #8: três rodadas de carga na VM | 2 | Medida em 01/11, falta marcar a caixa |
-| Sprint 2 | Validar o front da Joyce (PRs #52 a #55) | 2 | Falta fazer |
-| Sprint 2 | #46: custo da auditoria | 3 | Pronta no PR #65, falta integrar |
-| Sprint 2 | Validação final na VM (MTTD e burn rate) | 2 | Falta fazer |
-| Sprint 2 | Painel exibe MTTD e burn rate (P2) | 3 | Falta fazer |
+| A1 | **Decidir o `atividades-joyce.md`.** A `develop` tem o levantamento de 01/11 (205 linhas) e o PR #66 tem a reescrita de 02/11 (473 linhas). São documentos diferentes com o mesmo nome, e cada um tem conteúdo que o outro não tem. Escolher um, juntar os dois ou arquivar em `docs/historico/` como descontinuado. **Trava o #66**, e com ele os diários de 01, 02 e 03/11 | PR #66 | 15 min |
+| A2 | **Enviar ao Iohan** a lista dele e a cobrança (o texto foi redigido em 02/11 e não consta como enviado) | fora do repo | 10 min |
+| A3 | **Cobrar o orientador**, que não comenta desde 31/10: critério de recall da #5, limite de login da #46, confirmação da banca de 18/11 e licença. Avisar que #5 e #56 passam para 10/11 | #31 | 20 min |
+| A4 | **Atribuir dono** à #56 e à #57, que estão sem ninguém no GitHub | GitHub | 2 min |
+| A5 | **Triar os PRs antigos** #41, #42 e #63 (licença, que aguarda os autores) | PRs | 20 min |
 
-## Situação em 02/11/2026 (noite)
+### B. Trabalho técnico seu, sem depender de ninguém
 
-Nenhuma issue está fechada: todo o trabalho pronto está em PR aberto, sem integração. Por isso o painel das sprints mostra 0%. "Pronta" abaixo significa código e testes feitos com CI verde, aguardando revisão e merge.
+| # | Afazer | Depende de | Tamanho |
+|---|---|---|---|
+| B1 | **#8: duas rodadas de carga** a mais, consecutivas, dentro da meta. A de hoje, na máquina física, foi a primeira (atraso máximo de 0,044 s contra 0,5 s). Só então marcar a caixa de ≥ 200 alvos | fechar a #45 | 1 h |
+| B2 | **#45: decidir a rodada final.** Aceitar a evidência da máquina física de hoje ou refazer 30/30 isoladas na VM no SHA integrado. A caixa de 30/30 depende disso | decisão sua | 30 min a 3 h |
+| B3 | **Validação final na VM:** MTTD e burn rate para o texto do TCC | B1 | 2 h |
+| B4 | **Painel exibir MTTD e burn rate** (P2, o primeiro a cortar) | — | 3 h |
+| B5 | **Balanço geral dos dados do TCC**, agora que a #25 fechou e a #46 tem medição | — | 2 h |
 
-### Concluído (pronto, aguardando integração)
+### C. Esperando o Iohan
 
-- **#13** (5 pts): PR #60 com âncora externa, rotação com `kid` e verificação agendada. Conferência de critérios comentada na issue. Falta revisar, integrar e fechar.
-- **#46** (3 pts): PR #65, empilhado sobre o #60, com CI 5/5 verde. Login com 100 mil entradas de 4.291 ms para 13 ms (meta: 50 ms). Evidência para o TCC em `docs/tcc/evidencias/`. Falta o Iohan revisar (já marcado) e a integração depois do #60.
-- **#5, parte das regras**: PR #59 com as regras para os 14 casos do orientador, CI verde.
-- **#45, parte do código**: PR #61 com o timer de IA de 13 s e a espera por evento no teste de DNS, CI verde.
-- **#25, preparação**: roteiro e script de ambiente (PR #62), pacote e `candidato-72948b9.bundle` gerados, ensaio completo em casa sem falhas, pendrive montado em `E:\LEVAR-PENDRIVE\`.
-- **Conferência de critérios** comentada nas issues #8, #13, #25, #45 e #46, com duas caixas marcadas na #8.
-- **Triagem de 01/11:** auditoria do épico #31 registrada, #48 fechado, #41 e #42 atualizados, e comentário de triagem ao orientador publicado no #31 (2 pontos para confirmar, 5 avisos, incluindo o diagnóstico da #56).
-- **#8, medição:** rodada 9 na VM (candidato `da7ff94`) com três cargas de 200 alvos seguidas aprovadas, em duas passagens (p95 queda→SSE de 0,32 a 0,38 s; atraso máximo do calendário de 0,015 a 0,042 s).
-- **#45, triagem e medição:** timer de IA de 14 s para 13 s com justificativa registrada, e rodada 9 com 30 execuções isoladas por teste (sonda, DNS e agendador em 30/30; provedor de IA em 13,07 a 13,11 s).
-- **Comparativo** professor × plano × repositório salvo em `docs/planejamento/`.
+| # | O quê | Efeito se não vier |
+|---|---|---|
+| C1 | **#64**, o conjunto cego da #5, com CI vermelho desde 02/11. O item 1 da lista dele. O PR #68 é uma proposta pronta, que ele pode integrar no #64 | **A #5 não fecha, e sem ela não sai a tag `v1.0.0`** |
+| C2 | **#56**, o PR estrutural (CI hermético separado da deriva agendada, mais o teste com lock divergente). O escopo diminuiu: os PRs da Joyce saíram | A #56 não fecha, e a release também espera por ela |
+| C3 | **Revisões independentes** da #45 e da #46. Ele é o revisor nomeado nas duas e não revisou nenhum PR | Caixa de revisão da #45 aberta; a #46 fecha sem revisão independente |
+| C4 | **#57**, P0 da Sprint 2, sem dono e sem PR | Fica para a Sprint 2 |
 
-### Em andamento
+### D. Esperando o orientador
 
-- **Triagem com o orientador:** enviada em 01/11 no épico #31. Falta a resposta dele em dois pontos: concordar em mover a #25 para a Sprint 2 (o milestone da #25 ainda mostra Sprint 1) e dizer se há regra da faculdade sobre propriedade intelectual para a licença. Ficou sem comentário dele nas #13, #25 e #56. Falta também o pedido explícito de confirmar a banca de 18/11. Os PRs #41 e #42 foram atualizados, mas seguem abertos.
-- **#5:** o PR #64 do Iohan (14 casos de regressão e conjunto cego) está com CI vermelho em `test-config` e `test-postgres`, por um teste só: `test_safe_block_is_not_counted_as_transformation`. Causa: o critério de aprovação do E6 passou de recall de transformação (95,12%) para recall de proteção (100%). Já comentei o PR com as duas saídas. **Falta decidir o critério** com o Iohan e o orientador. Depois: corrigir o teste ou o critério, deixar o #64 verde, integrar #59 e #64, e registrar o recall com intervalo de confiança e a limitação na #5. Pendem 3 caixas: testes por tipo de identificador, falha injetada e relatório de recall em `resultados/`.
-- **#25:** falta o critério principal, restaurar em outra máquina. Fica para **terça, 03/11, no estágio**. Se o Iohan integrar os PRs antes, regenerar o pacote no SHA oficial. Depois: preencher `segunda-maquina.md`, comentar o resultado na issue e só então marcar a caixa.
-- **#45:** a triagem de 01/11 e a rodada 9 estão registradas na issue. Faltam: revisão do Iohan e integração do PR #61; marcar as caixas depois do merge; e **decidir** se o E2 é aceito com a ressalva das paradas da VM (29/30 em três passagens) ou se é refeito na máquina física. O 4º teste da lista original (`test_scheduler`, 28/30) deve corresponder à linha "Encerramento do agendador" da rodada 9, que fechou 30/30 em duas passagens. Confirmar que é o mesmo teste antes de dar por coberto.
-- **#8:** as três cargas seguidas já foram medidas e aprovadas (rodada 9). Falta marcar a caixa "≥ 200 alvos", o que só vale depois da integração do #61 e do fechamento da #45, e declarar a limitação do E2 na issue.
+| # | O quê | Trava |
+|---|---|---|
+| D1 | Critério de recall do E6 na #5: transformação (95,12% no cego) ou proteção (100%) | Fechamento da #5 |
+| D2 | Limite acordado do custo de login da #46. Medido 12,9 ms; proposta de 50 ms | Última caixa da #46 |
+| D3 | Confirmação da banca em 18/11 e da licença | Planejamento da Sprint 3 |
+| D4 | Aval para mover #5 e #56 para 10/11 | Formalizar o atraso da Sprint 1 |
 
-### Falta fazer
+### E. Release `v1.0.0`
 
-- **Release e tag `v1.0.0`:** só depois de #5 e #56 integradas. Hoje a #5 depende dos PRs #59 e #64, e a #56 está aberta.
-- **Validar o front da Joyce** (PRs #52 a #55): não iniciado. Todos abertos.
-- **Validação final na VM** (MTTD e burn rate): não iniciada.
-- **Painel com MTTD e burn rate** (P2): não iniciado e é o primeiro a cortar.
+Só depois de **#5 e #56 integradas**. O aceite completo já passou hoje na `develop` `b657509` (`pytest` 522 passed, K10 com 20 verificações, painel com 4 testes, E2 e carga dentro da meta), mas precisa ser **repetido na `develop` final** antes da tag.
 
-### Pendências de terça, 03/11
+### F. Sprint 3, a partir de 11/11
 
-1. Restauração da #25 na máquina do estágio (pendrive pronto; a chave vai por outro canal).
-2. Enviar a cobrança ao Iohan (revisões dos PRs, conjunto cego da #5) e decidir o critério de recall.
-3. Cobrar a resposta do orientador à triagem de 01/11 (mover a #25, licença, banca, diagnóstico da #56).
-4. Revisar e integrar o #60, o que deixa a #13 pronta para fechar.
-5. Dar dono à #57 (P0, Sprint 2, sem dono, comentário nem PR).
-6. Planejar o balanço de dados do TCC depois do teste de terça.
+Congelamento do código em 11/11, só correção de bug P0. Texto e resultados do TCC, slides, ensaio em 13 e 14/11, roteiro de demonstração, backup do ambiente e VM de contingência, e o capítulo de trabalho futuro (que agora inclui o design system descontinuado).
 
-**Risco:** a Sprint 1 fecha em 03/11 com 1 dia útil. Se a #13 e a #25 escorregarem, pedir o aval do orientador para movê-las a 10/11, como já previsto abaixo. Nunca se corta a #5 nem a release.
+## O que fechou em 03/11
 
-Sprint 1: 14 pts contra ≈ 17 de capacidade, com 01/11 já em curso. Se não couber, a #13 vai para 10/11 com o aval do orientador, depois a #25. Nunca se corta a #5 nem a release.
+- **#25 fechada:** restauração em máquina física separada, com registro em `segunda-maquina.md`.
+- **#13 fechada:** âncora externa, rotação com `kid` e verificação agendada, com 34 testes conferidos na `develop`.
+- **#46 com 3 de 4 caixas:** contenção entre processos medida (com 8 processos em rajada, as falhas por lock caíram de 35% para 0,6%).
+- **#45 com 2 de 4 caixas:** triagem registrada, timer de IA em 13 s e E2 refeito na máquina física.
+- **Integrados:** #59, #60, #61, #62, #67 e #65. O #69 (hierarquia de títulos do Diagnóstico) está pronto, com CI verde, aguardando merge.
+- **Fechados sem integrar:** #53, #54 e #55, com a frente de design system descontinuada.
+- **Aceite da release** executado na `develop` `b657509`.
 
+**Risco em aberto:** a Sprint 1 terminou hoje com #5 e #56 abertas, as duas dependendo do Iohan. O orientador já previu mover para 10/11 com justificativa, e é isso que o item A3 pede.
 ---
 
 ## Sprint 1 (prazo 03/11)
@@ -96,6 +96,8 @@ O orientador testou 14 casos fora do corpus e todos passaram sem bloqueio. Ele d
 
 ### 3. Issue #25: máquina física e testes de VM (2 pts)
 
+> **Fechada em 03/11.** Restauração executada em máquina física separada; registro em `../specs/018-backup-restauracao/segunda-maquina.md`. Mantido abaixo como histórico.
+
 Falta só o critério "restaurar o backup em outra máquina reproduz incidentes e auditoria íntegra". As 17 verificações em VM do mesmo host já passaram, e o smoke test está verde no CI.
 
 1. Siga o guia [backup-restauracao.md](../operacao/backup-restauracao.md) e preencha o registro [segunda-maquina.md](../specs/018-backup-restauracao/segunda-maquina.md): data, operador, identificação fictícia das máquinas, SHA e versão do PostgreSQL.
@@ -105,6 +107,8 @@ Falta só o critério "restaurar o backup em outra máquina reproduz incidentes 
 5. **Se a máquina não estiver disponível:** declare a limitação no TCC e mova a issue para a Sprint 2 com o aval do orientador.
 
 ### 4. Issue #13: âncora externa e rotação HMAC (5 pts, candidata a 10/11)
+
+> **Fechada em 03/11.** PR #60 integrado, 34 testes conferidos na `develop`. Mantido abaixo como histórico.
 
 - Âncora externa do último hash (e-mail/n8n ou push para outro servidor).
 - `key id` por entrada, com rotação preservando o histórico.
@@ -135,6 +139,8 @@ Alguns scripts exigem PostgreSQL de teste em `SIGMA_TEST_DATABASE_URL`. Com o CI
 
 ### 6. Issue #45: testes instáveis (4 pts, triagem até 04/11)
 
+> **Em 03/11:** triagem registrada na issue e 2 das 4 caixas marcadas. Faltam a rodada 30/30 e a revisão independente.
+
 Registre a triagem na issue até 04/11 com:
 
 1. a decisão sobre o timer de IA (14 s ou 13 s), com medição;
@@ -148,6 +154,8 @@ Depois cubra o 4º teste (`test_scheduler`, 28/30) e estabilize. Teste de tempo 
 Dois critérios já estão atendidos (SSE em até 5 s em 30 quedas; reinício sem duplicar incidentes). Falta "≥ 200 alvos sem acumular atraso". O orientador pede: fechar a #45 e registrar **três rodadas de carga consecutivas** dentro da meta. Registre o resultado de cada rodada na issue e feche.
 
 ### 8. Validar o front da Joyce (2 pts)
+
+> **Descontinuada em 03/11.** A frente de design system saiu do escopo antes da banca, e os PRs #53, #54 e #55 foram fechados sem integrar. O defeito de acessibilidade que o #53 apontava foi corrigido à parte, no PR #69. Mantido abaixo como histórico.
 
 O que o orientador pediu sobre o front se limita ao CI verde nos PRs dela (#56). Esta validação é nossa, como responsável pelo repositório. Os PRs #52 a #55 têm só `validate-compose` vermelho (a causa é a #56); `test-config`, `test-package`, `test-postgres` e `test-recovery` passam.
 
@@ -165,6 +173,8 @@ O que o orientador pediu sobre o front se limita ao CI verde nos PRs dela (#56).
 **Resultado esperado:** um comentário em cada PR com o que foi verificado e o veredito. Recomendo integrar na `feature/front-design-system` só #52 e #53, com testes e E2E verdes, e deixar #54 e #55 para a reunião de decisão. A integração da branch na `develop` só entra antes do congelamento de 11/11 se tudo estiver verde. Caso contrário, fica para depois da banca. Nada de front novo depois de 11/11.
 
 ### 9. Issue #46: custo da auditoria (3 pts, P1)
+
+> **Em 03/11:** PR #65 integrado e 3 das 4 caixas marcadas. Falta só o limite de login, que depende do orientador.
 
 Leitura incremental ou cache do último `seq/hash`, preservando a recusa de gravação após adulteração. Meta de 50 ms com 100 mil registros (hoje ≈ 3 s). Depende da #13. Se não fechar até o congelamento de 11/11, registre como débito técnico no TCC.
 
