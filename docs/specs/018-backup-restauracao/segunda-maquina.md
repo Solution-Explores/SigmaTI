@@ -1,15 +1,21 @@
-# Aceite em outra máquina — pendente
+# Aceite em outra máquina — APROVADO em 03/11/2026
 
-Não preencher como aprovado com dois contêineres no mesmo host. Usuário escolheu preparar pacote e executar este aceite depois.
+Execução do roteiro `docs/planejamento/roteiro-restauracao-25-maquina-fisica.md`, seções 1 a 4.7. Todos os itens passaram. Primeiro critério da #25 atendido.
 
-- Data, operador e identificação fictícia da máquina de origem/destino:
-- SHA do código aprovado e versão principal PostgreSQL:
-- Manifesto original autenticado com a chave transferida por canal separado:
-- Comando restore.sh, código de saída e resumo (sem segredos/dados brutos):
-- Inventário de tabelas/contagens/fingerprints conferido pelo restore:
-- Incidente original consultado pela API e auditoria íntegra:
-- Recriação do contêiner com o mesmo volume sem perda:
-- Nova escrita e avanço dos IDs sem colisão:
-- Evidências e resultado final:
+- **Data, operador e identificação fictícia da máquina de origem/destino:** 03/11/2026. Origem: computador pessoal, onde o pacote foi gerado em 02/11/2026. Destino: desktop corporativo Windows 10 Pro (build 19045), 16 GB, Python 3.12.10, Git 2.56.0, Docker Engine 29.8.2 em contêineres Linux, Compose 5.6.0. São **máquinas físicas distintas**, confirmado pelo operador (hostname e placa de vídeo diferentes; valores não registrados aqui para não identificar a instituição).
+- **SHA do código aprovado e versão principal PostgreSQL:** `72948b9e428d21a74a0a1575e73cc8311ca8c24c` (candidato local: `develop` + PRs #59, #60, #61, #62), obtido por `git bundle` do pendrive. SHA-256 do `candidato-72948b9.bundle` conferido: `32949fc1aca79d23bda0df04c75082fe14e07e7a9be7c1edbd9c87985e08c68b`. `git bundle verify`: histórico completo. PostgreSQL major 15, imagem `postgres:15.19-alpine3.24@sha256:f7d23353e1b15400d22ebe31189f4d314b87a4c129cc400c8c2d8d4ca127bf81`.
+- **Manifesto original autenticado com a chave transferida por canal separado:** chave recebida fora do pendrive e definida só na sessão. `recovery.py verify --bundle` saiu com código 0: `{"status": "ok", "tables": 13, "audit_entries": 2}`. O script de verificação confirmou "Chave fora do pacote" nos três momentos.
+- **Comando restore, código de saída e resumo (sem segredos/dados brutos):** `recovery.py restore --container sigma-db-recuperado --bundle ... --audit ...\audit-restaurado.jsonl --quiesced`. Código de saída **0**. Resumo: `{"status": "ok", "tables": 13, "audit_entries": 2}`. Banco de destino estava vazio antes (0 relações em `public`) e nenhuma migração foi aplicada antes do restore.
+- **Inventário de tabelas/contagens/fingerprints conferido pelo restore:** as 13 tabelas do manifesto conferidas pelo próprio `restore`, que só grava a trilha depois de comparar contagens e fingerprints. Nenhuma divergência.
+- **Incidente original consultado pela API e auditoria íntegra:** trilha restaurada verificada pela chave, sem depender da API: `integra: True`, `primeira_invalida: None`, `entradas: 2` — igual ao `audit_entries` do restore. API subida no banco restaurado com a coleta desligada (`SIGMA_COLLECTION_ENABLED=0`). `GET /api/eng/incidentes`: 1 incidente, o da origem (`2372c2c8-66c1-4179-ade5-0f7d0cf1686d`, alvo `smoke.synthetic`, tipo `availability`, severidade P3, detectado em 02/11/2026 17:51 UTC — a falha TCP injetada na origem). `GET /api/eng/auditoria/verificar`: `integra: true`.
+- **Recriação do contêiner com o mesmo volume sem perda:** volume nomeado `sigma-dest-data` usado desde a criação. API parada, `docker rm -f` e `docker run` com o mesmo volume e a mesma senha. Contagens antes e depois **idênticas**: `incidentes=1`, `eventos=5`, `usuarios=2`.
+- **Nova escrita e avanço dos IDs sem colisão:** `max(id)` de `eventos_operacionais` era **4**; após `POST /api/eng/aprovacoes` passou a **5**. Aprovação criada com estado `pending`, sem colisão.
+- **Evidências e resultado final:** verificação de ambiente ("Ambiente completo") nos três momentos — A antes de clonar, B após clone e checkout, C com o PostgreSQL no ar e a chave na sessão. Todos os itens do roteiro passaram, em máquina física distinta da origem. **Resultado: aprovado.** Primeiro critério da #25 atendido.
 
-Guia: ../../operacao/backup-restauracao.md. Não anexar dump, trilha bruta, chaves, tokens ou configurações reais ao GitHub/Trello. Somente após esse aceite conferir o primeiro critério da #25. O job smoke verde comprova apenas o segundo critério, no ambiente CI descrito.
+## Notas de execução
+
+- **Desvio em relação ao roteiro (seção 4.3):** o roteiro cria o usuário de teste com `scripts.manage_identity`, que usa `getpass` e exige console interativo. Aqui o comando foi executado por um invólucro que lê a senha de um arquivo local protegido, fora do pacote. A senha foi gerada na máquina, não foi impressa, não consta deste registro e é descartada na limpeza. O desvio afeta só como o usuário de teste foi criado; não toca em `verify`, `restore`, trilha nem nas conferências.
+- **Segredos:** chave de auditoria, senha do PostgreSQL, segredo JWT e senha do usuário de teste ficaram em arquivos fora de `bundle/`, nunca em arquivo versionado nem na saída dos comandos.
+- **Limpeza:** pendente ao fechar o aceite — parar a API, `docker rm -f` do contêiner, `docker volume rm sigma-dest-data`, apagar `C:\sigma-restore`, a pasta de chaves, o `.venv` e o clone.
+
+Guia: ../../operacao/backup-restauracao.md. Não anexar dump, trilha bruta, chaves, tokens ou configurações reais ao GitHub/Trello.
