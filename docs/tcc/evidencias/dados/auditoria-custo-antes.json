@@ -1,0 +1,123 @@
+{
+  "python": "3.12.14",
+  "plataforma": "win32",
+  "resultados": [
+    {
+      "tamanho": 1000,
+      "bytes": 299230,
+      "verificar": {
+        "mediana_ms": 41.11,
+        "p95_ms": 44.47,
+        "min_ms": 40.15,
+        "max_ms": 44.47,
+        "amostras": 5
+      },
+      "partida_fria": {
+        "mediana_ms": 57.17,
+        "p95_ms": 57.33,
+        "min_ms": 49.03,
+        "max_ms": 57.33,
+        "amostras": 3
+      },
+      "login": {
+        "mediana_ms": 49.29,
+        "p95_ms": 50.34,
+        "min_ms": 49.07,
+        "max_ms": 50.34,
+        "amostras": 5
+      },
+      "gravacao_repouso": {
+        "mediana_ms": 54.14,
+        "p95_ms": 58.3,
+        "min_ms": 50.89,
+        "max_ms": 58.3,
+        "amostras": 3
+      },
+      "gravacao_rajada": {
+        "mediana_ms": 50.9,
+        "p95_ms": 52.74,
+        "min_ms": 50.09,
+        "max_ms": 52.74,
+        "amostras": 5
+      }
+    },
+    {
+      "tamanho": 10000,
+      "bytes": 3012280,
+      "verificar": {
+        "mediana_ms": 427.11,
+        "p95_ms": 468.57,
+        "min_ms": 422.7,
+        "max_ms": 468.57,
+        "amostras": 5
+      },
+      "partida_fria": {
+        "mediana_ms": 455.04,
+        "p95_ms": 542.99,
+        "min_ms": 449.66,
+        "max_ms": 542.99,
+        "amostras": 3
+      },
+      "login": {
+        "mediana_ms": 428.7,
+        "p95_ms": 464.06,
+        "min_ms": 415.96,
+        "max_ms": 464.06,
+        "amostras": 5
+      },
+      "gravacao_repouso": {
+        "mediana_ms": 413.5,
+        "p95_ms": 421.83,
+        "min_ms": 408.82,
+        "max_ms": 421.83,
+        "amostras": 3
+      },
+      "gravacao_rajada": {
+        "mediana_ms": 409.35,
+        "p95_ms": 539.42,
+        "min_ms": 400.57,
+        "max_ms": 539.42,
+        "amostras": 5
+      }
+    },
+    {
+      "tamanho": 100000,
+      "bytes": 30322780,
+      "verificar": {
+        "mediana_ms": 4238.75,
+        "p95_ms": 4641.27,
+        "min_ms": 4216.34,
+        "max_ms": 4641.27,
+        "amostras": 5
+      },
+      "partida_fria": {
+        "mediana_ms": 4664.86,
+        "p95_ms": 5683.04,
+        "min_ms": 4535.2,
+        "max_ms": 5683.04,
+        "amostras": 3
+      },
+      "login": {
+        "mediana_ms": 4291.24,
+        "p95_ms": 4785.55,
+        "min_ms": 4261.96,
+        "max_ms": 4785.55,
+        "amostras": 5
+      },
+      "gravacao_repouso": {
+        "mediana_ms": 4516.66,
+        "p95_ms": 4612.51,
+        "min_ms": 4268.2,
+        "max_ms": 4612.51,
+        "amostras": 3
+      },
+      "gravacao_rajada": {
+        "mediana_ms": 4185.98,
+        "p95_ms": 4224.12,
+        "min_ms": 4125.46,
+        "max_ms": 4224.12,
+        "amostras": 5
+      }
+    }
+  ]
+}

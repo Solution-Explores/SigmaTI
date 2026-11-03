@@ -1,0 +1,102 @@
+{
+  "python": "3.12.10",
+  "plataforma": "win32",
+  "tamanho": 100000,
+  "resultados": [
+    {
+      "processos": 1,
+      "gravacoes_por_processo": 5,
+      "intervalo_ms": 0.0,
+      "tamanho_inicial": 100000,
+      "gravacoes_esperadas": 5,
+      "gravacoes_ok": 5,
+      "erros": {},
+      "processos_com_falha": 0,
+      "entradas_finais": 100005,
+      "entradas_esperadas": 100005,
+      "integra": true,
+      "primeira_invalida": null,
+      "sem_perda_nem_duplicacao": true,
+      "tempo_total_s": 7.75,
+      "vazao_gravacoes_por_s": 0.52,
+      "mediana_ms": 1548.4,
+      "p95_ms": 1570.33,
+      "max_ms": 1570.33,
+      "partida_fria": {
+        "amostras": 1,
+        "mediana_ms": 1570.33,
+        "max_ms": 1570.33
+      },
+      "demais_gravacoes": {
+        "amostras": 4,
+        "mediana_ms": 1544.69,
+        "p95_ms": 1551.25,
+        "max_ms": 1551.25
+      }
+    },
+    {
+      "processos": 4,
+      "gravacoes_por_processo": 5,
+      "intervalo_ms": 0.0,
+      "tamanho_inicial": 100000,
+      "gravacoes_esperadas": 20,
+      "gravacoes_ok": 20,
+      "erros": {},
+      "processos_com_falha": 0,
+      "entradas_finais": 100020,
+      "entradas_esperadas": 100020,
+      "integra": true,
+      "primeira_invalida": null,
+      "sem_perda_nem_duplicacao": true,
+      "tempo_total_s": 31.3,
+      "vazao_gravacoes_por_s": 0.51,
+      "mediana_ms": 4797.83,
+      "p95_ms": 10918.72,
+      "max_ms": 11019.27,
+      "partida_fria": {
+        "amostras": 4,
+        "mediana_ms": 4107.69,
+        "max_ms": 11019.27
+      },
+      "demais_gravacoes": {
+        "amostras": 16,
+        "mediana_ms": 4887.64,
+        "p95_ms": 9377.86,
+        "max_ms": 10918.72
+      }
+    },
+    {
+      "processos": 8,
+      "gravacoes_por_processo": 5,
+      "intervalo_ms": 0.0,
+      "tamanho_inicial": 100000,
+      "gravacoes_esperadas": 40,
+      "gravacoes_ok": 26,
+      "erros": {
+        "TimeoutError": 14
+      },
+      "processos_com_falha": 0,
+      "entradas_finais": 100026,
+      "entradas_esperadas": 100026,
+      "integra": true,
+      "primeira_invalida": null,
+      "sem_perda_nem_duplicacao": true,
+      "tempo_total_s": 41.93,
+      "vazao_gravacoes_por_s": 0.5,
+      "mediana_ms": 6214.53,
+      "p95_ms": 11140.81,
+      "max_ms": 11354.64,
+      "partida_fria": {
+        "amostras": 5,
+        "mediana_ms": 7097.1,
+        "max_ms": 11354.64
+      },
+      "demais_gravacoes": {
+        "amostras": 21,
+        "mediana_ms": 6185.71,
+        "p95_ms": 10603.15,
+        "max_ms": 11140.81
+      }
+    }
+  ]
+}
