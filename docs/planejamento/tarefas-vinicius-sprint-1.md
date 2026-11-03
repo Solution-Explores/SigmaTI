@@ -2,7 +2,7 @@
 
 Segue as sprints e as orientações do orientador (milestones e comentários das issues). A Sprint 1 fecha a `v1.0.0` em 03/11, e 02/11 é feriado. A Sprint 2 fecha em 10/11, com o congelamento de código anunciado nesse dia. Cada um integra o próprio PR com o CI verde, como em [fluxo-de-trabalho-tcc.md](../processo/fluxo-de-trabalho-tcc.md). Vale o plano do orientador (milestones das Sprints 1, 2 e 3; o planejamento pós-demo está descontinuado desde 02/11). As atividades do Iohan estão em [tarefas-iohan-sprint-1.md](tarefas-iohan-sprint-1.md).
 
-**Divisão de responsabilidades:** Vinícius e Iohan desenvolvem. A frente de design system da Joyce foi **descontinuada em 03/11**, e os PRs #53, #54 e #55 foram fechados sem integrar. Máquina física, VM e testes relacionados a elas são do Vinícius.
+**Divisão de responsabilidades:** Vinícius e Iohan desenvolvem; a Joyce cuida do design e do front, **com prazo final em 17/11**. Em 03/11 os PRs #53, #54 e #55 dela foram fechados sem integrar, porque a branch `feature/front-design-system` está 46 commits atrás da `develop` e usa a pasta antiga `sigma-frontend/`: o trabalho é retomado sobre uma base nova tirada da `develop`, que o Vinícius monta. A DS-02 saiu à parte, no PR #69. Máquina física, VM e testes relacionados a elas são do Vinícius.
 
 ## Afazeres (situação em 03/11/2026, fim do dia)
 
@@ -12,11 +12,12 @@ Esta é a lista de trabalho. A ordem dentro de cada bloco é a sugerida. O detal
 
 | # | Afazer | Onde | Tamanho |
 |---|---|---|---|
-| A1 | **Decidir o `atividades-joyce.md`.** A `develop` tem o levantamento de 01/11 (205 linhas) e o PR #66 tem a reescrita de 02/11 (473 linhas). São documentos diferentes com o mesmo nome, e cada um tem conteúdo que o outro não tem. Escolher um, juntar os dois ou arquivar em `docs/historico/` como descontinuado. **Trava o #66**, e com ele os diários de 01, 02 e 03/11 | PR #66 | 15 min |
+| A1 | ~~Decidir o `atividades-joyce.md`~~ **Feito em 03/11:** vale a reescrita de 02/11, que foi a enviada a ela (mesmo SHA-256 do arquivo entregue). Conflito do #66 resolvido | PR #66 | feito |
 | A2 | **Enviar ao Iohan** a lista dele e a cobrança (o texto foi redigido em 02/11 e não consta como enviado) | fora do repo | 10 min |
 | A3 | **Cobrar o orientador**, que não comenta desde 31/10: critério de recall da #5, limite de login da #46, confirmação da banca de 18/11 e licença. Avisar que #5 e #56 passam para 10/11 | #31 | 20 min |
 | A4 | **Atribuir dono** à #56 e à #57, que estão sem ninguém no GitHub | GitHub | 2 min |
-| A5 | **Triar os PRs antigos** #41, #42 e #63 (licença, que aguarda os autores) | PRs | 20 min |
+| A5 | **Montar a base nova do front da Joyce** a partir da `develop`, com o mock e os documentos dela em `frontend/`. Ela está parada esperando isso, e o prazo dela é 17/11 | branch nova | 2 a 3 h |
+| A6 | **Triar os PRs antigos** #41, #42 e #63 (licença, que aguarda os autores) | PRs | 20 min |
 
 ### B. Trabalho técnico seu, sem depender de ninguém
 
@@ -155,7 +156,7 @@ Dois critérios já estão atendidos (SSE em até 5 s em 30 quedas; reinício se
 
 ### 8. Validar o front da Joyce (2 pts)
 
-> **Descontinuada em 03/11.** A frente de design system saiu do escopo antes da banca, e os PRs #53, #54 e #55 foram fechados sem integrar. O defeito de acessibilidade que o #53 apontava foi corrigido à parte, no PR #69. Mantido abaixo como histórico.
+> **Substituída em 03/11.** Os PRs #53, #54 e #55 foram fechados sem integrar, e o trabalho da Joyce é retomado sobre uma base nova tirada da `develop`. O que fica para o Vinícius é montar essa base, não validar aqueles PRs. O defeito de acessibilidade que o #53 apontava foi corrigido à parte, no PR #69. Mantido abaixo como histórico.
 
 O que o orientador pediu sobre o front se limita ao CI verde nos PRs dela (#56). Esta validação é nossa, como responsável pelo repositório. Os PRs #52 a #55 têm só `validate-compose` vermelho (a causa é a #56); `test-config`, `test-package`, `test-postgres` e `test-recovery` passam.
 
