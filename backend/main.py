@@ -48,9 +48,18 @@ async def lifespan(app: FastAPI):
                 lease=SchedulerLease(app.state.operational_store.engine))
             app.state.scheduler = scheduler
             scheduler.start()
+        app.state.audit_job = None
+        destinos, alerta = destinos_do_ambiente()
+        if destinos:
+            app.state.audit_job = asyncio.create_task(verificar_periodicamente(
+                engineering_audit, destinos, alerta,
+                float(os.getenv("SIGMA_AUDIT_JOB_INTERVAL_SECONDS", INTERVALO_PADRAO_SEGUNDOS))))
         try:
             yield
         finally:
+            if app.state.audit_job is not None:
+                app.state.audit_job.cancel()
+                await asyncio.gather(app.state.audit_job, return_exceptions=True)
             if app.state.scheduler is not None:
                 await app.state.scheduler.stop()
 
@@ -87,13 +96,13 @@ app.include_router(events_router)
 
 from sigma_eng.api import create_router
 from sigma_eng.audit_chain import AuditChain
+from sigma_eng.audit_anchor import destinos_do_ambiente
+from audit_job import INTERVALO_PADRAO_SEGUNDOS, verificar_periodicamente
 
 # O pacote não escolhe o local dos dados da aplicação hospedeira.
 # Preservar o caminho da trilha de engenharia existente no checkout.
-_audit_key = os.getenv("SIGMA_AUDIT_KEY")
-engineering_audit = AuditChain(
+engineering_audit = AuditChain.do_ambiente(
     os.getenv("SIGMA_AUDIT_PATH", str(Path(__file__).resolve().parent.parent / "engenharia" / "resultados" / "audit.jsonl")),
-    chave=_audit_key.encode() if _audit_key else None,
 )
 app.include_router(create_router(exige_papel, auditoria=engineering_audit))
 # --------------------------------------------------
