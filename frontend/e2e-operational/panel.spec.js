@@ -49,7 +49,9 @@ test('operacional: N1 vê saúde sem ações privilegiadas, com temas e teclado'
   await page.keyboard.press('Control+Home');
   await page.getByRole('button', { name: 'Diagnóstico', exact: true }).focus();
   await page.keyboard.press('Enter');
-  await expect(page.getByRole('heading', { name: 'Enviar alerta' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Enviar alerta', level: 3 })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Resultado', level: 3 })).toBeVisible();
+  await accessible(page);  // o Diagnóstico não era coberto pelo axe; os títulos ficam sob o h2 da área
   expect(await page.evaluate(() => ({ local: localStorage.length, session: sessionStorage.length }))).toEqual({ local: 0, session: 0 });
 });
 

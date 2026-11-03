@@ -33,7 +33,7 @@ export default function Diagnostic({ session, onExpire }) {
     {erro && <p role="alert" className="error">{erro}</p>}
           <div className="columns">
             <section className="card" aria-labelledby="alert-title">
-              <h2 id="alert-title">Enviar alerta</h2>
+              <h3 id="alert-title">Enviar alerta</h3>
               <form onSubmit={enviarAlerta}>
                 <label htmlFor="equipment">Equipamento</label>
                 <input id="equipment" value={equipamento} onChange={e => setEquipamento(e.target.value)} required disabled={loading} />
@@ -45,11 +45,11 @@ export default function Diagnostic({ session, onExpire }) {
               </form>
             </section>
             <section className="card" aria-labelledby="result-title" aria-live="polite" aria-busy={loading}>
-              <h2 id="result-title">Resultado</h2>
+              <h3 id="result-title">Resultado</h3>
               {resultado ? <>
-                <h3>Dados enviados à IA</h3>
+                <h4>Dados enviados à IA</h4>
                 <pre>{resultado.dados_enviados_nuvem}</pre>
-                <h3>Diagnóstico da IA</h3>
+                <h4>Diagnóstico da IA</h4>
                 <p className="diagnosis">{resultado.diagnostico_ia}</p>
               </> : <p>O diagnóstico aparecerá aqui após o envio.</p>}
             </section>
