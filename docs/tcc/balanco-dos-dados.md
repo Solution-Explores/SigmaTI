@@ -16,15 +16,20 @@ Três estados: **medido** (há número, dado bruto e script reprodutível),
 
 | | Quantos |
 |---|---:|
-| Medido, com dado bruto no repositório | 7 |
+| Medido, com dado bruto no repositório | 8 |
 | Verificado por teste automatizado, sem número a citar | 5 |
-| Lacuna que ainda dá tempo de fechar até 11/11 | 3 |
+| Lacuna que ainda dá tempo de fechar até 11/11 | 2 |
 | Lacuna que vai para as limitações | 4 |
+| Defeito encontrado ao medir, ainda sem correção | 1 |
 
 O texto tem base empírica para detecção, latência de alerta, resposta a
-incidentes, anonimização, custo de auditoria e restauração de backup. **Não tem**
-nada medido sobre o requisito de 15 segundos da IA (RNF04), sobre rede real, nem
-sobre burn rate em queda prolongada.
+incidentes, burn rate, anonimização, custo de auditoria e restauração de backup.
+**Não tem** nada medido sobre o requisito de 15 segundos da IA (RNF04) nem sobre
+rede real.
+
+A medição do E3, feita em 03/11 depois da primeira versão deste balanço,
+encontrou um defeito: incidentes de disponibilidade nunca se fecham sozinhos, e
+por isso um corte de 10 segundos gera `page`. Está na seção 2.8.
 
 ---
 
@@ -116,6 +121,41 @@ SHA-256 e impressão digital de tabela, incidentes reproduzidos e trilha de
 auditoria íntegra. Desvio declarado: o `manage_identity` exigiu console real, e a
 senha foi lida de arquivo protegido.
 
+### 2.8 Burn rate com queda prolongada e com corte curto (E3)
+
+[`evidencias/e3-burn-rate.md`](evidencias/e3-burn-rate.md), dado bruto em
+`evidencias/dados/e3-burn-rate.json`, script `scripts/medir_e3.py`.
+
+| Condição | Esperado | Medido | |
+|---|---|---|:-:|
+| Queda de 10 min | chega a `page` | `page` em **52,0 s** | ✅ |
+| Corte de 10 s | não pagina | `page` em **45,0 s** | ❌ |
+
+**O critério da #11 passa pela metade, e a metade que falha vale mais no texto.**
+A lógica de alerta está correta: com o intervalo recortado nos 10 segundos reais
+de queda, nenhuma regra dispara em nenhum instante de avaliação. O que falha é o
+ciclo de vida do incidente — ver 2.9.
+
+### 2.9 Defeito encontrado: incidentes não se fecham sozinhos
+
+`resolvido_em` é escrito em um único lugar do código, dentro de
+`change_incident`, que atende as rotas manuais `/reconhecer` e `/resolver`. A
+gravação de uma medição com sucesso **não** encerra o incidente de
+disponibilidade em aberto. O sistema sabe quando um alvo caiu e não sabe quando
+ele voltou.
+
+Dois efeitos, ambos relevantes para o texto:
+
+1. Qualquer oscilação de poucos segundos vira `page` em menos de um minuto, como
+   a condição B mediu.
+2. O MTTR de 0,191 s da seção 2.3 só existe porque o script resolvia cada
+   incidente por chamada de API. **Em operação, o MTTR do sistema é o tempo até a
+   intervenção humana**, não o tempo até o serviço voltar.
+
+A correção é pequena e localizada — fechar o incidente quando a sonda voltar a ter
+sucesso — mas é mudança de comportamento, a dez dias do congelamento, com a #57
+aberta sobre rotas que respondem sucesso sem efeito.
+
 ---
 
 ## 3. Verificado, sem número a citar
@@ -142,22 +182,13 @@ incômoda da lista, e está esperando o Iohan.
 
 ## 4. Lacunas que ainda dá tempo de fechar
 
-### 4.1 E3 — burn rate com queda prolongada
-
-A #11 pede: alvo caído por 10 minutos deve chegar a `page`; corte de 10 segundos
-não deve paginar. **O burn rate que medi não cobre isso**, porque minhas quedas
-duraram menos de um segundo cada. A máquina de alerta está implementada e testada
-(`sigma_eng/slo.py`, regras do SRE Workbook), e o arreio de medição já existe. É
-cerca de 15 minutos de execução mais o registro. **É a lacuna de melhor relação
-entre custo e valor para o texto.**
-
-### 4.2 E4 — fuzzing da cadeia de hash
+### 4.1 E4 — fuzzing da cadeia de hash
 
 A #11 pede N = 1000 mutações aleatórias com 100% de detecção. Hoje existem testes
 unitários de adulteração, não o experimento com volume e semente fixa. O
 verificador da cadeia já está pronto; falta o laço e o CSV.
 
-### 4.3 Deriva lenta (#10)
+### 4.2 Deriva lenta (#10)
 
 Não é lacuna de medição: está medido e o resultado é ruim (16,7%). A decisão a
 tomar é se entra no texto só como limitação ou se CUSUM é implementado antes do
@@ -179,8 +210,10 @@ não são suficientes para implementar e validar um detector novo com honestidad
 
 ## 6. O que fazer com isto
 
-1. **Medir o E3** antes do congelamento. É a única lacuna que vira resultado com
-   poucas horas de trabalho.
+1. **Decidir o que fazer com o defeito da seção 2.9.** Corrigir antes do
+   congelamento e remedir, ou declarar no texto que o SLO é calculado sobre
+   intervalos que só fecham por intervenção humana. As duas são defensáveis; o
+   que não é defensável é citar burn rate sem dizer isto.
 2. **Escrever a seção de limitações com os números negativos dentro**: 16,7% na
    deriva, recall sustentável de ~93% e não 99%, RNF04 sem evidência, tudo em
    loopback. Uma banca de computação pergunta justamente por esses, e tê-los

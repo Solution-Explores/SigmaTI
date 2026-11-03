@@ -12,6 +12,7 @@ Material de acompanhamento com o orientador.
 - [Custo da trilha de auditoria, antes e depois (#46)](evidencias/auditoria-custo-46.md)
 - [Contenção da trilha de auditoria entre processos (#46)](evidencias/auditoria-contencao-46.md)
 - [MTTD, MTTA, MTTR e burn rate medidos](evidencias/incidentes-mttd-burn.md)
+- [E3: burn rate com queda prolongada e com corte curto](evidencias/e3-burn-rate.md)
 
 ## Pastas
 
