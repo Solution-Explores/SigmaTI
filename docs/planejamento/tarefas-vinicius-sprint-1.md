@@ -23,11 +23,13 @@ Esta é a lista de trabalho. A ordem dentro de cada bloco é a sugerida. O detal
 
 | # | Afazer | Depende de | Tamanho |
 |---|---|---|---|
-| B1 | **#8: duas rodadas de carga** a mais, consecutivas, dentro da meta. A de hoje, na máquina física, foi a primeira (atraso máximo de 0,044 s contra 0,5 s). Só então marcar a caixa de ≥ 200 alvos | fechar a #45 | 1 h |
-| B2 | **#45: decidir a rodada final.** Aceitar a evidência da máquina física de hoje ou refazer 30/30 isoladas na VM no SHA integrado. A caixa de 30/30 depende disso | decisão sua | 30 min a 3 h |
-| B3 | **Validação final na VM:** MTTD e burn rate para o texto do TCC | B1 | 2 h |
-| B4 | **Painel exibir MTTD e burn rate** (P2, o primeiro a cortar) | — | 3 h |
-| B5 | **Balanço geral dos dados do TCC**, agora que a #25 fechou e a #46 tem medição | — | 2 h |
+| B1 | ✅ **Feito.** Três rodadas consecutivas de 200 alvos em máquina física, postadas na #8. Atraso máximo do calendário de 0,044 s contra a meta de 0,5 s. A caixa não foi marcada: o critério é combinado com o fechamento da #45 | — | — |
+| B2 | ✅ **Feito.** 120 execuções isoladas (30 de cada um dos quatro testes) na `develop` `55a1796`, em máquina física, **zero falhas**, postadas na #45. A caixa de 30/30 **não** foi marcada, porque o mesmo critério exige o PR da sonda revisado, e nem o #47 nem o #61 têm revisão registrada | Iohan (C) | — |
+| B3 | ✅ **Feito**, com desvio: medido em máquina física, não na VM, que está inacessível aqui. MTTD 0,712 s, MTTA 0,159 s, MTTR 0,191 s, burn rate 7,519 em 1 h. No PR #70 | — | — |
+| B4 | ⚠️ **Mudou de natureza.** Não é trabalho de frontend: `/api/eng/incidentes/resumo` devolve `MTTD: n=0` sempre, porque nada grava o instante real da falha. Exibir MTTD exige antes decidir de onde vem esse instante. MTTA e MTTR o painel já poderia mostrar | decisão de projeto | 3 h + |
+| B5 | ✅ **Feito.** `docs/tcc/balanco-dos-dados.md`, no PR #70. Oito itens medidos, cinco verificados, duas lacunas que ainda cabem, quatro para as limitações | — | — |
+| B6 | **E4 da #11:** fuzzing da cadeia, N = 1000 com semente fixa e CSV. O verificador já existe; falta o laço. **Última lacuna que ainda cabe antes do congelamento** | — | 2 h |
+| B7 | **#71:** decidir a resolução automática de incidente. Corrigir e remedir o E3, ou declarar no texto que o SLO só fecha intervalos por intervenção humana | decisão sua | 3 h ou 0 |
 
 ### C. Esperando o Iohan
 
@@ -62,8 +64,12 @@ Congelamento do código em 11/11, só correção de bug P0. Texto e resultados d
 - **#46 com 3 de 4 caixas:** contenção entre processos medida (com 8 processos em rajada, as falhas por lock caíram de 35% para 0,6%).
 - **#45 com 2 de 4 caixas:** triagem registrada, timer de IA em 13 s e E2 refeito na máquina física.
 - **Integrados:** #59, #60, #61, #62, #67 e #65. O #69 (hierarquia de títulos do Diagnóstico) está pronto, com CI verde, aguardando merge.
-- **Fechados sem integrar:** #53, #54 e #55, com a frente de design system descontinuada.
+- **Fechados sem integrar:** #53, #54 e #55, porque a branch `feature/front-design-system` está 46 commits atrás da `develop` e usa a pasta antiga `sigma-frontend/`. **A frente da Joyce continua**, com prazo em 17/11, sobre uma base nova tirada da `develop` (item A5).
 - **Aceite da release** executado na `develop` `b657509`.
+
+- **E3 da #11 medido:** queda de 10 min pagina em 52,0 s, conforme a previsão analítica. **Corte de 10 s pagina indevidamente**, com o alvo no ar, porque incidentes nunca se fecham sozinhos. Abriu a **#71**.
+- **#70 aberto:** MTTD, MTTA, MTTR, burn rate, o balanço dos dados do TCC e o E3, com dado bruto e dois scripts reprodutíveis.
+- **Correções postadas** em #53, #54, #55 e #56, desfazendo a afirmação errada de que a frente da Joyce teria sido descontinuada.
 
 **Risco em aberto:** a Sprint 1 terminou hoje com #5 e #56 abertas, as duas dependendo do Iohan. O orientador já previu mover para 10/11 com justificativa, e é isso que o item A3 pede.
 ---
