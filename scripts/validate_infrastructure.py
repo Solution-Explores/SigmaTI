@@ -84,33 +84,61 @@ def render(checks: CredentialChecks, env: dict[str, str], profile: str | None = 
         raise ValidationError("Configuração K04 inválida.") from None
 
 
-def verify_registry(lock: dict) -> None:
+def fetch_manifest(repository: str, reference: str) -> tuple[str | None, bytes]:
     # Somente endpoints de metadados fixos do registro oficial; não buscar camadas.
+    query = urlencode({"service": "registry.docker.io", "scope": f"repository:{repository}:pull"})
+    with urlopen("https://auth.docker.io/token?" + query, timeout=30) as response:
+        token = json.load(response)["token"]
+    headers = {"Authorization": "Bearer " + token, "Accept": ACCEPT}
+    request = Request(f"https://registry-1.docker.io/v2/{repository}/manifests/{reference}", headers=headers)
+    with urlopen(request, timeout=30) as response:
+        return response.headers.get("Docker-Content-Digest"), response.read()
+
+
+def verify_registry(lock: dict, fetch=fetch_manifest) -> None:
     for entry in lock["images"]:
         repository = entry["registry_repository"]
-        query = urlencode({"service": "registry.docker.io", "scope": f"repository:{repository}:pull"})
-        with urlopen("https://auth.docker.io/token?" + query, timeout=30) as response:
-            token = json.load(response)["token"]
-        headers = {"Authorization": "Bearer " + token, "Accept": ACCEPT}
-        # A tag é mutável: a checagem usa só o digest fixado no lock.
-        for reference in (entry["digest"],):
-            request = Request(f"https://registry-1.docker.io/v2/{repository}/manifests/{reference}", headers=headers)
-            with urlopen(request, timeout=30) as response:
-                body = response.read()
-                digest = "sha256:" + hashlib.sha256(body).hexdigest()
-                require(response.headers.get("Docker-Content-Digest") == digest == entry["digest"],
-                        f"Manifest de {repository} diverge do lock; revisar sem atualizar automaticamente.")
-            manifest = json.loads(body)
-            platforms = {(m.get("platform", {}).get("os"), m.get("platform", {}).get("architecture"))
-                         for m in manifest.get("manifests", [])}
-            require({("linux", "amd64"), ("linux", "arm64")} <= platforms,
-                    f"Plataformas Linux amd64/arm64 não confirmadas em {repository}.")
+        # A tag é mutável: a checagem de integridade usa só o digest fixado no lock.
+        header, body = fetch(repository, entry["digest"])
+        digest = "sha256:" + hashlib.sha256(body).hexdigest()
+        require(header == digest == entry["digest"],
+                f"Manifest de {repository} diverge do lock; revisar sem atualizar automaticamente.")
+        manifest = json.loads(body)
+        platforms = {(m.get("platform", {}).get("os"), m.get("platform", {}).get("architecture"))
+                     for m in manifest.get("manifests", [])}
+        require({("linux", "amd64"), ("linux", "arm64")} <= platforms,
+                f"Plataformas Linux amd64/arm64 não confirmadas em {repository}.")
         print(f"PASS: registro oficial confirma {entry['repository']} pelo digest {entry['digest']}")
+
+
+def registry_drift(lock: dict, fetch=fetch_manifest) -> list[str]:
+    """Imagens cuja tag já aponta para outro digest que o do lock (informativo, nunca reprova)."""
+    drifted = []
+    for entry in lock["images"]:
+        header, _ = fetch(entry["registry_repository"], entry["tag"])
+        if header != entry["digest"]:
+            drifted.append(f"{entry['repository']}:{entry['tag']} lock={entry['digest']} registro={header}")
+    return drifted
+
+
+def report_drift(lock: dict, fetch=fetch_manifest) -> int:
+    """Relata a deriva da tag sem reprovar: o lock continua íntegro pelo digest."""
+    try:
+        drifted = registry_drift(lock, fetch)
+    except (OSError, ValueError, KeyError, HTTPError, URLError):
+        print("::warning::Não foi possível consultar a tag no registro; deriva não verificada.")
+        return 0
+    for line in drifted:
+        print(f"::warning::Deriva de tag: {line}")
+    print("DRIFT: " + (f"{len(drifted)} imagem(ns) com tag republicada; revisar o lock sem atualizar automaticamente."
+                       if drifted else "nenhuma deriva entre as tags e o lock."))
+    return 0
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--verify-registry", action="store_true", help="Consultar somente manifests públicos do Docker Hub")
+    parser.add_argument("--drift", action="store_true", help="Relatar (sem reprovar) tags republicadas no Docker Hub")
     options = parser.parse_args()
     try:
         lock = json.loads((ROOT / "docker-images.lock.json").read_text(encoding="utf-8"))
@@ -138,6 +166,8 @@ def main() -> int:
                     raise ValidationError(f"A política deveria recusar bind amplo em {name}.")
         if options.verify_registry:
             verify_registry(lock)
+        if options.drift:
+            report_drift(lock)
         print("K04: configuração aprovada; nenhum contêiner iniciado e nenhuma camada baixada.")
     except ValidationError as error:
         print(f"FAIL: {error}", file=sys.stderr)
