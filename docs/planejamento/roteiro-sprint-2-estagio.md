@@ -51,8 +51,8 @@ A ordem abaixo põe primeiro o que destrava os outros. A Joyce está parada espe
 |---|---|---|---|
 | Quarta 04 | 1 | Integrar #69 e #70 (você clica no merge) | 15 min |
 | Quarta 04 | 2 | ✅ **Feito de casa, de manhã.** PR semanal dos diários (#75) integrado e #66 fechado | — |
-| Quarta 04 | 3 | Base nova do front da Joyce | 2 a 3 h |
-| Quinta 05 | 4 | E4 da #11: fuzzing da cadeia | 2 h |
+| Quarta 04 | 3 | ✅ **Feito na tarde de 04/11.** Base nova do front da Joyce, PR #77 | — |
+| Quinta 05 | 4 | ✅ **Feito na tarde de 04/11, antecipado.** E4 da #11, PR #78 | — |
 | Sexta 06 | 5 | #71: incidente que nunca se fecha sozinho | 3 h, ou 0 se for declarado |
 | Segunda 09 | 6 | Aceite da release e rodada final no SHA candidato | 1 a 2 h |
 | Segunda 09 | 7 | Painel com MTTD e burn rate (P2, só se sobrar tempo) | 3 h |
@@ -80,6 +80,13 @@ O que depende do Iohan e do orientador corre em paralelo e está nas tabelas "Es
 - **Feito:** passo 2 (acima), mais o próprio roteiro, que foi conferido contra as tarefas do Iohan, as issues e os cartões do Trello. Dessa conferência saiu a separação do que é seu e do que espera o Iohan.
 - **Deixado para o estágio, por escolha sua:** o passo 1. Os PRs **#69** (títulos do Diagnóstico) e **#70** (MTTD, burn rate, balanço e E3) continuam abertos, mescláveis e com o CI verde. Enquanto o #70 não entrar, `scripts/medir_e3.py` e `docs/tcc/balanco-dos-dados.md` não estão na `develop`.
 - **Primeira coisa a fazer lá:** clicar no merge do #69 e do #70 e conferir que a `develop` ficou verde, antes do passo 3.
+
+## Situação em 04/11 (tarde, no estágio)
+
+- **Feito:** passo 3 (PR #77, base do front da Joyce) e passo 4 (PR #78, E4 da #11), este último antecipado de quinta. Os dois com CI e conferência registradas no corpo de cada PR.
+- **Não feito:** o passo 1. O #69 e o #70 continuam abertos e verdes, esperando o seu clique, e agora o #77 e o #78 também.
+- **Passo 5 (#71)** espera a sua decisão entre corrigir e declarar. Enquanto isso, nada nele começa.
+- **A Joyce já pode ser avisada** depois que o #77 entrar na `develop`.
 
 ### Passo 3. Base nova do front da Joyce
 
