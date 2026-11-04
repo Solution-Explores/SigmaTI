@@ -6,6 +6,7 @@ Material de acompanhamento com o orientador.
 
 ## Documentos
 
+- [Limitações do trabalho](limitacoes.md): os números desfavoráveis, com a medição que sustenta cada um
 - [SigmaTI: situação e proposta de cronograma](proposta-orientador.md)
 - [SigmaTI — situação para o orientador · 21/10/2026](relatorio-orientador-2026-10-21.md)
 - [Custo da trilha de auditoria, antes e depois (#46)](evidencias/auditoria-custo-46.md)
