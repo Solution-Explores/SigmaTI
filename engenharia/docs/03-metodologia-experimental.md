@@ -21,7 +21,7 @@ Princípios: **semente fixa**, **repetições** (n ≥ 30), **saída em CSV**, *
 |---|---|---|---|
 | **E1** | Qualidade dos detectores com falha injetada em séries sintéticas | H1 | ✅ Implementado (`experimentos/exp_deteccao.py`) |
 | **E2** | Latência ponta a ponta do alerta até o painel (RF01 ≤ 5 s) | H4 | Ensaio local implementado: scripts/validate_collection.py; tela pendente #15 |
-| **E3** | Burn rate em rede real: tempo até `page` com sonda caída | H2 | ⬜ A fazer |
+| **E3** | Burn rate em rede real: tempo até `page` com sonda caída | H2 | ⚠️ Medido em laboratório 03/11: queda de 10 min pagina em 52 s; corte de 10 s **pagina indevidamente** |
 | **E4** | Fuzzing da cadeia de hash (adulterar, remover, reordenar N entradas) | H3 | ⚠️ Medido em 04/11: 100% nas três mutações do critério; **truncamento do fim não é detectado** pela verificação, só pela âncora |
 | **E5** | Latência da resposta da IA (RNF04 ≤ 15 s) com anonimização | H4 | ⬜ A fazer |
 
@@ -51,9 +51,15 @@ O script `scripts/validate_collection.py` injeta 30 quedas de um serviço TCP em
 
 Reprodução, limites e configuração: [coleta e eventos](09-coleta-eventos.md). Os resultados do laboratório não comprovam renderização do painel (#15), 200 equipamentos físicos nem comportamento de DROP/firewall real. Repetir no ambiente de homologação com relógios sincronizados e condições representativas.
 
-### E3 · Burn rate em rede real (a fazer)
+### E3 · Burn rate (medido em laboratório; rede real pendente)
 
-Derrubar a sonda por 10 min com SLO de 99,9%; medir o tempo até o primeiro `page` e confirmar que um corte de 10 s **não** pagina.
+Executado em 03/11/2026 em loopback, máquina física, com SLO de 99,9% em 30 dias. Script `scripts/medir_e3.py`; evidência e dado bruto em [`docs/tcc/evidencias/e3-burn-rate.md`](../../docs/tcc/evidencias/e3-burn-rate.md).
+
+**Condição A, queda de 10 min:** `page` em **52,0 s**, com passo de amostragem de 2 s. Confere com a previsão analítica de 51,8 s, em que a janela longa de 1 h é a que determina o disparo. Ao fim dos 10 min as quatro regras estavam disparadas, incluindo as duas de `ticket`. **Critério atendido.**
+
+**Condição B, corte de 10 s:** o serviço voltou na mesma porta, a coleta registrou sucesso, e o sistema **paginou em 45,0 s**. **Critério não atendido.** A causa não é o cálculo de burn rate: com o intervalo de indisponibilidade recortado nos 10 s reais, nenhuma regra dispara em nenhum instante de avaliação (janela curta 33,3, janela longa 2,778, limiar 14,4). O defeito é que o incidente de disponibilidade **nunca é fechado automaticamente**: `resolvido_em` só é escrito pelas rotas manuais `/reconhecer` e `/resolver`, e a gravação de medição com sucesso não encerra o incidente em aberto. Para o cálculo de SLO, toda queda continua até a intervenção humana.
+
+Pendente: repetir em rede real, com repetições e intervalo de confiança, e com durações intermediárias de corte, para saber a partir de que duração o `page` passa a ser legítimo.
 
 ### E4 · Fuzzing da cadeia (medido em 04/11/2026)
 
