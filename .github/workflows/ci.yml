@@ -22,5 +22,8 @@ jobs:
       - name: Validate credentials and Compose without starting containers
         run: python scripts/validate_compose_credentials.py
 
-      - name: Validate published ports and locked official image manifests
-        run: python scripts/validate_infrastructure.py --verify-registry
+      # Hermético: compose, lock, portas e binds, sem rede. A conferência no
+      # Docker Hub fica no workflow agendado (infra-registry.yml) para que o
+      # estado externo não reprove PR que não toca em infraestrutura (#56).
+      - name: Validate published ports and locked image references (no network)
+        run: python scripts/validate_infrastructure.py
