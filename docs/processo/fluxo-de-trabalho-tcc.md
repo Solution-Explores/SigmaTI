@@ -1,88 +1,65 @@
 # Fluxo de trabalho do TCC
 
-Como a equipe atende uma issue do GitHub, da leitura ao fechamento. O fluxo segue o [Git Flow](gitflow.md): `feature/*` e `fix/*` partem da `develop` e voltam por PR revisado.
+Fluxo para o dev trabalhar sozinho, com apoio de um agente de IA (Claude Code, Codex). Ninguém precisa atribuir, aprovar ou liberar nada. O que protege o projeto são regras claras e o CI, e o agente executa as partes repetitivas. Segue o [Git Flow](gitflow.md).
 
 ```mermaid
-flowchart TD
-    inicio(["INÍCIO"])
-    leitura["1. Ler a issue no GitHub<br/>Pedido, critérios, dependências e responsável"]
-    desenvolvimento["2. Desenvolver em feature/*<br/>Base develop, alterações e commits"]
-    testes["3. Testar e registrar resultados"]
-    revisao["4. Outro integrante revisa e valida"]
-    aprovado{"Foi aprovado?"}
-    correcao["Corrigir na branch de trabalho<br/>Testar e retornar à revisão"]
-    integracao["5. Integrar à develop por PR<br/>Preparar release para main e tag"]
-    evidencia["6. Comentar na issue<br/>O que foi feito, links e evidências"]
-    conclusao["7. Concluir a tarefa<br/>Fechar a issue só com todos os requisitos atendidos"]
-    fim(["FIM"])
-
-    inicio --> leitura --> desenvolvimento --> testes --> revisao --> aprovado
-    aprovado -->|Não| correcao
-    correcao --> revisao
-    aprovado -->|Sim| integracao
-    integracao --> evidencia --> conclusao --> fim
+flowchart LR
+    A["1. Pega a issue<br/>sprint atual, P0 > P1 > P2"] --> B["2. Cria branch<br/>feature/* ou fix/*"]
+    B --> C["3. Faz e testa<br/>com o agente"]
+    C --> D["4. Abre o PR<br/>para develop"]
+    D --> E{"5. CI verde?"}
+    E -->|Não| C
+    E -->|Sim| F["6. Merge<br/>pelo autor"]
+    F --> G["7. Registra na issue<br/>e fecha se tudo atendido"]
 ```
 
-Documente sempre o que mudou, por quê, as decisões, como foi testado, os resultados e as pendências. Use comentários na issue, mensagens de commit e a documentação do repositório.
+## Regras
+
+1. **Qualquer dev pega qualquer issue aberta**, na ordem do [plano vigente](../planejamento/plano-pos-demo-issues-abertas.md): sprint atual (os prazos estão nos milestones do GitHub) e prioridade P0, P1, P2. Não precisa pedir. Depois do congelamento (11/11), só entra correção de bug P0. Se ficar com ela, atribui a si; se largar, remove a atribuição.
+2. **CI verde é a única barreira para o merge.** Verde, o autor integra. Vermelho, corrige. Nunca desliga verificação nem usa `--no-verify`.
+3. **O autor integra o próprio PR.** Não há revisão obrigatória antes nem depois.
+4. **Todo critério de aceite vira teste ou comando.** O que não tem verificação não conta como atendido.
+5. **Sem segredos.** Dados fictícios; nunca chaves, senhas ou dados reais do hospital.
+6. **Issue só fecha com todos os critérios atendidos.** Entrega parcial: fica aberta, com a lista do que falta.
 
 ## Passo a passo
 
-1. **Entenda o pedido completo.** Leia título, corpo, critérios de aceite, comentários e specs vinculadas. O checklist resume o pedido, mas não substitui o corpo da issue. Confira as dependências e registre um responsável e um colega revisor.
-2. **Ligue a issue ao planejamento.** Veja qual cartão da sprint atende qual parte da issue. Uma issue pode ter várias tarefas, e concluir um cartão não cumpre a issue inteira. Registre o escopo e as pendências e mova o cartão para **Em andamento**.
-3. **Trabalhe em uma branch por tarefa.** Atualize a `develop` e crie `feature/nome` (funcionalidade) ou `fix/nome` (correção). Preserve o trabalho dos colegas e referencie a issue nos commits.
-4. **Teste e registre evidências.** Rode as verificações dos critérios de aceite e as afetadas pela mudança. Registre comandos, ambiente, resultado esperado, resultado obtido e links. Use dados fictícios. Nunca inclua chaves, senhas ou dados reais do hospital.
-5. **Peça revisão.** Abra o PR para `develop` e mova o cartão para **Revisão e testes**. O colega confere o pedido completo e os resultados. Corrija os achados na mesma branch e repita as verificações afetadas. Integre só com revisão e CI aprovados.
-6. **Prepare a release.** Valide na `develop`, crie `release/X.Y.Z`, congele funcionalidades e registre o aceite. Depois da aprovação, integre à `main`, crie a tag `vX.Y.Z` e leve as correções de volta à `develop`. Detalhes e urgências (`hotfix/*`) estão no [Git Flow](gitflow.md).
-7. **Registre a entrega.** Comente na issue o que foi feito, com links, revisão e evidências. Marque os critérios atendidos e mova a tarefa para **Concluído**. Feche a issue só quando todos os requisitos estiverem atendidos. Se a entrega for parcial, deixe a issue aberta e liste o que falta.
+1. **Pegue a issue.** Leia o corpo e os critérios de aceite. Peça ao agente para resumir os critérios e propor como verificar cada um.
+2. **Crie a branch** a partir da `develop` atualizada: `feature/nome` ou `fix/nome`.
+3. **Desenvolva e teste com o agente.** O agente escreve o código e os testes, roda `pytest` e os scripts de aceite afetados, e repete no isolado qualquer teste de tempo que falhar (veja a [#45](https://github.com/Solution-Explores/SigmaTI/issues/45)).
+4. **Abra o PR para `develop`.** O corpo traz: issue, critérios com a verificação de cada um, comandos e resultados.
+5. **Confira o CI.** Vermelho: volte ao passo 3.
+6. **Integre com o CI verde.** O autor faz o merge (pode usar auto-merge do GitHub).
+7. **Registre na issue** o que mudou, o link do PR e as evidências. Se todos os critérios estão atendidos, feche a issue.
 
-## Colunas do quadro
+## O que o agente faz
 
-| Coluna | Quando usar |
-|---|---|
-| A fazer | Tarefa identificada, com escopo, responsável e dependências registrados. |
-| Em andamento | Desenvolvimento na branch da tarefa, ou correção dos achados da revisão. |
-| Revisão e testes | Alteração pronta para revisão por outro integrante, com evidências. |
-| Concluído | Escopo da tarefa aprovado e entregue. A issue só fecha se todos os seus requisitos também estiverem atendidos. |
+Peça ao agente, em uma frase, e confira o resultado:
 
-## Modelos de comentário
+- ler a issue e listar critérios e verificações;
+- criar a branch, escrever código e testes, e rodar a bateria;
+- ler o próprio diff antes do push (segredos, dados reais, arquivos soltos);
+- abrir o PR com o corpo preenchido e comentar a evidência na issue.
 
-Preencha os campos entre colchetes.
+Bateria padrão (alguns scripts exigem PostgreSQL de teste em `SIGMA_TEST_DATABASE_URL`):
 
-Comentário inicial:
-
-```text
-Iniciando a tarefa [Kxx], vinculada à issue #[número].
-Responsável: [nome]. Revisor: [outro integrante].
-Escopo desta entrega: [parte do pedido que será atendida].
-Critérios a validar: [critérios do corpo e do checklist].
-Dependências e pendências: [listar ou indicar nenhuma].
-Trabalho em feature/nome, com PR para develop; evidências serão registradas nesta issue e na documentação.
+```bash
+python -m pytest
+python scripts/validate_api_acceptance.py
+python scripts/validate_panel.py
+python scripts/validate_collection.py
+python scripts/validate_infrastructure.py
 ```
 
-Comentário final:
+## Release e tag
 
-```text
-Entrega da tarefa [Kxx] vinculada à issue #[número].
-O que mudou e por quê: [resumo e decisões].
-Commits / integração / documentação: [links].
-Testes: [comandos, ambiente e resultados].
-Evidências: [links].
-Revisão: [nome do colega e registro da aprovação].
-Critérios atendidos: [listar].
-Pendências: [listar ou indicar nenhuma].
-Situação da issue: [manter aberta por entrega parcial / fechar após atender tudo].
-```
+Qualquer dev pode fazer, sem pedir liberação:
 
-## Conferências por issue
+1. Com a `develop` verde, crie `release/X.Y.Z` e rode a bateria padrão.
+2. Abra o PR para a `main`. Com o CI verde, integre.
+3. Crie a tag `vX.Y.Z` no commit entregue e leve as correções de volta à `develop`.
+4. Comente na issue da versão o SHA, a data e o resultado da bateria.
 
-A tabela orienta a conferência do pedido. Ela não declara que os critérios já foram implementados ou validados. A descrição atual da issue no GitHub é a referência.
-
-| Issue | O que conferir |
-|---|---|
-| [#2 Docker Compose](https://github.com/Solution-Explores/SigmaTI/issues/2) | `docker compose config --quiet` passa localmente e no CI. O arquivo não tem marcadores de conflito. README e stack descrevem os serviços mantidos. |
-| [#3 Credenciais, portas e imagens](https://github.com/Solution-Explores/SigmaTI/issues/3) | `.env.example` existe e `.env` é ignorado. Nenhuma senha literal no repositório. Imagens com versão fixa, sem `latest`. Banco na rede interna, portas restritas, n8n acessível só pela gerência ou VPN, política de atualização documentada. |
-| [#4 Configuração e chamada à IA](https://github.com/Solution-Explores/SigmaTI/issues/4) | Sem segredo no código, e a API falha ao iniciar sem chave. Origem não autorizada é recusada. Teste com provedor simulado mostra timeout de até 15 s e erro público genérico. Chamada assíncrona, modelo e origens por ambiente, e detalhes de falha só no log. |
-
-Exemplo: a K02 cobre a configuração por ambiente da issue #4. Ela sozinha não fecha a issue, porque faltam a chamada assíncrona, o timeout e o tratamento de erros.
+A `v1.0.0` é a meta da Sprint 1 do plano (milestone de 03/11). Hotfix: mesmo caminho, a partir da `main` (`hotfix/nome`).
 
 [Voltar ao README](../../README.md)

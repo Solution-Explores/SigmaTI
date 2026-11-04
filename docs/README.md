@@ -30,6 +30,7 @@ Como a equipe trabalha.
 
 ## Planejamento ([`planejamento/`](planejamento/README.md))
 
+- [Mapa dos espaços: GitHub, Trello, Miro e Drive](planejamento/mapa-de-espacos.md)
 - [Plano de demonstração](planejamento/plano-demonstracao-2026-10-27.md)
 - [Plano de sprints pós-demo](planejamento/plano-sprints-pos-demo.md)
 - [Pauta de 28/10: pós-congelamento](planejamento/pauta-pos-congelamento-2026-10-28.md)

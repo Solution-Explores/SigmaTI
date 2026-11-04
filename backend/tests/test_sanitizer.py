@@ -147,3 +147,130 @@ class TestZeroPseudonimizacao:
             val = getattr(sanitizer, attr)
             if isinstance(val, dict):
                 assert attr not in {"de_para", "mapeamento_reverso", "lookup_table", "tabela_correspondencia"}
+
+
+class TestRegressaoAuditoriaOrientador:
+    """Regressão estrita para os 14 casos adversariais da conferência de 31/10/2026 (#5)."""
+
+    @pytest.mark.parametrize(
+        ("id_caso", "entrada", "fragmentos_proibidos"),
+        [
+            (
+                "ADV-01",
+                "Paciente: Ana Beatriz Souza sem acesso ao portal de exames",
+                ["Ana", "Beatriz", "Souza"],
+            ),
+            (
+                "ADV-02",
+                "Dr Pedro Alves sem acesso ao sistema de laudos",
+                ["Pedro", "Alves"],
+            ),
+            (
+                "ADV-03",
+                "Sra. Carla Mendes ligou informando queda no totem da recepção",
+                ["Carla", "Mendes"],
+            ),
+            (
+                "ADV-04",
+                "Maria Oliveira (leito 12) não consegue sincronizar monitor multiparamétrico",
+                ["Maria", "Oliveira"],
+            ),
+            (
+                "ADV-05",
+                "usuario joao.silva bloqueado no AD após múltiplas tentativas",
+                ["joao.silva", "joao", ".silva", "silva"],
+            ),
+            (
+                "ADV-06",
+                "login: maria.souza falhou 5 vezes na autenticação RADIUS",
+                ["maria.souza", "maria", ".souza", "souza"],
+            ),
+            (
+                "ADV-07",
+                "CPF 123 456 789 09 do paciente recusado na validação cadastral",
+                ["123 456 789 09", "123 456", "789 09"],
+            ),
+            (
+                "ADV-08",
+                "Registro de atendimento 2026-000123 falhou ao sincronizar com o HIS",
+                ["2026-000123", "000123"],
+            ),
+            (
+                "ADV-09a",
+                "Equipamento PACS-01 fora do ar no setor de imagem",
+                ["PACS-01"],
+            ),
+            (
+                "ADV-09b",
+                "Servidor pacs01 sem resposta ao ping de monitoramento",
+                ["pacs01"],
+            ),
+            (
+                "ADV-10",
+                "Telefone do responsável: (92) 99123-4567 não recebeu alerta SMS",
+                ["(92) 99123-4567", "99123-4567", "991234567"],
+            ),
+            (
+                "ADV-11",
+                "RG 12.345.678-9 do acompanhante gerou erro de digitação no cadastro",
+                ["12.345.678-9", "12.345.678"],
+            ),
+            (
+                "ADV-12",
+                "Data de nascimento 12/03/1984 divergente na integração HL7",
+                ["12/03/1984", "1984"],
+            ),
+            (
+                "ADV-13",
+                "Endereço Rua das Flores, 123, Manaus falhou na validação de CEP",
+                ["Rua das Flores", "Flores, 123"],
+            ),
+        ],
+    )
+    def test_casos_adversariais_nao_vazam_para_ia(self, id_caso, entrada, fragmentos_proibidos):
+        """Nenhum dos 14 casos pode passar com fragmentos sensíveis preservados (ou substitui, ou bloqueia)."""
+        resultado = sanitizar_texto(entrada)
+        if resultado.sucesso:
+            assert resultado.texto_sanitizado != entrada, (
+                f"Caso {id_caso} passou inalterado sem bloqueio: {entrada!r}"
+            )
+            for proibido in fragmentos_proibidos:
+                assert not re.search(re.escape(proibido), resultado.texto_sanitizado, re.IGNORECASE), (
+                    f"Caso {id_caso} vazou fragmento proibido {proibido!r} em {resultado.texto_sanitizado!r}"
+                )
+        else:
+            assert resultado.residuos or resultado.motivo_bloqueio, (
+                f"Caso {id_caso} bloqueado deve registrar motivo/resíduo."
+            )
+
+
+class TestConjuntoCegoE6:
+    """Executa o conjunto de avaliação cega da #5: zero vazamentos e proteção relatada com intervalo.
+
+    O critério original do E6 (recall de transformação) não é afirmado aqui: o conjunto cego é para
+    relatar o recall com IC e declarar a limitação, não para ajustar a regra olhando o resultado.
+    """
+
+    def test_conjunto_cego_sem_vazamentos_e_protecao_relatada(self):
+        from pathlib import Path
+        import sys
+
+        root = Path(__file__).resolve().parents[2]
+        if str(root / "scripts") not in sys.path:
+            sys.path.insert(0, str(root / "scripts"))
+        from executar_experimento_e6 import carregar_corpus, executar_experimento
+
+        caminho = Path(__file__).resolve().parent / "data" / "corpus_cego_pii.json"
+        corpus = carregar_corpus(caminho)
+        metricas = executar_experimento(corpus)
+
+        assert metricas["total_identificadores"] >= 40
+        assert metricas["negativos"] >= 20
+        assert metricas["vazados"] == 0, f"Vazamentos detectados no conjunto cego: {metricas['detalhes']}"
+        assert metricas["recall_protecao"] >= 99.0
+        assert metricas["taxa_fp"] <= 5.0
+        assert metricas["aprovado_protecao"] is True
+        # Bloqueio e transformação somam a proteção; nada fica sem contabilizar.
+        assert metricas["removidos"] + metricas["bloqueados"] + metricas["vazados"] == metricas["total_identificadores"]
+        lim_inf, lim_sup = metricas["ic_protecao"]
+        assert lim_inf <= metricas["recall_protecao"] <= lim_sup

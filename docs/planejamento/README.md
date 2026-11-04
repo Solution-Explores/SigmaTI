@@ -6,7 +6,18 @@ Planos e pautas datados da demonstração e do pós-demonstração.
 
 ## Documentos
 
+- [Mapa dos espaços (GitHub, Trello, Miro, Drive)](mapa-de-espacos.md)
+- [Atividades do Vinícius nas Sprints 1 e 2 (até 10/11/2026)](tarefas-vinicius-sprint-1.md)
+- [Roteiro da Sprint 2 no estágio (04 a 10/11/2026)](roteiro-sprint-2-estagio.md)
+- [Atividades do Iohan nas Sprints 1, 2 e 3 (plano do orientador, 02/11/2026)](tarefas-iohan-sprint-1.md)
+- [Atividades da Joyce: design system e front (plano do orientador, 02/11/2026)](atividades-joyce.md)
 - [Pauta de 28/10/2026: pós-congelamento](pauta-pos-congelamento-2026-10-28.md)
 - [Concluir a demonstração do SigmaTI e organizar o fechamento do projeto](plano-conclusao-2026-10-20.md)
 - [Plano até a demonstração de 27/10/2026](plano-demonstracao-2026-10-27.md)
+
+## Descontinuados
+
+A partir de 02/11/2026 vale o plano do orientador (Sprint 1 até 03/11, Sprint 2 até 10/11, Sprint 3 até 17/11), registrado nos milestones do GitHub e na auditoria de 31/10. Os planos abaixo ficam só como histórico:
+
+- [Planejamento pós-demo das issues abertas (28/10 a 18/11/2026)](plano-pos-demo-issues-abertas.md)
 - [Plano de sprints pós-demo (28/10 a 17/11/2026)](plano-sprints-pos-demo.md)

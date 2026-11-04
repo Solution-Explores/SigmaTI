@@ -177,6 +177,8 @@ docker-compose.yml, docker-images.lock.json, .env.example
 
 ## Para quem trabalha no TCC
 
+Trello, Miro e Drive estão mapeados em [docs/planejamento/mapa-de-espacos.md](docs/planejamento/mapa-de-espacos.md); o repositório vence em caso de divergência.
+
 O desenvolvimento segue o [Git Flow](docs/processo/gitflow.md): branches `feature/*` e `fix/*` entram na `develop` por PR, com testes, evidências e revisão, e uma `release/*` prepara a `main`. Comece pelo [fluxo de trabalho do TCC](docs/processo/fluxo-de-trabalho-tcc.md), que explica as etapas, as colunas do quadro e quando uma issue pode ser encerrada. Toda a documentação está indexada em [docs/README.md](docs/README.md).
 
 ## Autores

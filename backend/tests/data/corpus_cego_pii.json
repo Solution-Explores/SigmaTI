@@ -1,0 +1,596 @@
+[
+  {
+    "id": "CEGO-POS-001",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "ipv4",
+        "valor": "10.12.45.203",
+        "substituto": "10.12.45.0/24",
+        "proibidos": ["10.12.45.203"]
+      },
+      {
+        "classe": "ipv4",
+        "valor": "172.20.8.14",
+        "substituto": "172.20.8.0/24",
+        "proibidos": ["172.20.8.14"]
+      }
+    ],
+    "entrada": "Perda de pacotes ICMP entre o coletor 10.12.45.203 e o gateway 172.20.8.14 na ala cirúrgica.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-002",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "ipv6",
+        "valor": "2001:0db8:cafe:0042:0000:0000:00a1:9f3c",
+        "substituto": "2001:db8:cafe:42::/64",
+        "proibidos": ["00a1:9f3c", "2001:0db8:cafe:0042:0000:0000:00a1:9f3c"]
+      }
+    ],
+    "entrada": "Timeout de sessão BGP com o vizinho IPv6 2001:0db8:cafe:0042:0000:0000:00a1:9f3c na porta 179.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-003",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "ipv6",
+        "valor": "fe80::a00:27ff:fe8e:4d21",
+        "substituto": "fe80::/64",
+        "proibidos": ["fe8e:4d21", "fe80::a00:27ff:fe8e:4d21"]
+      },
+      {
+        "classe": "mac",
+        "valor": "08:00:27:8E:4D:21",
+        "substituto": "[MAC_MASCARADO]",
+        "proibidos": ["08:00:27:8E:4D:21"]
+      }
+    ],
+    "entrada": "Anúncio RA duplicado detectado a partir de fe80::a00:27ff:fe8e:4d21 (MAC 08:00:27:8E:4D:21).",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-004",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "mac",
+        "valor": "D4-BE-D9-72-19-C0",
+        "substituto": "[MAC_MASCARADO]",
+        "proibidos": ["D4-BE-D9-72-19-C0"]
+      },
+      {
+        "classe": "mac",
+        "valor": "aabb.ccdd.ee11",
+        "substituto": "[MAC_MASCARADO]",
+        "proibidos": ["aabb.ccdd.ee11"]
+      }
+    ],
+    "entrada": "Flapping de endereço físico entre D4-BE-D9-72-19-C0 e aabb.ccdd.ee11 na VLAN 30.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-005",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "hostname",
+        "valor": "sw-distribuicao-02",
+        "substituto": "[SWITCH_REDE]",
+        "proibidos": ["sw-distribuicao-02"]
+      },
+      {
+        "classe": "hostname",
+        "valor": "rt-borda-principal",
+        "substituto": "[ROTEADOR_REDE]",
+        "proibidos": ["rt-borda-principal"]
+      },
+      {
+        "classe": "hostname",
+        "valor": "fw-perimetro-02",
+        "substituto": "[FIREWALL_REDE]",
+        "proibidos": ["fw-perimetro-02"]
+      }
+    ],
+    "entrada": "Queda de túnel OSPF entre sw-distribuicao-02, rt-borda-principal e fw-perimetro-02.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-006",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "hostname",
+        "valor": "PACS-02",
+        "substituto": "[SERVIDOR_HOSPITALAR]",
+        "proibidos": ["PACS-02"]
+      },
+      {
+        "classe": "hostname",
+        "valor": "pacs03",
+        "substituto": "[SERVIDOR_HOSPITALAR]",
+        "proibidos": ["pacs03"]
+      }
+    ],
+    "entrada": "Servidor de arquivamento PACS-02 sem sincronismo DICOM com o nó secundário pacs03.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-007",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "hostname",
+        "valor": "tomografo-siemens-02",
+        "substituto": "[EQUIPAMENTO_IMAGEM]",
+        "proibidos": ["tomografo-siemens-02"]
+      },
+      {
+        "classe": "hostname",
+        "valor": "monitor-multiparametrico-08",
+        "substituto": "[DISPOSITIVO_BIOMEDICO]",
+        "proibidos": ["monitor-multiparametrico-08"]
+      },
+      {
+        "classe": "hostname",
+        "valor": "ws-triagem-04",
+        "substituto": "[ESTACAO_CLINICA]",
+        "proibidos": ["ws-triagem-04"]
+      },
+      {
+        "classe": "hostname",
+        "valor": "ap-quimioterapia-01",
+        "substituto": "[ACCESS_POINT]",
+        "proibidos": ["ap-quimioterapia-01"]
+      }
+    ],
+    "entrada": "Latência elevada no ap-quimioterapia-01 afetando ws-triagem-04, monitor-multiparametrico-08 e tomografo-siemens-02.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-008",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "email",
+        "valor": "suporte.redes@fcecon.am.gov.br",
+        "substituto": "[EMAIL_REMOVIDO]",
+        "proibidos": ["suporte.redes@fcecon.am.gov.br", "suporte.redes"]
+      },
+      {
+        "classe": "email",
+        "valor": "plantao.ti@hospital.org.br",
+        "substituto": "[EMAIL_REMOVIDO]",
+        "proibidos": ["plantao.ti@hospital.org.br", "plantao.ti"]
+      }
+    ],
+    "entrada": "Notificação crítica encaminhada para suporte.redes@fcecon.am.gov.br e plantao.ti@hospital.org.br.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-009",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "login",
+        "valor": "carlos.nogueira",
+        "substituto": "[LOGIN_REMOVIDO]",
+        "proibidos": ["carlos.nogueira", "carlos", "nogueira"]
+      }
+    ],
+    "entrada": "Conta bloqueada no Active Directory: usuario carlos.nogueira excedeu o limite de tentativas.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-010",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "login",
+        "valor": "fernanda.lima",
+        "substituto": "[LOGIN_REMOVIDO]",
+        "proibidos": ["fernanda.lima", "fernanda", "lima"]
+      }
+    ],
+    "entrada": "Falha de autenticação RADIUS: login: fernanda.lima rejeitado pelo controlador sem fio.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-011",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "login",
+        "valor": "marcos_azevedo",
+        "substituto": "[LOGIN_REMOVIDO]",
+        "proibidos": ["marcos_azevedo", "marcos", "azevedo"]
+      }
+    ],
+    "entrada": "Sessão VPN encerrada para o operador user=marcos_azevedo após expiração de token.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-012",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "cpf",
+        "valor": "418.729.630-15",
+        "substituto": "[CPF_REMOVIDO]",
+        "proibidos": ["418.729.630-15", "418.729", "630-15"]
+      }
+    ],
+    "entrada": "Erro ao validar certificado digital vinculado ao CPF 418.729.630-15 no portal clínico.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-013",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "cpf",
+        "valor": "741 852 963 04",
+        "substituto": "[CPF_REMOVIDO]",
+        "proibidos": ["741 852 963 04", "741 852", "963 04"]
+      }
+    ],
+    "entrada": "Timeout na consulta cadastral do CPF 741 852 963 04 durante admissão na triagem.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-014",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "cpf",
+        "valor": "52998224725",
+        "substituto": "[CPF_REMOVIDO]",
+        "proibidos": ["52998224725"]
+      },
+      {
+        "classe": "cns",
+        "valor": "704501239876541",
+        "substituto": "[CNS_REMOVIDO]",
+        "proibidos": ["704501239876541"]
+      }
+    ],
+    "entrada": "Divergência de sincronização no barramento SUS para CPF 52998224725 e CNS 704501239876541.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-015",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "cns",
+        "valor": "898 0012 3456 7891",
+        "substituto": "[CNS_REMOVIDO]",
+        "proibidos": ["898 0012 3456 7891", "3456 7891"]
+      }
+    ],
+    "entrada": "Falha de comunicação SOAP ao consultar Cartão SUS 898 0012 3456 7891 na base federal.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-016",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "prontuario",
+        "valor": "PRT-445566",
+        "substituto": "[PRONTUARIO_REMOVIDO]",
+        "proibidos": ["PRT-445566", "445566"]
+      },
+      {
+        "classe": "registro_atendimento",
+        "valor": "2026-004891",
+        "substituto": "[REGISTRO_REMOVIDO]",
+        "proibidos": ["2026-004891", "004891"]
+      }
+    ],
+    "entrada": "Erro de indexação do prontuário #PRT-445566 vinculado ao Registro de atendimento 2026-004891.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-017",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "Henrique Vasconcelos",
+        "substituto": "[NOME_REMOVIDO]",
+        "proibidos": ["Henrique", "Vasconcelos"]
+      }
+    ],
+    "entrada": "Dr Henrique Vasconcelos relatou indisponibilidade do visualizador radiológico na sala 3.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-018",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "Camila Fontes Ribeiro",
+        "substituto": "[NOME_REMOVIDO]",
+        "proibidos": ["Camila", "Fontes", "Ribeiro"]
+      }
+    ],
+    "entrada": "Paciente: Camila Fontes Ribeiro aguardando reconexão do sistema de agendamento quimioterápico.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-019",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "Helena Batista",
+        "substituto": "[NOME_REMOVIDO]",
+        "proibidos": ["Helena", "Batista"]
+      },
+      {
+        "classe": "nome",
+        "valor": "Otavio Cavalcanti",
+        "substituto": "[NOME_REMOVIDO]",
+        "proibidos": ["Otavio", "Cavalcanti"]
+      }
+    ],
+    "entrada": "Sra. Helena Batista e Sr. Otavio Cavalcanti reportaram queda do totem de senhas na recepção.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-020",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "Gabriela Peixoto",
+        "substituto": "[NOME_REMOVIDO]",
+        "proibidos": ["Gabriela", "Peixoto"]
+      }
+    ],
+    "entrada": "Gabriela Peixoto (leito 08) sem telemetria de oximetria no painel central da enfermaria.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-021",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "nome",
+        "valor": "Rafael Tavares",
+        "substituto": "[NOME_REMOVIDO]",
+        "proibidos": ["Rafael", "Tavares"]
+      }
+    ],
+    "entrada": "Acesso negado na catraca do bloco cirúrgico para Rafael Tavares após falha do controlador.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-022",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "telefone",
+        "valor": "(92) 98412-3390",
+        "substituto": "[TELEFONE_REMOVIDO]",
+        "proibidos": ["98412-3390", "984123390"]
+      },
+      {
+        "classe": "telefone",
+        "valor": "(11) 3245-8899",
+        "substituto": "[TELEFONE_REMOVIDO]",
+        "proibidos": ["3245-8899", "32458899"]
+      }
+    ],
+    "entrada": "Falha no disparo de SMS para o telefone do responsável: (92) 98412-3390 e ramal externo (11) 3245-8899.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-023",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "rg",
+        "valor": "24.680.135-7",
+        "substituto": "[RG_REMOVIDO]",
+        "proibidos": ["24.680.135-7", "24.680.135"]
+      }
+    ],
+    "entrada": "Erro de leitura óptica ao cadastrar RG 24.680.135-7 do acompanhante na portaria principal.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-024",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "data_nascimento",
+        "valor": "25/11/1978",
+        "substituto": "[DATA_NASCIMENTO_REMOVIDA]",
+        "proibidos": ["25/11/1978", "1978"]
+      }
+    ],
+    "entrada": "Inconsistência de validação HL7 no campo Data de nascimento 25/11/1978 do registro clínico.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-025",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "endereco",
+        "valor": "Avenida Pedro Teixeira, 450, Dom Pedro, Manaus",
+        "substituto": "[ENDERECO_REMOVIDO]",
+        "proibidos": ["Pedro Teixeira", "Dom Pedro"]
+      }
+    ],
+    "entrada": "Falha na geocodificação domiciliar para Endereço Avenida Pedro Teixeira, 450, Dom Pedro, Manaus.",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-POS-026",
+    "tipo": "positivo",
+    "identificadores": [
+      {
+        "classe": "endereco",
+        "valor": "Rua das Acácias, 78, Flores",
+        "substituto": "[ENDERECO_REMOVIDO]",
+        "proibidos": ["Rua das Acácias", "Acácias"]
+      },
+      {
+        "classe": "telefone",
+        "valor": "+55 92 99188-7766",
+        "substituto": "[TELEFONE_REMOVIDO]",
+        "proibidos": ["99188-7766", "991887766"]
+      }
+    ],
+    "entrada": "Cadastro de ambulância falhou para Endereço Rua das Acácias, 78, Flores (contato +55 92 99188-7766).",
+    "espera_sanitizacao": true
+  },
+  {
+    "id": "CEGO-NEG-001",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Latency spike on VLAN 120: average RTT reached 42ms over 60 seconds.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-002",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "PostgreSQL checkpoint completion time exceeded 180 seconds on replica node.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-003",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Executando motor de regras versão 2.14.8 com pacote zabbix-agent 6.4.21.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-004",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "TLS 1.3 handshake failed: cipher suite mismatch on upstream proxy port 8443.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-005",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Memory cgroup limit reached: container killed with exit code 137.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-006",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "SNMP polling timeout after 3 retries on OID 1.3.6.1.2.1.1.3.0.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-007",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Filesystem /var/lib/postgresql usage reached 92 percent capacity.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-008",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "HTTP 502 Bad Gateway returned by internal reverse proxy during healthcheck.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-009",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Chronyd stratum 3 clock offset measured at 12.4 milliseconds.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-010",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Interface bond0 link status up at 10000Mb/s full duplex.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-011",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Fila de mensagens RabbitMQ acumulou 350 eventos pendentes de processamento.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-012",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Certificado X.509 expira em 15 dias para o serviço de mensageria interna.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-013",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Servidor de impressão Santa Casa fora de sincronismo na fila de etiquetas.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-014",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Controladora de armazenamento RAID-10 reportou bateria de cache em recarga.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-015",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Taxa de colisão Ethernet igual a zero nas portas trunk do bloco cirúrgico.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-016",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Tempo de resposta da consulta SQL subiu para 320ms após vacuum automático.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-017",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Link óptico primário operando com atenuação de -14.2 dBm dentro do limite.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-018",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Serviço systemd-journald rotacionou arquivos de log acima de 500MB.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-019",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Balanceador HAProxy removeu backend inativo após 3 falhas consecutivas de TCP.",
+    "espera_sanitizacao": false
+  },
+  {
+    "id": "CEGO-NEG-020",
+    "tipo": "negativo",
+    "identificadores": [],
+    "entrada": "Consumo de swap estabilizado em 128MB no nó coletor de telemetria.",
+    "espera_sanitizacao": false
+  }
+]

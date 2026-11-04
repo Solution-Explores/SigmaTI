@@ -1,5 +1,7 @@
 # Plano de sprints pós-demo (28/10 a 17/11/2026)
 
+> **Histórico.** Escrito antes da demo. O plano vigente, que segue as sprints e os prazos definidos pelo orientador em 31/10, é [plano-pos-demo-issues-abertas.md](plano-pos-demo-issues-abertas.md).
+
 ## Contexto
 A demo ao orientador acontece **terça 27/10 às 18h** (SHA congela segunda 26/10 às 18h). Não existe sprint formal de duração fixa: a sprint de 15 a 20/10 não foi cumprida e depois o trabalho seguiu por cronograma diário. A **banca está marcada para 18/11/2026, e pode ser antecipada**. Restam três semanas úteis após a demo, e o backlog é maior que isso. O plano abaixo usa sprints de 1 semana, trata 11/11 como congelamento de código (margem para a banca antecipada) e separa o que entra do que vira "trabalho futuro" no TCC.
 

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440" width="760" height="440" role="img" aria-labelledby="t d" font-family="Segoe UI, Arial, sans-serif">
+<title id="t">Tempo de gravação da trilha de auditoria por tamanho da trilha, antes e depois da correção</title>
+<desc id="d">Antes: 1.000 entradas em 49.29 ms, 10.000 entradas em 428.7 ms, 100.000 entradas em 4291.24 ms. Depois: 1.000 entradas em 12.56 ms, 10.000 entradas em 12.24 ms, 100.000 entradas em 12.89 ms. Meta proposta: 50 ms.</desc>
+<rect width="760" height="440" fill="#ffffff"/>
+<text x="78" y="26" font-size="16" font-weight="600" fill="#1f2937">Custo de uma gravação na auditoria (login)</text>
+<text x="78" y="44" font-size="12" fill="#4b5563">mediana de 5 repetições · escala logarítmica nos dois eixos</text>
+<line x1="78" x2="610" y1="376.0" y2="376.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="70" y="380.0" font-size="12" text-anchor="end" fill="#4b5563">1 ms</text>
+<line x1="78" x2="610" y1="296.0" y2="296.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="70" y="300.0" font-size="12" text-anchor="end" fill="#4b5563">10 ms</text>
+<line x1="78" x2="610" y1="216.0" y2="216.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="70" y="220.0" font-size="12" text-anchor="end" fill="#4b5563">100 ms</text>
+<line x1="78" x2="610" y1="136.0" y2="136.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="70" y="140.0" font-size="12" text-anchor="end" fill="#4b5563">1.000 ms</text>
+<line x1="78" x2="610" y1="56.0" y2="56.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="70" y="60.0" font-size="12" text-anchor="end" fill="#4b5563">10.000 ms</text>
+<line x1="153.7" x2="153.7" y1="376" y2="381" stroke="#4b5563"/>
+<text x="153.7" y="398" font-size="12" text-anchor="middle" fill="#4b5563">1.000</text>
+<line x1="344.0" x2="344.0" y1="376" y2="381" stroke="#4b5563"/>
+<text x="344.0" y="398" font-size="12" text-anchor="middle" fill="#4b5563">10.000</text>
+<line x1="534.3" x2="534.3" y1="376" y2="381" stroke="#4b5563"/>
+<text x="534.3" y="398" font-size="12" text-anchor="middle" fill="#4b5563">100.000</text>
+<text x="344" y="426" font-size="12" text-anchor="middle" fill="#4b5563">entradas na trilha de auditoria</text>
+<line x1="78" x2="610" y1="240.1" y2="240.1" stroke="#4b5563" stroke-dasharray="5 4"/>
+<text x="618" y="244.1" font-size="12" fill="#4b5563">meta proposta: 50 ms</text>
+<polyline points="153.7,240.6 344.0,165.4 534.3,85.4" fill="none" stroke="#b45309" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="153.7" cy="240.6" r="5" fill="#b45309" stroke="#ffffff" stroke-width="2"/>
+<text x="153.7" y="228.6" font-size="12" text-anchor="middle" fill="#1f2937">49,29 ms</text>
+<circle cx="344.0" cy="165.4" r="5" fill="#b45309" stroke="#ffffff" stroke-width="2"/>
+<text x="344.0" y="153.4" font-size="12" text-anchor="middle" fill="#1f2937">428,7 ms</text>
+<circle cx="534.3" cy="85.4" r="5" fill="#b45309" stroke="#ffffff" stroke-width="2"/>
+<text x="534.3" y="73.4" font-size="12" text-anchor="middle" fill="#1f2937">4291,24 ms</text>
+<text x="546.3" y="89.4" font-size="13" font-weight="600" fill="#1f2937">antes</text>
+<polyline points="153.7,288.1 344.0,289.0 534.3,287.2" fill="none" stroke="#1d5fa6" stroke-width="2.5" stroke-linejoin="round"/>
+<circle cx="153.7" cy="288.1" r="5" fill="#1d5fa6" stroke="#ffffff" stroke-width="2"/>
+<text x="153.7" y="308.1" font-size="12" text-anchor="middle" fill="#1f2937">12,56 ms</text>
+<circle cx="344.0" cy="289.0" r="5" fill="#1d5fa6" stroke="#ffffff" stroke-width="2"/>
+<text x="344.0" y="309.0" font-size="12" text-anchor="middle" fill="#1f2937">12,24 ms</text>
+<circle cx="534.3" cy="287.2" r="5" fill="#1d5fa6" stroke="#ffffff" stroke-width="2"/>
+<text x="534.3" y="307.2" font-size="12" text-anchor="middle" fill="#1f2937">12,89 ms</text>
+<text x="546.3" y="291.2" font-size="13" font-weight="600" fill="#1f2937">depois</text>
+</svg>

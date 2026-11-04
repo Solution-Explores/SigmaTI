@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { apiRequest } from './api';
+import { apiRequest, MOCK } from './api';
 import Operations from './Operations';
 import './App.css';
 
@@ -43,6 +43,8 @@ export default function App() {
           aria-pressed={theme === 'light'}>Tema {theme === 'dark' ? 'claro' : 'escuro'}</button>
       </header>
       <p className="notice">Demonstração controlada: utilize somente dados fictícios.</p>
+      {MOCK && <p className="notice" role="note">Modo mock: API simulada, sem servidor. Entre com usuário iniciado por
+        {' '}<strong>suporte</strong>, <strong>analista</strong> ou <strong>gestor</strong> e qualquer senha.</p>}
       {erro && <p role="alert" className="error">{erro}</p>}
       {!session ? <section aria-labelledby="login-title" className="card login">
         <h2 id="login-title">Entrar</h2>
