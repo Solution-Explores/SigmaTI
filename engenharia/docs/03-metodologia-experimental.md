@@ -22,7 +22,7 @@ Princípios: **semente fixa**, **repetições** (n ≥ 30), **saída em CSV**, *
 | **E1** | Qualidade dos detectores com falha injetada em séries sintéticas | H1 | ✅ Implementado (`experimentos/exp_deteccao.py`) |
 | **E2** | Latência ponta a ponta do alerta até o painel (RF01 ≤ 5 s) | H4 | Ensaio local implementado: scripts/validate_collection.py; tela pendente #15 |
 | **E3** | Burn rate em rede real: tempo até `page` com sonda caída | H2 | ⬜ A fazer |
-| **E4** | Fuzzing da cadeia de hash (adulterar, remover, reordenar N entradas) | H3 | ⬜ A fazer (há testes unitários) |
+| **E4** | Fuzzing da cadeia de hash (adulterar, remover, reordenar N entradas) | H3 | ⚠️ Medido em 04/11: 100% nas três mutações do critério; **truncamento do fim não é detectado** pela verificação, só pela âncora |
 | **E5** | Latência da resposta da IA (RNF04 ≤ 15 s) com anonimização | H4 | ⬜ A fazer |
 
 ### E1 · Resultados (implementado)
@@ -55,9 +55,20 @@ Reprodução, limites e configuração: [coleta e eventos](09-coleta-eventos.md)
 
 Derrubar a sonda por 10 min com SLO de 99,9%; medir o tempo até o primeiro `page` e confirmar que um corte de 10 s **não** pagina.
 
-### E4 · Fuzzing da cadeia (a fazer)
+### E4 · Fuzzing da cadeia (medido em 04/11/2026)
 
-Gerar cadeias de N=1000 entradas; aplicar mutação aleatória (alterar um byte de um campo, remover ou trocar duas linhas) e verificar que `verificar()` reporta o índice ≤ ao da mutação em 100% dos casos.
+Trilha de N = 1000 entradas, uma mutação aleatória por caso, 250 casos por tipo, semente fixa 20261104. Script `experimentos/exp_fuzzing_cadeia.py`, resultado em [`resultados/e4_fuzzing_cadeia.md`](../resultados/e4_fuzzing_cadeia.md) e dado bruto em `resultados/e4_fuzzing_cadeia.csv`.
+
+| Mutação | Casos | `verificar()` detecta | Índice ≤ ao mutado | Âncora detecta |
+|---|---:|---:|---:|---:|
+| um byte de uma linha trocado | 250 | 100% | 250 | 0 |
+| uma linha apagada | 250 | 100% | 250 | 250 |
+| duas linhas trocadas de lugar | 250 | 100% | 250 | 0 |
+| 1 a 5 linhas apagadas do fim | 250 | **0%** | 0 | 100% |
+
+Nos 750 casos das três mutações do critério, o índice reportado foi exatamente o índice mutado. O critério da #11 passa.
+
+O quarto tipo foi acrescentado além do critério e **falha por construção**: uma trilha cortada no fim continua coerente consigo mesma, então a verificação não tem como saber que havia mais. É o que o `ancora()` resolve, comparado com o resumo guardado fora da máquina — ali o truncamento aparece em 100% dos casos. As duas conferências são complementares: a âncora, por sua vez, não vê mutação no meio.
 
 ### E5 · RNF04 (a fazer)
 
@@ -72,3 +83,4 @@ Medir tempo de resposta do chat com o filtro de anonimização ativo, n ≥ 30, 
 | Externa | Resultados de um só hospital | Declarar como estudo de caso |
 | Conclusão | Falhas injetadas são mais "limpas" que as reais | Rotular incidentes reais retroativamente |
 | Medição | Relógios não sincronizados distorcem MTTD | NTP/chrony nos hosts; registrar o offset |
+| Construto | A cadeia de hash, lida só a partir dela mesma, não detecta truncamento do fim (E4, 0 de 250 casos) | Guardar a âncora (`ancora()`) fora da máquina e conferir; declarar o limite no texto |
