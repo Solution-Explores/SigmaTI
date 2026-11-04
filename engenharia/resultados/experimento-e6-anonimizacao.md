@@ -26,4 +26,7 @@ Bloqueio seguro (fail-closed, como no detector residual de nomes do IBGE) é con
 Os resultados descrevem somente este corpus sintético. Não demonstram anonimização universal, conformidade jurídica ou ausência de vazamentos em dados hospitalares. Nomes sem contexto fora da lista de primeiros nomes frequentes do IBGE, OIDs numéricos com sub-sequências de 4 octetos compatíveis com IPv4 e hostnames fora dos padrões/lista configurados exigem novos casos e regras.
 IPv4 é generalizado para /24 e IPv6 para /64. A identificação contextual não substitui avaliação de risco de reidentificação.
 
-Resultado do corpus: APROVADO.
+Com poucos identificadores, a meta de 99% não é demonstrável: mesmo sem nenhuma falha, o limite inferior do IC de Wilson só chega a 99% com cerca de 381 identificadores. Por isso o recall é relatado com o intervalo, e a conclusão vale só para este corpus.
+
+Critério original (recall de transformação ≥ 99%, sem vazamento, FP ≤ 5%): APROVADO.
+Proteção contra vazamento externo (transformação + bloqueio, sem vazamento, FP ≤ 5%), relatada ao lado: ATENDIDA.

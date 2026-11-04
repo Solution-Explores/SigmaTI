@@ -89,7 +89,10 @@ def executar_experimento(corpus):
             "precisao": precisao, "ic_precisao": ic_precisao,
             "taxa_fp": taxa_fp, "ic_fp": ic_fp,
             "por_classe": dict(classes), "detalhes": detalhes,
-            "aprovado": total > 0 and vazados == 0 and recall_protecao >= 99 and taxa_fp <= 5}
+            # Critério original do E6 (21/10), mantido: transformação conta, bloqueio não.
+            "aprovado": total > 0 and vazados == 0 and recall >= 99 and taxa_fp <= 5,
+            # Proteção contra vazamento externo, relatada ao lado; não substitui o critério acima.
+            "aprovado_protecao": total > 0 and vazados == 0 and recall_protecao >= 99 and taxa_fp <= 5}
 
 
 def gerar_relatorio_markdown(m, destino):
@@ -122,7 +125,13 @@ def gerar_relatorio_markdown(m, destino):
                "e hostnames fora dos padrões/lista configurados exigem novos casos e regras.",
                "IPv4 é generalizado para /24 e IPv6 para /64. A identificação contextual não substitui "
                "avaliação de risco de reidentificação.", "",
-               f"Resultado do corpus: {'APROVADO' if m['aprovado'] else 'REPROVADO'}."]
+               "Com poucos identificadores, a meta de 99% não é demonstrável: mesmo sem nenhuma falha, o limite "
+               "inferior do IC de Wilson só chega a 99% com cerca de 381 identificadores. Por isso o recall é "
+               "relatado com o intervalo, e a conclusão vale só para este corpus.", "",
+               f"Critério original (recall de transformação ≥ 99%, sem vazamento, FP ≤ 5%): "
+               f"{'APROVADO' if m['aprovado'] else 'REPROVADO'}.",
+               f"Proteção contra vazamento externo (transformação + bloqueio, sem vazamento, FP ≤ 5%), "
+               f"relatada ao lado: {'ATENDIDA' if m['aprovado_protecao'] else 'NÃO ATENDIDA'}."]
     destino = Path(destino)
     destino.parent.mkdir(parents=True, exist_ok=True)
     destino.write_text("\n".join(linhas) + "\n", encoding="utf-8")

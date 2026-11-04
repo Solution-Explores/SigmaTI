@@ -245,9 +245,13 @@ class TestRegressaoAuditoriaOrientador:
 
 
 class TestConjuntoCegoE6:
-    """Executa o conjunto de avaliação cega da #5 e garante zero vazamentos e recall de proteção >= 99%."""
+    """Executa o conjunto de avaliação cega da #5: zero vazamentos e proteção relatada com intervalo.
 
-    def test_conjunto_cego_atende_meta_de_recall_sem_vazamentos(self):
+    O critério original do E6 (recall de transformação) não é afirmado aqui: o conjunto cego é para
+    relatar o recall com IC e declarar a limitação, não para ajustar a regra olhando o resultado.
+    """
+
+    def test_conjunto_cego_sem_vazamentos_e_protecao_relatada(self):
         from pathlib import Path
         import sys
 
@@ -265,4 +269,8 @@ class TestConjuntoCegoE6:
         assert metricas["vazados"] == 0, f"Vazamentos detectados no conjunto cego: {metricas['detalhes']}"
         assert metricas["recall_protecao"] >= 99.0
         assert metricas["taxa_fp"] <= 5.0
-        assert metricas["aprovado"] is True
+        assert metricas["aprovado_protecao"] is True
+        # Bloqueio e transformação somam a proteção; nada fica sem contabilizar.
+        assert metricas["removidos"] + metricas["bloqueados"] + metricas["vazados"] == metricas["total_identificadores"]
+        lim_inf, lim_sup = metricas["ic_protecao"]
+        assert lim_inf <= metricas["recall_protecao"] <= lim_sup
