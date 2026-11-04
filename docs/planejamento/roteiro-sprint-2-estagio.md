@@ -2,14 +2,16 @@
 
 Roteiro para trabalhar a Sprint 2 na máquina do estágio, sem depender do computador de casa. Segue o plano do orientador: Sprint 2 fecha em 10/11, o congelamento de código é em 11/11 (só correção de bug P0) e a banca é em 18/11. A lista completa continua em [tarefas-vinicius-sprint-1.md](tarefas-vinicius-sprint-1.md); aqui está só o que fazer lá, na ordem.
 
+**Este roteiro tem só as atividades do Vinícius.** O que depende do Iohan está numa tabela à parte ("Esperando o Iohan"), para esperar a resposta dele em vez de fazer no lugar dele. Conferido em 04/11 contra as tarefas do Iohan, as issues e os cartões do Trello.
+
 [Voltar ao índice do planejamento](README.md)
 
 ## Resumo em poucas linhas
 
 - **Dias úteis até o congelamento:** quarta 04, quinta 05, sexta 06, segunda 09 e terça 10. Sábado e domingo ficam como folga, não como plano.
-- **A Sprint 2 tem 4 issues abertas:** #8, #45, #46 e #57. Nenhuma delas fecha sozinha: a #8 espera a #45, a #45 espera a revisão do Iohan, a #46 espera o orientador e a #57 está sem dono.
-- **O que é seu e cabe nesta semana:** montar a base do front da Joyce (ela está parada), o E4 da #11 (fuzzing da cadeia) e a #71 (incidente que nunca se fecha sozinho).
-- **O que é de outras pessoas:** a #57 e as revisões (Iohan), o limite de login da #46 (orientador), o front (Joyce, prazo 17/11).
+- **A Sprint 2 tem 4 issues abertas:** #8, #45, #46 e #57. Nenhuma fecha só com o seu trabalho: a #8 espera a #45, a #45 espera a revisão do Iohan, a #46 espera o orientador e a #57 é do Iohan.
+- **O que é seu e cabe nesta semana:** montar a base do front da Joyce (ela está parada), o E4 da #11 (fuzzing da cadeia), a #71 (incidente que nunca se fecha sozinho), o aceite da release e a rodada final no SHA candidato. O painel com MTTD e burn rate é P2 e só entra se sobrar tempo.
+- **O que é de outras pessoas:** a #57 e as revisões da #45 e da #46 (Iohan), o limite de login da #46 (orientador), o front (Joyce, prazo 17/11).
 - **Máquina:** use a máquina física do estágio. A VM do VirtualBox não está acessível, então as medições seguem com o desvio já declarado nos registros anteriores (máquina física em vez de VM).
 
 ## Antes de começar (20 minutos)
@@ -52,11 +54,11 @@ A ordem abaixo põe primeiro o que destrava os outros. A Joyce está parada espe
 | Quarta 04 | 3 | Base nova do front da Joyce | 2 a 3 h |
 | Quinta 05 | 4 | E4 da #11: fuzzing da cadeia | 2 h |
 | Sexta 06 | 5 | #71: incidente que nunca se fecha sozinho | 3 h, ou 0 se for declarado |
-| Segunda 09 | 6 | Aceite da release na `develop` atual | 1 a 2 h |
-| Segunda 09 | 7 | Revisões e fechamento de #45 e #8 | conforme o Iohan |
+| Segunda 09 | 6 | Aceite da release e rodada final no SHA candidato | 1 a 2 h |
+| Segunda 09 | 7 | Painel com MTTD e burn rate (P2, só se sobrar tempo) | 3 h |
 | Terça 10 | 8 | Conferência final da Sprint 2 e registro das limitações | 1 a 2 h |
 
-Os passos de decisão (A a E, mais abaixo) correm em paralelo, porque dependem de resposta de outras pessoas.
+O que depende do Iohan e do orientador corre em paralelo e está nas tabelas "Esperando o Iohan" e "Decisões", mais abaixo. Quando a resposta chegar, o que sobra para você é pequeno.
 
 ## Passos, um por um
 
@@ -111,19 +113,18 @@ Os passos de decisão (A a E, mais abaixo) correm em paralelo, porque dependem d
 - **Se for A:** MTTA e MTTR já medidos mudam de significado (hoje o MTTR de 0,191 s vem de o script resolver cada incidente por chamada de API). Reexecute `python scripts/medir_e3.py --output <saida>.json --minutos-a 10 --segundos-b 10 --observacao-b 5` e `scripts/medir_incidentes.py`, e atualize `docs/tcc/evidencias/e3-burn-rate.md` e `incidentes-mttd-burn.md`.
 - **Pronto quando:** na condição B do E3 (corte de 10 s) o sistema não dispara `page`, com teste e evidência no PR. Ou, na opção B, o texto da limitação commitado.
 
-### Passo 6. Aceite da release na `develop` atual
+### Passo 6. Aceite da release e rodada final no SHA candidato
 
-- **Por que:** a #5 e a #56 já estão integradas, então o que falta para a `v1.0.0` é repetir o aceite completo na `develop` atual. A #8 entra na `v1.0.0` com a limitação do E2 declarada; a #8 e a #45 são da Sprint 2 e não seguram a tag.
+- **Por que:** a #5 e a #56 já estão integradas, então o que falta para a `v1.0.0` é repetir o aceite completo na `develop` atual. A #8 entra na `v1.0.0` com a limitação do E2 declarada; a #8 e a #45 são da Sprint 2 e não seguram a tag. Esta é também a "rodada final no SHA candidato" do cartão VALIDAÇÃO do Trello (prazo 10/11): registre o MTTD e o burn rate para o texto do TCC. A VM do cartão está inacessível, então a rodada é na máquina física, com o desvio declarado.
 - **Fazer:** o bloco da seção 5 de [tarefas-vinicius-sprint-1.md](tarefas-vinicius-sprint-1.md) (branch `release/1.0.0`, `pytest`, `validate_api_acceptance`, `validate_panel`, `validate_collection`, `validate_infrastructure`), com o PostgreSQL de teste ligado. Abra o PR para a `main`, integre, crie a tag no commit entregue, leve as correções de volta à `develop` e comente na issue da versão o SHA, a data e o resultado.
 - **Cuidados:** rode **uma** execução de cada vez (duas execuções sobrepostas já contaminaram um resultado em 03/11). A `main` já recebeu os quatro arquivos da #56 pelo #73; confira que chegam sem conflito.
 - **Antes da tag:** decidir se #69 e #70 entram na release (eles são de antes do congelamento).
 
-### Passo 7. #45 e #8
+### Passo 7. Painel com MTTD e burn rate (P2)
 
-- **#45:** faltam duas caixas. A de 30/30 tem a evidência pronta (120 execuções isoladas, zero falhas, em máquina física, no comentário da issue) e depende da outra: o PR da correção da sonda revisado. O Iohan é o revisor nomeado e não revisou nada registrado.
-- **#8:** as três rodadas de carga já estão postadas (p95 entre 0,781 s e 0,835 s, atraso máximo do calendário de 0,044 s contra a meta de 0,5 s). A caixa de carga só marca junto com o fechamento da #45.
-- **Fazer:** pedir ao Iohan que registre "revisado" no #47 e no #61. Quando vier, marcar a caixa da #45, fechar, e fechar a #8.
-- **Se o Iohan não responder até segunda 09:** registrar na #45 que a revisão independente não aconteceu e quem a substituiu, e deixar a decisão de fechar ao orientador.
+- **Só se sobrar tempo.** É o primeiro item a cortar (cartão PAINEL do Trello, prazo 10/11).
+- **Atenção:** não é só trabalho de frontend. `/api/eng/incidentes/resumo` devolve `MTTD: n=0` sempre, porque nada grava o instante real da falha. Hoje o painel já poderia mostrar MTTA e MTTR; o MTTD exige antes decidir de onde vem esse instante.
+- **Pronto quando:** o painel mostra o que o sistema realmente mede, com teste, ou o corte fica registrado no diário e no TCC.
 
 ### Passo 8. Conferência final
 
@@ -131,17 +132,27 @@ Os passos de decisão (A a E, mais abaixo) correm em paralelo, porque dependem d
 - Registrar no TCC as limitações que ficam: recall de transformação 95,12% no conjunto cego (n = 41), deriva lenta 16,7%, RNF04 sem evidência, tudo em loopback, e a #71 (corrigida ou declarada).
 - Depois do congelamento (11/11) entra só correção de bug P0.
 
+## Esperando o Iohan (não fazer no lugar dele)
+
+Estas atividades são dele, pela lista [tarefas-iohan-sprint-1.md](tarefas-iohan-sprint-1.md) e pelos cartões do Trello. O que sobra para você é cobrar e, quando a resposta vier, fechar o que depende dela.
+
+| O quê | Onde está | O que você faz quando ele entregar |
+|---|---|---|
+| **#57**, rotas que respondem sucesso sem efeito (opção B, resposta 501, 8 a 11 h; P0 da Sprint 2, prazo 10/11). É dele: está na lista dele e o cartão do Trello tem o nome dele. No GitHub a issue ainda não tem responsável; ele deve se atribuir | Issue #57 | Revisar o PR, conferir os testes por rota e a matriz RBAC, e integrar com o CI verde |
+| **Revisão independente da #45 e da #46.** Ele é o revisor nomeado nas duas. Para a #45, é o que falta na caixa "PR da correção da sonda revisado" (#47 e #61) | Issues #45 e #46 | Marcar a caixa da #45 (a evidência de 30/30 já está postada: 120 execuções isoladas, zero falhas), fechar a #45 e depois fechar a #8 (as três rodadas de carga já estão postadas) |
+| Revisões dos PRs #59 a #65, que foram integrados sem revisão registrada | PRs integrados | Nada. Só registrar no diário que a revisão veio |
+
+- **Se o Iohan não responder até segunda 09:** registrar na #45 que a revisão independente não aconteceu e quem a substituiu, e deixar a decisão de fechar ao orientador. Não marque a caixa dele por conta própria.
+- **Mensagem curta sugerida:** "Iohan, bom dia. O #64 e o #68 já estão integrados e a #5 fechou. Para a Sprint 2 preciso de duas coisas: um comentário de 'revisado' no #47 e no #61, e a #57 com você. Se for começar, ela vem depois dos PRs que já entraram na `develop`."
+
 ## Decisões que não são do Claude (a resposta destrava)
 
 | # | Decisão | De quem | Efeito |
 |---|---|---|---|
-| A | **Dono da #57** (rotas que respondem sucesso sem efeito; opção B, resposta 501, 8 a 11 h; é P0 da Sprint 2, sem dono hoje). Pela lista do Iohan, é dele | Você e o Iohan | Sem dono, a #57 não fecha até 10/11 |
-| B | Opção A ou B da #71 | Você | Passo 5 |
-| C | Limite de custo de login da #46 (medido 12,9 ms; proposta de 50 ms) | Orientador | Última caixa da #46 |
-| D | Critério de recall do E6 na #5 e confirmação da banca de 18/11 e da licença | Orientador | Sprint 3 |
-| E | Digest novo do PostgreSQL (#74): manter o atual ou revisar | Você | Só informativo, sem pressa |
-
-Mensagem curta para o Iohan, sugerida: "Iohan, bom dia. O #64 e o #68 já estão integrados e a #5 fechou. Para a Sprint 2 preciso de duas coisas: um comentário de 'revisado' no #47 e no #61, e saber se a #57 fica com você. Se for, ela vem depois dos PRs que já entraram na `develop`."
+| A | Opção A ou B da #71 | Você | Passo 5 |
+| B | Limite de custo de login da #46 (medido 12,9 ms; proposta de 50 ms) | Orientador | Última caixa da #46 |
+| C | Critério de recall do E6 na #5 e confirmação da banca de 18/11 e da licença | Orientador | Sprint 3 |
+| D | Digest novo do PostgreSQL (#74): manter o atual ou revisar | Você | Só informativo, sem pressa |
 
 ## Ao fim de cada dia
 
