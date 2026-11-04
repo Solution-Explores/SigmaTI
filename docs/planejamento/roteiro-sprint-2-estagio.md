@@ -53,7 +53,7 @@ A ordem abaixo põe primeiro o que destrava os outros. A Joyce está parada espe
 | Quarta 04 | 2 | ✅ **Feito de casa, de manhã.** PR semanal dos diários (#75) integrado e #66 fechado | — |
 | Quarta 04 | 3 | ✅ **Feito na tarde de 04/11.** Base nova do front da Joyce, PR #77 | — |
 | Quinta 05 | 4 | ✅ **Feito na tarde de 04/11, antecipado.** E4 da #11, PR #78 | — |
-| Sexta 06 | 5 | #71: incidente que nunca se fecha sozinho | 3 h, ou 0 se for declarado |
+| Sexta 06 | 5 | ✅ **Feito na tarde de 04/11, antecipado.** #71 corrigida (opção A) e E3 remedido, PR #79 | — |
 | Segunda 09 | 6 | Aceite da release e rodada final no SHA candidato | 1 a 2 h |
 | Segunda 09 | 7 | Painel com MTTD e burn rate (P2, só se sobrar tempo) | 3 h |
 | Terça 10 | 8 | Conferência final da Sprint 2 e registro das limitações | 1 a 2 h |
@@ -87,6 +87,8 @@ O que depende do Iohan e do orientador corre em paralelo e está nas tabelas "Es
 - **Não feito:** o passo 1. O #69 e o #70 continuam abertos e verdes, esperando o seu clique, e agora o #77 e o #78 também.
 - **Passo 5 (#71)** espera a sua decisão entre corrigir e declarar. Enquanto isso, nada nele começa.
 - **A Joyce já pode ser avisada** depois que o #77 entrar na `develop`.
+- **Passo 5 feito também**, antecipado de sexta: a #71 foi corrigida pela opção A e o E3 passou a valer nas duas condições (PR #79). Com isso, os passos 3, 4 e 5 estão prontos e esperando integração.
+- **Passo 1 conferido:** nada dele aconteceu. A `develop` segue em `857e3ff` e o histórico do #69 e do #70 não registra tentativa de integração. Os dois estão mescláveis, com CI verde.
 
 ### Passo 3. Base nova do front da Joyce
 
