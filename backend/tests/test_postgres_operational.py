@@ -357,3 +357,90 @@ def test_entire_operational_rbac_matrix_against_postgres(store, pg_client):
             expected = 401 if role is None else 403 if level < minimum else 200
             response = pg_client.request(method, "/api/eng" + path, json=body, headers=headers)
             assert response.status_code == expected, (method, path, role, response.status_code)
+
+
+def test_success_closes_availability_incident_by_itself(store):
+    """#71: o alvo voltou, então o incidente fecha sem ninguém clicar."""
+    t = target(store)
+    caiu = datetime.now(timezone.utc).replace(microsecond=0)
+    incident = store.record_measurement(t["id"], False, ts=caiu)["incident"]
+    assert incident["resolvido_em"] is None
+    voltou = caiu + timedelta(seconds=10)
+    resultado = store.record_measurement(t["id"], True, 12.5, ts=voltou)
+    fechado = resultado["resolved"]
+    assert fechado is not None and fechado["id"] == incident["id"]
+    # O instante de fechamento é o da medição que provou a volta, não "agora":
+    # é isso que limita o intervalo de indisponibilidade usado no SLO.
+    assert fechado["resolvido_em"] == voltou
+    assert not [i for i in store.incidents(True) if i["alvo_id"] == t["id"]]
+    # Ninguém reconheceu, e o registro não finge que alguém reconheceu.
+    assert fechado["reconhecido_em"] is None
+    evento = [e for e in store.events() if e["acao"] == "incident.resolve"
+              and e["recurso"] == incident["id"]]
+    assert len(evento) == 1
+    assert evento[0]["ator"] == "scheduler" and evento[0]["detalhes"]["automatico"] is True
+    # O painel precisa ver o fechamento, e o SSE só entrega três ações.
+    assert any(e["acao"] == "incident.resolve" and e["incidente_id"] == incident["id"]
+               for e in store.stream_events())
+
+
+def test_automatic_closure_does_not_touch_latency_incident(store):
+    """Uma amostra boa não desmente o detector; só fecha disponibilidade."""
+    t = target(store)
+    store.record_measurement(t["id"], False)
+    for _ in range(40):
+        store.record_measurement(t["id"], True, 10.0, detector_kind="ewma")
+    anomalia = None
+    for _ in range(5):
+        anomalia = store.record_measurement(t["id"], True, 5000.0, detector_kind="ewma")["incident"]
+        if anomalia is not None and anomalia["tipo"] == "latency":
+            break
+    assert anomalia is not None and anomalia["tipo"] == "latency"
+    store.record_measurement(t["id"], True, 10.0, detector_kind="ewma")
+    abertos = [i for i in store.incidents(True) if i["alvo_id"] == t["id"]]
+    assert [i["tipo"] for i in abertos] == ["latency"]
+
+
+def test_manual_action_after_automatic_closure_is_a_no_op(store):
+    t = target(store)
+    incident = store.record_measurement(t["id"], False)["incident"]
+    fechado = store.record_measurement(t["id"], True, 10.0)["resolved"]
+    depois = store.change_incident(incident["id"], "resolve", "analyst")
+    assert depois["resolvido_em"] == fechado["resolvido_em"]
+    assert store.change_incident(incident["id"], "ack", "analyst")["reconhecido_em"] is None
+
+
+def test_failure_after_automatic_closure_opens_a_new_incident(store):
+    t = target(store)
+    primeiro = store.record_measurement(t["id"], False)["incident"]
+    store.record_measurement(t["id"], True, 10.0)
+    segundo = store.record_measurement(t["id"], False)["incident"]
+    assert segundo["id"] != primeiro["id"]
+    assert len([i for i in store.incidents(True) if i["alvo_id"] == t["id"]]) == 1
+
+
+def test_success_without_open_incident_resolves_nothing(store):
+    t = target(store)
+    assert store.record_measurement(t["id"], True, 10.0)["resolved"] is None
+    assert not [e for e in store.events() if e["acao"] == "incident.resolve"
+                and e["detalhes"].get("alvo_id") == t["id"]]
+
+
+def test_batch_measurements_close_incidents_of_recovered_targets(store):
+    um, dois = target(store), target(store)
+    caiu = datetime.now(timezone.utc).replace(microsecond=0)
+    abertos = {alvo["id"]: store.record_measurement(alvo["id"], False, ts=caiu)["incident"]["id"]
+               for alvo in (um, dois)}
+    voltou = caiu + timedelta(seconds=10)
+    resultados = store.record_measurements([
+        {"target_id": um["id"], "success": True, "latency_ms": 11.0, "ts": voltou, "detector_kind": "ewma"},
+        {"target_id": dois["id"], "success": False, "ts": voltou, "detector_kind": "ewma"},
+    ])
+    assert resultados[0]["resolved"]["id"] == abertos[um["id"]]
+    assert resultados[0]["resolved"]["resolvido_em"] == voltou
+    assert resultados[1]["resolved"] is None
+    ativos = {i["alvo_id"] for i in store.incidents(True)}
+    assert um["id"] not in ativos and dois["id"] in ativos
+    evento = [e for e in store.events() if e["acao"] == "incident.resolve"
+              and e["recurso"] == abertos[um["id"]]]
+    assert len(evento) == 1 and evento[0]["detalhes"]["automatico"] is True
