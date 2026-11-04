@@ -1,0 +1,5 @@
+tipo,casos,detectados_por_verificar,taxa_verificar,indice_menor_ou_igual,detectados_pela_ancora,taxa_ancora,escapes_na_ultima_entrada
+byte,250,250,1.0,250,0,0.0,0
+remocao,250,250,1.0,250,250,1.0,0
+troca,250,250,1.0,250,0,0.0,0
+truncamento,250,0,0.0,0,250,1.0,39
