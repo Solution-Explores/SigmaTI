@@ -85,10 +85,16 @@ commitada; é a mesma correção).
 - **O MTTD não muda.** A correção não toca a detecção, e o limite estrutural
   continua: nada grava o instante real da falha, então
   `/api/eng/incidentes/resumo` devolve `MTTD: n=0`.
-- **A medição de MTTD, MTTA e MTTR de 03/11 segue válida** sem repetição: o
+- **A medição de MTTD, MTTA e MTTR foi repetida, e a previsão se confirmou:** o
   `medir_incidentes.py` derruba o alvo e o mantém derrubado até resolver por API,
-  então nenhuma medição com sucesso aparece para fechar o incidente. O número não
-  muda; o que muda é a frase que o acompanha.
+  então nenhuma medição com sucesso aparece para fechar o incidente, e os 30
+  intervalos continuaram vindo da resolução por API. Os números da repetição, no
+  entanto, saíram todos maiores que os de 03/11 — MTTD médio 0,795 contra 0,712 s
+  — com outro contêiner PostgreSQL e um servidor de front ligados na máquina. As
+  duas execuções estão registradas em
+  [`incidentes-mttd-burn.md`](incidentes-mttd-burn.md), e a recomendação é citar
+  as duas no texto, não escolher a melhor: a diferença entre elas é a medida
+  honesta de quanto a máquina influencia o resultado.
 
 ## Limites
 
