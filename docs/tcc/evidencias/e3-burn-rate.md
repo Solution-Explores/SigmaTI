@@ -7,6 +7,13 @@ agendador nem a API).
 Critério da issue #11: **alvo caído por 10 min deve chegar a `page`; corte de 10 s
 não deve paginar.**
 
+> **Atualização de 04/11/2026.** O defeito que esta medição encontrou foi
+> corrigido no mesmo dia (#71, PR #79), e o E3 foi remedido: a condição B deixou
+> de paginar, com o incidente fechando sozinho em 10,334 s. Este documento
+> permanece como o estado **antes** da correção, que é o que justifica a #71. O
+> depois está em [`e3-pos-71.md`](e3-pos-71.md).
+
+
 Script `scripts/medir_e3.py`, dado bruto em
 [`dados/e3-burn-rate.json`](dados/e3-burn-rate.json) com as 301 amostras da
 condição A e as 61 da condição B.

@@ -20,7 +20,7 @@ Três estados: **medido** (há número, dado bruto e script reprodutível),
 | Verificado por teste automatizado, sem número a citar | 5 |
 | Lacuna que ainda dá tempo de fechar até 11/11 | 2 |
 | Lacuna que vai para as limitações | 4 |
-| Defeito encontrado ao medir, ainda sem correção | 1 |
+| Defeito encontrado ao medir, corrigido em 04/11 | 1 |
 
 O texto tem base empírica para detecção, latência de alerta, resposta a
 incidentes, burn rate, anonimização, custo de auditoria e restauração de backup.
@@ -126,17 +126,19 @@ senha foi lida de arquivo protegido.
 [`evidencias/e3-burn-rate.md`](evidencias/e3-burn-rate.md), dado bruto em
 `evidencias/dados/e3-burn-rate.json`, script `scripts/medir_e3.py`.
 
-| Condição | Esperado | Medido | |
-|---|---|---|:-:|
-| Queda de 10 min | chega a `page` | `page` em **52,0 s** | ✅ |
-| Corte de 10 s | não pagina | `page` em **45,0 s** | ❌ |
+| Condição | Esperado | Medido em 03/11 | Depois da correção, 04/11 | |
+|---|---|---|---|:-:|
+| Queda de 10 min | chega a `page` | `page` em **52,0 s** | `page` em **52,0 s** | ✅ |
+| Corte de 10 s | não pagina | `page` em **45,0 s** | **nenhum alerta** | ✅ |
 
-**O critério da #11 passa pela metade, e a metade que falha vale mais no texto.**
-A lógica de alerta está correta: com o intervalo recortado nos 10 segundos reais
-de queda, nenhuma regra dispara em nenhum instante de avaliação. O que falha é o
-ciclo de vida do incidente — ver 2.9.
+**Em 03/11 o critério da #11 passava pela metade, e a metade que falhava valia
+mais no texto.** A lógica de alerta já estava correta: com o intervalo recortado
+nos 10 segundos reais de queda, nenhuma regra disparava em nenhum instante de
+avaliação. O que falhava era o ciclo de vida do incidente — ver 2.9. **Corrigido
+em 04/11** (PR #79), com o E3 remedido em duas execuções de cada condição:
+[`evidencias/e3-pos-71.md`](evidencias/e3-pos-71.md).
 
-### 2.9 Defeito encontrado: incidentes não se fecham sozinhos
+### 2.9 Defeito encontrado ao medir, e corrigido no mesmo dia
 
 `resolvido_em` é escrito em um único lugar do código, dentro de
 `change_incident`, que atende as rotas manuais `/reconhecer` e `/resolver`. A
@@ -152,9 +154,17 @@ Dois efeitos, ambos relevantes para o texto:
    incidente por chamada de API. **Em operação, o MTTR do sistema é o tempo até a
    intervenção humana**, não o tempo até o serviço voltar.
 
-A correção é pequena e localizada — fechar o incidente quando a sonda voltar a ter
-sucesso — mas é mudança de comportamento, a dez dias do congelamento, com a #57
-aberta sobre rotas que respondem sucesso sem efeito.
+**Corrigido em 04/11, no PR #79.** Ao gravar uma medição com sucesso, o incidente
+de disponibilidade aberto daquele alvo fecha no instante dessa medição, nos dois
+caminhos de ingestão, com seis testes novos e o E3 remedido. O que fica para o
+texto do TCC:
+
+- O efeito 1 acabou: o corte de 10 s não gera mais `page`.
+- O efeito 2 mudou de forma. **O MTTR passou a ter dois sentidos conviventes:**
+  incidente fechado pelo sistema mede o tempo até o serviço voltar; fechado à
+  mão, o tempo até alguém clicar. `/api/eng/incidentes/resumo` mistura os dois,
+  então citar MTTR exige dizer qual. O MTTA não muda, porque só conta incidentes
+  com `reconhecido_em`, e o fechamento automático não escreve esse campo.
 
 ---
 
@@ -210,14 +220,14 @@ não são suficientes para implementar e validar um detector novo com honestidad
 
 ## 6. O que fazer com isto
 
-1. **Decidir o que fazer com o defeito da seção 2.9.** Corrigir antes do
-   congelamento e remedir, ou declarar no texto que o SLO é calculado sobre
-   intervalos que só fecham por intervenção humana. As duas são defensáveis; o
-   que não é defensável é citar burn rate sem dizer isto.
+1. ✅ **Feito em 04/11.** O defeito da seção 2.9 foi corrigido e o E3 remedido
+   (PR #79). O que resta é escrever, ao citar MTTR, qual dos dois sentidos está
+   em jogo.
 2. **Escrever a seção de limitações com os números negativos dentro**: 16,7% na
    deriva, recall sustentável de ~93% e não 99%, RNF04 sem evidência, tudo em
    loopback. Uma banca de computação pergunta justamente por esses, e tê-los
    escritos antes é melhor que ser pego sem eles.
-3. **Não citar MTTA e MTTR como tempo de operador.** São do sistema.
+3. **Não citar MTTA e MTTR como tempo de operador.** São do sistema, e o MTTR
+   agora tem dois sentidos conviventes.
 4. **Resolver a #57** ou declarar explicitamente que algumas rotas podem responder
    sucesso sem efeito. Isso afeta a confiança em tudo da seção 3.

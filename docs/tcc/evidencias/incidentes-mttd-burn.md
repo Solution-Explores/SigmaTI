@@ -96,6 +96,51 @@ frontend. Exige antes decidir de onde vem o `inicio_real` — por exemplo, a úl
 medição bem-sucedida antes da falha, que o banco já guarda. MTTA e MTTR, esses
 sim, a API já tem condição de calcular com o que está gravado.
 
+## Atualização de 04/11: repetição depois da correção da #71
+
+A correção da #71 (PR #79) fez o sistema fechar sozinho o incidente de
+disponibilidade quando a sonda volta a responder. Isso **não** muda esta
+medição, e a repetição serviu para confirmar a previsão: o
+`medir_incidentes.py` derruba o alvo e o mantém derrubado até resolver por
+chamada de API, então nenhuma medição com sucesso aparece para fechar o
+incidente. Os 30 intervalos de indisponibilidade continuaram vindo da
+resolução por API, como antes.
+
+Segunda execução, 30 repetições, SHA `74db26b`, dado bruto em
+[`dados/incidentes-pos-71.json`](dados/incidentes-pos-71.json):
+
+| Métrica | 03/11 (média / p95) | 04/11 (média / p95) |
+|---|---:|---:|
+| MTTD | 0,712 / 0,794 s | **0,795 / 0,889 s** |
+| MTTA | 0,159 / 0,246 s | **0,283 / 0,478 s** |
+| MTTR | 0,191 / 0,266 s | **0,359 / 0,605 s** |
+| burn rate em 1 h | 7,519 | **9,611** |
+| orçamento consumido | 0,451 de 43,2 min | **0,577 de 43,2 min** |
+
+Nenhum alerta disparou nas duas execuções, e a conferência cruzada pela
+biblioteca do TCC voltou a bater com o medido (0,790 / 0,890 s contra 0,795 /
+0,889 s).
+
+**Os números de 04/11 são todos maiores, e não é por causa da correção.** Ela
+acrescenta uma única atualização no caminho de uma medição com **sucesso**, e o
+MTTD, o MTTA e o MTTR desta medição não passam por lá — o alvo fica derrubado do
+começo ao fim. A explicação provável é carga da máquina: a execução de 04/11
+rodou com outro contêiner PostgreSQL e um servidor de desenvolvimento do front
+ligados, o que a de 03/11 não tinha.
+
+**O que fazer com isso no texto do TCC:** citar as duas execuções, não escolher a
+melhor. A diferença entre elas — 0,712 e 0,795 s de MTTD médio — é maior que o
+desvio dentro de cada uma, e é a medida honesta de quanto a máquina influencia o
+resultado. Um valor único de "MTTD do sistema" com três casas decimais seria
+precisão inventada.
+
+**O MTTR, porém, muda de significado a partir da correção.** Nesta medição ele
+continua sendo o tempo até a resolução por chamada de API, porque o alvo nunca
+volta. Em operação, um incidente fechado pelo sistema mede o tempo até o serviço
+voltar, e um fechado à mão, o tempo até alguém clicar.
+`/api/eng/incidentes/resumo` mistura os dois. Ver
+[`e3-pos-71.md`](e3-pos-71.md).
+
 ## Limites desta medição
 
 - Uma máquina, uma sessão, loopback. Não cobre rede hospitalar nem latência real.
