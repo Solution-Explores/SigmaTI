@@ -13,6 +13,19 @@ npm run build
 npm run lint
 ```
 
+## Modo mock
+
+Para trabalhar só no visual, sem backend, use a API simulada:
+
+```bash
+npm run dev:mock
+```
+
+Entre com um usuário iniciado por `suporte`, `analista` ou `gestor` e qualquer senha.
+Detalhes e cenários (`?cenario=vazio|erro|lento|falha-trilha`) em
+[design-system/01-instalacao-front.md](../design-system/01-instalacao-front.md).
+O build de produção não inclui o mock.
+
 ## Configuração
 
 - `VITE_API_URL` define o endereço da API. O padrão é `http://localhost:8000`.
