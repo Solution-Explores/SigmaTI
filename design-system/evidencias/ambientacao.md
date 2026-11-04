@@ -44,7 +44,7 @@ Fonte: `src/mock/mockApi.js` e `src/OperationalPages.jsx`.
 
 ## 5. Estado dos três comandos
 
-Executados em 29/10/2026 às 23:34, no computador da Joyce, em `sigma-frontend/`, com Node v24.22.1 e com as alterações da DS-02 já aplicadas:
+Executados em 29/10/2026 às 23:34, no computador da Joyce, em `frontend/`, com Node v24.22.1 e com as alterações da DS-02 já aplicadas:
 
 | Comando | Resultado |
 |---|---|

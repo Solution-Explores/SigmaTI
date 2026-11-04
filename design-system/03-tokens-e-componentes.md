@@ -1,6 +1,6 @@
 # 3. Tokens e componentes atuais
 
-Fonte de verdade hoje: `sigma-frontend/src/App.css`. Os tokens são variáveis CSS definidas em
+Fonte de verdade hoje: `frontend/src/App.css`. Os tokens são variáveis CSS definidas em
 `.app-surface`; o tema claro sobrescreve as mesmas variáveis em `.app-surface[data-theme="light"]`.
 Para trocar uma cor no sistema inteiro, troque a variável, nunca a cor dentro de um componente.
 

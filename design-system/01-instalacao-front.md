@@ -1,6 +1,6 @@
 # 1. Instalação só do front
 
-Para trabalhar no visual basta **Git** e **Node.js 22.12 ou mais novo** (recomendado: 24 LTS).
+Para trabalhar no visual basta **Git** e **Node.js 24**, a mesma versão do CI.
 Python, Docker, PostgreSQL e chave de IA não são necessários.
 
 ## Primeira vez
@@ -9,8 +9,8 @@ Python, Docker, PostgreSQL e chave de IA não são necessários.
 git clone https://github.com/Solution-Explores/SigmaTI.git
 cd SigmaTI
 git switch develop
-cd sigma-frontend
-npm ci
+cd frontend
+npm ci --include=optional
 npm run dev:mock
 ```
 
@@ -65,4 +65,4 @@ Para testar a regra de "quatro olhos", crie uma solicitação como `analista.a`,
 ## Ver com a API real (opcional)
 
 Quando quiser conferir uma alteração com o backend de verdade, peça ao Vinny ou ao Iohan, ou siga o
-[roteiro completo](../doc/instalacao-desenvolvimento.md). Ele exige Python, PostgreSQL e variáveis de ambiente.
+[roteiro completo](../docs/operacao/instalacao.md). Ele exige Python, PostgreSQL e variáveis de ambiente.

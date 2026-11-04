@@ -27,7 +27,7 @@ Os diagramas estão em Mermaid: o GitHub os desenha direto na página.
 
 ```mermaid
 flowchart LR
-  J[Joyce<br/>design system] -->|CSS, JSX de apresentação,<br/>novos componentes| F[sigma-frontend/src]
+  J[Joyce<br/>design system] -->|CSS, JSX de apresentação,<br/>novos componentes| F[frontend/src]
   V[Vinny e Iohan<br/>integração] -->|api.js, hooks,<br/>rotas e banco| F
   F -->|modo mock| M[API simulada<br/>src/mock]
   F -->|modo normal| A[API FastAPI + PostgreSQL]
@@ -35,9 +35,9 @@ flowchart LR
 
 **Joyce pode alterar livremente:**
 
-- `sigma-frontend/src/App.css` e `index.css` (ou dividi-los em arquivos por componente);
+- `frontend/src/App.css` e `index.css` (ou dividi-los em arquivos por componente);
 - a marcação e as classes em `App.jsx`, `Operations.jsx`, `OperationalPages.jsx` e `Diagnostic.jsx`;
-- novos componentes visuais em `sigma-frontend/src/` (por exemplo `components/Badge.jsx`);
+- novos componentes visuais em `frontend/src/` (por exemplo `components/Badge.jsx`);
 - textos de interface, ícones e imagens em `src/assets/` e `public/`;
 - os dados de exemplo em `src/mock/data.js`, para testar casos visuais (nome longo, muitos itens).
 
@@ -68,13 +68,13 @@ git switch develop
 git pull --ff-only origin develop
 git switch -c feature/ds-nome-curto
 # trabalhar com: npm run dev:mock
-cd sigma-frontend
+cd frontend
 npm run lint
 npm test
 npm run build
 git push -u origin feature/ds-nome-curto
 ```
 
-Abra o PR para `develop`, conforme o [Git Flow](../doc/gitflow.md), com capturas antes e depois
+Abra o PR para `develop`, conforme o [Git Flow](../docs/processo/gitflow.md), com capturas antes e depois
 nos dois temas. Se um teste falhar porque o texto de um botão mudou, avise no PR. Os testes
 procuram elementos pelo texto visível, e a integração ajusta o teste junto.

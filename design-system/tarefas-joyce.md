@@ -11,9 +11,9 @@ Responsável pelas tarefas de apresentação: **Joyce**. Vinny coordena priorida
 - Uma tarefa por branch/PR pequeno, em ordem de dependências. **P**: até meio dia; **M**: até 1 dia. Não há tarefa G. Se o escopo ultrapassar1 dia, divida antes de iniciar, sem juntar tarefas para compensar espera de revisão.
 - Não há data final confirmada. O campo **Prazo** fica vazio em cada fase; a sequência de duas semanas abaixo não é compromisso de calendário nem presume disponibilidade integral.
 - Antes de iniciar uma tarefa, Vinny confirma se o material/mock já entrou em `develop`. Se ainda não entrou, usar a base de trabalho indicada por ele e não apontar um PR de código sem mock para uma base que não o contém. Não copiar arquivos de integração para resolver a diferença.
-- Criar a branch da tarefa a partir da base autorizada; registrar escopo, dependências, capturas e verificação no PR conforme [fluxo do TCC](../doc/fluxo-de-trabalho-tcc.md). Não incorporar a reorganização futura `backend/frontend` sem atualizar este plano.
+- Criar a branch da tarefa a partir da base autorizada; registrar escopo, dependências, capturas e verificação no PR conforme [fluxo do TCC](../docs/processo/fluxo-de-trabalho-tcc.md). Não incorporar a reorganização futura `backend/frontend` sem atualizar este plano.
 - Nesta entrega do plano: somente este arquivo e o link no README; commit local em `feature/tarefas-joyce`. **Sem issues, PR ou push sem aprovação do Vinny.** Os rascunhos do apêndice não são issues criadas.
-- Arquivos `src/...` abaixo são relativos a `sigma-frontend/`. `design-system/...`, `DESIGN.md` e `doc/...` são relativos à raiz.
+- Arquivos `src/...` abaixo são relativos a `frontend/`. `design-system/...`, `DESIGN.md` e `docs/...` são relativos à raiz.
 
 ## C0 — aceite obrigatório em todas as tarefas
 
@@ -23,7 +23,7 @@ Cada tarefa herda integralmente este checklist, inclusive as documentais (nelas 
 2. **Contraste medido:** texto≥4,5:1; borda funcional de campo≥3:1; foco visível sobre superfícies adjacentes. Medir o resultado renderizado, inclusive hover e composição de disabled; não usar opacidade como único sinal. Não copiar a borda fraca do protótipo. Tema troca **sem transição de cores**.
 3. Estado sempre tem texto além da cor. Ausência de dado não é disponibilidade nem zero. Preservar **“Sem dados recentes”**, **“Até X min”**, **“Sem início real de falha registrado”**, a nota de observação parcial e a separação das trilhas.
 4. Teclado: Tab/Shift+Tab, Enter/Espaço, foco visível, link Ir para o conteúdo e foco no título ao mudar de área. Alvos interativos de pelo menos 44×44 px; nomes acessíveis, labels e hierarquia válidos. Manter tudo em português.
-5. Executar em `sigma-frontend/`: **`npm run lint`, `npm test` e `npm run build`**, todos aprovados, sem ignorar testes/assertivas para obter verde. Guardar comando/resultado/commit no PR. Documentação também registra a conferência da base; não precisa inventar testes novos que só espelhem a implementação.
+5. Executar em `frontend/`: **`npm run lint`, `npm test` e `npm run build`**, todos aprovados, sem ignorar testes/assertivas para obter verde. Guardar comando/resultado/commit no PR. Documentação também registra a conferência da base; não precisa inventar testes novos que só espelhem a implementação.
 6. Se mudar texto visível/nome acessível, **listar antes → depois, ajustar o teste afetado no mesmo PR e avisar Vinny/Iohan**. Há seletores por texto, papel, quantidade de botões e região; mudar semântica também pode afetá-los. Não basta declarar que “é só CSS”.
 7. Preservar contrato e regras: não editar **`src/api.js`, `useResource.js`, `useEvents.js`, `useActionRequest.js` ou `src/mock/mockApi.js`**. Pode ajustar dados fictícios dos campos já contratados em `src/mock/data.js` para nomes longos, ausência de valor e estados. Sem campos futuros inventados para liberar uma tela.
 8. Extrair componentes **só de apresentação**: callbacks e props atuais entram sem alteração; não refatorar os handlers, a política de perfil, timers de atualização/cancelamento ou fluxo de autenticação. Nenhum comando de rede é executado por Aprovações.

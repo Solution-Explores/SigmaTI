@@ -5,24 +5,27 @@ com jornadas por perfil, biblioteca de componentes, tokens claro/escuro, estados
 versões para celular, tablet e desktop. É a **referência visual de onde queremos chegar**, não a
 descrição do que já existe (para isso, veja o [estado atual](../02-estado-atual.md)).
 
-![Visão geral do analista no protótipo](previews/overview-analyst.png)
+Os arquivos do protótipo ficam em `docs/design/prototipo-figcraft/`, que é a cópia canônica no
+repositório. Esta página só os explica e aponta para lá; nada é duplicado aqui.
+
+![Visão geral do analista no protótipo](../../docs/design/prototipo-figcraft/figcraft/previews/overview-analyst.png)
 
 ## Como abrir
 
 | Arquivo | Para quê | Precisa de |
 |---|---|---|
-| [`review.html`](review.html) | Galeria com todas as telas, busca e imagem em tamanho original | Só o navegador: baixe a pasta e abra o arquivo |
-| [`previews/`](previews/) | Uma imagem PNG por tela (1440 px no desktop) | Nada; o GitHub mostra direto |
-| `sigma-fluxos.figcraft` | Arquivo editável, com navegação entre telas e modo apresentação | Aplicativo FigCraft 0.7 (peça o instalador ao Vinny) |
-| [`handoff.md`](handoff.md) | Descrição das páginas, fluxos e regras do protótipo | — |
-| [`tokens.css`](tokens.css) / [`tokens.json`](tokens.json) | Cores do protótipo exportadas, nos modos Claro e Escuro | — |
-| [`MASTER.md`](MASTER.md) | Regras visuais de uma versão experimental anterior (17/10) | Os caminhos citados nele não existem neste repositório |
+| [`review.html`](../../docs/design/prototipo-figcraft/figcraft/review.html) | Galeria com todas as telas, busca e imagem em tamanho original | Só o navegador: baixe a pasta e abra o arquivo |
+| [`previews/`](../../docs/design/prototipo-figcraft/figcraft/previews/) | Uma imagem PNG por tela (1440 px no desktop) | Nada; o GitHub mostra direto |
+| `../../docs/design/prototipo-figcraft/figcraft/sigma-fluxos.figcraft` | Arquivo editável, com navegação entre telas e modo apresentação | Aplicativo FigCraft 0.7 (peça o instalador ao Vinny) |
+| [`handoff.md`](../../docs/design/prototipo-figcraft/figcraft/handoff.md) | Descrição das páginas, fluxos e regras do protótipo | — |
+| [`tokens.css`](../../docs/design/prototipo-figcraft/figcraft/tokens.css) / [`tokens.json`](../../docs/design/prototipo-figcraft/figcraft/tokens.json) | Cores do protótipo exportadas, nos modos Claro e Escuro | — |
+| [`MASTER.md`](../../docs/design/prototipo-figcraft/MASTER.md) | Regras visuais de uma versão experimental anterior (17/10) | Histórico; a cópia canônica está em `docs/design/prototipo-figcraft/` |
 
-Telas boas para começar: [login](previews/login.png) · [visão geral N1](previews/overview-n1.png) ·
-[fila de incidentes](previews/queue-analyst.png) · [detalhe do incidente](previews/incident-analyst.png) ·
-[biblioteca de componentes](previews/library.png) · [estados de erro](previews/states.png) ·
-[saúde](previews/health.png) · [auditoria](previews/audit.png) · [celular](previews/mobile-summary.png) ·
-[tema escuro](previews/overview-dark.png).
+Telas boas para começar: [login](../../docs/design/prototipo-figcraft/figcraft/previews/login.png) · [visão geral N1](../../docs/design/prototipo-figcraft/figcraft/previews/overview-n1.png) ·
+[fila de incidentes](../../docs/design/prototipo-figcraft/figcraft/previews/queue-analyst.png) · [detalhe do incidente](../../docs/design/prototipo-figcraft/figcraft/previews/incident-analyst.png) ·
+[biblioteca de componentes](../../docs/design/prototipo-figcraft/figcraft/previews/library.png) · [estados de erro](../../docs/design/prototipo-figcraft/figcraft/previews/states.png) ·
+[saúde](../../docs/design/prototipo-figcraft/figcraft/previews/health.png) · [auditoria](../../docs/design/prototipo-figcraft/figcraft/previews/audit.png) · [celular](../../docs/design/prototipo-figcraft/figcraft/previews/mobile-summary.png) ·
+[tema escuro](../../docs/design/prototipo-figcraft/figcraft/previews/overview-dark.png).
 
 ## O que muda em relação ao painel atual
 

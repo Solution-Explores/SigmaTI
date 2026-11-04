@@ -2,7 +2,7 @@
 
 Este é o "combinado" entre o visual e a integração: são as rotas que o painel chama e os campos que
 ele lê. Enquanto esses nomes e formatos forem respeitados, a Joyce muda o visual com o mock e tudo
-continua funcionando com a API real. Exemplos completos estão em [`src/mock/data.js`](../sigma-frontend/src/mock/data.js).
+continua funcionando com a API real. Exemplos completos estão em [`src/mock/data.js`](../frontend/src/mock/data.js).
 
 Todas as rotas (exceto o login) exigem `Authorization: Bearer <token>`. Datas vêm em ISO 8601 (UTC)
 e o front as formata em `pt-BR` no fuso do navegador.
