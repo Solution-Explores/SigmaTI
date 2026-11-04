@@ -189,7 +189,19 @@ def run(database_url, output, minutos_a, segundos_b, minutos_observacao_b):
                     r["sucesso"] for r in store.measurements(ident_b)
                     if r["ts"] > fim_real_b - timedelta(seconds=1)), timeout=30)
                 recuperado_em = dt.datetime.now(timezone.utc)
-                amostras_b, page_b = amostrar(det_b, minutos_observacao_b * 60, 5.0)
+                # O sistema fecha o incidente sozinho quando a sonda volta (#71)?
+                # Se fechar, o intervalo que ele registra termina ali, e e esse
+                # intervalo que o burn rate tem de usar. Se nao fechar, a queda
+                # segue "em curso" e o intervalo cresce ate agora.
+                def fechado():
+                    linha = [r for r in store.incidents(limit=500) if r["id"] == inc_b][0]
+                    return linha["resolvido_em"]
+                try:
+                    vc.wait_until(lambda: fechado() is not None, timeout=20)
+                except Exception:
+                    pass
+                fim_registrado = fechado()
+                amostras_b, page_b = amostrar(det_b, minutos_observacao_b * 60, 5.0, fim_registrado)
                 linha_b = [r for r in store.incidents(limit=500) if r["id"] == inc_b][0]
                 # O mesmo calculo, com o intervalo recortado na queda real.
                 agora_b = dt.datetime.now(timezone.utc)
@@ -220,6 +232,10 @@ def run(database_url, output, minutos_a, segundos_b, minutos_observacao_b):
                 "observacao_min": minutos_observacao_b,
                 "alvo_voltou_a_responder": True,
                 "incidente_resolvido_pelo_sistema": linha_b["resolvido_em"] is not None,
+                "fim_registrado_pelo_sistema": (linha_b["resolvido_em"].isoformat()
+                                                if linha_b["resolvido_em"] else None),
+                "duracao_registrada_s": (round((linha_b["resolvido_em"] - det_b).total_seconds(), 3)
+                                         if linha_b["resolvido_em"] else None),
                 "pelo_sistema": {"page_em_segundos": page_b, "burn_final": amostras_b[-1]},
                 "limitado_em_10s": {"paginou": page_lim, "regras": disparos_lim,
                                     "burn_por_janela": burn_lim},
