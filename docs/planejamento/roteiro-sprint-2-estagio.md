@@ -50,10 +50,10 @@ A ordem abaixo põe primeiro o que destrava os outros. A Joyce está parada espe
 | Quando | Passo | O que é | Tamanho |
 |---|---|---|---|
 | Quarta 04 | 1 | Integrar #69 e #70 (você clica no merge) | 15 min |
-| Quarta 04 | 2 | Abrir o PR semanal dos diários e fechar o #66 | 15 min |
-| Quarta 04 | 3 | Base nova do front da Joyce | 2 a 3 h |
-| Quinta 05 | 4 | E4 da #11: fuzzing da cadeia | 2 h |
-| Sexta 06 | 5 | #71: incidente que nunca se fecha sozinho | 3 h, ou 0 se for declarado |
+| Quarta 04 | 2 | ✅ **Feito de casa, de manhã.** PR semanal dos diários (#75) integrado e #66 fechado | — |
+| Quarta 04 | 3 | ✅ **Feito na tarde de 04/11.** Base nova do front da Joyce, PR #77 | — |
+| Quinta 05 | 4 | ✅ **Feito na tarde de 04/11, antecipado.** E4 da #11, PR #78 | — |
+| Sexta 06 | 5 | ✅ **Feito na tarde de 04/11, antecipado.** #71 corrigida (opção A) e E3 remedido, PR #79 | — |
 | Segunda 09 | 6 | Aceite da release e rodada final no SHA candidato | 1 a 2 h |
 | Segunda 09 | 7 | Painel com MTTD e burn rate (P2, só se sobrar tempo) | 3 h |
 | Terça 10 | 8 | Conferência final da Sprint 2 e registro das limitações | 1 a 2 h |
@@ -70,11 +70,25 @@ O que depende do Iohan e do orientador corre em paralelo e está nas tabelas "Es
 - **Como:** você faz o "Merge pull request" (merge commit, não squash). O classificador de permissões não deixa o Claude integrar PR sem revisão registrada.
 - **Pronto quando:** `git pull --ff-only origin develop` traz os dois e o CI da `develop` fica verde.
 
-### Passo 2. PR semanal dos diários
+### Passo 2. PR semanal dos diários (feito)
 
-- A branch `docs/diario-03-11` tem tudo que o #66 tinha e mais (diário de 03/11 e atividades corrigidas), e o #66 está em conflito.
-- **Fazer:** abrir o PR semanal a partir de `docs/diario-03-11` e fechar o #66 com um comentário que aponte para o novo.
-- **Pronto quando:** um só PR de diários da semana aberto e o #66 fechado.
+- **Feito em 04/11, de casa:** o PR [#75](https://github.com/Solution-Explores/SigmaTI/pull/75) (diários de 01 a 03/11, roteiro e atividades) foi integrado na `develop` e o #66, que estava em conflito, foi fechado com um comentário apontando para ele.
+- **Para os diários desta semana a partir de 04/11:** use a branch `docs/semana-02-11-continuacao` e **um só PR** no fim da semana, sem branch por dia.
+
+## Situação em 04/11 (manhã, de casa)
+
+- **Feito:** passo 2 (acima), mais o próprio roteiro, que foi conferido contra as tarefas do Iohan, as issues e os cartões do Trello. Dessa conferência saiu a separação do que é seu e do que espera o Iohan.
+- **Deixado para o estágio, por escolha sua:** o passo 1. Os PRs **#69** (títulos do Diagnóstico) e **#70** (MTTD, burn rate, balanço e E3) continuam abertos, mescláveis e com o CI verde. Enquanto o #70 não entrar, `scripts/medir_e3.py` e `docs/tcc/balanco-dos-dados.md` não estão na `develop`.
+- **Primeira coisa a fazer lá:** clicar no merge do #69 e do #70 e conferir que a `develop` ficou verde, antes do passo 3.
+
+## Situação em 04/11 (tarde, no estágio)
+
+- **Feito:** passo 3 (PR #77, base do front da Joyce) e passo 4 (PR #78, E4 da #11), este último antecipado de quinta. Os dois com CI e conferência registradas no corpo de cada PR.
+- **Não feito:** o passo 1. O #69 e o #70 continuam abertos e verdes, esperando o seu clique, e agora o #77 e o #78 também.
+- **Passo 5 (#71)** espera a sua decisão entre corrigir e declarar. Enquanto isso, nada nele começa.
+- **A Joyce já pode ser avisada** depois que o #77 entrar na `develop`.
+- **Passo 5 feito também**, antecipado de sexta: a #71 foi corrigida pela opção A e o E3 passou a valer nas duas condições (PR #79). Com isso, os passos 3, 4 e 5 estão prontos e esperando integração.
+- **Passo 1 conferido:** nada dele aconteceu. A `develop` segue em `857e3ff` e o histórico do #69 e do #70 não registra tentativa de integração. Os dois estão mescláveis, com CI verde.
 
 ### Passo 3. Base nova do front da Joyce
 

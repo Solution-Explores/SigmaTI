@@ -8,6 +8,8 @@ Segue as sprints e as orientações do orientador (milestones e comentários das
 
 Esta é a lista de trabalho. A ordem dentro de cada bloco é a sugerida. O detalhe de cada issue está nas seções das sprints, mais abaixo.
 
+> **Atualização de 04/11 (manhã):** a ordem da semana, por dia, está em [roteiro-sprint-2-estagio.md](roteiro-sprint-2-estagio.md), só com as atividades do Vinícius. Em 04/11 o PR semanal dos diários (#75) foi integrado e o #66 fechado. O #69 e o #70 ficaram para o estágio.
+
 ### A. Depende só de você
 
 | # | Afazer | Onde | Tamanho |
