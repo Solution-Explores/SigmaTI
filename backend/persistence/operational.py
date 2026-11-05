@@ -59,6 +59,12 @@ BATCH_INCIDENTS = """INSERT INTO incidentes (id,alvo_id,tipo,severidade,detectad
 SELECT id,target,kind,'P3',ts FROM unnest(%s::varchar[],%s::varchar[],%s::varchar[],%s::timestamptz[])
 AS b(id,target,kind,ts) ON CONFLICT (alvo_id,tipo) WHERE resolvido_em IS NULL
 DO NOTHING RETURNING id,alvo_id,tipo"""
+# Sonda voltou a responder: fecha o incidente de disponibilidade aberto (#71).
+BATCH_RESOLVE = """UPDATE incidentes SET resolvido_em = GREATEST(b.ts, incidentes.detectado_em)
+FROM unnest(%s::varchar[],%s::timestamptz[]) AS b(target,ts)
+WHERE incidentes.alvo_id = b.target AND incidentes.tipo = 'availability'
+AND incidentes.resolvido_em IS NULL
+RETURNING incidentes.id,incidentes.alvo_id,incidentes.resolvido_em"""
 
 
 def _arrays(rows, names):
@@ -210,6 +216,30 @@ class PostgresOperationalStore:
                                                       IncidentRow.tipo == kind, IncidentRow.resolvido_em.is_(None)))
         return columns(row), created is not None
 
+    def _resolve_availability(self, session, target_id, ts):
+        """Fecha o incidente de disponibilidade aberto do alvo (#71).
+
+        Uma medição com sucesso é a prova de que o alvo voltou, então o
+        incidente fecha em ``ts``, o instante dessa medição. Sem isto o
+        intervalo de indisponibilidade só terminava por clique humano, e o
+        burn rate de uma oscilação de segundos paginava (E3, condição B).
+
+        Só incidente de ``availability``: o de ``latency`` nasce do detector e
+        não se desmente com uma amostra boa. ``reconhecido_em`` fica como está
+        — um incidente pode fechar sem que ninguém o tenha reconhecido, e é
+        exatamente o que acontece aqui.
+        """
+        row = session.scalar(select(IncidentRow).where(IncidentRow.alvo_id == target_id,
+            IncidentRow.tipo == "availability", IncidentRow.resolvido_em.is_(None)).with_for_update())
+        if row is None:
+            return None
+        row.resolvido_em = max(ts, row.detectado_em)
+        # Mesma ação da rota manual, para o SSE e o índice parcial de eventos
+        # continuarem valendo; quem distingue é o ator e o campo "automatico".
+        self._event(session, "scheduler", "incident.resolve", row.id,
+                    {"alvo_id": target_id, "automatico": True})
+        return columns(row)
+
     def record_measurement(self, target_id, success, latency_ms=None, ts=None, identifier=None, *, detector_kind=None, _session=None):
         ts = utc(ts)
         if type(success) is not bool or (latency_ms is not None and
@@ -232,7 +262,8 @@ class PostgresOperationalStore:
                     raise StateConflict("identificador de medição reutilizado com outros dados")
                 active = session.scalar(select(IncidentRow).where(IncidentRow.alvo_id == target_id,
                     IncidentRow.tipo == "availability", IncidentRow.resolvido_em.is_(None))) if not success else None
-                return {"inserted": False, "incident": columns(active) if active else None}
+                return {"inserted": False, "incident": columns(active) if active else None,
+                        "resolved": None}
             anomaly = False
             if detector_kind is not None:
                 stored = session.get(DetectorRow, target_id)
@@ -249,7 +280,11 @@ class PostgresOperationalStore:
                 else:
                     stored.documento, stored.versao, stored.atualizado_em = data, version, ts
             self._aggregate(session, target_id, ts, success, latency_ms)
-            incident, created = self._incident(session, target_id, ts) if not success else (None, False)
+            if success:
+                incident, created, resolved = None, False, self._resolve_availability(session, target_id, ts)
+            else:
+                incident, created = self._incident(session, target_id, ts)
+                resolved = None
             # Telemetria contínua já tem registro imutável em medicoes. Não
             # serializar todas as amostras no cursor global dos eventos de domínio.
             # Incidentes e ações administrativas continuam auditados na transação.
@@ -263,7 +298,7 @@ class PostgresOperationalStore:
                 if latency_created:
                     self._event(session, "scheduler", "incident.created", latency_incident["id"],
                                 {"alvo_id": target_id, "tipo": "latency"})
-            return {"inserted": True, "incident": incident or latency_incident}
+            return {"inserted": True, "incident": incident or latency_incident, "resolved": resolved}
 
     def record_measurements(self, samples):
         """Até 32 alvos distintos; commit único antes de confirmar os resultados."""
@@ -332,11 +367,15 @@ class PostgresOperationalStore:
                 for kind in kinds:
                     requests.append(dict(id=str(uuid.uuid4()), alvo_id=row['target_id'], tipo=kind,
                         severidade='P3', detectado_em=row['ts']))
+            # Alvos que voltaram a responder neste lote (#71).
+            recuperados = [(row['target_id'], row['ts']) for row in rows if row['success']]
             active = {}
             created = []
+            resolved = []
             try:
                 with (raw.pipeline(), raw.cursor() as measured, raw.cursor() as state_writer,
-                      raw.cursor() as aggregated, raw.cursor() as incidents, raw.cursor() as current):
+                      raw.cursor() as aggregated, raw.cursor() as incidents, raw.cursor() as current,
+                      raw.cursor() as recovered):
                     measured.execute(BATCH_MEASUREMENTS, _arrays(measurements, ('id','ts','alvo_id','sucesso','latencia_ms')))
                     state_writer.execute(BATCH_DETECTORS, (
                         [r['id'] for r in detectors], [json.dumps(r['documento'], allow_nan=False) for r in detectors],
@@ -347,8 +386,12 @@ class PostgresOperationalStore:
                         incidents.execute(BATCH_INCIDENTS, _arrays(requests, ('id','alvo_id','tipo','detectado_em')))
                         current.execute('SELECT * FROM incidentes WHERE alvo_id = ANY(%s::varchar[]) AND resolvido_em IS NULL',
                             ([r['alvo_id'] for r in requests],))
+                    if recuperados:
+                        recovered.execute(BATCH_RESOLVE, ([t for t, _ in recuperados], [ts for _, ts in recuperados]))
                     if len(measured.fetchall()) != len(rows):
                         raise StateConflict('identificador de medição concorrente')
+                    if recuperados:
+                        resolved = recovered.fetchall()
                     if requests:
                         created = incidents.fetchall()
                         records = current.fetchall()
@@ -361,7 +404,15 @@ class PostgresOperationalStore:
                     actor='scheduler', action='incident.created', resource=identifier,
                     details={'alvo_id': target_id, **({'tipo': kind} if kind == 'latency' else {})})
                     for identifier, target_id, kind in created])
-            return [{'inserted': True, 'incident':
+            if resolved:
+                self._event(session, 'scheduler', 'incident.resolve', None, batch=[dict(
+                    actor='scheduler', action='incident.resolve', resource=identifier,
+                    details={'alvo_id': target_id, 'automatico': True})
+                    for identifier, target_id, _ in resolved])
+            # Mesmo formato do caminho individual: o incidente fechado, nao so o id.
+            fechados = {target_id: {'id': identifier, 'resolvido_em': fim}
+                        for identifier, target_id, fim in resolved}
+            return [{'inserted': True, 'resolved': fechados.get(r['target_id']), 'incident':
                 (active.get((r['target_id'], 'availability')) if not r['success'] else None)
                 or (active.get((r['target_id'], 'latency')) if r['target_id'] in anomalies else None)} for r in rows]
 
