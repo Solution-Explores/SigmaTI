@@ -24,7 +24,7 @@ O protótipo do Vinny usa um terceiro azul (`#1D4ED8` no claro e `#60A5FA` no es
 - Opção escolhida: [x] 1 · v4  [ ] 2 · azul do logotipo  [ ] 3 · verde do logotipo  [ ] outra
 - Data da decisão: 04/11/2026
 - Quem decidiu: Vinícius Lima (aprovação informada pela Joyce Yasmin)
-- Observações e ajustes pedidos: nenhum informado. Seguem abertos: regra de sinalização do hospital para o símbolo em cruz, validação da borda de campo (`#4F6577` claro e `#4F7C9E` escuro), fonte (DS-05) e os metadados C2PA dos SVGs.
+- Observações e ajustes pedidos: nenhum informado. Seguem abertos: validação da borda de campo (`#4F6577` claro e `#4F7C9E` escuro), fonte (DS-05) e os metadados C2PA dos SVGs.
 
 ## 2. Opção 1 · Identidade v4 (proposta principal)
 
@@ -102,7 +102,7 @@ Observações:
 - **Fonte (DS-05):** Atkinson Hyperlegible e IBM Plex Mono são sugestões. A licença (OFL-1.1) e a forma de distribuição local precisam ser confirmadas na DS-05.
 - **Logotipos vetoriais (DS-04):** os 9 arquivos SVG estão nesta pasta. Falta testar a área de proteção e o tamanho mínimo em tamanho real.
 - **Aplicação ao painel (DS-06 e DS-08):** tokens, temas e comparação com as cores atuais do painel.
-- **Símbolo em cruz no hospital:** a prancha pede confirmar com o hospital se há regra de sinalização. Isso não foi verificado.
+- **Símbolo em cruz no hospital:** Resolvido em 04/11/2026: símbolo em cruz permitido; logotipo do hospital proibido.
 - **Fotografias:** nenhuma foi produzida; precisam de autorização do hospital.
 
 ## 6. Próximos passos
