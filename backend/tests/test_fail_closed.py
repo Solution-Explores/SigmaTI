@@ -156,7 +156,7 @@ class TestFailClosedSanitizacao:
 
         assert response.status_code == 200
         dados = response.json()
-        assert dados["status"] == "Incidente Registrado"
+        assert dados["status"] == "Diagnóstico gerado"
 
         # Verifica que o prompt enviado para a IA foi devidamente generalizado
         prompt_enviado = dados["dados_enviados_nuvem"]

@@ -6,8 +6,9 @@ from pathlib import Path
 import re
 from time import monotonic
 from typing import Annotated, Literal
+from urllib.parse import urlsplit
 
-from fastapi import Depends, FastAPI, Request
+from fastapi import Depends, FastAPI, HTTPException, Request
 from pydantic import BaseModel, Field
 import httpx2 as httpx
 
@@ -193,10 +194,24 @@ async def receber_alerta(
     
     # 3. Retorno para o Frontend (O bloco que devolve a resposta)
     return {
-        "status": "Incidente Registrado",
+        "status": "Diagnóstico gerado",
         "dados_enviados_nuvem": prompt_enviado,
         "diagnostico_ia": diagnostico_ia
     }
+
+
+def _validar_url_n8n(valor: str) -> str:
+    if not valor or any(c.isspace() for c in valor):
+        raise ValueError("URL do n8n vazia ou com espaços.")
+    parsed = urlsplit(valor)
+    if parsed.scheme not in ("http", "https") or not parsed.hostname:
+        raise ValueError("URL do n8n deve usar esquema http ou https e host explícito.")
+    if parsed.username is not None or parsed.password is not None or "@" in parsed.netloc:
+        raise ValueError("URL do n8n não pode conter credenciais embutidas.")
+    port = parsed.port
+    if port is not None and not 1 <= port <= 65535:
+        raise ValueError("Porta da URL do n8n inválida.")
+    return valor
 
 
 # =====================================================================
@@ -205,32 +220,37 @@ async def receber_alerta(
 
 @app.get("/api/status")
 async def obter_status(usuario: Annotated[Usuario, Depends(exige_papel("suporte_n1"))]):
-    """Ver alertas e status da rede (Suporte N1, Analista de Redes, Gestor de TI)."""
+    """Ver alertas e status da rede (Suporte N1, Analista de Redes, Gestor de TI).
+
+    Débito técnico (#57): afirma status operacional sem sondar dependências internas.
+    """
     return {"status": "operacional", "perfil": usuario.papel}
 
 
 @app.get("/api/alertas")
 async def listar_alertas(usuario: Annotated[Usuario, Depends(exige_papel("suporte_n1"))]):
-    """Ver alertas e status da rede (Suporte N1, Analista de Redes, Gestor de TI)."""
-    return {"alertas": []}
+    """Listagem de alertas planejada; não retorna lista vazia fictícia (#57)."""
+    raise HTTPException(status_code=501, detail="Recurso ainda não disponível.")
 
 
 @app.get("/api/pacotes")
 async def ver_pacotes(usuario: Annotated[Usuario, Depends(exige_papel("analista_redes"))]):
-    """Ver histórico e detalhes de pacotes (Analista de Redes, Gestor de TI)."""
-    return {"pacotes": []}
+    """Histórico e detalhes de pacotes planejados; não retorna lista vazia fictícia (#57)."""
+    raise HTTPException(status_code=501, detail="Recurso ainda não disponível.")
 
 
 @app.get("/api/incidentes")
 def listar_incidentes(usuario: Annotated[Usuario, Depends(exige_papel("analista_redes"))]):
     """Ver histórico e incidentes (Analista de Redes, Gestor de TI)."""
-    return {"incidentes": app.state.operational_store.incidents() if app.state.operational_store else []}
+    if app.state.operational_store is None:
+        raise HTTPException(status_code=503, detail="Persistência operacional não configurada.")
+    return {"incidentes": app.state.operational_store.incidents()}
 
 
 @app.get("/api/relatorios")
 async def relatorios_gerenciais(usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))]):
-    """Ver relatórios gerenciais (Exclusivo Gestor de TI)."""
-    return {"relatorios": []}
+    """Relatórios gerenciais planejados na #16; não retorna lista vazia fictícia (#57)."""
+    raise HTTPException(status_code=501, detail="Recurso ainda não disponível.")
 
 
 @app.get("/api/usuarios")
@@ -257,11 +277,18 @@ def criar_usuario(
 
 @app.post("/api/chaves/rotacao")
 async def rotacionar_chaves(usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))]):
-    """Gerenciar chaves e rotação de credenciais (Exclusivo Gestor de TI)."""
-    return {"status": "chaves_rotacionadas"}
+    """Rotação de chaves de origem planejada na #23; recusa sucesso fictício (#57)."""
+    raise HTTPException(status_code=501, detail="Recurso ainda não disponível.")
 
 
 @app.get("/api/n8n/acesso")
 async def acessar_n8n(usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))]):
-    """Acesso ao n8n via VLAN de gerência / VPN restrita (Exclusivo Gestor de TI)."""
-    return {"status": "autorizado_vlan_gerencia", "url": "http://n8n-internal.hospital:5678"}
+    """Acesso ao n8n via URL configurada por ambiente, sem URL ou verificação de VLAN fictícias (#57)."""
+    url_bruta = os.getenv("SIGMA_N8N_URL", "").strip()
+    if not url_bruta:
+        raise HTTPException(status_code=501, detail="Recurso ainda não disponível.")
+    try:
+        url = _validar_url_n8n(url_bruta)
+    except ValueError:
+        raise HTTPException(status_code=503, detail="Configuração de URL do n8n inválida.") from None
+    return {"url": url}
