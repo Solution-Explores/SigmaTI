@@ -234,7 +234,7 @@ def test_alert_uses_configured_provider_and_preserves_response_contract(api):
     assert response.status_code == 200
     assert response.headers["access-control-allow-origin"] == "http://localhost:5173"
     assert response.json() == {
-        "status": "Incidente Registrado",
+        "status": "Diagnóstico gerado",
         "dados_enviados_nuvem": "Equipamento: [SWITCH_REDE] | Erro: Falha de rede no IP 192.0.2.0/24. Forneça um diagnóstico de rede curto e direto.",
         "diagnostico_ia": "Diagnóstico simulado",
     }

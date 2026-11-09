@@ -1,5 +1,5 @@
 import { afterEach, expect, it, vi } from 'vitest';
-import { readEventStream } from './api';
+import { ApiError, apiRequest, readEventStream } from './api';
 afterEach(() => vi.unstubAllGlobals());
 function response(text) {
   const bytes = new TextEncoder().encode(text);
@@ -25,4 +25,10 @@ it('encerra sessão quando servidor revoga o stream', async () => {
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response('event: session.closed\ndata: {}\n\n')));
   await expect(readEventStream({ token: 'synthetic', signal: new AbortController().signal,
     onReady: vi.fn(), onEvent: vi.fn() })).rejects.toMatchObject({ status: 401 });
+});
+it('mapeia resposta HTTP 501 para mensagem de recurso ainda não disponível (#57)', async () => {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 501 }));
+  await expect(apiRequest('/api/chaves/rotacao', { method: 'POST', token: 'synthetic' }))
+    .rejects.toMatchObject({ status: 501, message: 'Recurso ainda não disponível.' });
+  expect(new ApiError(501).message).toBe('Recurso ainda não disponível.');
 });
