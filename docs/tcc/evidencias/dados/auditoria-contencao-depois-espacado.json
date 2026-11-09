@@ -1,0 +1,69 @@
+{
+  "python": "3.12.10",
+  "plataforma": "win32",
+  "tamanho": 100000,
+  "resultados": [
+    {
+      "processos": 4,
+      "gravacoes_por_processo": 20,
+      "intervalo_ms": 100.0,
+      "tamanho_inicial": 100000,
+      "gravacoes_esperadas": 80,
+      "gravacoes_ok": 80,
+      "erros": {},
+      "processos_com_falha": 0,
+      "entradas_finais": 100080,
+      "entradas_esperadas": 100080,
+      "integra": true,
+      "primeira_invalida": null,
+      "sem_perda_nem_duplicacao": true,
+      "tempo_total_s": 8.14,
+      "vazao_gravacoes_por_s": 9.34,
+      "mediana_ms": 71.69,
+      "p95_ms": 1296.17,
+      "max_ms": 4569.25,
+      "partida_fria": {
+        "amostras": 4,
+        "mediana_ms": 2831.98,
+        "max_ms": 4569.25
+      },
+      "demais_gravacoes": {
+        "amostras": 76,
+        "mediana_ms": 71.61,
+        "p95_ms": 218.93,
+        "max_ms": 3406.49
+      }
+    },
+    {
+      "processos": 8,
+      "gravacoes_por_processo": 20,
+      "intervalo_ms": 100.0,
+      "tamanho_inicial": 100000,
+      "gravacoes_esperadas": 160,
+      "gravacoes_ok": 160,
+      "erros": {},
+      "processos_com_falha": 0,
+      "entradas_finais": 100160,
+      "entradas_esperadas": 100160,
+      "integra": true,
+      "primeira_invalida": null,
+      "sem_perda_nem_duplicacao": true,
+      "tempo_total_s": 15.52,
+      "vazao_gravacoes_por_s": 9.79,
+      "mediana_ms": 236.65,
+      "p95_ms": 3334.55,
+      "max_ms": 9163.46,
+      "partida_fria": {
+        "amostras": 8,
+        "mediana_ms": 5007.25,
+        "max_ms": 9163.46
+      },
+      "demais_gravacoes": {
+        "amostras": 152,
+        "mediana_ms": 236.09,
+        "p95_ms": 1431.5,
+        "max_ms": 5656.18
+      }
+    }
+  ]
+}

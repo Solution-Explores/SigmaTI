@@ -10,7 +10,7 @@
 | 4. Implementação | Módulos, decisões de projeto e propriedades verificadas por testes | [01](01-mapeamento-vigilark-sigma.md), [02](02-guia-de-implementacao.md) |
 | 5. Metodologia de avaliação | Métricas, experimentos, ameaças à validade | [03](03-metodologia-experimental.md) |
 | 6. Resultados | E1–E5, discussão do achado negativo (deriva) | `resultados/` |
-| 7. Conclusão | Hipóteses confirmadas/refutadas, limitações, trabalhos futuros | — |
+| 7. Conclusão | Hipóteses confirmadas/refutadas, limitações, trabalhos futuros | [limitações](../../docs/tcc/limitacoes.md) |
 
 ## Para aprofundar o lado de hardware (engenharia da computação)
 

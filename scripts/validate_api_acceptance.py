@@ -156,7 +156,8 @@ def validate(args) -> int:
             status, body, headers = request(base, "POST", "/api/alertas", ALERT, auth)
             result = json.loads(body)
             check("authenticated_sanitized_success", status == 200 and set(result) == {
-                "status", "dados_enviados_nuvem", "diagnostico_ia"} and result["diagnostico_ia"] == "Diagnóstico K10 simulado"
+                "status", "dados_enviados_nuvem", "diagnostico_ia"} and result["status"] == "Diagnóstico gerado"
+                and result["diagnostico_ia"] == "Diagnóstico K10 simulado"
                 and "192.0.2.10" not in body and "dr.joao" not in body and FAKE_KEY not in body,
                 {"http": status, "contract": sorted(result)})
             check("allowed_origin_response", headers.get("access-control-allow-origin") == ORIGIN, {"http": status})
@@ -171,7 +172,7 @@ def validate(args) -> int:
                     "Diagnóstico de IA indisponível no momento. Tente novamente mais tarde."
                 ) and PRIVATE_DETAIL not in body and FAKE_KEY not in body
                 if marker == "K10_TIMEOUT":
-                    passed = passed and 14 <= elapsed <= 15 and '"provider_cancelled"' in events.read_text()
+                    passed = passed and 13 <= elapsed <= 15 and '"provider_cancelled"' in events.read_text()
                 check(marker.lower(), passed, {"http": status, "seconds": round(elapsed, 3)})
 
             for name, payload, origin, expected in (

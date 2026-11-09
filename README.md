@@ -11,11 +11,13 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?logo=postgresql&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)
 ![Status](https://img.shields.io/badge/status-MVP%20(TCC)-orange)
+![Versão](https://img.shields.io/badge/vers%C3%A3o-v1.0.0-blue)
 
 [Problema](#problema-que-resolve) ·
 [Funcionalidades](#funcionalidades) ·
 [Arquitetura](#arquitetura) ·
 [Início rápido](#início-rápido) ·
+[Versão entregue](#versão-entregue) ·
 [Documentação](docs/README.md)
 
 </div>
@@ -117,12 +119,12 @@ python -m pytest -q -p no:cacheprovider
 
 | Função | Suporte N1 | Analista de Redes | Gestor de TI |
 |---|---|---|---|
-| Ver alertas e status da rede | Sim | Sim | Sim |
-| Usar o diagnóstico com a IA | Sim | Sim | Sim |
-| Ver histórico e detalhes de pacotes | Não | Sim | Sim |
-| Ver relatórios gerenciais | Não | Não | Sim |
-| Gerenciar usuários e chaves | Não | Não | Sim |
-| Acessar o n8n | Não | Não | Sim |
+| Ver alertas e status da rede (`GET /api/alertas` planejado, 501) | Sim | Sim | Sim |
+| Usar o diagnóstico com a IA (`POST /api/alertas`) | Sim | Sim | Sim |
+| Ver histórico e detalhes de pacotes (`GET /api/pacotes`, planejado, 501) | Não | Sim | Sim |
+| Ver relatórios gerenciais (`GET /api/relatorios` planejado #16, 501) | Não | Não | Sim |
+| Gerenciar usuários e chaves (usuários em `/api/usuarios`; `POST /api/chaves/rotacao` planejado #23, 501) | Não | Não | Sim |
+| Acessar o n8n (`GET /api/n8n/acesso`, requer `SIGMA_N8N_URL`) | Não | Não | Sim |
 
 ## Estado do desenvolvimento
 
@@ -130,12 +132,35 @@ python -m pytest -q -p no:cacheprovider
 - Com `SIGMA_USERS_FILE`, sessões e usuários alterados ficam em memória. Com PostgreSQL, eles persistem ([identidades e sessões](engenharia/docs/07-persistencia-identidades.md)).
 - O [estado operacional no PostgreSQL](engenharia/docs/08-estado-operacional.md) cobre esquema, recuperação de aprovações e execuções, medições, retenção e APIs. Veja também a [coleta de eventos e o SSE](engenharia/docs/09-coleta-eventos.md).
 - O experimento E6 avalia cada identificador anotado, e seus resultados valem só para o corpus sintético.
-- As issues #5 e #6 continuam abertas.
-- A resposta `Incidente Registrado` é um contrato legado e não comprova a gravação de um incidente no PostgreSQL.
+- As issues #5 (anonimização) e #6 (autenticação e perfis) foram fechadas. Continuam abertas a #8 (sondagem contínua), a #11 (experimentos, falta o E5), a #45, a #46 e a #57.
+- `POST /api/alertas` responde `status: "Diagnóstico gerado"` e não grava incidente no PostgreSQL (incidentes nascem da coleta de medições sobre alvos cadastrados). As rotas planejadas de rotação de chaves de origem (`POST /api/chaves/rotacao`, #23), relatórios gerenciais (`GET /api/relatorios`, #16), pacotes (`GET /api/pacotes`) e listagem legada de alertas (`GET /api/alertas`) respondem HTTP 501 (`Recurso ainda não disponível.`). `GET /api/status` continua registrado como débito técnico por responder `"operacional"` sem sondar dependências.
 - As correções de sessão, painel e anonimização estão nas [evidências da recuperação da sprint](docs/specs/011-recuperacao-sprint/evidencias.md), integradas à `develop` pelo [PR #32](https://github.com/Solution-Explores/SigmaTI/pull/32).
-- O ensaio do backup em outra máquina e a ativação do modelo systemd continuam pendentes. A validação local não equivale ao aceite integral da issue #25.
+- A #25 foi fechada: a restauração foi aceita em máquina física separada. A ativação do modelo systemd continua pendente.
+- A [#57](https://github.com/Solution-Explores/SigmaTI/issues/57) eliminou as respostas `200` sem efeito nas rotas de rotação de chaves, relatórios, pacotes, listagem de alertas, incidentes sem banco (503) e URL fictícia do n8n.
 
-Planejamento do aceite em outro local: [VM VirtualBox e roteiro da #25](docs/historico/planejamento-validacao-25-virtualbox.md).
+## Versão entregue
+
+**`v1.0.0`**, marcada em 04/11/2026 no commit `0379374`. O aceite completo foi executado no SHA `15568d3`, cuja árvore é idêntica à da tag: mesmo conteúdo, só a história difere.
+
+Máquina física, loopback, PostgreSQL 15.19 descartável em contêiner com imagem presa por digest. Um validador de cada vez.
+
+| Rodada | Resultado |
+|---|---|
+| `pytest` (suíte inteira) | 565 passaram, 1 pulado, **0 falharam** |
+| `validate_api_acceptance` | 20 PASS, 0 FAIL |
+| `validate_panel` | 4 de 4, em navegador real |
+| `validate_collection` | 30 de 30 dentro de 5 s; mediana 0,758 s, p95 0,960 s, máx. 1,099 s |
+| `validate_infrastructure` | 12 PASS; K04 aprovado sem iniciar contêiner |
+
+Tempos medidos na versão entregue, 30 repetições em loopback:
+
+| | média | p95 |
+|---|---|---|
+| MTTD | 0,684 s | 0,795 s |
+| MTTA | 0,133 s | 0,216 s |
+| MTTR | 0,164 s | 0,244 s |
+
+**Estes números não são promessas de desempenho em rede hospitalar.** São de laboratório, numa máquina só, com alvos sintéticos. O MTTD variou entre 0,684 e 0,795 s em três execuções do mesmo código — a diferença entre execuções é maior que o desvio dentro de cada uma, então a faixa vale mais que qualquer valor único. O que cada medição não cobre está em [limitações do trabalho](docs/tcc/limitacoes.md).
 
 ## Segurança e privacidade
 
@@ -147,13 +172,13 @@ Planejamento do aceite em outro local: [VM VirtualBox e roteiro da #25](docs/his
 
 ## Validação
 
-| Requisito | Meta |
-|---|---|
-| RF01 | Alerta no painel em até 5 s |
-| RNF04 | Diagnóstico da IA em até 15 s |
-| RNF06 | Backup restaurável e sem perda de dados ao recriar contêineres |
-| RNF07 | Requisição sem chave, inválida ou revogada é recusada (401 ou 403) |
-| RNF08 | Zero vazamentos de dados sensíveis para a IA |
+| Requisito | Meta | Medido na `v1.0.0` |
+|---|---|---|
+| RF01 | Alerta no painel em até 5 s | ✅ 30 de 30; mediana 0,758 s, máx. 1,099 s (loopback) |
+| RNF04 | Diagnóstico da IA em até 15 s | ❌ sem nenhuma medição com provedor real |
+| RNF06 | Backup restaurável e sem perda de dados ao recriar contêineres | ✅ aceito em máquina física separada (#25) |
+| RNF07 | Requisição sem chave, inválida ou revogada é recusada (401 ou 403) | ✅ origem não confiável 403, payload inválido 422, sem chamada ao provedor |
+| RNF08 | Zero vazamentos de dados sensíveis para a IA | ⚠️ 100% de proteção pelo bloqueio *fail-closed*; o recall de transformação ficou em 95,12% (n = 41), abaixo do critério original |
 
 A validação completa está na seção 6 do [estudo de caso](docs/arquitetura/estudo-de-caso.md). O registro de testes e achados corrigidos está em [revisão K01 a K06](docs/specs/revisao-k01-k06/validacao.md).
 
@@ -164,6 +189,10 @@ A validação completa está na seção 6 do [estudo de caso](docs/arquitetura/e
 - A generalização é feita por regras: reduz o risco, mas não o elimina. Por isso existe a falha segura.
 - Arredondar horários e mascarar sub-redes pode reduzir a precisão do diagnóstico. O RNF08 mede essa perda com dados fictícios.
 - O servidor on-premise e a VLAN ou VPN de gerência ainda precisam ser confirmados pela instituição.
+- A cadeia de hash da auditoria **não detecta truncamento do fim** da trilha: 0 de 250 casos no experimento E4. Só a âncora guardada fora da máquina pega esse caso.
+- O RNF04 (diagnóstico da IA em até 15 s) **não tem nenhuma medição** com provedor real e filtro de anonimização ativo.
+
+A lista completa, com a medição que sustenta cada item, está em [limitações do trabalho](docs/tcc/limitacoes.md).
 
 ## Estrutura do projeto
 

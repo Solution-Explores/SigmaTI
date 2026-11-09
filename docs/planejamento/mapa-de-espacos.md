@@ -20,7 +20,7 @@ O repositório GitHub é a fonte da verdade. Issues, milestones e os documentos 
 ## Como o Trello reflete o repositório
 
 - Um cartão por issue aberta, com o link da issue, o milestone e o prazo do milestone.
-- Sprint 1 (03/11): #56, #5, #25, #13, release `v1.0.0` e triagem. Sprint 2 (10/11): #45, #8, #46, #57 e validação final. Sprint 3 (17/11): congelamento em 11/11, ensaio em 13 e 14/11, checklist final e banca em 18/11.
+- Sprint 1 (03/11): #56, #5, #25, #13, release `v1.0.0` e triagem. Sprint 2 (10/11): #45, #8, #46, #57 e validação final. Sprint 3 (17/11): congelamento em 11/11, ensaio em 13 e 14/11, checklist final; em 18/11 começa a preparação da apresentação (banca entre 01 e 10/12).
 - Sprint 4 (depois da banca): um cartão por grupo, sem data, com a etiqueta "Pós-banca".
 - Cartões do design system (DS) e da API pertencem à Joyce e seguem os PRs #52 a #55; as datas só mudam com o aval dela e do orientador.
 
@@ -31,7 +31,7 @@ O repositório GitHub é a fonte da verdade. Issues, milestones e os documentos 
 | `01_desenvolvimento` | Atas de reunião, design (logotipo e sistema tipográfico) e diário de bordo |
 | `02_documentação` | Projeto básico, plano e escopo, estudo de caso, orçamento e material do orientador |
 | `03_entre_pacial` | Entregas parciais |
-| `04_entrega_final` | Pitch, TCC, artigo e checklist da banca de 18/11 |
+| `04_entrega_final` | Pitch, TCC, artigo e checklist da banca (01 a 10/12) |
 
 Versões antigas dos documentos ficam em `02_documentação/projeto/_arquivo`. O `00_LEIA-ME` na raiz da pasta aponta para os quatro espaços.
 

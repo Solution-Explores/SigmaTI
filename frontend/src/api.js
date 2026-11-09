@@ -1,4 +1,6 @@
 export const BASE_URL = (import.meta.env?.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '');
+// `npm run dev:mock` liga a API simulada de src/mock; o build comum remove esse ramo.
+export const MOCK = import.meta.env?.VITE_MOCK === '1';
 
 export class ApiError extends Error {
   constructor(status) {
@@ -8,6 +10,7 @@ export class ApiError extends Error {
       409: 'O registro mudou ou a decisão não é permitida. Atualize os dados antes de tentar novamente.',
       422: 'Confira os dados informados.',
       429: 'Muitas tentativas. Aguarde antes de tentar novamente.',
+      501: 'Recurso ainda não disponível.',
     };
     super(messages[status] || 'A API está indisponível no momento. Tente novamente.');
     this.status = status;
@@ -15,6 +18,7 @@ export class ApiError extends Error {
 }
 
 export async function apiRequest(path, { method = 'GET', body, token, signal } = {}) {
+  if (MOCK) return (await import('./mock/mockApi.js')).mockRequest(path, { method, body, token, signal });
   let response;
   try {
     response = await fetch(`${BASE_URL}${path}`, {
@@ -41,6 +45,7 @@ export async function apiRequest(path, { method = 'GET', body, token, signal } =
 
 
 export async function readEventStream({ token, cursor, signal, onEvent, onReady }) {
+  if (MOCK) return (await import('./mock/mockApi.js')).mockEventStream({ token, signal, onReady });
   const connection = new AbortController();
   let timer;
   let reader;

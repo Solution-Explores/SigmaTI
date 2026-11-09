@@ -114,6 +114,12 @@ Copie `.env.example` para `.env` (`Copy-Item .env.example .env` no PowerShell, `
 | `SIGMA_JWT_SECRET` | Segredo local aleatório de pelo menos 32 bytes. Não há valor padrão. |
 | `SIGMA_USERS_FILE` | Caminho absoluto do arquivo de hashes criado por `scripts/create_demo_users.py`. Alternativa em arquivo (laboratório) ao PostgreSQL. |
 
+Variável opcional para consulta do endereço do n8n pelo Gestor de TI (`GET /api/n8n/acesso`):
+
+| Variável opcional | Conteúdo |
+|---|---|
+| `SIGMA_N8N_URL` | URL explícita (`http://` ou `https://`, sem credenciais embutidas). Se omitida ou vazia, `GET /api/n8n/acesso` responde HTTP 501; se malformada ou com credenciais, responde HTTP 503. |
+
 O backend lê só o `.env` da raiz, de qualquer pasta de execução. Variáveis já definidas no processo têm prioridade, mesmo vazias. Os valores do arquivo são literais, sem interpolação de `${...}`. O arquivo pode faltar se todas as variáveis obrigatórias estiverem no ambiente.
 
 A API não inicia se alguma configuração faltar, estiver vazia ou tiver origens inválidas. A chave aceita só caracteres ASCII visíveis, sem espaços. Nas origens, não use caminhos, barra final, credenciais, curingas nem itens vazios, e escreva domínios internacionalizados em punycode.
@@ -143,6 +149,7 @@ Os erros HTTP usam JSON `{"detail": "mensagem pública"}`, sem refletir a entrad
 | 404 | Recurso não encontrado. |
 | 405 | Método não permitido. |
 | 422 | Dados da requisição inválidos. |
+| 501 | Recurso ainda não disponível. |
 | 500 e outras falhas internas | Erro interno do servidor. |
 
 O log registra categoria, classe da falha, status e duração, quando disponíveis. Não inclui entradas, query, cabeçalhos nem traceback. O OpenAPI documenta o formato `PublicError`. As respostas 200 de sucesso e de IA indisponível seguem o contrato descrito na próxima seção.
@@ -151,11 +158,11 @@ Veja a [especificação](../specs/004-cors-erros-publicos/spec.md), as [evidênc
 
 ## Chamada à IA e indisponibilidade
 
-A API usa um cliente HTTPX assíncrono, compartilhado durante a vida da aplicação e fechado no desligamento. O prazo global de espera pelo provedor é de **14 segundos**, com timeouts HTTP de 14 segundos por etapa, sem retentativas nem redirects. O prazo global também interrompe respostas que chegam devagar, em blocos pequenos, o que um timeout só de leitura não faria.
+A API usa um cliente HTTPX assíncrono, compartilhado durante a vida da aplicação e fechado no desligamento. O prazo global de espera pelo provedor é de **13 segundos**, com timeouts HTTP de 13 segundos por etapa, sem retentativas nem redirects. O prazo global também interrompe respostas que chegam devagar, em blocos pequenos, o que um timeout só de leitura não faria.
 
-`POST /api/alertas` mantém o HTTP 200 e os campos `status`, `dados_enviados_nuvem` e `diagnostico_ia`. Se a IA estourar o prazo, recusar a requisição, falhar na comunicação ou devolver uma resposta inválida, o diagnóstico será: **"Diagnóstico de IA indisponível no momento. Tente novamente mais tarde."** O HTTP 200 mantém a compatibilidade com o painel. Ele não indica sucesso do provedor nem prova a gravação do incidente em banco.
+`POST /api/alertas` mantém o HTTP 200 e os campos `status` (`"Diagnóstico gerado"`), `dados_enviados_nuvem` e `diagnostico_ia`. Se a IA estourar o prazo, recusar a requisição, falhar na comunicação ou devolver uma resposta inválida, o diagnóstico será: **"Diagnóstico de IA indisponível no momento. Tente novamente mais tarde."** O HTTP 200 mantém a compatibilidade com o painel; a rota apenas solicita o diagnóstico à IA e não grava incidentes no PostgreSQL (incidentes nascem da coleta de medições vinculada a um `alvo_id`).
 
-O log técnico registra categoria, classe da exceção, status HTTP (quando conhecido) e duração. Não registra chave, prompt, corpo bruto da IA nem texto da exceção. Os 14 segundos deixam margem para responder dentro da meta de 15 segundos nos testes controlados. Eles não garantem a latência da rede, a carga do servidor nem a resposta de um modelo real em produção.
+O log técnico registra categoria, classe da exceção, status HTTP (quando conhecido) e duração. Não registra chave, prompt, corpo bruto da IA nem texto da exceção. Os 13 segundos deixam 2 s de margem para o atraso do timer observado nas VMs (até 1,478 s), dentro da meta de 15 segundos nos testes controlados. Eles não garantem a latência da rede, a carga do servidor nem a resposta de um modelo real em produção.
 
 Veja a [especificação](../specs/004-chamada-assincrona-timeout/spec.md), as [evidências](../specs/004-chamada-assincrona-timeout/evidencias.md) e as [pendências](../specs/004-chamada-assincrona-timeout/tasks.md). A cobertura complementar e a correção da coleta estão nas [evidências K07 e K08](../specs/007-008-ci-provedor-simulado/evidencias.md). O aceite integral da issue #4 continua separado, e as entregas atuais são parciais.
 

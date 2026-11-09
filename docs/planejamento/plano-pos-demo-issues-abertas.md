@@ -2,7 +2,7 @@
 
 ## Contexto
 
-A demo ao orientador foi em 27/10 (SHA `7851da6`, tag `demo-2026-10-27`). A banca está marcada para **18/11/2026**, podendo ser antecipada. Em 31/10 o orientador entregou a auditoria das issues de estabilização (`main@87e6a19`) e definiu três sprints, com milestones e prazos no GitHub. **Este plano segue essa divisão.** O [plano de sprints pós-demo](plano-sprints-pos-demo.md) é anterior à demo e fica como histórico.
+A demo ao orientador foi em 27/10 (SHA `7851da6`, tag `demo-2026-10-27`). A banca será entre **01 e 10/12/2026** (edital; a Coordenação publica o dia e o horário). Em **18/11** começa a preparação da apresentação. Em 31/10 o orientador entregou a auditoria das issues de estabilização (`main@87e6a19`) e definiu três sprints, com milestones e prazos no GitHub. **Este plano segue essa divisão.** O [plano de sprints pós-demo](plano-sprints-pos-demo.md) é anterior à demo e fica como histórico.
 
 Situação em 01/11: 26 issues abertas. A #6 foi fechada na auditoria (31/10). Entraram duas issues novas, #56 e #57.
 
@@ -20,7 +20,7 @@ Situação em 01/11: 26 issues abertas. A #6 foi fechada na auditoria (31/10). E
 |---|---|---|---|---|
 | 1 | 28/10 a 03/11 | Começo | Fechar a `v1.0.0` | #56 (bloqueador), #5 (risco alto), #25, #13 |
 | 2 | 04 a 10/11 | Meio | Robustez e evidências | #8, #45, #46, #57 |
-| 3 | 11 a 17/11 | Fim | Congelamento, texto, ensaio e banca (18/11) | texto do TCC, slides, ensaio |
+| 3 | 11 a 17/11 | Fim | Congelamento, texto e ensaio; 18/11 inicia a preparação da apresentação | texto do TCC, slides, ensaio |
 | 4 | depois da banca | Pós-fim | Expansão e pesquisa (backlog sem data) | #10 a #12, #16 a #24, #26 a #31 |
 
 ## Sprint 1: Fechar a v1.0.0 (28/10 a 03/11) · meta ≈ 17 pts
@@ -36,7 +36,7 @@ Situação em 01/11: 26 issues abertas. A #6 foi fechada na auditoria (31/10). E
 | P0 | Release | Aceite completo na `develop` (pytest, `validate_api_acceptance`, `validate_panel`, `validate_collection`) e tag `v1.0.0` na `main` | Vinícius | 2 |
 | P1 | #25 Implantação e backup (RNF06) | Restauração em segunda máquina física (único critério aberto; as 17 verificações em VM já passaram). A decisão VM ou máquina física, pedida ao orientador em 24/10, ainda não tem registro | Vinícius | 2 |
 | P1 | #13 Auditoria: âncora e rotação HMAC | Âncora externa do último hash, `key id` por entrada com rotação preservando o histórico, job diário de `verificar()`, ADR 0002. Se não fechar até 03/11, segue para a Sprint 2 com o aval do orientador | Vinícius | 5 |
-| P0 | Triagem | Registrar a auditoria na #31, triar os PRs #41, #42 e #48 e confirmar com o orientador: banca em 18/11, #13 e #25 em 03/11 ou 10/11, licença do repositório | Vinícius | 1 |
+| P0 | Triagem | Registrar a auditoria na #31, triar os PRs #41, #42 e #48 e confirmar com o orientador: dia e horário da banca (edital: 01 a 10/12), #13 e #25 em 03/11 ou 10/11, licença do repositório | Vinícius | 1 |
 
 **Carga:** P0 = 12 pts (#56 1, #5 8, release 2, triagem 1); com #25 = 14; com #13 = 19 (≈ 112% dos ~17). Como já estamos em 01/11, o saldo real é menor que o da semana inteira. **Corte, nesta ordem:** #13 vai para a Sprint 2 (com aval), depois #25. Nunca se corta #56, #5 nem a release.
 
@@ -74,7 +74,7 @@ Situação em 01/11: 26 issues abertas. A #6 foi fechada na auditoria (31/10). E
 
 ## Sprint 3: Congelamento e banca (11 a 17/11) · meta ≈ 10 de 19 pts (folga deliberada)
 
-**Saída:** projeto estável, texto e apresentação prontos. Marcos: 11/11 congelamento · 13 e 14/11 ensaio · 17/11 checklist final (fim do milestone) · **18/11 banca**.
+**Saída:** projeto estável, texto e apresentação prontos. Marcos: 11/11 congelamento · 13 e 14/11 ensaio · 17/11 checklist final (fim do milestone) · **18/11 início da preparação da apresentação** (banca entre 01 e 10/12).
 
 | Prio | Tarefa | Quem pega | Pts |
 |---|---|---|---|
@@ -85,7 +85,7 @@ Situação em 01/11: 26 issues abertas. A #6 foi fechada na auditoria (31/10). E
 | P0 | Backup do ambiente e VM de contingência | Vinícius | 1 |
 | P1 | Capítulo "Trabalho futuro" com as issues da Sprint 4 e a justificativa de cada uma | Vinícius | 2 |
 
-**Se a banca for antecipada:** a Sprint 2 vira a última de código e o congelamento passa para o dia anterior à nova data.
+**Janela da banca (edital):** 01 a 10/12. O congelamento de 11/11 se mantém.
 
 ## Sprint 4: Depois da banca (backlog, sem data)
 

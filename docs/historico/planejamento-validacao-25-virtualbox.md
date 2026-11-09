@@ -1,5 +1,7 @@
 # Task #25 — validação de restauração em outra máquina (VirtualBox)
 
+> **Substituído em 09/11/2026.** O aceite da #25 foi feito em **03/11/2026 em máquina física separada**, com o pacote do pendrive, e a #25 foi fechada. Esta VM **não foi usada**. O registro válido é [segunda-maquina.md](../specs/018-backup-restauracao/segunda-maquina.md). Este guia fica só como histórico do plano B.
+
 > **Atualização de 01/11/2026.** A restauração em outra máquina será feita em uma máquina física separada, a partir de 03/11, e a #25 passa para a Sprint 2. Este guia de VM fica como plano B, caso a máquina física não esteja disponível. A VM só conta como evidência se for limpa, sem volume nem chave do host de origem, e a limitação precisa ser declarada no TCC.
 
 Planejamento para executar em outro local. Preparado em 20/10/2026 (UTC−4). **Não é um registro de execução.** Código de referência já integrado: `8cb1e23b0e83066e52d3f81dd7ef05ce82dfc93c` (PR #40). Issue #25 permanece aberta; smoke no CI aprovado, aceite externo pendente.

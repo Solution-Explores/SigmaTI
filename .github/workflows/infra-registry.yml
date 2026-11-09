@@ -1,0 +1,47 @@
+name: Infrastructure Registry Check
+
+# Conferência com rede, fora do caminho dos PRs (#56): o lock continua íntegro
+# pelo digest, e a deriva da tag é só um aviso.
+on:
+  schedule:
+    - cron: '17 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  registry:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Confirm the locked digests still exist in the official registry
+        run: python scripts/validate_infrastructure.py --verify-registry
+
+      - name: Report tag drift without failing
+        id: drift
+        run: |
+          python scripts/validate_infrastructure.py --drift | tee drift.txt
+          if grep -q '^::warning::Deriva' drift.txt; then echo "drifted=true" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Open an issue when a tag was republished
+        if: steps.drift.outputs.drifted == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          existing=$(gh issue list --state open --search "Deriva de tag das imagens oficiais in:title" --json number --jq '.[0].number // empty')
+          body="$(grep '^::warning::Deriva' drift.txt | sed 's/^::warning:://')"$'\n\nRevisar changelog e base da imagem antes de atualizar o lock. Não atualizar automaticamente.'
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "$body"
+          else
+            gh issue create --title "Deriva de tag das imagens oficiais" --body "$body"
+          fi

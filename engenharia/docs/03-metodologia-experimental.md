@@ -21,8 +21,8 @@ Princípios: **semente fixa**, **repetições** (n ≥ 30), **saída em CSV**, *
 |---|---|---|---|
 | **E1** | Qualidade dos detectores com falha injetada em séries sintéticas | H1 | ✅ Implementado (`experimentos/exp_deteccao.py`) |
 | **E2** | Latência ponta a ponta do alerta até o painel (RF01 ≤ 5 s) | H4 | Ensaio local implementado: scripts/validate_collection.py; tela pendente #15 |
-| **E3** | Burn rate em rede real: tempo até `page` com sonda caída | H2 | ⬜ A fazer |
-| **E4** | Fuzzing da cadeia de hash (adulterar, remover, reordenar N entradas) | H3 | ⬜ A fazer (há testes unitários) |
+| **E3** | Burn rate em rede real: tempo até `page` com sonda caída | H2 | ✅ Medido em laboratório (03 e 04/11): queda de 10 min pagina em 52 s; corte de 10 s não pagina depois da correção da #71 (antes, paginava em 45 s). Rede real pendente |
+| **E4** | Fuzzing da cadeia de hash (adulterar, remover, reordenar N entradas) | H3 | ⚠️ Medido em 04/11: 100% nas três mutações do critério; **truncamento do fim não é detectado** pela verificação, só pela âncora |
 | **E5** | Latência da resposta da IA (RNF04 ≤ 15 s) com anonimização | H4 | ⬜ A fazer |
 
 ### E1 · Resultados (implementado)
@@ -51,13 +51,32 @@ O script `scripts/validate_collection.py` injeta 30 quedas de um serviço TCP em
 
 Reprodução, limites e configuração: [coleta e eventos](09-coleta-eventos.md). Os resultados do laboratório não comprovam renderização do painel (#15), 200 equipamentos físicos nem comportamento de DROP/firewall real. Repetir no ambiente de homologação com relógios sincronizados e condições representativas.
 
-### E3 · Burn rate em rede real (a fazer)
+### E3 · Burn rate (medido em laboratório; rede real pendente)
 
-Derrubar a sonda por 10 min com SLO de 99,9%; medir o tempo até o primeiro `page` e confirmar que um corte de 10 s **não** pagina.
+Executado em 03/11/2026 em loopback, máquina física, com SLO de 99,9% em 30 dias. Script `scripts/medir_e3.py`; evidência e dado bruto em [`docs/tcc/evidencias/e3-burn-rate.md`](../../docs/tcc/evidencias/e3-burn-rate.md).
 
-### E4 · Fuzzing da cadeia (a fazer)
+**Condição A, queda de 10 min:** `page` em **52,0 s**, com passo de amostragem de 2 s. Confere com a previsão analítica de 51,8 s, em que a janela longa de 1 h é a que determina o disparo. Ao fim dos 10 min as quatro regras estavam disparadas, incluindo as duas de `ticket`. **Critério atendido.**
 
-Gerar cadeias de N=1000 entradas; aplicar mutação aleatória (alterar um byte de um campo, remover ou trocar duas linhas) e verificar que `verificar()` reporta o índice ≤ ao da mutação em 100% dos casos.
+**Condição B, corte de 10 s, em 03/11 (antes da correção da #71):** o serviço voltou na mesma porta, a coleta registrou sucesso, e o sistema **paginou em 45,0 s**. **Critério não atendido.** A causa não era o cálculo de burn rate: com o intervalo de indisponibilidade recortado nos 10 s reais, nenhuma regra dispara em nenhum instante de avaliação (janela curta 33,3, janela longa 2,778, limiar 14,4). O defeito era que o incidente de disponibilidade **nunca era fechado automaticamente**: `resolvido_em` só era escrito pelas rotas manuais `/reconhecer` e `/resolver`, e a gravação de medição com sucesso não encerrava o incidente em aberto.
+
+**Condição B depois da correção, em 04/11 (#71, PR #79):** a gravação de uma medição com sucesso passa a fechar o incidente de disponibilidade aberto daquele alvo, no instante dessa medição. Em duas execuções, o corte de 10 s **não gerou nenhum alerta**: o incidente fechou sozinho com 10,334 s de duração registrada e o burn de 1 h ficou em 2,871, abaixo do limiar de 14,4. A condição A repetiu-se em 52,0 s, no mesmo segundo. **Critério atendido nas duas condições.** Evidência e dado bruto em [`docs/tcc/evidencias/e3-pos-71.md`](../../docs/tcc/evidencias/e3-pos-71.md). A janela curta chegou a 34,4: é a exigência da janela longa que impede o plantão por pico isolado.
+
+Pendente: repetir em rede real, com repetições e intervalo de confiança (hoje são duas execuções de cada condição), e com durações intermediárias de corte, para saber a partir de que duração o `page` passa a ser legítimo.
+
+### E4 · Fuzzing da cadeia (medido em 04/11/2026)
+
+Trilha de N = 1000 entradas, uma mutação aleatória por caso, 250 casos por tipo, semente fixa 20261104. Script `experimentos/exp_fuzzing_cadeia.py`, resultado em [`resultados/e4_fuzzing_cadeia.md`](../resultados/e4_fuzzing_cadeia.md) e dado bruto em `resultados/e4_fuzzing_cadeia.csv`.
+
+| Mutação | Casos | `verificar()` detecta | Índice ≤ ao mutado | Âncora detecta |
+|---|---:|---:|---:|---:|
+| um byte de uma linha trocado | 250 | 100% | 250 | 0 |
+| uma linha apagada | 250 | 100% | 250 | 250 |
+| duas linhas trocadas de lugar | 250 | 100% | 250 | 0 |
+| 1 a 5 linhas apagadas do fim | 250 | **0%** | 0 | 100% |
+
+Nos 750 casos das três mutações do critério, o índice reportado foi exatamente o índice mutado. O critério da #11 passa.
+
+O quarto tipo foi acrescentado além do critério e **falha por construção**: uma trilha cortada no fim continua coerente consigo mesma, então a verificação não tem como saber que havia mais. É o que o `ancora()` resolve, comparado com o resumo guardado fora da máquina — ali o truncamento aparece em 100% dos casos. As duas conferências são complementares: a âncora, por sua vez, não vê mutação no meio.
 
 ### E5 · RNF04 (a fazer)
 
@@ -72,3 +91,4 @@ Medir tempo de resposta do chat com o filtro de anonimização ativo, n ≥ 30, 
 | Externa | Resultados de um só hospital | Declarar como estudo de caso |
 | Conclusão | Falhas injetadas são mais "limpas" que as reais | Rotular incidentes reais retroativamente |
 | Medição | Relógios não sincronizados distorcem MTTD | NTP/chrony nos hosts; registrar o offset |
+| Construto | A cadeia de hash, lida só a partir dela mesma, não detecta truncamento do fim (E4, 0 de 250 casos) | Guardar a âncora (`ancora()`) fora da máquina e conferir; declarar o limite no texto |

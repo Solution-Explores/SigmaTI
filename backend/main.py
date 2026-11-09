@@ -6,8 +6,9 @@ from pathlib import Path
 import re
 from time import monotonic
 from typing import Annotated, Literal
+from urllib.parse import urlsplit
 
-from fastapi import Depends, FastAPI, Request
+from fastapi import Depends, FastAPI, HTTPException, Request
 from pydantic import BaseModel, Field
 import httpx2 as httpx
 
@@ -20,7 +21,7 @@ configure_auth(settings.jwt_secret)
 from routers.auth import router as auth_router
 
 logger = logging.getLogger(__name__)
-IA_TIMEOUT_SECONDS = 14.0
+IA_TIMEOUT_SECONDS = 13.0
 IA_UNAVAILABLE = "Diagnóstico de IA indisponível no momento. Tente novamente mais tarde."
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
@@ -48,9 +49,18 @@ async def lifespan(app: FastAPI):
                 lease=SchedulerLease(app.state.operational_store.engine))
             app.state.scheduler = scheduler
             scheduler.start()
+        app.state.audit_job = None
+        destinos, alerta = destinos_do_ambiente()
+        if destinos:
+            app.state.audit_job = asyncio.create_task(verificar_periodicamente(
+                engineering_audit, destinos, alerta,
+                float(os.getenv("SIGMA_AUDIT_JOB_INTERVAL_SECONDS", INTERVALO_PADRAO_SEGUNDOS))))
         try:
             yield
         finally:
+            if app.state.audit_job is not None:
+                app.state.audit_job.cancel()
+                await asyncio.gather(app.state.audit_job, return_exceptions=True)
             if app.state.scheduler is not None:
                 await app.state.scheduler.stop()
 
@@ -87,13 +97,13 @@ app.include_router(events_router)
 
 from sigma_eng.api import create_router
 from sigma_eng.audit_chain import AuditChain
+from sigma_eng.audit_anchor import destinos_do_ambiente
+from audit_job import INTERVALO_PADRAO_SEGUNDOS, verificar_periodicamente
 
 # O pacote não escolhe o local dos dados da aplicação hospedeira.
 # Preservar o caminho da trilha de engenharia existente no checkout.
-_audit_key = os.getenv("SIGMA_AUDIT_KEY")
-engineering_audit = AuditChain(
+engineering_audit = AuditChain.do_ambiente(
     os.getenv("SIGMA_AUDIT_PATH", str(Path(__file__).resolve().parent.parent / "engenharia" / "resultados" / "audit.jsonl")),
-    chave=_audit_key.encode() if _audit_key else None,
 )
 app.include_router(create_router(exige_papel, auditoria=engineering_audit))
 # --------------------------------------------------
@@ -184,10 +194,24 @@ async def receber_alerta(
     
     # 3. Retorno para o Frontend (O bloco que devolve a resposta)
     return {
-        "status": "Incidente Registrado",
+        "status": "Diagnóstico gerado",
         "dados_enviados_nuvem": prompt_enviado,
         "diagnostico_ia": diagnostico_ia
     }
+
+
+def _validar_url_n8n(valor: str) -> str:
+    if not valor or any(c.isspace() for c in valor):
+        raise ValueError("URL do n8n vazia ou com espaços.")
+    parsed = urlsplit(valor)
+    if parsed.scheme not in ("http", "https") or not parsed.hostname:
+        raise ValueError("URL do n8n deve usar esquema http ou https e host explícito.")
+    if parsed.username is not None or parsed.password is not None or "@" in parsed.netloc:
+        raise ValueError("URL do n8n não pode conter credenciais embutidas.")
+    port = parsed.port
+    if port is not None and not 1 <= port <= 65535:
+        raise ValueError("Porta da URL do n8n inválida.")
+    return valor
 
 
 # =====================================================================
@@ -196,32 +220,37 @@ async def receber_alerta(
 
 @app.get("/api/status")
 async def obter_status(usuario: Annotated[Usuario, Depends(exige_papel("suporte_n1"))]):
-    """Ver alertas e status da rede (Suporte N1, Analista de Redes, Gestor de TI)."""
+    """Ver alertas e status da rede (Suporte N1, Analista de Redes, Gestor de TI).
+
+    Débito técnico (#57): afirma status operacional sem sondar dependências internas.
+    """
     return {"status": "operacional", "perfil": usuario.papel}
 
 
 @app.get("/api/alertas")
 async def listar_alertas(usuario: Annotated[Usuario, Depends(exige_papel("suporte_n1"))]):
-    """Ver alertas e status da rede (Suporte N1, Analista de Redes, Gestor de TI)."""
-    return {"alertas": []}
+    """Listagem de alertas planejada; não retorna lista vazia fictícia (#57)."""
+    raise HTTPException(status_code=501, detail="Recurso ainda não disponível.")
 
 
 @app.get("/api/pacotes")
 async def ver_pacotes(usuario: Annotated[Usuario, Depends(exige_papel("analista_redes"))]):
-    """Ver histórico e detalhes de pacotes (Analista de Redes, Gestor de TI)."""
-    return {"pacotes": []}
+    """Histórico e detalhes de pacotes planejados; não retorna lista vazia fictícia (#57)."""
+    raise HTTPException(status_code=501, detail="Recurso ainda não disponível.")
 
 
 @app.get("/api/incidentes")
 def listar_incidentes(usuario: Annotated[Usuario, Depends(exige_papel("analista_redes"))]):
     """Ver histórico e incidentes (Analista de Redes, Gestor de TI)."""
-    return {"incidentes": app.state.operational_store.incidents() if app.state.operational_store else []}
+    if app.state.operational_store is None:
+        raise HTTPException(status_code=503, detail="Persistência operacional não configurada.")
+    return {"incidentes": app.state.operational_store.incidents()}
 
 
 @app.get("/api/relatorios")
 async def relatorios_gerenciais(usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))]):
-    """Ver relatórios gerenciais (Exclusivo Gestor de TI)."""
-    return {"relatorios": []}
+    """Relatórios gerenciais planejados na #16; não retorna lista vazia fictícia (#57)."""
+    raise HTTPException(status_code=501, detail="Recurso ainda não disponível.")
 
 
 @app.get("/api/usuarios")
@@ -248,11 +277,18 @@ def criar_usuario(
 
 @app.post("/api/chaves/rotacao")
 async def rotacionar_chaves(usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))]):
-    """Gerenciar chaves e rotação de credenciais (Exclusivo Gestor de TI)."""
-    return {"status": "chaves_rotacionadas"}
+    """Rotação de chaves de origem planejada na #23; recusa sucesso fictício (#57)."""
+    raise HTTPException(status_code=501, detail="Recurso ainda não disponível.")
 
 
 @app.get("/api/n8n/acesso")
 async def acessar_n8n(usuario: Annotated[Usuario, Depends(exige_papel("gestor_ti"))]):
-    """Acesso ao n8n via VLAN de gerência / VPN restrita (Exclusivo Gestor de TI)."""
-    return {"status": "autorizado_vlan_gerencia", "url": "http://n8n-internal.hospital:5678"}
+    """Acesso ao n8n via URL configurada por ambiente, sem URL ou verificação de VLAN fictícias (#57)."""
+    url_bruta = os.getenv("SIGMA_N8N_URL", "").strip()
+    if not url_bruta:
+        raise HTTPException(status_code=501, detail="Recurso ainda não disponível.")
+    try:
+        url = _validar_url_n8n(url_bruta)
+    except ValueError:
+        raise HTTPException(status_code=503, detail="Configuração de URL do n8n inválida.") from None
+    return {"url": url}
