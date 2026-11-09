@@ -12,7 +12,7 @@
 .sigma-panel p { max-width: 75ch; overflow-wrap: anywhere; }
 .notice, .muted { color: var(--muted); }
 .notice { font-size: var(--text-sm); }
-.card, .workspace { padding: var(--space-5); background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+.card, .workspace { padding: var(--space-5); background: var(--surface); border: 1px solid var(--separator); border-radius: 12px; }
 .login { max-width: 420px; margin: var(--space-6) auto; }
 .columns { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
 .workspace .columns .card { border: 0; padding: 0; border-radius: 0; }
@@ -27,14 +27,14 @@
 .sigma-panel pre, .diagnosis { white-space: pre-wrap; overflow-wrap: anywhere; background: var(--field); padding: var(--space-4); border-radius: 6px; }
 .error { padding: var(--space-4); background: var(--error); color: var(--error-fg); border: 1px solid var(--bad); border-radius: 6px; }
 .error p { margin-top: 0; }
-.sigma-panel nav { display: flex; gap: var(--space-2); flex-wrap: wrap; padding: var(--space-3) 0; border-top: 1px solid var(--line); }
+.sigma-panel nav { display: flex; gap: var(--space-2); flex-wrap: wrap; padding: var(--space-3) 0; border-top: 1px solid var(--separator); }
 .sigma-panel nav button { background: transparent; color: var(--fg); border-color: var(--line); }
-.sigma-panel nav button[aria-current="page"] { background: var(--button); color: white; border-color: var(--accent); }
+.sigma-panel nav button[aria-current="page"] { background: var(--button); color: var(--button-fg); border-color: var(--accent); }
 .stream-state { color: var(--muted); font-size: var(--text-sm); margin: var(--space-2) 0 var(--space-5); }
 .table-scroll { overflow: auto; max-width: 100%; scrollbar-color: var(--line) var(--field); margin: var(--space-5) 0; }
 table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
 caption { text-align: left; font-weight: var(--weight-semibold); margin-bottom: var(--space-3); }
-th, td { border-bottom: 1px solid var(--line); text-align: left; padding: var(--space-4) var(--space-3); vertical-align: top; min-width: 135px; }
+th, td { border-bottom: 1px solid var(--separator); text-align: left; padding: var(--space-4) var(--space-3); vertical-align: top; min-width: 135px; }
 th { font-weight: var(--weight-semibold); }
 td small, th small { display: block; color: var(--muted); font-weight: var(--weight-regular); margin-top: var(--space-2); }
 .identifier { overflow-wrap: anywhere; max-width: 250px; font-size: var(--text-sm); }
@@ -45,18 +45,18 @@ td small, th small { display: block; color: var(--muted); font-weight: var(--wei
 .actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }
 .actions button.secondary { margin-top: 0; }
 .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); margin: var(--space-6) 0; }
-.metric-grid section { border-top: 1px solid var(--line); padding-top: var(--space-4); }
+.metric-grid section { border-top: 1px solid var(--separator); padding-top: var(--space-4); }
 .metric-grid dl { margin: 0; font-variant-numeric: tabular-nums; }
 .metric-grid dl div { display: flex; justify-content: space-between; gap: var(--space-3); }
 .metric-grid dd { margin: 0; }
-.approval-item { padding: var(--space-5) 0; border-bottom: 1px solid var(--line); }
+.approval-item { padding: var(--space-5) 0; border-bottom: 1px solid var(--separator); }
 .approval-item form, .request-details form { max-width: 680px; }
 .request-details { margin: var(--space-5) 0; }
 .request-details summary { cursor: pointer; padding: var(--space-3) 0; color: var(--accent); font-weight: var(--weight-semibold); }
 .empty { padding: var(--space-5) 0; color: var(--muted); }
 .skip-link { position: absolute; left: 12px; top: -100px; background: var(--surface); color: var(--fg); padding: var(--space-3); z-index: 10; }
 .skip-link:focus { top: 8px; }
-::selection { background: #2166a5; color: white; }
+.app-surface ::selection { background: var(--selection-bg); color: var(--selection-fg); }
 @media (max-width: 720px) { .columns, .metric-grid { grid-template-columns: 1fr; } .session, .masthead { flex-wrap: wrap; } .workspace { padding: var(--space-4); } .sigma-panel { width: calc(100% - 24px); } .sigma-panel nav button { flex: 1 1 130px; } }
 
 .approval-item h3 { overflow-wrap: anywhere; }

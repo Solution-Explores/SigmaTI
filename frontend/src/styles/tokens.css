@@ -1,10 +1,9 @@
-/* Tokens de cor do painel (DS-06).
-   Valores copiados do App.css sem alteração: o painel deve ficar visualmente igual.
+/* Tokens de cor do painel. Identidade v4 aplicada (DS-08), conforme design-system/identidade-visual/decisoes.md.
    Tema escuro é o padrão; o claro entra com data-theme="light" em .app-surface.
-   Este é o único lugar para ajustar cores de execução. A identidade v4 (DS-03) NÃO está aplicada aqui:
-   a aplicação é da DS-08. */
-.app-surface { --bg: #13131a; --surface: #202632; --field: #121722; --fg: #eef2f8; --muted: #c3cedd; --line: #65748a; --accent: #91caff; --button: #12568e; --button-fg: #ffffff; --focus: #f5d773; --error: #54202a; --error-fg: #ffe0e4; --good: #abebcf; --bad: #ffabb6; }
-.app-surface[data-theme="light"] { --bg: #f2f5f9; --surface: #ffffff; --field: #f7f9fc; --fg: #17283c; --muted: #41536c; --line: #63758e; --accent: #12568e; --button: #12568e; --focus: #7b3e00; --error: #fff0f2; --error-fg: #7d172c; --good: #15563c; --bad: #8c1830; }
+   Este é o único lugar para ajustar cores de execução. Medidas de contraste em contraste.md.
+   --line é a borda FUNCIONAL (campos, botões): precisa de 3:1. --separator é só decoração (cartões e linhas de tabela). */
+.app-surface { --bg: #0a1e30; --surface: #11293d; --field: #0a1e30; --fg: #e3eef6; --muted: #9fb3c4; --line: #4f7c9e; --separator: #2c4a63; --accent: #a5b4fc; --button: #a5b4fc; --button-fg: #0a1e30; --focus: #f5d773; --error: #3a1b1e; --error-fg: #ff9e94; --good: #abebcf; --bad: #ff9e94; --warn: #ffd479; --selection-bg: #a5b4fc; --selection-fg: #0a1e30; }
+.app-surface[data-theme="light"] { --bg: #f3f6f8; --surface: #ffffff; --field: #ffffff; --fg: #0a1e30; --muted: #4f6577; --line: #4f6577; --separator: #c5ced3; --accent: #3730a3; --button: #3730a3; --button-fg: #ffffff; --focus: #7b3e00; --error: #fdecea; --error-fg: #a82a20; --good: #15563c; --bad: #a82a20; --warn: #7a4a00; --selection-bg: #3730a3; --selection-fg: #ffffff; }
 /* Escalas de espaço e de texto (DS-07). PROPOSTA: nenhuma escala foi aprovada no repositório.
    Espaço: 4, 8, 12, 16, 24, 32, 48 e 64 px. Valores soltos do App.css foram arredondados para a escala.
    Fonte: pilha B da DS-05, local (nenhum arquivo de fonte é distribuído). */
