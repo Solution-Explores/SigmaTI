@@ -6,7 +6,7 @@
 |---|---|---|
 | 1, Fechar a v1.0.0 | 03/11 | #5 (risco alto), #13, #25, #56 (bloqueador) |
 | 2, Robustez e evidências | 10/11 | #8, #45, #46, #57 |
-| 3, Congelamento e banca | 17/11 | Texto do TCC, ensaio e banca em 18/11. Código congelado em 11/11, só correção P0 |
+| 3, Congelamento e banca | 17/11 | Texto do TCC e ensaio. Em 18/11 começa a preparação da apresentação; a banca é entre 01 e 10/12. Código congelado em 11/11, só correção P0 |
 
 O orientador ainda não decidiu mover a #13 e a #25 para 10/11. Até a resposta dele, os prazos continuam como estão no milestone.
 
@@ -141,7 +141,7 @@ Você já é o revisor independente nomeado nas duas issues. Depois da revisão 
 
 ## Sprint 3 (11 a 17/11)
 
-O código fica congelado em 11/11, e só entra correção de bug P0. O trabalho é o texto do TCC, os slides, o ensaio e a banca em 18/11. O orientador ainda não confirmou a banca. A divisão entre você e o Vinícius ainda não foi definida; combinem na revisão de 07/11, antes do congelamento. Itens candidatos:
+O código fica congelado em 11/11, e só entra correção de bug P0. O trabalho é o texto do TCC, os slides e o ensaio. Em 18/11 começa a preparação da apresentação, e a banca é entre 01 e 10/12 (edital; a Coordenação publica o dia e o horário). A divisão entre você e o Vinícius ainda não foi definida; combinem na revisão de 07/11, antes do congelamento. Itens candidatos:
 
 - Roteiro de demonstração (`docs/demo/roteiro-demonstracao.md`) e ensaio.
 - Seção do TCC sobre anonimização, com as limitações da #5 (conjunto cego, tamanho amostral, nomes fora da lista).

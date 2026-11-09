@@ -10,7 +10,7 @@ Os três dias a mais servem para reduzir risco (ensaios e revisão sem pressa).
 O escopo não cresce.
 
 Este plano funciona como a "Sprint 0" e termina na demonstração. O que vem depois
-(28/10 a 17/11, com a banca em 18/11) está em
+(28/10 a 17/11, com o início da preparação da apresentação em 18/11 e a banca de 01 a 10/12) está em
 [plano-sprints-pos-demo.md](plano-sprints-pos-demo.md). Em 23/10 este plano foi
 alinhado a ele: disponibilidade do Vinícius, uso do fim de semana, proposta ao
 orientador e pendências herdadas.
@@ -118,7 +118,7 @@ A falha conhecida com 200 alvos não deve ser exibida como resolvida.
 
 ## Proposta ao orientador
 
-A banca está marcada para 18/11/2026 e pode ser antecipada. Por isso a proposta
+A banca será entre 01 e 10/12/2026 (edital); o dia 18/11 inicia a preparação da apresentação. Por isso a proposta
 original (tudo até 03/11) foi dividida em sprints semanais, de quarta a terça.
 
 - **Entregue:** #2, #3, #4, #7, #9, #14 e #15; #6 e #8 se o aceite de sexta passar.
@@ -130,7 +130,7 @@ original (tudo até 03/11) foi dividida em sprints semanais, de quarta a terça.
   proposta:** #13 e #25 saem do prazo de 03/11 para 10/11, porque não cabem junto
   com a `v1.0.0`. Depende da concordância do orientador.
 - **Sprint 3, 11/11 a 17/11:** código congelado em 11/11, texto do TCC, slides e
-  ensaio. Banca em 18/11.
+  ensaio. Preparação da apresentação a partir de 18/11 (banca entre 01 e 10/12).
 - **Trabalho futuro:** expansão (#10, #16–#19, #21, #22, #30, #23) e validações
   externas (#11, #12, #20, #24, #26–#29), que dependem de hospital, hardware ou
   coleta prolongada. Entram como capítulo de trabalho futuro do TCC, não como código
@@ -144,7 +144,7 @@ Detalhes, estimativas e riscos em [plano-sprints-pos-demo.md](plano-sprints-pos-
 |---|---|---|
 | S1 | 28/10 a 03/11 | Fechar a `v1.0.0` (#5, #6, #8, estrutura, aceite da release) |
 | S2 | 04/11 a 10/11 | Robustez e evidências (#13, #45/#47, #46, #25) |
-| S3 | 11/11 a 17/11 | Congelamento, texto, slides e ensaio; banca em 18/11 |
+| S3 | 11/11 a 17/11 | Congelamento, texto, slides e ensaio; preparação da apresentação em 18/11 (banca entre 01 e 10/12) |
 
 - Capacidade do Vinícius pela disponibilidade acima: ~36 h na S1 e ~42 h por semana
   na S2 e na S3. A S1 tem só 4 dias úteis, porque 02/11 (segunda) é Finados.

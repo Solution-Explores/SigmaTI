@@ -16,7 +16,7 @@ Esta é a lista de trabalho. A ordem dentro de cada bloco é a sugerida. O detal
 |---|---|---|---|
 | A1 | ~~Decidir o `atividades-joyce.md`~~ **Feito em 03/11:** vale a reescrita de 02/11, que foi a enviada a ela (mesmo SHA-256 do arquivo entregue). Conflito do #66 resolvido | PR #66 | feito |
 | A2 | **Enviar ao Iohan** a lista dele e a cobrança (o texto foi redigido em 02/11 e não consta como enviado) | fora do repo | 10 min |
-| A3 | **Cobrar o orientador**, que não comenta desde 31/10: critério de recall da #5, limite de login da #46, confirmação da banca de 18/11 e licença. Avisar que #5 e #56 passam para 10/11 | #31 | 20 min |
+| A3 | **Cobrar o orientador**, que não comenta desde 31/10: critério de recall da #5, limite de login da #46, confirmação do dia e do horário da banca (o edital prevê 01 a 10/12) e licença. Avisar que #5 e #56 passam para 10/11 | #31 | 20 min |
 | A4 | **Atribuir dono** à #56 e à #57, que estão sem ninguém no GitHub | GitHub | 2 min |
 | A5 | **Montar a base nova do front da Joyce** a partir da `develop`, com o mock e os documentos dela em `frontend/`. Ela está parada esperando isso, e o prazo dela é 17/11 | branch nova | 2 a 3 h |
 | A6 | **Triar os PRs antigos** #41, #42 e #63 (licença, que aguarda os autores) | PRs | 20 min |
@@ -48,7 +48,7 @@ Esta é a lista de trabalho. A ordem dentro de cada bloco é a sugerida. O detal
 |---|---|---|
 | D1 | Critério de recall do E6 na #5: transformação (95,12% no cego) ou proteção (100%) | Fechamento da #5 |
 | D2 | Limite acordado do custo de login da #46. Medido 12,9 ms; proposta de 50 ms | Última caixa da #46 |
-| D3 | Confirmação da banca em 18/11 e da licença | Planejamento da Sprint 3 |
+| D3 | Dia e horário da banca (edital: 01 a 10/12) e licença | Planejamento da Sprint 3 |
 | D4 | Aval para mover #5 e #56 para 10/11 | Formalizar o atraso da Sprint 1 |
 
 ### E. Release `v1.0.0`
@@ -86,7 +86,7 @@ Conteúdo enviado ao orientador:
 
 - Pedido para mover a **#13** para 10/11 (a carga da Sprint 1 passa do planejado). O milestone mantém 03/11 até ele decidir.
 - Decisão sobre a **#25**: VM ou máquina física. Você pediu em 24/10 e não há registro de resposta.
-- Confirmação de que a banca é em 18/11 e se há risco de antecipação, e a licença do repositório.
+- Dia e horário da banca (o edital prevê 01 a 10/12, e a Coordenação publica o dia) e a licença do repositório.
 - Aviso de que o diagnóstico da **#56** está incompleto: o commit `8661916` (22/10) já faz a `main` checar só pelo digest, e `python scripts/validate_infrastructure.py --verify-registry` passa na `main`. Só as branches antigas, sem esse commit, estão vermelhas. Atualizar o lock não é necessário.
 - Aviso de que, no fluxo atual, a revisão cruzada não é obrigatória, mas as verificações independentes que ele pediu continuam (conjunto cego escrito pelo Iohan, evidência da #25 na issue).
 
