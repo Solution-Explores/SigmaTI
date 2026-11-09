@@ -82,6 +82,21 @@ O quarto tipo foi acrescentado além do critério e **falha por construção**: 
 
 Medir tempo de resposta do chat com o filtro de anonimização ativo, n ≥ 30, por horário do dia (camada gratuita do provedor varia).
 
+## Onde ficam os scripts e os resultados
+
+Regra adotada em 09/11/2026 (issue #11). Ela descreve o que já existe; nenhum arquivo foi movido.
+
+| Tipo de experimento | Script em | Resultado em | Exemplos |
+|---|---|---|---|
+| Roda sozinho, só com o pacote `sigma_eng` (Python puro) | `engenharia/experimentos/` | `engenharia/resultados/` (CSV e relatório) | E1 (`exp_deteccao.py`), E4 (`exp_fuzzing_cadeia.py`) |
+| Precisa ligar o sistema (backend, PostgreSQL, SSE) | `scripts/` | `docs/tcc/evidencias/dados/` (JSON) e relatório em `docs/tcc/evidencias/` | E2 (`validate_collection.py`), E3 (`medir_e3.py`) |
+
+**Por quê.** Os scripts do primeiro grupo rodam em qualquer máquina com Python. Os do segundo dependem do backend e de um PostgreSQL descartável, como os outros programas de `scripts/` que sobem o sistema. Misturá-los esconderia essa diferença.
+
+Vale para todos: semente fixa, saída em arquivo, SHA do código e estado da máquina anotados.
+
+**E5** (ainda sem medição): usa o provedor real e o backend, então seguirá o segundo grupo.
+
 ## Ameaças à validade
 
 | Tipo | Ameaça | Mitigação |
