@@ -1,7 +1,7 @@
 # Limitações do trabalho
 
 Material para o capítulo 7 do TCC (Conclusão), escrito em **04/11/2026**, antes
-do congelamento de código (11/11) e da banca (18/11).
+do congelamento de código (11/11) e da banca (01 a 10/12).
 
 O propósito deste documento é um só: **ter os números desfavoráveis escritos
 antes de alguém perguntar por eles.** Cada limitação abaixo tem a medição que a

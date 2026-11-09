@@ -15,7 +15,7 @@
 - O **prazo final das suas atividades é 17/11**, o fim da Sprint 3. É até esse dia que o time produz.
 - O orientador tinha marcado o congelamento do código para 11/11. O Vinícius vai pedir a ele que o design e o front da Joyce possam seguir até 17/11. **Enquanto o orientador não responder, a meta segura é entregar o essencial até 11/11** e o resto até 17/11.
 - O Vinícius ajuda você no desenvolvimento quando for preciso.
-- A banca é em **18/11**.
+- A banca é entre **01 e 10/12** (edital). Em **18/11** começa a preparação da apresentação.
 - Não cabe tudo até 17/11. Veja a seção "O que entra até 17/11".
 
 **Como o trabalho anda**
@@ -65,7 +65,7 @@ Até a base nova ficar pronta, continue na sua branch atual. Quando o Vinícius 
 | 10/11 | Fim da Sprint 2 |
 | 11/11 | Congelamento do código do produto marcado pelo orientador (só correção de bug urgente). O Vinícius vai pedir prorrogação do design e do front da Joyce |
 | **17/11** | **Fim da Sprint 3 e prazo final das atividades da Joyce** (texto do TCC, ensaio) |
-| 18/11 | Banca |
+| 18/11 | Início da preparação da apresentação (banca entre 01 e 10/12) |
 
 ## O que entra até 17/11
 
