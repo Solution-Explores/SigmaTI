@@ -2,7 +2,7 @@
 
 Situação em **03/11/2026**, com a `develop` em `55a1796`. O propósito é um só:
 dizer, para cada afirmação que o texto precisa sustentar, se existe número
-medido, onde ele está, e o que ele **não** cobre. A banca é em 18/11 e o
+medido, onde ele está, e o que ele **não** cobre. A banca é entre 01 e 10/12 e o
 congelamento de código em 11/11, então o que não estiver medido até lá entra no
 texto como limitação, não como resultado.
 
@@ -212,7 +212,7 @@ não são suficientes para implementar e validar um detector novo com honestidad
 | Lacuna | Por quê |
 |---|---|
 | **RNF04 / E5: IA em ≤ 15 s** | Nenhuma medição com provedor real e anonimização ativa. O ensaio usa provedor simulado. É um requisito não funcional declarado **sem evidência** — tem de ser dito assim |
-| **Rede real (#12)** | Tudo foi medido em loopback. O E1 foi calibrado em séries sintéticas, e a #12 pede duas semanas de RTT real. Não acontece até 18/11 |
+| **Rede real (#12)** | Tudo foi medido em loopback. O E1 foi calibrado em séries sintéticas, e a #12 pede duas semanas de RTT real. Não acontece antes da banca |
 | **MTTD no painel** | Estruturalmente impossível hoje: nada grava o instante real da falha, e `/api/eng/incidentes/resumo` devolve `MTTD: n=0` sempre. Detalhado em `evidencias/incidentes-mttd-burn.md` |
 | **Sincronização de relógio (#27)** | O MTTD medido depende de relógios na mesma máquina. Em rede real, NTP contra PTP muda o número, e isso não foi quantificado |
 

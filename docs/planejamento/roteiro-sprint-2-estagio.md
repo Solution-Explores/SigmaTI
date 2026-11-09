@@ -1,6 +1,6 @@
 # Sprint 2 no estágio (04 a 10/11/2026)
 
-Roteiro para trabalhar a Sprint 2 na máquina do estágio, sem depender do computador de casa. Segue o plano do orientador: Sprint 2 fecha em 10/11, o congelamento de código é em 11/11 (só correção de bug P0) e a banca é em 18/11. A lista completa continua em [tarefas-vinicius-sprint-1.md](tarefas-vinicius-sprint-1.md); aqui está só o que fazer lá, na ordem.
+Roteiro para trabalhar a Sprint 2 na máquina do estágio, sem depender do computador de casa. Segue o plano do orientador: Sprint 2 fecha em 10/11, o congelamento de código é em 11/11 (só correção de bug P0) e o dia 18/11 inicia a preparação da apresentação (a banca é entre 01 e 10/12, pelo edital). A lista completa continua em [tarefas-vinicius-sprint-1.md](tarefas-vinicius-sprint-1.md); aqui está só o que fazer lá, na ordem.
 
 **Este roteiro tem só as atividades do Vinícius.** O que depende do Iohan está numa tabela à parte ("Esperando o Iohan"), para esperar a resposta dele em vez de fazer no lugar dele. Conferido em 04/11 contra as tarefas do Iohan, as issues e os cartões do Trello.
 
@@ -165,7 +165,7 @@ Estas atividades são dele, pela lista [tarefas-iohan-sprint-1.md](tarefas-iohan
 |---|---|---|---|
 | A | Opção A ou B da #71 | Você | Passo 5 |
 | B | Limite de custo de login da #46 (medido 12,9 ms; proposta de 50 ms) | Orientador | Última caixa da #46 |
-| C | Critério de recall do E6 na #5 e confirmação da banca de 18/11 e da licença | Orientador | Sprint 3 |
+| C | Critério de recall do E6 na #5 e confirmação do dia e do horário da banca (edital: 01 a 10/12) e da licença | Orientador | Sprint 3 |
 | D | Digest novo do PostgreSQL (#74): manter o atual ou revisar | Você | Só informativo, sem pressa |
 
 ## Ao fim de cada dia
