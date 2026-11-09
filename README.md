@@ -121,9 +121,9 @@ python -m pytest -q -p no:cacheprovider
 |---|---|---|---|
 | Ver alertas e status da rede (`GET /api/alertas` planejado, 501) | Sim | Sim | Sim |
 | Usar o diagnóstico com a IA (`POST /api/alertas`) | Sim | Sim | Sim |
-| Ver histórico de incidentes (`GET /api/pacotes` planejado, 501) | Não | Sim | Sim |
+| Ver histórico e detalhes de pacotes (`GET /api/pacotes`, planejado, 501) | Não | Sim | Sim |
 | Ver relatórios gerenciais (`GET /api/relatorios` planejado #16, 501) | Não | Não | Sim |
-| Gerenciar usuários (`POST /api/chaves/rotacao` planejado #23, 501) | Não | Não | Sim |
+| Gerenciar usuários e chaves (usuários em `/api/usuarios`; `POST /api/chaves/rotacao` planejado #23, 501) | Não | Não | Sim |
 | Acessar o n8n (`GET /api/n8n/acesso`, requer `SIGMA_N8N_URL`) | Não | Não | Sim |
 
 ## Estado do desenvolvimento
