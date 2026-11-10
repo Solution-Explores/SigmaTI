@@ -23,7 +23,7 @@ Regra deste relatório: só afirma como feito o que está integrado na `develop`
 
 ## 2. Equipe e contribuições
 
-Os números vêm do GitHub (PRs integrados, issues e comentários). **Não existe diário de bordo do Iohan nem da Joyce no repositório**: só o modelo `docs/tcc/diario-bordo/joyce/_modelo.md`. O que está abaixo é o que o GitHub mostra, e não relato pessoal deles.
+Os números vêm do GitHub (PRs integrados, issues e comentários). **Não existe diário de bordo do Iohan nem da Joyce no repositório**: só o modelo `docs/tcc/diario-bordo/joyce/_modelo.md`. (A Joyce mantém um diário, o de 09/11, que enviou ao Vinícius por fora; ver o diário de 10/11.) O que está abaixo é o que o GitHub mostra, e não relato pessoal deles.
 
 ### Vinícius ([@Vinny1313](https://github.com/Vinny1313)): integração, aceite e documentação
 - 29 dos 34 PRs integrados entre 26/10 e 09/11 são dele (Joyce 3, Iohan 2): reorganização do repositório (#49 a #51), regras da anonimização (#59), âncora externa, rotação de chave e verificação agendada da auditoria (#60), custo da auditoria (#65), estabilização dos testes (#61), CI de infraestrutura (#72, #73), E4 (#78), correção do fechamento de incidentes (#79), release `v1.0.0` (#82), ajustes da #57 (#90) e os diários.
