@@ -119,12 +119,12 @@ python -m pytest -q -p no:cacheprovider
 
 | Função | Suporte N1 | Analista de Redes | Gestor de TI |
 |---|---|---|---|
-| Ver alertas e status da rede | Sim | Sim | Sim |
-| Usar o diagnóstico com a IA | Sim | Sim | Sim |
-| Ver histórico e detalhes de pacotes | Não | Sim | Sim |
-| Ver relatórios gerenciais | Não | Não | Sim |
-| Gerenciar usuários e chaves | Não | Não | Sim |
-| Acessar o n8n | Não | Não | Sim |
+| Ver alertas e status da rede (`GET /api/alertas` planejado, 501) | Sim | Sim | Sim |
+| Usar o diagnóstico com a IA (`POST /api/alertas`) | Sim | Sim | Sim |
+| Ver histórico e detalhes de pacotes (`GET /api/pacotes`, planejado, 501) | Não | Sim | Sim |
+| Ver relatórios gerenciais (`GET /api/relatorios` planejado #16, 501) | Não | Não | Sim |
+| Gerenciar usuários e chaves (usuários em `/api/usuarios`; `POST /api/chaves/rotacao` planejado #23, 501) | Não | Não | Sim |
+| Acessar o n8n (`GET /api/n8n/acesso`, requer `SIGMA_N8N_URL`) | Não | Não | Sim |
 
 ## Estado do desenvolvimento
 
@@ -133,10 +133,10 @@ python -m pytest -q -p no:cacheprovider
 - O [estado operacional no PostgreSQL](engenharia/docs/08-estado-operacional.md) cobre esquema, recuperação de aprovações e execuções, medições, retenção e APIs. Veja também a [coleta de eventos e o SSE](engenharia/docs/09-coleta-eventos.md).
 - O experimento E6 avalia cada identificador anotado, e seus resultados valem só para o corpus sintético.
 - As issues #5 (anonimização) e #6 (autenticação e perfis) foram fechadas. Continuam abertas a #8 (sondagem contínua), a #11 (experimentos, falta o E5), a #45, a #46 e a #57.
-- A resposta `Incidente Registrado` é um contrato legado e não comprova a gravação de um incidente no PostgreSQL.
+- `POST /api/alertas` responde `status: "Diagnóstico gerado"` e não grava incidente no PostgreSQL (incidentes nascem da coleta de medições sobre alvos cadastrados). As rotas planejadas de rotação de chaves de origem (`POST /api/chaves/rotacao`, #23), relatórios gerenciais (`GET /api/relatorios`, #16), pacotes (`GET /api/pacotes`) e listagem legada de alertas (`GET /api/alertas`) respondem HTTP 501 (`Recurso ainda não disponível.`). `GET /api/status` continua registrado como débito técnico por responder `"operacional"` sem sondar dependências.
 - As correções de sessão, painel e anonimização estão nas [evidências da recuperação da sprint](docs/specs/011-recuperacao-sprint/evidencias.md), integradas à `develop` pelo [PR #32](https://github.com/Solution-Explores/SigmaTI/pull/32).
 - A #25 foi fechada: a restauração foi aceita em máquina física separada. A ativação do modelo systemd continua pendente.
-- A [#57](https://github.com/Solution-Explores/SigmaTI/issues/57) está aberta: há rotas que respondem sucesso sem produzir efeito. Isso afeta o que os documentos chamam de "verificado".
+- A [#57](https://github.com/Solution-Explores/SigmaTI/issues/57) eliminou as respostas `200` sem efeito nas rotas de rotação de chaves, relatórios, pacotes, listagem de alertas, incidentes sem banco (503) e URL fictícia do n8n.
 
 ## Versão entregue
 

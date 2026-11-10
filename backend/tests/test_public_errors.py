@@ -184,7 +184,8 @@ def test_router_errors_use_public_contract(api, caplog, method, path, status, me
 @pytest.mark.parametrize("status,message", [
     (400, "Requisição inválida."), (401, "Autenticação necessária."),
     (403, "Requisição não permitida."), (429, "Limite de requisições excedido."),
-    (418, "Requisição inválida."), (503, "Erro interno do servidor."),
+    (418, "Requisição inválida."), (501, "Recurso ainda não disponível."),
+    (503, "Erro interno do servidor."),
 ])
 def test_http_exception_details_and_arbitrary_headers_are_private(api, caplog, status, message):
     module, client, provider = api
@@ -216,6 +217,7 @@ def test_provider_failure_preserves_k05_contract_and_cors(api, caplog):
     response = client.post("/api/alertas", json=ALERT, headers={"Origin": ORIGINS[0]})
     assert response.status_code == 200
     assert set(response.json()) == {"status", "dados_enviados_nuvem", "diagnostico_ia"}
+    assert response.json()["status"] == "Diagnóstico gerado"
     assert response.json()["diagnostico_ia"] == "Diagnóstico de IA indisponível no momento. Tente novamente mais tarde."
     assert response.headers["access-control-allow-origin"] == ORIGINS[0]
     for secret in (PRIVATE, KEY):

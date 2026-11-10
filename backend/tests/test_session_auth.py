@@ -195,27 +195,28 @@ class TestMatrizPermissoesRBAC:
     Critérios de aceite:
       - 401 sem token (ou token inválido) para cada linha da matriz
       - 403 quando o perfil for insuficiente
-      - 200 quando o perfil atender ou superar o requisito
+      - status esperado da rota (200 nas rotas implementadas, 501 nas planejadas e 503 sem banco)
+        quando o perfil atender ou superar o requisito (#57)
     """
 
     ROTAS_MATRIZ = [
-        # (metodo, caminho, payload, papel_minimo)
-        ("GET", "/api/status", None, "suporte_n1"),
-        ("GET", "/api/alertas", None, "suporte_n1"),
-        ("POST", "/api/alertas", {"equipamento": "sw-core", "ip_origem": "10.0.0.1", "descricao_erro": "queda link"}, "suporte_n1"),
-        ("GET", "/api/pacotes", None, "analista_redes"),
-        ("GET", "/api/incidentes", None, "analista_redes"),
-        ("GET", "/api/relatorios", None, "gestor_ti"),
-        ("GET", "/api/usuarios", None, "gestor_ti"),
-        ("POST", "/api/usuarios", {"username": "novo.user", "password": "NovaSenha123", "papel": "suporte_n1"}, "gestor_ti"),
-        ("POST", "/api/chaves/rotacao", None, "gestor_ti"),
-        ("GET", "/api/n8n/acesso", None, "gestor_ti"),
+        # (metodo, caminho, payload, papel_minimo, esperado)
+        ("GET", "/api/status", None, "suporte_n1", 200),
+        ("GET", "/api/alertas", None, "suporte_n1", 501),
+        ("POST", "/api/alertas", {"equipamento": "sw-core", "ip_origem": "10.0.0.1", "descricao_erro": "queda link"}, "suporte_n1", 200),
+        ("GET", "/api/pacotes", None, "analista_redes", 501),
+        ("GET", "/api/incidentes", None, "analista_redes", 503),
+        ("GET", "/api/relatorios", None, "gestor_ti", 501),
+        ("GET", "/api/usuarios", None, "gestor_ti", 200),
+        ("POST", "/api/usuarios", {"username": "novo.user", "password": "NovaSenha123", "papel": "suporte_n1"}, "gestor_ti", 200),
+        ("POST", "/api/chaves/rotacao", None, "gestor_ti", 501),
+        ("GET", "/api/n8n/acesso", None, "gestor_ti", 501),
         # Rotas do Núcleo de Engenharia (/api/eng/*)
-        ("POST", "/api/eng/probe", {"host": "127.0.0.1", "port": 80, "kind": "tcp", "count": 1}, "analista_redes"),
-        ("POST", "/api/eng/slo/avaliar", {"alvo_pct": 99.9, "janela_dias": 30, "indisponibilidades": []}, "analista_redes"),
-        ("POST", "/api/eng/incidentes/metricas", [], "analista_redes"),
-        ("POST", "/api/eng/anomalias", {"serie": [1.0, 1.2, 1.1, 1.3], "metodo": "ewma"}, "analista_redes"),
-        ("GET", "/api/eng/auditoria/verificar", None, "gestor_ti"),
+        ("POST", "/api/eng/probe", {"host": "127.0.0.1", "port": 80, "kind": "tcp", "count": 1}, "analista_redes", 200),
+        ("POST", "/api/eng/slo/avaliar", {"alvo_pct": 99.9, "janela_dias": 30, "indisponibilidades": []}, "analista_redes", 200),
+        ("POST", "/api/eng/incidentes/metricas", [], "analista_redes", 200),
+        ("POST", "/api/eng/anomalias", {"serie": [1.0, 1.2, 1.1, 1.3], "metodo": "ewma"}, "analista_redes", 200),
+        ("GET", "/api/eng/auditoria/verificar", None, "gestor_ti", 200),
     ]
 
     def _fazer_requisicao(self, client, metodo: str, caminho: str, payload: dict | list | None, headers: dict | None = None):
@@ -226,14 +227,14 @@ class TestMatrizPermissoesRBAC:
             return client.post(caminho, json=payload if payload is not None else {}, headers=headers)
         raise ValueError(f"Método não suportado: {metodo}")
 
-    @pytest.mark.parametrize("metodo,caminho,payload,papel_minimo", ROTAS_MATRIZ)
-    def test_requisicao_sem_token_retorna_401(self, auth_app, metodo, caminho, payload, papel_minimo):
+    @pytest.mark.parametrize("metodo,caminho,payload,papel_minimo,esperado", ROTAS_MATRIZ)
+    def test_requisicao_sem_token_retorna_401(self, auth_app, metodo, caminho, payload, papel_minimo, esperado):
         client, _ = auth_app
         res = self._fazer_requisicao(client, metodo, caminho, payload, headers=None)
         assert res.status_code == 401, f"{metodo} {caminho} deve recusar requisição sem token com 401"
 
-    @pytest.mark.parametrize("metodo,caminho,payload,papel_minimo", ROTAS_MATRIZ)
-    def test_matriz_perfil_suporte_n1(self, auth_app, metodo, caminho, payload, papel_minimo):
+    @pytest.mark.parametrize("metodo,caminho,payload,papel_minimo,esperado", ROTAS_MATRIZ)
+    def test_matriz_perfil_suporte_n1(self, auth_app, metodo, caminho, payload, papel_minimo, esperado):
         client, _ = auth_app
         token_n1 = criar_token_sessao("suporte.n1", "suporte_n1")
         headers = {"Authorization": f"Bearer {token_n1}"}
@@ -241,12 +242,12 @@ class TestMatrizPermissoesRBAC:
         res = self._fazer_requisicao(client, metodo, caminho, payload, headers=headers)
 
         if papel_minimo == "suporte_n1":
-            assert res.status_code == 200, f"Suporte N1 deve ter acesso a {metodo} {caminho}"
+            assert res.status_code == esperado, f"Suporte N1 deve receber {esperado} em {metodo} {caminho}"
         else:
             assert res.status_code == 403, f"Suporte N1 deve receber 403 em {metodo} {caminho} (exige {papel_minimo})"
 
-    @pytest.mark.parametrize("metodo,caminho,payload,papel_minimo", ROTAS_MATRIZ)
-    def test_matriz_perfil_analista_redes(self, auth_app, metodo, caminho, payload, papel_minimo):
+    @pytest.mark.parametrize("metodo,caminho,payload,papel_minimo,esperado", ROTAS_MATRIZ)
+    def test_matriz_perfil_analista_redes(self, auth_app, metodo, caminho, payload, papel_minimo, esperado):
         client, _ = auth_app
         token_analista = criar_token_sessao("analista.redes", "analista_redes")
         headers = {"Authorization": f"Bearer {token_analista}"}
@@ -254,17 +255,102 @@ class TestMatrizPermissoesRBAC:
         res = self._fazer_requisicao(client, metodo, caminho, payload, headers=headers)
 
         if papel_minimo in ("suporte_n1", "analista_redes"):
-            assert res.status_code == 200, f"Analista de Redes deve ter acesso a {metodo} {caminho}"
+            assert res.status_code == esperado, f"Analista de Redes deve receber {esperado} em {metodo} {caminho}"
         else:
             assert res.status_code == 403, f"Analista de Redes deve receber 403 em {metodo} {caminho} (exige {papel_minimo})"
 
-    @pytest.mark.parametrize("metodo,caminho,payload,papel_minimo", ROTAS_MATRIZ)
-    def test_matriz_perfil_gestor_ti(self, auth_app, metodo, caminho, payload, papel_minimo):
+    @pytest.mark.parametrize("metodo,caminho,payload,papel_minimo,esperado", ROTAS_MATRIZ)
+    def test_matriz_perfil_gestor_ti(self, auth_app, metodo, caminho, payload, papel_minimo, esperado):
         client, _ = auth_app
         token_gestor = criar_token_sessao("gestor.ti", "gestor_ti")
         headers = {"Authorization": f"Bearer {token_gestor}"}
 
         res = self._fazer_requisicao(client, metodo, caminho, payload, headers=headers)
 
-        # Gestor de TI tem o nível mais alto (3), deve ter acesso a TODAS as rotas
-        assert res.status_code == 200, f"Gestor de TI deve ter acesso irrestrito a {metodo} {caminho}"
+        # Gestor de TI tem o nível mais alto (3), deve alcançar todas as rotas com o status esperado
+        assert res.status_code == esperado, f"Gestor de TI deve receber {esperado} em {metodo} {caminho}"
+
+
+class TestRotasSemEfeitoFalso:
+    """Issue #57: garante que nenhuma rota responda 2xx sem produzir o efeito anunciado."""
+
+    @pytest.mark.parametrize(
+        ("metodo", "caminho", "username", "papel"),
+        [
+            ("POST", "/api/chaves/rotacao", "gestor.ti", "gestor_ti"),
+            ("GET", "/api/alertas", "suporte.n1", "suporte_n1"),
+            ("GET", "/api/pacotes", "analista.redes", "analista_redes"),
+            ("GET", "/api/relatorios", "gestor.ti", "gestor_ti"),
+            ("GET", "/api/n8n/acesso", "gestor.ti", "gestor_ti"),
+        ],
+    )
+    def test_rotas_nao_implementadas_respondem_501_com_corpo_publico(
+        self, auth_app, metodo, caminho, username, papel,
+    ):
+        client, _ = auth_app
+        token = criar_token_sessao(username, papel)
+        headers = {"Authorization": f"Bearer {token}"}
+        res = client.request(metodo, caminho, headers=headers)
+        assert res.status_code == 501
+        assert res.json() == {"detail": "Recurso ainda não disponível."}
+
+    def test_post_alertas_retorna_diagnostico_gerado_mantendo_chaves(self, auth_app):
+        client, _ = auth_app
+        token = criar_token_sessao("suporte.n1", "suporte_n1")
+        res = client.post(
+            "/api/alertas",
+            json={"equipamento": "sw-core-01", "ip_origem": "192.0.2.10", "descricao_erro": "Queda de link"},
+            headers={"Authorization": f"Bearer {token}"},
+        )
+        assert res.status_code == 200
+        corpo = res.json()
+        assert set(corpo) == {"status", "dados_enviados_nuvem", "diagnostico_ia"}
+        assert corpo["status"] == "Diagnóstico gerado"
+
+    def test_get_incidentes_sem_banco_responde_503(self, auth_app):
+        client, _ = auth_app
+        token = criar_token_sessao("analista.redes", "analista_redes")
+        res = client.get("/api/incidentes", headers={"Authorization": f"Bearer {token}"})
+        assert res.status_code == 503
+        assert "incidentes" not in res.json()
+
+    @pytest.mark.parametrize(
+        "url_valida",
+        [
+            "http://127.0.0.1:5678",
+            "https://n8n.exemplo.interno:5678/workflows",
+        ],
+    )
+    def test_n8n_acesso_com_url_configurada_retorna_apenas_url(self, auth_app, monkeypatch, url_valida):
+        client, _ = auth_app
+        monkeypatch.setenv("SIGMA_N8N_URL", url_valida)
+        token = criar_token_sessao("gestor.ti", "gestor_ti")
+        res = client.get("/api/n8n/acesso", headers={"Authorization": f"Bearer {token}"})
+        assert res.status_code == 200
+        assert res.json() == {"url": url_valida}
+        assert "autorizado_vlan_gerencia" not in res.text
+        assert "n8n-internal.hospital" not in res.text
+
+    @pytest.mark.parametrize(
+        "url_invalida",
+        [
+            "ftp://127.0.0.1:5678",
+            "javascript:alert(1)",
+            "127.0.0.1:5678",
+            "http://admin:segredo-n8n@127.0.0.1:5678",
+            "https://token-secreto@n8n.exemplo.interno",
+            "http://127.0.0.1:5678/ espaco",
+            "http://127.0.0.1:99999",
+        ],
+    )
+    def test_n8n_acesso_recusa_esquema_invalido_ou_credenciais_embutidas(
+        self, auth_app, monkeypatch, url_invalida,
+    ):
+        client, _ = auth_app
+        monkeypatch.setenv("SIGMA_N8N_URL", url_invalida)
+        token = criar_token_sessao("gestor.ti", "gestor_ti")
+        res = client.get("/api/n8n/acesso", headers={"Authorization": f"Bearer {token}"})
+        assert res.status_code == 503
+        assert res.json() == {"detail": "Erro interno do servidor."}
+        assert "segredo-n8n" not in res.text
+        assert "token-secreto" not in res.text

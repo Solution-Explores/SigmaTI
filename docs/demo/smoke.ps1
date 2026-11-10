@@ -44,7 +44,7 @@ try {
     $corpo = @{ equipamento = 'sw-uti-01'; ip_origem = '10.0.0.5'; descricao_erro = 'Paciente Maria Silva CPF 529.982.247-25 relatou falha no sw-uti-01' }
     $r = Invoke-Sigma 'browser.demo' Post '/api/alertas' $corpo
     $enviado = [string]$r.dados_enviados_nuvem
-    $ok = $enviado.Contains('[NOME_REMOVIDO]') -and $enviado.Contains('[CPF_REMOVIDO]') -and -not $enviado.Contains('529.982.247-25') -and -not $enviado.Contains('Maria Silva') -and ([string]$r.diagnostico_ia).Contains('K10 simulado')
+    $ok = ($r.status -eq 'Diagnóstico gerado') -and $enviado.Contains('[NOME_REMOVIDO]') -and $enviado.Contains('[CPF_REMOVIDO]') -and -not $enviado.Contains('529.982.247-25') -and -not $enviado.Contains('Maria Silva') -and ([string]$r.diagnostico_ia).Contains('K10 simulado')
     Add-Resultado 'd) nome e CPF anonimizados; IA simulada' $ok $enviado
 } catch { Add-Resultado 'd) nome e CPF anonimizados; IA simulada' $false $_.Exception.Message }
 
