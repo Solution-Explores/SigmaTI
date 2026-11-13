@@ -86,7 +86,7 @@ Registro factual da identidade existente: azul sobre fundo escuro, fonte de sist
 - Tema escuro inicial e alternância para claro.
 - Tabelas, formulários e estados em português.
 
-Fonte normativa: `frontend/src/App.css` e `index.css`. O contrato da superfície está em `docs/specs/017-painel-operacional/brief.md`.
+Fonte normativa: `frontend/src/styles/tokens.css` (variáveis de cor e escalas de espaço e de texto), `frontend/src/App.css` e `index.css`. A identidade v4 e as medidas de contraste estão em `design-system/identidade-visual/decisoes.md` e `contraste.md`; os valores da seção Colors abaixo são anteriores à DS-08. O contrato da superfície está em `docs/specs/017-painel-operacional/brief.md`.
 
 ## Colors
 
