@@ -59,7 +59,7 @@ O nome "SigmaTI" nos SVGs de `design-system/identidade-visual/` está em curvas 
 
 ## 7. O que ainda não foi verificado
 
-- Aparência em macOS, Linux e celulares, e quais sistemas os usuários do painel realmente usam.
+- **A legibilidade medida vale para o Windows (Segoe UI).** Em Android, macOS, iOS e Linux a fonte será outra (system-ui ou Helvetica Neue/Arial) e a aparência nelas não foi medida; quais sistemas os usuários do painel usam também não foi verificado.
 - Se os pesos 600 e 700 aparecem como Semibold e Bold em todas as versões do Windows usadas.
 - Comportamento a 390 px e com zoom de 200% com a fonte aplicada: só dá para medir na DS-07, quando a fonte for aplicada ao painel.
 - Nomes extensos reais do mock (`src/mock/data.js`): a amostra usou texto fictício. Conferir com `gestor.joyce` em `/`, Saúde e Incidentes.
