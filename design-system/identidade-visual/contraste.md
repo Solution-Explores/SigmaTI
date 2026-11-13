@@ -54,8 +54,13 @@ Mínimos: texto 4,5:1; borda de campo e foco 3:1. Separadores decorativos não t
 
 - **Textos com botão habilitado:** o menor valor foi **6,90:1 no escuro** e **5,59:1 no claro**. Nenhum ficou abaixo de 4,5:1.
 - **Borda de campo (login e Diagnóstico):** o menor valor foi **3,34:1**.
-- **Botão desabilitado:** **2,76:1 no escuro e 2,59:1 no claro (e 3,91:1 e 4,03:1 em "Rejeitar")**. Fica abaixo de 4,5:1 porque o estilo atual usa `opacity: .65`. O WCAG não exige contraste mínimo de componentes desabilitados, mas o plano pede que o desabilitado não dependa só de cor e transparência. **Fica para a DS-09 (botão com estados).** Hoje o estado só se distingue pelo esmaecimento e pelo cursor.
+- **Botão desabilitado:** **botão principal 3,91:1 no claro e 4,38:1 no escuro; "Rejeitar" 3,91:1 no claro e 4,03:1 no escuro** (calculado sobre o cartão, com `opacity: .65` aplicada ao texto e ao fundo do botão; valores corrigidos em 13/11/2026 a pedido da revisão). Fica abaixo de 4,5:1 porque o estilo atual usa `opacity: .65`. O WCAG não exige contraste mínimo de componentes desabilitados, mas o plano pede que o desabilitado não dependa só de cor e transparência. **Fica para a DS-09 (botão com estados).** Hoje o estado só se distingue pelo esmaecimento e pelo cursor.
 - **Hover do botão principal (cálculo):** 9,99:1 no escuro e 8,69:1 no claro, acima do mínimo.
+
+## Observações da revisão (13/11/2026)
+
+- **Borda do cartão:** a borda do cartão (`--separator`) mede 1,61:1 no escuro e 1,60:1 no claro. Ela é decorativa e fica assim: o texto, os campos e os botões do cartão têm contraste próprio, e a borda funcional dos controles é a `--line` (mínimo 3:1). Se for preferível reforçá-la, basta trocar o valor de `--separator`.
+- **Tabelas:** em 768 px a tabela de Saúde esconde a 6ª coluna e, no celular, a 3ª fica cortada, sem dica de rolagem. Já era assim antes da DS-06. Não foi alterado nesta tarefa. Proposta: mostrar cada linha como cartão no celular; aplicar no painel é a DS-12 (grupo B).
 
 ## Não medido
 
