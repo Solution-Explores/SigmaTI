@@ -52,7 +52,7 @@ O SIGMA é um **MVP de TCC**. A visão descreve o produto que o projeto quer dem
 | Coordenação do hospital | Receber relatórios gerenciais periódicos |
 | DPO ou setor jurídico da Fcecon | Homologar a premissa de conformidade com o art. 12 da LGPD **[pendente]** |
 | Orientador (Euler Azevedo) | Acompanhar a entrega, avaliar o aceite das issues e a demonstração de 27/10/2026 |
-| Banca do TCC | Avaliar se o sistema funciona e se o resultado é reproduzível (prevista para 18/11/2026, podendo ser antecipada) |
+| Banca do TCC | Avaliar se o sistema funciona e se o resultado é reproduzível (entre 01 e 10/12/2026, com dia e horário definidos pela Coordenação; o dia 18/11 marca o início da preparação da apresentação) |
 | Equipe de desenvolvimento (Iohand Jheremy, Joyce Yasmin, Vinícius Gomes) | Entregar, documentar e revisar |
 
 ## 6. Visão geral do produto
@@ -129,7 +129,7 @@ Os diagramas completos estão no [README](../README.md) e na [stack de tecnologi
 | Técnica | A sonda roda no host, porque precisa da interface física de rede (RNF05). O n8n só é acessível pela VLAN de gerência ou VPN |
 | Dependência externa | As metas de 5 s e 15 s dependem das camadas gratuitas de IA. Com a IA fora do ar, o alerta continua no painel, sem diagnóstico |
 | Infraestrutura | Servidor on-premise e VLAN ou VPN de gerência ainda precisam ser confirmados pela instituição |
-| Equipe e prazo | Duas pessoas ativas no desenvolvimento. Demonstração em 27/10/2026, congelamento de código previsto para 11/11 e banca em 18/11/2026 |
+| Equipe e prazo | Duas pessoas ativas no desenvolvimento. Demonstração em 27/10/2026, congelamento de código previsto para 11/11, início da preparação da apresentação em 18/11 e banca entre 01 e 10/12/2026 |
 
 ## 9. Critérios de sucesso
 

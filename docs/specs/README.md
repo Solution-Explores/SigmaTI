@@ -24,4 +24,5 @@ Uma pasta por tarefa, com especificação, plano, tarefas e evidências.
 - [`016-coleta-sse/`](016-coleta-sse/evidencias.md): Issue #8 — coleta contínua e SSE
 - [`017-painel-operacional/`](017-painel-operacional/brief.md): #15 — Painel operacional
 - [`018-backup-restauracao/`](018-backup-restauracao/evidencias.md): #25 — recuperação local e pacote para outra máquina
+- [`019-rotas-sem-efeito/`](019-rotas-sem-efeito/spec.md): #57 — Eliminar respostas 2xx sem efeito nas rotas da API
 - [`revisao-k01-k06/`](revisao-k01-k06/validacao.md): Correções da revisão K01–K06

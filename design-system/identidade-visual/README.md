@@ -1,8 +1,8 @@
 # 8. Identidade visual: logotipo e paletas
 
 Material de marca enviado pelo Vinny em 21/10/2026. O logotipo tem duas variantes de cor (azul e verde),
-e cada uma tem uma paleta. **A variante oficial ainda não foi escolhida**: essa decisão faz parte do
-trabalho do design system.
+e cada uma tem uma paleta. **Atualização de 04/11/2026:** foi adotada a identidade v4 (ver [decisoes.md](decisoes.md)).
+As variantes azul e verde abaixo são o material original e não são a identidade adotada.
 
 | Variante azul | Variante verde |
 |---|---|
@@ -80,3 +80,30 @@ use a versão escura da cor para texto e botões.
   e de arquivo local (o projeto não carrega fontes de servidores externos).
 - **Escolha da variante** (azul ou verde) e do conjunto de cores, conforme a seção acima.
 - Depois de decidido, atualizar `DESIGN.md` na raiz do projeto, que é a referência citada no TCC.
+
+## Marca e paleta (DS-03): identidade v4 adotada
+
+Em 04/11/2026 foi adotada a identidade v4, conforme informado pela Joyce (aprovação do Vinícius). Ela ainda não foi aplicada ao painel.
+
+- [decisoes.md](decisoes.md): as três opções comparadas, papéis de cor, tabelas de contraste e o registro da decisão.
+- [prancha-identidade-v4.html](prancha-identidade-v4.html): prancha da identidade v4 (abrir no navegador).
+
+## Logotipos SVG da identidade v4 (DS-04)
+
+Arquivos gerados a partir da prancha `prancha-identidade-v4.html`. Pertencem à identidade adotada (ver `decisoes.md`) e ainda não foram aplicados ao painel.
+
+| Arquivo | Uso |
+| --- | --- |
+| `logo-claro.svg` | Logotipo horizontal para fundo claro |
+| `logo-escuro.svg` | Logotipo horizontal para fundo escuro |
+| `logo-vertical-claro.svg` | Logotipo vertical para fundo claro |
+| `logo-vertical-escuro.svg` | Logotipo vertical para fundo escuro |
+| `simbolo.svg` | Símbolo para fundo claro |
+| `simbolo-escuro.svg` | Símbolo para fundo escuro |
+| `icone-app.svg` | Ícone de aplicativo e favicon (único com fundo, um quadrado arredondado índigo) |
+| `logo-preto.svg` | Uma cor, preto (formulários e impressão simples) |
+| `logo-branco.svg` | Uma cor, branco |
+
+Características: vetor com `viewBox`, sem script, link externo ou imagem embutida, e sem fundo opaco (exceto o ícone). O nome está em curvas, então não depende de fonte instalada. Cada arquivo traz um bloco de metadados C2PA (credenciais de conteúdo, cerca de 7,7 KB) que não altera o desenho e pode ser removido se a equipe preferir.
+
+Ainda não verificado: contraste de cada logotipo nos dois temas e tamanhos mínimos de uso (a prancha sugere 110 px de largura para o logotipo horizontal e 24 px para o símbolo, sem teste em tamanho real).

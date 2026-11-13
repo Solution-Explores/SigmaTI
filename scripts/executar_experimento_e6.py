@@ -75,6 +75,7 @@ def executar_experimento(corpus):
     protegidos = removidos + bloqueados_id
     recall = 100 * removidos / total if total else 0
     recall_protecao = 100 * protegidos / total if total else 0
+    taxa_bloqueio = 100 * bloqueados_id / total if total else 0
     precisao = 100 * removidos / (removidos + fp) if removidos + fp else 0
     taxa_fp = 100 * fp / negativos if negativos else 0
     ic_recall = intervalo_wilson(removidos, total)
@@ -86,13 +87,15 @@ def executar_experimento(corpus):
             "casos_bloqueados": bloqueados, "negativos": negativos, "fp": fp,
             "recall": recall, "ic_recall": ic_recall,
             "recall_protecao": recall_protecao, "ic_protecao": ic_protecao,
+            "taxa_bloqueio": taxa_bloqueio,
             "precisao": precisao, "ic_precisao": ic_precisao,
             "taxa_fp": taxa_fp, "ic_fp": ic_fp,
             "por_classe": dict(classes), "detalhes": detalhes,
             # Critério original do E6 (21/10), mantido: transformação conta, bloqueio não.
             "aprovado": total > 0 and vazados == 0 and recall >= 99 and taxa_fp <= 5,
-            # Proteção contra vazamento externo, relatada ao lado; não substitui o critério acima.
-            "aprovado_protecao": total > 0 and vazados == 0 and recall_protecao >= 99 and taxa_fp <= 5}
+            # Proteção contra vazamento externo, relatada ao lado (com teto de bloqueio para evitar 'bloquear tudo').
+            "aprovado_protecao": (total > 0 and vazados == 0 and recall_protecao >= 99
+                                  and taxa_fp <= 5 and taxa_bloqueio <= 20)}
 
 
 def gerar_relatorio_markdown(m, destino):

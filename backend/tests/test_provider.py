@@ -75,7 +75,7 @@ def authenticated_client(module, provider, monkeypatch, tmp_path, temporary_iden
 def assert_generic(module, response):
     assert response.status_code == 200
     assert set(response.json()) == {"status", "dados_enviados_nuvem", "diagnostico_ia"}
-    assert response.json()["status"] == "Incidente Registrado"
+    assert response.json()["status"] == "Diagnóstico gerado"
     assert response.json()["diagnostico_ia"] == module.IA_UNAVAILABLE
     assert FAKE_KEY not in response.text
     assert PRIVATE_DETAIL not in response.text
@@ -105,7 +105,7 @@ def test_success_payload_and_shared_client_lifecycle(module, provider, caplog):
     assert clients[0].is_closed
     assert first.status_code == second.status_code == 200
     assert first.json() == second.json() == {
-        "status": "Incidente Registrado",
+        "status": "Diagnóstico gerado",
         "dados_enviados_nuvem": "Equipamento: [SWITCH_REDE] | Erro: Falha [USUARIO_MEDICO] no IP 192.0.2.0/24. Forneça um diagnóstico de rede curto e direto.",
         "diagnostico_ia": "Diagnóstico simulado",
     }
