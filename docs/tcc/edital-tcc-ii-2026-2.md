@@ -17,6 +17,8 @@ Resumo do Edital nº 001/2026 da Uninorte (Engenharia da Computação), publicad
 
 O dia **18/11/2026** não é a banca. É o início da preparação da apresentação, segundo o Vinícius. O edital não cita essa data.
 
+> **Datas definitivas: a registrar.** Na aula de TCC de 12/11/2026 chegaram novas orientações com as datas definitivas. O Vinícius vai enviá-las, e este resumo deve ser atualizado com elas. Até lá, vale o que está abaixo, que é do edital.
+
 ## Conflito dentro do edital (confirmar com o orientador)
 
 A seção 4.1 diz que o PDF para avaliação vai ao orientador **até 03/11/2026**, segue à Coordenação **até 15/11/2026**, e os examinadores têm 15 dias para ler. O cronograma da seção 7 diz **23/11/2026** para a entrega da versão à banca. As duas datas não batem. Perguntar ao orientador qual vale antes de fechar o texto.
