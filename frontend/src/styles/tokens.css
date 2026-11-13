@@ -1,6 +1,6 @@
 /* Tokens de cor do painel. Identidade v4 aplicada (DS-08), conforme design-system/identidade-visual/decisoes.md.
    Tema escuro é o padrão; o claro entra com data-theme="light" em .app-surface.
-   Este é o único lugar para ajustar cores de execução. Medidas de contraste em contraste.md.
+   Este é o lugar das variáveis de cor do painel. Medidas de contraste em contraste.md.
    --line é a borda FUNCIONAL (campos, botões): precisa de 3:1. --separator é só decoração (cartões e linhas de tabela). */
 .app-surface { --bg: #0a1e30; --surface: #11293d; --field: #0a1e30; --fg: #e3eef6; --muted: #9fb3c4; --line: #4f7c9e; --separator: #2c4a63; --accent: #a5b4fc; --button: #a5b4fc; --button-fg: #0a1e30; --focus: #f5d773; --error: #3a1b1e; --error-fg: #ff9e94; --good: #abebcf; --bad: #ff9e94; --warn: #ffd479; --selection-bg: #a5b4fc; --selection-fg: #0a1e30; }
 .app-surface[data-theme="light"] { --bg: #f3f6f8; --surface: #ffffff; --field: #ffffff; --fg: #0a1e30; --muted: #4f6577; --line: #4f6577; --separator: #c5ced3; --accent: #3730a3; --button: #3730a3; --button-fg: #ffffff; --focus: #7b3e00; --error: #fdecea; --error-fg: #a82a20; --good: #15563c; --bad: #a82a20; --warn: #7a4a00; --selection-bg: #3730a3; --selection-fg: #ffffff; }
