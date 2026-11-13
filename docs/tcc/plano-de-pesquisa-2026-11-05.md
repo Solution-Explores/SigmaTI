@@ -50,11 +50,11 @@ Criado em 05/11/2026. Segue a lista de prioridades definida a partir do [mapa do
 
 Enviar uma pauta única até 07/11 (Vinícius). Perguntas:
 
-1. O entregável do TCC II é este artigo (modelo Aurum) ou uma monografia? Quantas páginas?
+1. Qual é o limite de páginas, quando as orientações da disciplina definirem o formato final? (Os rascunhos do artigo e da monografia são base de conhecimento e parâmetro para o orientador, e não uma escolha em aberto.)
 2. Como é a submissão à revista, e qual é o prazo? O edital (seção 1.5) torna a publicação obrigatória para a nota.
 3. Quem consta como autor (máximo 3) e quem é orientador e coorientador?
-4. Das duas datas de entrega do PDF no edital, qual vale: 03/11 (com 15/11 à Coordenação) ou 23/11?
-5. Dia e horário da banca, quando a Coordenação publicar.
+4. **Datas definitivas:** as orientações da aula de TCC de 12/11 trazem as datas definitivas, que o Vinícius vai enviar para registro. Até lá, vale o calendário do edital, que tem duas datas de entrega do PDF (03/11 e 23/11).
+5. Dia e horário da banca, nas mesmas orientações.
 6. As pendências antigas: critério de recall da #5, limite de login da #46 e licença do repositório.
 
 **Pronto quando:** as respostas das perguntas 1 a 4 estão registradas neste arquivo.

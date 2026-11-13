@@ -7,7 +7,9 @@ Material de acompanhamento com o orientador.
 ## Documentos
 
 - [Edital do TCC II (2026.2): datas e regras](edital-tcc-ii-2026-2.md)
-- [Mapa do modelo científico: situação seção por seção](mapa-modelo-cientifico.md)
+- [Rascunho do artigo científico (modelo Aurum)](artigo-cientifico-rascunho.md)
+- [Rascunho da monografia (sete capítulos do orientador)](monografia-rascunho.md)
+- [Status do TCC: artigo e monografia (sólido, parcial, ausente)](mapa-modelo-cientifico.md)
 - [Plano de pesquisa: o que correr atrás (05/11/2026)](plano-de-pesquisa-2026-11-05.md)
 - [Limitações do trabalho](limitacoes.md): os números desfavoráveis, com a medição que sustenta cada um
 - [Balanço dos dados do TCC](balanco-dos-dados.md)
