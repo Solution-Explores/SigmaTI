@@ -8,7 +8,7 @@ Falsos positivos por mensagem negativa: 0.00% (0/25, IC 95% Wilson: [0.00%, 13.3
 Identificadores bloqueados: 0; vazados: 0.
 
 | Classe | Total | Removidos/generalizados | Bloqueados | Vazados |
-|---|---:|---:|---:|---:|
+| --- | ---: | ---: | ---: | ---: |
 | cns | 3 | 3 | 0 | 0 |
 | cpf | 5 | 5 | 0 | 0 |
 | email | 4 | 4 | 0 | 0 |
