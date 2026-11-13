@@ -99,7 +99,7 @@ Observações:
 
 ## 5. O que este documento NÃO decide
 
-- **Fonte (DS-05):** Atkinson Hyperlegible e IBM Plex Mono são sugestões. A licença (OFL-1.1) e a forma de distribuição local precisam ser confirmadas na DS-05.
+- **Fonte (DS-05):** Substituída pela DS-05. A prancha mostra Atkinson Hyperlegible e IBM Plex Mono, mas a decisão da DS-05 (`tipografia.md`, em revisão no PR #86) é a pilha "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif, sem arquivo de fonte no repositório. Onde houver diferença, vale o `tipografia.md` depois de aprovado; a tipografia da prancha é a sugestão anterior.
 - **Logotipos vetoriais (DS-04):** os 9 arquivos SVG estão nesta pasta. Falta testar a área de proteção e o tamanho mínimo em tamanho real.
 - **Aplicação ao painel (DS-06 e DS-08):** tokens, temas e comparação com as cores atuais do painel.
 - **Símbolo em cruz no hospital:** Resolvido em 04/11/2026: símbolo em cruz permitido; logotipo do hospital proibido.
