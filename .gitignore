@@ -6,6 +6,8 @@ frontend/node_modules/
 spec-kit/
 *.jsonl
 *.jsonl.lock
+*.jsonl.checkpoint
+*.jsonl.checkpoint.tmp
 .local/
 frontend/dist/
 frontend/playwright-report/

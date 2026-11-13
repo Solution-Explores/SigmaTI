@@ -59,6 +59,9 @@ def trabalhador(caminho: Path, gravacoes: int, intervalo_ms: float, inicio: floa
 def rodada(base: Path, pasta: Path, tamanho: int, processos: int, gravacoes: int, intervalo_ms: float) -> dict:
     caminho = pasta / f"contencao-{processos}p.jsonl"
     shutil.copyfile(base, caminho)
+    ponto = base.with_name(base.name + ".checkpoint")  # ponto de verificação (#46, opção D), se existir
+    if ponto.exists():
+        shutil.copyfile(ponto, caminho.with_name(caminho.name + ".checkpoint"))
     esperadas = processos * gravacoes
     inicio = time.time() + 3.0  # tempo para todos os processos importarem antes do disparo
     comandos = [[sys.executable, __file__, "--trabalhador", str(caminho), str(gravacoes), str(intervalo_ms),
@@ -114,6 +117,8 @@ def main() -> int:
     parser.add_argument("--gravacoes", type=int, default=20, help="gravações por processo")
     parser.add_argument("--intervalo-ms", type=float, default=0.0, help="espera entre gravações de cada processo")
     parser.add_argument("--saida", type=Path, help="JSON com o resultado")
+    parser.add_argument("--sem-ponto", action="store_true",
+                        help="apaga o ponto de verificação da trilha-base: mede a partida fria sem ele")
     args = parser.parse_args()
     with tempfile.TemporaryDirectory(prefix="auditoria-contencao-") as tmp:
         pasta = Path(tmp)
@@ -121,6 +126,8 @@ def main() -> int:
         montar_trilha(base, args.tamanho)
         ok, indice = AuditChain(base, chave=CHAVE).verificar()
         assert ok, f"trilha sintética inválida na entrada {indice}"
+        if args.sem_ponto:
+            base.with_name(base.name + ".checkpoint").unlink(missing_ok=True)
         resultados = []
         for n in args.processos:
             r = rodada(base, pasta, args.tamanho, n, args.gravacoes, args.intervalo_ms)

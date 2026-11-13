@@ -46,6 +46,13 @@ REVALIDAR_CONTEUDO_SEGUNDOS = 30
 # tamanho logo após a nossa escrita manteria o timestamp.
 JANELA_TIMESTAMP_NS = 100_000_000
 _BLOCO = 1 << 20
+# Ponto de verificação assinado (#46): arquivo ao lado da trilha, regravado a cada tantas
+# entradas, para a partida fria não refazer o HMAC do histórico inteiro. É só otimização:
+# qualquer dúvida (ausente, assinatura inválida, chave desconhecida, bytes diferentes) cai na
+# verificação completa.
+CHECKPOINT_SUFIXO = ".checkpoint"
+CHECKPOINT_INTERVALO = 1000
+_CHECKPOINT_DOMINIO = b"sigma-audit-checkpoint-v1\n"
 
 _ESTADOS: dict[tuple, "_Estado"] = {}
 
@@ -88,7 +95,7 @@ class _Estado:
     """O que já foi verificado de um arquivo: tamanho, contagem, último hash e SHA-256 dos bytes."""
 
     __slots__ = ("tamanho", "mtime_ns", "ino", "dev", "contagem", "ultimo_hash", "ultimo_kid", "digest",
-                 "conferido_em")
+                 "conferido_em", "cp_contagem")
 
     def __init__(self, st: os.stat_result | None, tamanho: int, contagem: int, ultimo_hash: str,
                  ultimo_kid: str | None, digest) -> None:
@@ -101,6 +108,7 @@ class _Estado:
         self.ultimo_kid = ultimo_kid
         self.digest = digest
         self.conferido_em = time.monotonic()
+        self.cp_contagem = 0  # contagem do último ponto de verificação gravado para este estado
 
     @classmethod
     def vazio(cls) -> "_Estado":
@@ -301,7 +309,119 @@ class AuditChain:
                 anterior, kid = entrada["hash"], entrada.get("kid")
                 contagem += 1
             st = os.fstat(fluxo.fileno())
-        return _Estado(st, lidos, contagem, anterior, kid, continuacao)
+        novo = _Estado(st, lidos, contagem, anterior, kid, continuacao)
+        novo.cp_contagem = estado.cp_contagem
+        return novo
+
+    # --- Ponto de verificação assinado (#46) ---
+
+    def _caminho_checkpoint(self) -> Path:
+        return self.caminho.with_name(self.caminho.name + CHECKPOINT_SUFIXO)
+
+    @staticmethod
+    def _assinar_checkpoint(chave: bytes, corpo: dict) -> str:
+        return hmac.new(chave, _CHECKPOINT_DOMINIO + _canonico(corpo), hashlib.sha256).hexdigest()
+
+    def _gravar_checkpoint(self, estado: _Estado) -> None:
+        """Grava o ponto assinado com a chave ativa. Otimização: nunca levanta erro.
+
+        Sem chave não há como autenticar o ponto, então não se grava. O chamador detém o lock.
+        """
+        if not self.chave or estado.contagem <= 0:
+            return
+        corpo = {"v": 1, "tamanho": estado.tamanho, "contagem": estado.contagem,
+                 "ultimo_hash": estado.ultimo_hash, "ultimo_kid": estado.ultimo_kid,
+                 "digest": estado.digest.hexdigest(), "kid": self._ativa}
+        conteudo = {**corpo, "assinatura": self._assinar_checkpoint(self.chave, corpo)}
+        destino = self._caminho_checkpoint()
+        temporario = destino.with_name(destino.name + ".tmp")
+        try:
+            with temporario.open("wb") as fh:
+                fh.write(_canonico(conteudo))
+                fh.flush()
+                os.fsync(fh.fileno())
+            os.replace(temporario, destino)
+            estado.cp_contagem = estado.contagem
+        except OSError:
+            try:
+                temporario.unlink()
+            except OSError:
+                pass
+
+    def _talvez_checkpoint(self, estado: _Estado) -> None:
+        if estado.contagem - estado.cp_contagem >= CHECKPOINT_INTERVALO:
+            self._gravar_checkpoint(estado)
+
+    def _ler_checkpoint(self) -> dict | None:
+        """Ponto íntegro e assinado por uma chave conhecida; None em qualquer dúvida."""
+        try:
+            bruto = self._caminho_checkpoint().read_bytes()
+            cp = json.loads(bruto.decode("utf-8"))
+        except (OSError, ValueError):
+            return None
+        if not isinstance(cp, dict) or cp.get("v") != 1:
+            return None
+        kid, assinatura = cp.get("kid"), cp.get("assinatura")
+        if kid is None:
+            chave = self._legada
+        elif isinstance(kid, str):
+            chave = self._chaves.get(kid)
+        else:
+            return None
+        if not chave or not isinstance(assinatura, str) or not assinatura.isascii():
+            return None
+        corpo = {k: v for k, v in cp.items() if k != "assinatura"}
+        if not hmac.compare_digest(self._assinar_checkpoint(chave, corpo), assinatura):
+            return None
+        tamanho, contagem = cp.get("tamanho"), cp.get("contagem")
+        ultimo_kid, digest, ultimo_hash = cp.get("ultimo_kid"), cp.get("digest"), cp.get("ultimo_hash")
+        if (type(tamanho) is not int or type(contagem) is not int or tamanho <= 0 or contagem <= 0
+                or not (ultimo_kid is None or isinstance(ultimo_kid, str))
+                or not isinstance(digest, str) or len(digest) != 64
+                or not isinstance(ultimo_hash, str) or len(ultimo_hash) != 64):
+            return None
+        try:
+            bytes.fromhex(digest)
+        except ValueError:
+            return None
+        return cp
+
+    def _retomar_checkpoint(self, st: os.stat_result) -> _Estado | None:
+        """Retoma do ponto assinado: SHA-256 do trecho antigo e verificação só do que veio depois.
+
+        None se o ponto não vale ou se o trecho antigo mudou: o chamador faz a verificação completa.
+        """
+        cp = self._ler_checkpoint()
+        if cp is None or cp["tamanho"] > st.st_size:
+            return None
+        try:
+            with self.caminho.open("rb") as fluxo:
+                conferido, restante = hashlib.sha256(), cp["tamanho"]
+                while restante:
+                    bloco = fluxo.read(min(restante, _BLOCO))
+                    if not bloco:
+                        return None
+                    conferido.update(bloco)
+                    restante -= len(bloco)
+                if not hmac.compare_digest(conferido.digest(), bytes.fromhex(cp["digest"])):
+                    return None
+                contagem, anterior, kid, lidos = cp["contagem"], cp["ultimo_hash"], cp["ultimo_kid"], cp["tamanho"]
+                for linha in fluxo:
+                    conferido.update(linha)
+                    lidos += len(linha)
+                    if not linha.strip():
+                        continue
+                    entrada = self._linha(linha)
+                    if not self._conferir(entrada, contagem, anterior):
+                        return None
+                    anterior, kid = entrada["hash"], entrada.get("kid")
+                    contagem += 1
+                novo_st = os.fstat(fluxo.fileno())
+        except OSError:
+            return None
+        estado = _Estado(novo_st, lidos, contagem, anterior, kid, conferido)
+        estado.cp_contagem = cp["contagem"]
+        return estado
 
     def _estado_verificado(self) -> _Estado:
         """Estado íntegro do arquivo com custo proporcional ao que mudou. ValueError se a trilha é inválida.
@@ -320,12 +440,20 @@ class AuditChain:
             avancado = self._avancar(estado)
             if avancado is not None:
                 _ESTADOS[chave] = avancado
+                self._talvez_checkpoint(avancado)
                 return avancado
+        # Partida fria (ou estado inutilizável): o ponto assinado evita refazer o HMAC do histórico.
+        retomado = self._retomar_checkpoint(st)
+        if retomado is not None:
+            _ESTADOS[chave] = retomado
+            self._talvez_checkpoint(retomado)
+            return retomado
         integra, _, _, novo = self._verificar_arquivo()
         if not integra:
             _ESTADOS.pop(chave, None)
             raise ValueError("Trilha de auditoria inválida; gravação recusada.")
         _ESTADOS[chave] = novo
+        self._talvez_checkpoint(novo)
         return novo
 
     # --- API ---
@@ -377,8 +505,11 @@ class AuditChain:
             if tamanho == estado.tamanho:
                 continuacao = estado.digest.copy()
                 continuacao.update(carga)
-                _ESTADOS[chave] = _Estado(st, tamanho + len(carga), seq + 1, entrada["hash"],
-                                          entrada.get("kid"), continuacao)
+                novo = _Estado(st, tamanho + len(carga), seq + 1, entrada["hash"],
+                               entrada.get("kid"), continuacao)
+                novo.cp_contagem = estado.cp_contagem
+                _ESTADOS[chave] = novo
+                self._talvez_checkpoint(novo)
             else:
                 # Alguém escreveu fora do lock entre a verificação e a gravação: não aproveitar nada.
                 _ESTADOS.pop(chave, None)
@@ -445,6 +576,7 @@ class AuditChain:
         chave = self._chave_cache()
         if ok:
             _ESTADOS[chave] = estado
+            self._talvez_checkpoint(estado)
         else:
             _ESTADOS.pop(chave, None)
         return ok, indice, total
