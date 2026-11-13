@@ -22,6 +22,7 @@ MESSAGES = {
     405: "Método não permitido.",
     422: "Dados da requisição inválidos.",
     429: "Limite de requisições excedido.",
+    501: "Recurso ainda não disponível.",
 }
 
 
@@ -30,7 +31,12 @@ class PublicError(BaseModel):
 
 
 def public_error(status: int, headers: dict | None = None) -> JSONResponse:
-    message = "Erro interno do servidor." if status >= 500 else MESSAGES.get(status, MESSAGES[400])
+    if status in MESSAGES:
+        message = MESSAGES[status]
+    elif status >= 500:
+        message = "Erro interno do servidor."
+    else:
+        message = MESSAGES[400]
     return JSONResponse({"detail": message}, status_code=status, headers=headers)
 
 

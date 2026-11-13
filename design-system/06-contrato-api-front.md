@@ -97,7 +97,7 @@ Quando `n` é 0, a métrica não pode ser exibida como número.
 ### `POST /api/alertas`
 
 ```json
-{ "status": "Incidente Registrado",
+{ "status": "Diagnóstico gerado",
   "dados_enviados_nuvem": "Equipamento: Switch | Erro: Perda de pacotes na sub-rede 192.0.2.0/24…",
   "diagnostico_ia": "Verifique o enlace físico e os contadores de erro da interface…" }
 ```
