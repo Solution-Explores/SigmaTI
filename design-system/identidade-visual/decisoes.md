@@ -23,7 +23,7 @@ O protótipo do Vinny usa um terceiro azul (`#1D4ED8` no claro e `#60A5FA` no es
 
 - Opção escolhida: [x] 1 · v4  [ ] 2 · azul do logotipo  [ ] 3 · verde do logotipo  [ ] outra
 - Data da decisão: 04/11/2026
-- Quem decidiu: Vinícius Lima (aprovação informada pela Joyce Yasmin)
+- Quem decidiu: Vinícius Lima, aprovação escrita no comentário do PR #85
 - Observações e ajustes pedidos: nenhum informado. Seguem abertos: validação da borda de campo (`#4F6577` claro e `#4F7C9E` escuro), fonte (DS-05) e os metadados C2PA dos SVGs.
 
 ## 2. Opção 1 · Identidade v4 (proposta principal)
