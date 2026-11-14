@@ -18,7 +18,7 @@ Rascunho de 27/10, à noite, para a conversa de quarta. Não substitui o [plano 
    - Revisão do #47 (`pr-47`): antes de incorporar, alinhar duas divergências. O texto diz que o teste passou de 5/10 para 30/30, e o guia e o plano falam em 26/30 para 30/30 (rodada 3). O texto também declara "Approve", e no GitHub há só o comentário com o parecer favorável.
    - `.trail/cache`: decidir se se versiona ou se vai para o `.gitignore`.
 4. **Retorno do orientador.** Triar em 28/10 (reserva P0 de 2 pontos na S1) e converter em issues. Falta o registro do retorno, que não está no repositório.
-5. **Prazos com o orientador.** Renegociar #13 e #25 de 03/11 para 10/11, confirmar 18/11 e o risco de antecipação da banca, e a licença do repositório.
+5. **Prazos com o orientador.** Renegociar #13 e #25 de 03/11 para 10/11, confirmar o dia e o horário da banca (edital: 01 a 10/12), e a licença do repositório.
 6. **#45.** Passa a cobrir o quarto teste instável (`test_scheduler`), o atraso do teste de carga E2 na rodada 8 (0,957 s contra 0,5 s) e a margem do timer de IA (14 s contra 15 s).
 
 ## Pendências de 27/10 sem registro

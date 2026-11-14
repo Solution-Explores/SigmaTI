@@ -99,7 +99,7 @@ const routes = [
   ['POST', /^\/api\/alertas$/, ({ token, body }) => {
     allow(token, 'suporte_n1');
     const texto = (body?.descricao_erro || '').replace(/\b(\d{1,3}\.\d{1,3}\.\d{1,3})\.\d{1,3}\b/g, '$1.0/24');
-    return { status: 'Incidente Registrado',
+    return { status: 'Diagnóstico gerado',
       dados_enviados_nuvem: `Equipamento: Equipamento de rede | Erro: ${texto}. Forneça um diagnóstico de rede curto e direto.`,
       diagnostico_ia: '[Resposta simulada] Verifique o enlace físico e os contadores de erro da interface; '
         + 'perda de pacotes persistente costuma indicar cabo ou porta com defeito, ou saturação do uplink.' };

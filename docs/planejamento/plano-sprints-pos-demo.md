@@ -67,7 +67,7 @@ Fontes: `docs/plano-demonstracao-2026-10-27.md`, `docs/historico/rascunhos/docum
 ---
 
 ## Sprint 3 — 11/11 a 17/11 · "Congelamento e banca"
-**Meta:** projeto estável, texto e apresentação prontos para a banca de 18/11.
+**Meta:** projeto estável, texto e apresentação prontos para o início da preparação da apresentação em 18/11 (banca entre 01 e 10/12).
 
 | Prio | Item | Est. | Dono |
 |------|------|------|------|
@@ -78,8 +78,8 @@ Fontes: `docs/plano-demonstracao-2026-10-27.md`, `docs/historico/rascunhos/docum
 | P1 | Seção "Trabalho futuro": #10, #16–#19, #21, #22, #30, #23 e itens externos, com justificativa | 2 | Vinícius |
 | P2 | #46 (se ainda aberta) como débito documentado | — | — |
 
-**Carga:** P0 = 8 pts, com P1 = 10 pts (~53% dos ~19 planejados). A folga é deliberada: banca antecipada e imprevistos. **Datas:** 11/11 freeze · 14/11 ensaio · 17/11 checklist final · **18/11 banca**.
-**Se a banca for antecipada:** a S3 comprime; a S2 vira a última sprint de código e o freeze passa para o dia anterior à nova data.
+**Carga:** P0 = 8 pts, com P1 = 10 pts (~53% dos ~19 planejados). A folga é deliberada: imprevistos. **Datas:** 11/11 freeze · 14/11 ensaio · 17/11 checklist final · **18/11 início da preparação da apresentação** · banca entre 01 e 10/12.
+**Janela da banca (edital):** 01 a 10/12. O freeze de 11/11 se mantém.
 
 ---
 
@@ -97,7 +97,7 @@ Fontes: `docs/plano-demonstracao-2026-10-27.md`, `docs/historico/rascunhos/docum
 
 ## Pontos em aberto para confirmar com o orientador
 1. Renegociar #13/#25 de 03/11 para 10/11.
-2. Confirmar 18/11 e se há risco de antecipação.
+2. Confirmar o dia e o horário da banca (edital: 01 a 10/12).
 3. Licença do repositório.
 
 ## Verificação
