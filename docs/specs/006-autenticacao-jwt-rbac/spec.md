@@ -87,13 +87,13 @@ Para mitigar ataques de adivinhação de senhas e garantir integridade forense �
 
 | Linha / Recurso | Endpoint | Suporte N1 | Analista de Redes | Gestor de TI |
 |---|---|:---:|:---:|:---:|
-| Ver alertas e status da rede | `GET /api/status`, `GET /api/alertas` | Sim (200) | Sim (200) | Sim (200) |
-| Usar o chat com a IA | `POST /api/alertas` | Sim (200) | Sim (200) | Sim (200) |
-| Ver histórico e detalhes de pacotes | `GET /api/pacotes`, `GET /api/incidentes` | Não (403) | Sim (200) | Sim (200) |
+| Ver alertas e status da rede | `GET /api/status` (200), `GET /api/alertas` (501 planejado) | Sim (200 / 501) | Sim (200 / 501) | Sim (200 / 501) |
+| Usar o chat com a IA | `POST /api/alertas` (`status: "Diagnóstico gerado"`) | Sim (200) | Sim (200) | Sim (200) |
+| Ver histórico e detalhes de pacotes | `GET /api/pacotes` (501 planejado), `GET /api/incidentes` (200 c/ banco, 503 s/ banco) | Não (403) | Sim (501 / 200-503) | Sim (501 / 200-503) |
 | Operações de Engenharia (Sonda/SLO/Métricas/Anomalias) | `/api/eng/probe`, `/slo/avaliar`, `/incidentes/metricas`, `/anomalias` | Não (403) | Sim (200) | Sim (200) |
-| Ver relatórios gerenciais | `GET /api/relatorios` | Não (403) | Não (403) | Sim (200) |
-| Gerenciar usuários e chaves | `GET/POST /api/usuarios`, `POST /api/chaves/rotacao` | Não (403) | Não (403) | Sim (200) |
-| Acessar o n8n (VLAN/VPN) | `GET /api/n8n/acesso` | Não (403) | Não (403) | Sim (200) |
+| Ver relatórios gerenciais | `GET /api/relatorios` (planejado #16) | Não (403) | Não (403) | Sim (501) |
+| Gerenciar usuários e chaves | `GET/POST /api/usuarios` (200), `POST /api/chaves/rotacao` (501 planejado #23) | Não (403) | Não (403) | Sim (200 / 501) |
+| Acessar o n8n (VLAN/VPN) | `GET /api/n8n/acesso` (200 c/ `SIGMA_N8N_URL`, 501 s/ variável) | Não (403) | Não (403) | Sim (200 / 501) |
 | Verificar integridade da auditoria | `GET /api/eng/auditoria/verificar` | Não (403) | Não (403) | Sim (200) |
 
 ---

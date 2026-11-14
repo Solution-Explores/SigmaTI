@@ -150,97 +150,142 @@ class TestZeroPseudonimizacao:
 
 
 class TestRegressaoAuditoriaOrientador:
-    """Regressão estrita para os 14 casos adversariais da conferência de 31/10/2026 (#5)."""
+    """Regressão estrita para os 14 casos adversariais da conferência de 31/10/2026 (#5).
+
+    Os 14 casos correspondem às 13 linhas da tabela do orientador, com a linha de
+    hostname desdobrada em duas entradas de teste (ADV-09a para 'PACS-01' e ADV-09b
+    para 'pacs01'). Cada caso fixa explicitamente se deve ser transformado (13 casos)
+    ou bloqueado em modo fail-closed (ADV-04, 'Maria Oliveira (leito 12)').
+    """
 
     @pytest.mark.parametrize(
-        ("id_caso", "entrada", "fragmentos_proibidos"),
+        ("id_caso", "entrada", "fragmentos_proibidos", "espera_transformacao", "marcador_esperado"),
         [
             (
                 "ADV-01",
                 "Paciente: Ana Beatriz Souza sem acesso ao portal de exames",
                 ["Ana", "Beatriz", "Souza"],
+                True,
+                "[NOME_REMOVIDO]",
             ),
             (
                 "ADV-02",
                 "Dr Pedro Alves sem acesso ao sistema de laudos",
                 ["Pedro", "Alves"],
+                True,
+                "[NOME_REMOVIDO]",
             ),
             (
                 "ADV-03",
                 "Sra. Carla Mendes ligou informando queda no totem da recepção",
                 ["Carla", "Mendes"],
+                True,
+                "[NOME_REMOVIDO]",
             ),
             (
                 "ADV-04",
                 "Maria Oliveira (leito 12) não consegue sincronizar monitor multiparamétrico",
                 ["Maria", "Oliveira"],
+                False,
+                "nome_sem_contexto_residual",
             ),
             (
                 "ADV-05",
                 "usuario joao.silva bloqueado no AD após múltiplas tentativas",
                 ["joao.silva", "joao", ".silva", "silva"],
+                True,
+                "[LOGIN_REMOVIDO]",
             ),
             (
                 "ADV-06",
                 "login: maria.souza falhou 5 vezes na autenticação RADIUS",
                 ["maria.souza", "maria", ".souza", "souza"],
+                True,
+                "[LOGIN_REMOVIDO]",
             ),
             (
                 "ADV-07",
                 "CPF 123 456 789 09 do paciente recusado na validação cadastral",
                 ["123 456 789 09", "123 456", "789 09"],
+                True,
+                "[CPF_REMOVIDO]",
             ),
             (
                 "ADV-08",
                 "Registro de atendimento 2026-000123 falhou ao sincronizar com o HIS",
                 ["2026-000123", "000123"],
+                True,
+                "[REGISTRO_REMOVIDO]",
             ),
             (
                 "ADV-09a",
                 "Equipamento PACS-01 fora do ar no setor de imagem",
                 ["PACS-01"],
+                True,
+                "[SERVIDOR_HOSPITALAR]",
             ),
             (
                 "ADV-09b",
                 "Servidor pacs01 sem resposta ao ping de monitoramento",
                 ["pacs01"],
+                True,
+                "[SERVIDOR_HOSPITALAR]",
             ),
             (
                 "ADV-10",
                 "Telefone do responsável: (92) 99123-4567 não recebeu alerta SMS",
                 ["(92) 99123-4567", "99123-4567", "991234567"],
+                True,
+                "[TELEFONE_REMOVIDO]",
             ),
             (
                 "ADV-11",
                 "RG 12.345.678-9 do acompanhante gerou erro de digitação no cadastro",
                 ["12.345.678-9", "12.345.678"],
+                True,
+                "[RG_REMOVIDO]",
             ),
             (
                 "ADV-12",
                 "Data de nascimento 12/03/1984 divergente na integração HL7",
                 ["12/03/1984", "1984"],
+                True,
+                "[DATA_NASCIMENTO_REMOVIDA]",
             ),
             (
                 "ADV-13",
                 "Endereço Rua das Flores, 123, Manaus falhou na validação de CEP",
-                ["Rua das Flores", "Flores, 123"],
+                ["Rua das Flores", "Flores", "123", "Manaus"],
+                True,
+                "[ENDERECO_REMOVIDO]",
             ),
         ],
     )
-    def test_casos_adversariais_nao_vazam_para_ia(self, id_caso, entrada, fragmentos_proibidos):
-        """Nenhum dos 14 casos pode passar com fragmentos sensíveis preservados (ou substitui, ou bloqueia)."""
+    def test_casos_adversariais_nao_vazam_para_ia(
+        self, id_caso, entrada, fragmentos_proibidos, espera_transformacao, marcador_esperado,
+    ):
+        """Fixa o resultado esperado de cada um dos 14 casos (13 transformados e ADV-04 bloqueado)."""
         resultado = sanitizar_texto(entrada)
-        if resultado.sucesso:
+        if espera_transformacao:
+            assert resultado.sucesso is True, (
+                f"Caso {id_caso} deveria ser transformado, mas foi bloqueado: {resultado.residuos!r}"
+            )
             assert resultado.texto_sanitizado != entrada, (
                 f"Caso {id_caso} passou inalterado sem bloqueio: {entrada!r}"
+            )
+            assert marcador_esperado in resultado.texto_sanitizado, (
+                f"Caso {id_caso} não gerou o marcador esperado {marcador_esperado!r} em {resultado.texto_sanitizado!r}"
             )
             for proibido in fragmentos_proibidos:
                 assert not re.search(re.escape(proibido), resultado.texto_sanitizado, re.IGNORECASE), (
                     f"Caso {id_caso} vazou fragmento proibido {proibido!r} em {resultado.texto_sanitizado!r}"
                 )
         else:
-            assert resultado.residuos or resultado.motivo_bloqueio, (
-                f"Caso {id_caso} bloqueado deve registrar motivo/resíduo."
+            assert resultado.sucesso is False, (
+                f"Caso {id_caso} deveria ser bloqueado em modo fail-closed, mas passou: {resultado.texto_sanitizado!r}"
+            )
+            assert marcador_esperado in resultado.residuos, (
+                f"Caso {id_caso} bloqueado sem o resíduo esperado {marcador_esperado!r}: {resultado.residuos!r}"
             )
 
 
@@ -269,8 +314,48 @@ class TestConjuntoCegoE6:
         assert metricas["vazados"] == 0, f"Vazamentos detectados no conjunto cego: {metricas['detalhes']}"
         assert metricas["recall_protecao"] >= 99.0
         assert metricas["taxa_fp"] <= 5.0
+        assert metricas["taxa_bloqueio"] <= 20.0
         assert metricas["aprovado_protecao"] is True
         # Bloqueio e transformação somam a proteção; nada fica sem contabilizar.
         assert metricas["removidos"] + metricas["bloqueados"] + metricas["vazados"] == metricas["total_identificadores"]
         lim_inf, lim_sup = metricas["ic_protecao"]
         assert lim_inf <= metricas["recall_protecao"] <= lim_sup
+
+    def test_bloquear_todos_os_positivos_nao_aprova_protecao(self, monkeypatch):
+        from pathlib import Path
+        import sys
+        import sanitizer
+
+        root = Path(__file__).resolve().parents[2]
+        if str(root / "scripts") not in sys.path:
+            sys.path.insert(0, str(root / "scripts"))
+        import executar_experimento_e6 as e6
+
+        corpus = [
+            {
+                "id": "pos-1",
+                "tipo": "positivo",
+                "entrada": "CPF 52998224725",
+                "identificadores": [{"classe": "cpf", "valor": "52998224725", "substituto": "[CPF_REMOVIDO]"}],
+            },
+            {
+                "id": "neg-1",
+                "tipo": "negativo",
+                "entrada": "Link Ethernet estável",
+                "identificadores": [],
+            },
+        ]
+        monkeypatch.setattr(
+            e6,
+            "sanitizar_texto",
+            lambda texto: (
+                sanitizer.ResultadoSanitizacao(False, "", residuos=["bloqueio_total"])
+                if "52998224725" in texto
+                else sanitizer.ResultadoSanitizacao(True, texto)
+            ),
+        )
+        m = e6.executar_experimento(corpus)
+        assert m["recall_protecao"] == 100.0
+        assert m["taxa_bloqueio"] == 100.0
+        assert m["aprovado"] is False
+        assert m["aprovado_protecao"] is False

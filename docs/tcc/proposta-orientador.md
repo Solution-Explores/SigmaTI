@@ -30,7 +30,7 @@ Com as correções: tempo entre a queda e o alerta no painel (SSE) com p50 de 0,
 O PR #47 (estabilização do teste da sonda) foi revisado pelo Iohan e integrado em 26/10. Os demais testes sensíveis a tempo (provedor de IA, DNS e agendador) seguem na issue #45.
 
 ## 2. Próximas etapas (sprints semanais, de quarta a terça)
-A banca está marcada para 18/11/2026 e pode ser antecipada. Por isso o que era "tudo até 03/11" foi dividido em três sprints, com o código congelado em 11/11.
+A banca será entre 01 e 10/12/2026 (edital); o dia 18/11 inicia a preparação da apresentação. Por isso o que era "tudo até 03/11" foi dividido em três sprints, com o código congelado em 11/11.
 
 **Sprint 1, 28/10 a 03/11 (4 dias úteis, porque 02/11 é Finados):**
 - **#5:** anonimização LGPD revisada contra os critérios completos, com novos casos adversariais.
@@ -43,7 +43,7 @@ A banca está marcada para 18/11/2026 e pode ser antecipada. Por isso o que era 
 - **#25:** scripts de implantação, backup e smoke E2E. Falta a restauração em outra máquina física; na mesma máquina, em VM, já foi aprovada com 17 verificações.
 - **#45 e #47:** testes sensíveis a tempo e CI. **#46:** custo da verificação da trilha de auditoria.
 
-**Sprint 3, 11/11 a 17/11:** código congelado em 11/11, texto do TCC, slides e ensaio. Banca em 18/11.
+**Sprint 3, 11/11 a 17/11:** código congelado em 11/11, texto do TCC, slides e ensaio. Em 18/11 começa a preparação da apresentação; a banca é de 01 a 10/12.
 
 #13 e #25 saem do prazo de 03/11 para 10/11 porque não cabem junto com a `v1.0.0` sem estourar a capacidade.
 
@@ -63,4 +63,4 @@ A banca está marcada para 18/11/2026 e pode ser antecipada. Por isso o que era 
 1. Podemos manter #5, o aceite de #6 e #8, a reorganização e a `v1.0.0` em 03/11 e mover #13 e #25 para 10/11?
 2. Os itens da seção 3 podem ficar registrados como trabalho futuro no texto do TCC?
 3. Para o resultado do #25, a restauração em VM na mesma máquina basta, ou a máquina física diferente é obrigatória?
-4. A banca de 18/11 está confirmada, e há risco de antecipação? Que licença o repositório deve ter?
+4. A Coordenação já publicou o dia e o horário da banca (edital: 01 a 10/12)? Que licença o repositório deve ter?

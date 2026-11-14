@@ -156,7 +156,7 @@ class TestFailClosedSanitizacao:
 
         assert response.status_code == 200
         dados = response.json()
-        assert dados["status"] == "Incidente Registrado"
+        assert dados["status"] == "Diagnóstico gerado"
 
         # Verifica que o prompt enviado para a IA foi devidamente generalizado
         prompt_enviado = dados["dados_enviados_nuvem"]
@@ -168,3 +168,49 @@ class TestFailClosedSanitizacao:
 
         # Confirma que a chamada ao provedor foi realizada com dados sanitizados
         provider_handler.assert_called_once()
+
+    def test_ramo_erro_execucao_dentro_de_sanitizar_texto(self, monkeypatch):
+        """Exercita o ramo except Exception dentro de sanitizar_texto (resíduo erro_execucao)."""
+        import sanitizer
+
+        def falha_interna(_texto: str):
+            raise RuntimeError("Falha simulada na segunda passada")
+
+        monkeypatch.setattr(sanitizer, "detectar_residuos", falha_interna)
+        resultado = sanitizar_texto("Falha de link no IP 192.168.1.50")
+
+        assert resultado.sucesso is False
+        assert resultado.texto_sanitizado == ""
+        assert resultado.residuos == ["erro_execucao"]
+        assert "RuntimeError" in (resultado.motivo_bloqueio or "")
+
+    def test_bloqueio_real_do_sanitizador_em_alertas_impede_provedor_e_audita(self, api, caplog):
+        """Ponta a ponta em /api/alertas: mensagem bloqueada pelo sanitizador real não chama provedor e audita."""
+        import json
+        import os
+        from pathlib import Path
+
+        _, client, provider_handler = api
+        alerta = {
+            "equipamento": "sw-core-bloco-a",
+            "ip_origem": "192.168.1.50",
+            "descricao_erro": "Maria Oliveira (leito 12) não consegue sincronizar monitor multiparamétrico",
+        }
+
+        response = client.post(
+            "/api/alertas",
+            json=alerta,
+            headers={"Origin": "http://localhost:5173"},
+        )
+
+        assert response.status_code == 500
+        assert response.json() == {"detail": "Erro interno do servidor."}
+        provider_handler.assert_not_called()
+        assert any("AUDIT_PRIVACY" in record.getMessage() for record in caplog.records)
+
+        audit_text = Path(os.environ["SIGMA_AUDIT_PATH"]).read_text(encoding="utf-8")
+        assert "Maria" not in audit_text
+        assert "Oliveira" not in audit_text
+        ultimo_evento = json.loads(audit_text.splitlines()[-1])
+        assert ultimo_evento["acao"] == "privacy.sanitization_failed"
+        assert ultimo_evento["recurso"] == "outbound_ai"

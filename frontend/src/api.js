@@ -10,6 +10,7 @@ export class ApiError extends Error {
       409: 'O registro mudou ou a decisão não é permitida. Atualize os dados antes de tentar novamente.',
       422: 'Confira os dados informados.',
       429: 'Muitas tentativas. Aguarde antes de tentar novamente.',
+      501: 'Recurso ainda não disponível.',
     };
     super(messages[status] || 'A API está indisponível no momento. Tente novamente.');
     this.status = status;
